@@ -8,17 +8,17 @@ export const HotelsHub = ({ onNavigate }: { onNavigate: (tab: View) => void }) =
 
         {/* Floating emoji row */}
         <div className="flex justify-center gap-4 mb-8 text-4xl select-none">
-          <span className="animate-bounce" style={{ animationDelay: '0ms' }}>ğŸ¨</span>
-          <span className="animate-bounce" style={{ animationDelay: '150ms' }}>âœ¨</span>
-          <span className="animate-bounce" style={{ animationDelay: '300ms' }}>ğŸ’•</span>
-          <span className="animate-bounce" style={{ animationDelay: '450ms' }}>ğŸŒ™</span>
-          <span className="animate-bounce" style={{ animationDelay: '600ms' }}>ğŸ—ï¸</span>
+          <span className="animate-bounce" style={{ animationDelay: '0ms' }}>ğ  ¨</span>
+          <span className="animate-bounce" style={{ animationDelay: '150ms' }}>â ¨</span>
+          <span className="animate-bounce" style={{ animationDelay: '300ms' }}>ğ  â€¢</span>
+          <span className="animate-bounce" style={{ animationDelay: '450ms' }}>ğ   </span>
+          <span className="animate-bounce" style={{ animationDelay: '600ms' }}>ğ   ï¸</span>
         </div>
 
         {/* Card */}
         <div className="bg-white border border-cream-200 rounded-3xl shadow-sm p-8 md:p-10 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-forest-900 text-cream-50 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
-            <span>ğŸš€</span> Coming Soon
+            <span>ğ   </span> Coming Soon
           </div>
 
           <h1 className="text-3xl md:text-4xl font-lora font-bold text-stone-800 leading-tight">
@@ -26,29 +26,29 @@ export const HotelsHub = ({ onNavigate }: { onNavigate: (tab: View) => void }) =
           </h1>
 
           <p className="text-stone-500 leading-relaxed text-base">
-            Shh&hellip; our secret hideaways aren&rsquo;t fully revealed yet&nbsp;ğŸ˜‰
+            Shh&hellip; our secret hideaways aren&rsquo;t fully revealed yet&nbsp;ğ   
           </p>
 
           <div className="w-full h-px bg-cream-200 my-2" />
 
           <p className="text-stone-500 leading-relaxed">
             But don&rsquo;t worry&mdash;we&rsquo;re about to go live, tying up the best hotels just for you,
-            with a little AI magic to make every stay feel like a love story&nbsp;âœ¨
+            with a little AI magic to make every stay feel like a love story&nbsp;â ¨
           </p>
 
           <p className="text-stone-500 leading-relaxed">
             We can&rsquo;t wait to see you back&mdash;your next dreamy escape
-            (and maybe a little adventure of the heart&nbsp;ğŸ’•) is just around the corner!
+            (and maybe a little adventure of the heart&nbsp;ğ  â€¢) is just around the corner!
           </p>
 
           {/* Decorative tag row */}
           <div className="flex flex-wrap justify-center gap-2 pt-2">
             {[
-              { emoji: 'ğŸ–ï¸', label: 'Beach Retreats' },
-              { emoji: 'ğŸ”ï¸', label: 'Mountain Hideaways' },
-              { emoji: 'ğŸŒ†', label: 'City Stays' },
-              { emoji: 'ğŸŒ¿', label: 'Wellness Resorts' },
-              { emoji: 'ğŸ’', label: 'Luxury Suites' },
+              { emoji: 'ğ   ï¸', label: 'Beach Retreats' },
+              { emoji: 'ğ   ï¸', label: 'Mountain Hideaways' },
+              { emoji: 'ğ   ', label: 'City Stays' },
+              { emoji: 'ğ  ¿', label: 'Wellness Resorts' },
+              { emoji: 'ğ   ', label: 'Luxury Suites' },
             ].map(({ emoji, label }) => (
               <span
                 key={label}

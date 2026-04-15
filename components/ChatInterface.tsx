@@ -9,7 +9,7 @@ import { Icon } from './Icon';
 import { Spinner } from './Spinner';
 import { uid } from '../utils/uid';
 
-// √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨ Dashboard content config √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨
+// √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨ Dashboard content config √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨
 const DASHBOARD = {
     hero: {
         greeting: () => {
@@ -30,7 +30,7 @@ const DASHBOARD = {
         { title: 'Fitness', subtitle: 'Track nutrition & goals', icon: 'fitness_center', route: 'fitness' as View, gradient: 'from-blue-500/20 to-cyan-500/20', iconColor: 'text-blue-400', comingSoon: true },
     ],
     spotlight: {
-        title: "Chef's Table ‚Äî AI Kitchen",
+        title: "Chef's Table ‚ î AI Kitchen",
         subtitle: 'Get a recipe from ingredients you have at home',
         prompt: 'Help me create a recipe from what I have in my fridge',
         icon: 'soup_kitchen',
@@ -43,7 +43,7 @@ const DASHBOARD = {
     ],
 };
 
-// √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨ Render helpers √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨
+// √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨ Render helpers √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨
 
 function renderStars(rating: number) {
     return (
@@ -104,13 +104,13 @@ function renderMarkdown(text: string) {
             .replace(/\*(.+?)\*/g, '<em>$1</em>')
             .replace(/^### (.+)/g, '<h3 class="text-base font-semibold text-stone-800 mt-3 mb-1">$1</h3>')
             .replace(/^## (.+)/g, '<h2 class="text-lg font-bold text-stone-800 mt-3 mb-1">$1</h2>')
-            .replace(/^[-√¢‚Ç¨¬¢] (.+)/g, '<li class="ml-4 list-disc text-stone-600">$1</li>')
+            .replace(/^[-√¢‚ ¨¬¢] (.+)/g, '<li class="ml-4 list-disc text-stone-600">$1</li>')
             .replace(/^\d+\. (.+)/g, '<li class="ml-4 list-decimal text-stone-600">$1</li>');
         return <div key={i} dangerouslySetInnerHTML={{ __html: processed || '<br/>' }} />;
     });
 }
 
-// √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨ Main Component √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨
+// √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨ Main Component √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨
 
 interface ChatInterfaceProps {
     favorites: ChatMessage[];
@@ -219,7 +219,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
     const showDashboard = history.length <= 1;
     const isFavorite = (id: string) => favorites.some(f => f.id === id);
 
-    // √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨ Dashboard View √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨
+    // √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨ Dashboard View √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨
     if (showDashboard) {
         return (
             <div className="flex flex-col h-full">
@@ -268,10 +268,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                     {/* Coming Soon Toast */}
                     <div className={`fixed bottom-24 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${comingSoonToast ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
                         <div className="bg-forest-900 text-cream-50 px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 min-w-[260px]">
-                            <span className="text-xl">‚ú®</span>
+                            <span className="text-xl">‚ ®</span>
                             <div>
                                 <p className="font-semibold text-sm">Something exciting is coming!</p>
-                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this ‚Äî stay tuned üíï</p>
+                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this ‚ î stay tuned   ‚Ä¢</p>
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
         );
     }
 
-    // √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨ Chat View √¢‚Äù‚Ç¨√¢‚Äù‚Ç¨√¢‚Äù‚Ç¨
+    // √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨ Chat View √¢‚ ù‚ ¨√¢‚ ù‚ ¨√¢‚ ù‚ ¨
     function renderInput() {
         return (
             <div className="flex-shrink-0 p-3 border-t border-cream-200">

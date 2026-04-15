@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const { restaurantId = 'demo', customerName, rating, text } = req.body;
   if (!customerName || !rating || !text) return res.status(400).json({ error: 'Missing required fields' });
-  if (rating < 1 || rating > 5) return res.status(400).json({ error: 'Rating must be 1â€“5' });
+  if (rating < 1 || rating > 5) return res.status(400).json({ error: 'Rating must be 1â “5' });
   const review = { id: uid(), restaurantId, customerName, rating: Number(rating), text, createdAt: now(), replied: false, reply: '' };
   reviews.set(review.id, review);
   res.status(201).json(review);

@@ -23,10 +23,10 @@ interface SpecialForm {
 }
 
 const EMPTY_FORM: SpecialForm = {
-  name: '', description: '', priceCents: 2500, category: 'daily_special', chefNote: '', imageEmoji: 'ğŸ½ï¸', isAvailable: true,
+  name: '', description: '', priceCents: 2500, category: 'daily_special', chefNote: '', imageEmoji: 'ğ  ½ï¸', isAvailable: true,
 };
 
-const EMOJI_OPTIONS = ['ğŸ½ï¸','ğŸŸ','ğŸ¥©','ğŸ„','ğŸ«•','ğŸ¥—','ğŸ±','ğŸ¦','ğŸ§€','ğŸ¥','ğŸŒ¿','ğŸœ'];
+const EMOJI_OPTIONS = ['ğ  ½ï¸','ğ   ','ğ ¥©','ğ   ','ğ «â€¢','ğ ¥ ','ğ  ±','ğ ¦ ','ğ § ','ğ ¥ ','ğ  ¿','ğ   '];
 
 export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRestaurant }) {
   const [specials, setSpecials] = useState<DemoChefSpecial[]>([]);
@@ -43,7 +43,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
   const openCreate = () => { setEditId(null); setForm(EMPTY_FORM); setShowForm(true); };
   const openEdit = (s: DemoChefSpecial) => {
     setEditId(s.id);
-    setForm({ name: s.name, description: s.description, priceCents: s.priceCents, category: s.category, chefNote: s.chefNote || '', imageEmoji: s.imageEmoji || 'ğŸ½ï¸', isAvailable: s.isAvailable });
+    setForm({ name: s.name, description: s.description, priceCents: s.priceCents, category: s.category, chefNote: s.chefNote || '', imageEmoji: s.imageEmoji || 'ğ  ½ï¸', isAvailable: s.isAvailable });
     setShowForm(true);
   };
 
@@ -133,7 +133,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
                   <div className="p-6">
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-14 h-14 rounded-2xl bg-cream-100 flex items-center justify-center text-3xl flex-shrink-0">
-                        {special.imageEmoji || 'ğŸ½ï¸'}
+                        {special.imageEmoji || 'ğ  ½ï¸'}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
@@ -146,7 +146,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
 
                     {special.chefNote && (
                       <div className="flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 mb-4">
-                        <span className="text-lg flex-shrink-0">ğŸ‘¨â€ğŸ³</span>
+                        <span className="text-lg flex-shrink-0">ğ  ¨â ğ  ³</span>
                         <p className="text-sm text-amber-700 italic leading-relaxed">{special.chefNote}</p>
                       </div>
                     )}

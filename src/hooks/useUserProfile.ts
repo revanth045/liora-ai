@@ -38,7 +38,7 @@ const toNum = (v: unknown, fallback: number): number => {
 };
 
 /**
- * Sanitize a raw profile object from localStorage â€” ensures every field is the
+ * Sanitize a raw profile object from localStorage â ” ensures every field is the
  * correct primitive type regardless of what the AI or old code stored.
  */
 const sanitizeProfile = (raw: unknown): StoredUserProfile | null => {

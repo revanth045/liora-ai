@@ -189,7 +189,7 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                                     </div>
                                     <div className="p-2">
                                         <h4 className="font-bold text-stone-800 text-sm truncate">{pick.name}</h4>
-                                        <p className="text-[10px] text-stone-400 uppercase font-semibold">{pick.cuisine} â€¢ {pick.est_cost}</p>
+                                        <p className="text-[10px] text-stone-400 uppercase font-semibold">{pick.cuisine} â ¢ {pick.est_cost}</p>
                                         <button 
                                             onClick={() => pick.isPartner ? handleCheckIn(pick) : executeSearch({ ...formState, cuisine: pick.name })}
                                             className={`w-full mt-2 py-1.5 rounded-lg text-[10px] font-bold transition-all ${pick.isPartner ? 'bg-brand-400 text-white' : 'bg-cream-50 text-stone-800'}`}
@@ -222,9 +222,9 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                                                         <h4 className="font-bold text-stone-800">{rec.name}</h4>
                                                         {rec.isPartner && <Icon name="sparkles" className="w-3 h-3 text-brand-400" />}
                                                     </div>
-                                                    <span className="bg-white px-2 py-0.5 rounded text-xs border border-cream-200">{rec.rating}â˜…</span>
+                                                    <span className="bg-white px-2 py-0.5 rounded text-xs border border-cream-200">{rec.rating}â …</span>
                                                 </div>
-                                                <p className="text-xs text-stone-400 mt-0.5">{rec.cuisine} â€¢ {rec.est_cost} â€¢ {rec.distance}</p>
+                                                <p className="text-xs text-stone-400 mt-0.5">{rec.cuisine} â ¢ {rec.est_cost} â ¢ {rec.distance}</p>
                                                 <p className="text-xs text-stone-600 mt-2 italic">"{rec.why_matched}"</p>
                                                 <div className="mt-3 flex gap-2">
                                                     {rec.isPartner ? (

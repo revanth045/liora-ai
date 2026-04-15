@@ -203,7 +203,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
                                             <h3 className="font-lora text-2xl font-bold text-stone-800">{place.name}</h3>
-                                            <p className="text-sm text-stone-400 font-medium">{place.type} â€¢ <span className="text-stone-800 font-bold">{place.price}</span></p>
+                                            <p className="text-sm text-stone-400 font-medium">{place.type} â ¢ <span className="text-stone-800 font-bold">{place.price}</span></p>
                                         </div>
                                         <div className="flex items-center gap-1.5 bg-cream-50 px-3 py-1.5 rounded-xl border border-cream-200">
                                             <Icon name="star-solid" size={14} className="text-yellow-500" />

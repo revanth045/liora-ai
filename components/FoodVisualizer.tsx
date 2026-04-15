@@ -196,7 +196,7 @@ export const FoodVisualizer: React.FC = () => {
                     {loadingAnalysis && !analysis ? (
                         <div className="flex items-center justify-center gap-3 py-8 text-stone-400">
                             <Spinner />
-                            <p className="text-sm animate-pulse">Chef Marco is preparing your guideâ€¦</p>
+                            <p className="text-sm animate-pulse">Chef Marco is preparing your guideâ ¦</p>
                         </div>
                     ) : analysis && (
                         <div className="p-5 space-y-4">
@@ -236,7 +236,7 @@ export const FoodVisualizer: React.FC = () => {
                                     <ul className="space-y-1.5">
                                         {analysis.proTips.map((tip: string, i: number) => (
                                             <li key={i} className="flex gap-2 text-sm text-stone-700">
-                                                <span className="text-amber-500 font-bold flex-shrink-0">âœ¦</span>
+                                                <span className="text-amber-500 font-bold flex-shrink-0">â ¦</span>
                                                 <span>{tip}</span>
                                             </li>
                                         ))}

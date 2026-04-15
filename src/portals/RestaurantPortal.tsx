@@ -21,21 +21,21 @@ import RestoTables from "./restaurant/pages/Tables";
 
 
 const TABS = [
-  // â”€ Core operations
+  // â € Core operations
   {key:"overview",   label:"Dashboard",        icon: "search",          group: "Operations"},
   {key:"orders",     label:"Order Management",  icon: "restaurant_menu", group: "Operations"},
   {key:"menu",       label:"Menu Studio",       icon: "menu",            group: "Operations"},
   {key:"inventory",  label:"Inventory",         icon: "briefcase",       group: "Operations"},
   {key:"tables",     label:"Table Management",   icon: "table_restaurant",group: "Operations"},
   {key:"chef",       label:"Chef Specials",     icon: "star",            group: "Operations"},
-  // â”€ Growth
+  // â € Growth
   {key:"consultant", label:"AI Consultant",     icon: "chat",            group: "Growth"},
   {key:"marketing",  label:"Marketing Studio",  icon: "sparkles",        group: "Growth"},
   {key:"promotions", label:"Promotions",        icon: "tag",             group: "Growth"},
-  // â”€ Insights
+  // â € Insights
   {key:"kpis",       label:"KPIs & Analytics",  icon: "clipboard-list",  group: "Insights"},
   {key:"customers",  label:"Customer Insights", icon: "user-circle",     group: "Insights"},
-  // â”€ Team
+  // â € Team
   {key:"staff",      label:"Staff & Scheduling",icon: "user-circle",     group: "Team"},
   {key:"finance",    label:"Finance",           icon: "attach_money",    group: "Team"},
   {key:"training",   label:"Training",          icon: "calendar",        group: "Team"},
@@ -69,7 +69,7 @@ export default function RestaurantPortal(){
   if (!s || s.user.role!=="restaurant_owner") {
     return <div className="p-6">Please login as a restaurant owner.</div>;
   }
-  if (!restaurant) return <div className="p-6">Loading your restaurantâ€¦</div>;
+  if (!restaurant) return <div className="p-6">Loading your restaurantâ ¦</div>;
 
   // Group tabs for sidebar rendering
   const TAB_GROUPS = [...new Set(TABS.map(t => t.group))];

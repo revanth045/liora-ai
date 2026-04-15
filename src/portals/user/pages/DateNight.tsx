@@ -12,16 +12,16 @@ export default function DateNightPage() {
                     Date Night Planner
                 </h1>
                 <p className="text-stone-600 text-base leading-relaxed mb-4">
-                    Good food brings people togetherâ€¦ what if it also sparks something more?&nbsp;ğŸ˜‰
+                    Good food brings people togetherâ ¦ what if it also sparks something more?&nbsp;ğ   
                 </p>
                 <p className="text-stone-400 text-sm leading-relaxed mb-8">
-                    We&apos;re going live soon â€” get ready to discover delicious moments and maybe even a little romance.
+                    We&apos;re going live soon â ” get ready to discover delicious moments and maybe even a little romance.
                 </p>
                 <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-forest-900 text-cream-50 text-sm font-semibold shadow-sm">
                     <Icon name="sparkles" className="w-4 h-4 text-brand-400" />
                     Coming Soon
                 </div>
-                <p className="mt-6 text-xs text-stone-300">Stay tuned â€” something delicious is cooking ğŸ½ï¸</p>
+                <p className="mt-6 text-xs text-stone-300">Stay tuned â ” something delicious is cooking ğ  ½ï¸</p>
             </div>
         </div>
     );

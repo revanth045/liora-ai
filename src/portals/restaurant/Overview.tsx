@@ -51,7 +51,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
   const METRICS = [
     { label: "Today's Revenue", value: fmt(todayRevenue), icon: 'attach_money', color: 'bg-green-100 text-green-700', sub: `${deliveredToday.length} completed orders` },
     { label: 'Active Orders', value: activeOrders.length, icon: 'local_fire_department', color: 'bg-orange-100 text-orange-700', sub: `${pendingOrders.length} pending` },
-    { label: 'Avg Ticket', value: avgTicket > 0 ? fmt(avgTicket) : '‚Äî', icon: 'receipt_long', color: 'bg-blue-100 text-blue-700', sub: `${todayOrders.length} orders today` },
+    { label: 'Avg Ticket', value: avgTicket > 0 ? fmt(avgTicket) : '‚ î', icon: 'receipt_long', color: 'bg-blue-100 text-blue-700', sub: `${todayOrders.length} orders today` },
     { label: 'Low Stock Alerts', value: lowStockItems.length, icon: 'inventory_2', color: lowStockItems.length > 0 ? 'bg-red-100 text-red-700' : 'bg-purple-100 text-purple-700', sub: lowStockItems.length > 0 ? lowStockItems[0].name + (lowStockItems.length > 1 ? ` +${lowStockItems.length - 1}` : '') : 'All stocked' },
   ];
 
@@ -59,7 +59,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
   const recentFeed = orders.slice(0, 8).map(o => ({
     id: o.id,
     time: timeAgo(o.createdAt),
-    table: o.tableNumber || '‚Äî',
+    table: o.tableNumber || '‚ î',
     action: `${o.items.map(i => `${i.qty}√ó ${i.name}`).join(', ')} ¬∑ ${fmt(o.totalCents)}`,
     type: o.status === 'pending' ? 'pending' : o.status === 'preparing' ? 'order' : o.status === 'ready' ? 'service' : 'done',
     status: o.status,
@@ -71,7 +71,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
     ...(pendingOrders.length > 0 ? [{ level: 'critical', msg: `${pendingOrders.length} order${pendingOrders.length > 1 ? 's' : ''} waiting to be accepted`, link: 'orders' }] : []),
     ...(lowStockItems.slice(0, 2).map(item => ({ level: 'warning', msg: `Low stock: ${item.name} (${item.quantity} ${item.unit} remaining)`, link: 'inventory' }))),
     ...(reservationCount > 0 ? [{ level: 'info', msg: `${reservationCount} active reservation${reservationCount > 1 ? 's' : ''}`, link: 'orders' }] : []),
-    ...(menuCount === 0 ? [{ level: 'warning', msg: 'No menu items published yet ‚Äî customers can\'t order', link: 'menu' }] : []),
+    ...(menuCount === 0 ? [{ level: 'warning', msg: 'No menu items published yet ‚ î customers can\'t order', link: 'menu' }] : []),
   ].slice(0, 4);
 
   const STATUS_ICON: Record<string, string> = { pending: 'pending_actions', order: 'restaurant', service: 'done_all', done: 'check_circle' };
@@ -126,13 +126,13 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
                     <span className="font-bold text-stone-800 text-sm">
-                      {item.table !== '‚Äî' ? `Table ${item.table}` : 'Pickup'}
+                      {item.table !== '‚ î' ? `Table ${item.table}` : 'Pickup'}
                     </span>
                     <span className="text-[10px] font-bold text-stone-400 uppercase bg-cream-100/50 px-2 py-0.5 rounded-full">{item.time}</span>
                   </div>
                   <p className="text-xs text-stone-400 font-medium truncate">{item.action}</p>
                   {item.notes && (
-                    <p className="text-[10px] text-amber-600 mt-0.5 truncate">‚ö† {item.notes}</p>
+                    <p className="text-[10px] text-amber-600 mt-0.5 truncate">‚ † {item.notes}</p>
                   )}
                 </div>
                 <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${
@@ -178,7 +178,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
                     <span className={`text-[10px] font-bold uppercase tracking-widest ${
                       alert.level === 'critical' ? 'text-red-500' : alert.level === 'warning' ? 'text-orange-500' : 'text-blue-500'
                     }`}>
-                      {alert.level === 'critical' ? '‚óè Urgent' : alert.level === 'warning' ? '‚óÜ Warning' : '‚óâ Info'}
+                      {alert.level === 'critical' ? '‚ è Urgent' : alert.level === 'warning' ? '‚ Ü Warning' : '‚ â Info'}
                     </span>
                   </div>
                 ))}

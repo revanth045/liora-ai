@@ -55,11 +55,11 @@ export const DiningProvider: React.FC<{ children: ReactNode }> = ({ children }) 
 
   const connectTableViaQR = async (tableNumber: string | number, restaurantName: string) => {
     try {
-      console.log('üöÄ Starting table connection...');
+      console.log('    Starting table connection...');
 
-      // Attempt connection directly ‚Äî connectToTable handles network errors itself
+      // Attempt connection directly ‚ î connectToTable handles network errors itself
       const tableSession = await connectToTable(tableNumber, restaurantName);
-      console.log('‚úÖ Session created:', tableSession);
+      console.log('‚ Ö Session created:', tableSession);
 
       setSession(prev => ({
         ...prev,
@@ -71,7 +71,7 @@ export const DiningProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         status: 'checked-in'
       }));
     } catch (error) {
-      console.error('‚ùå Connection error:', error);
+      console.error('‚ å Connection error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Failed to connect to table';
       throw new Error(errorMsg);
     }

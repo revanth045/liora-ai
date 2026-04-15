@@ -16,7 +16,7 @@ export default function RoleRouter() {
     else setView("user");
   }, [s]);
 
-  if (view === "loading") return <div className="p-6">Loadingâ€¦</div>;
+  if (view === "loading") return <div className="p-6">Loadingâ ¦</div>;
   if (view === "public") return <PublicSite />;
   if (view === "restaurant") return <RestaurantPortal />;
   if (view === "staff") return <ServiceDeskPortal />;

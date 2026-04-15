@@ -146,7 +146,7 @@ export default function Login({ setView }: LoginProps) {
                             value={password}
                             onChange={e => setPassword(e.target.value)}
                             className={inputClass}
-                            placeholder="••••••••"
+                            placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                             required
                             minLength={6}
                         />

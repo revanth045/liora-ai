@@ -57,7 +57,7 @@ const chatWithHistory = async ({ history, user, sessionContext }) => {
     }
 };
 
-// â”€â”€â”€â”€ TABLE SESSION ROUTES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â € TABLE SESSION ROUTES â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 
 // POST /api/ai-waiter/connect
 // Connect to a table session using QR code data (tableNumber, restaurantName)
@@ -141,7 +141,7 @@ router.get('/session/:sessionId', (req, res) => {
     res.json({ session, orders: sessionOrders, assistanceRequests: sessionAssists });
 });
 
-// â”€â”€â”€â”€ AI CHAT ROUTES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â € AI CHAT ROUTES â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 
 // POST /api/ai-waiter/chat
 router.post('/chat', async (req, res) => {

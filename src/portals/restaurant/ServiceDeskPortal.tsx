@@ -10,9 +10,9 @@ import {
 
 const STATUS_FLOW: DemoOrderStatus[] = ['pending', 'preparing', 'ready', 'delivered'];
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-//  Sound helper â€” Web Audio API beep
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+//  Sound helper â ” Web Audio API beep
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 function beep() {
   try {
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -28,13 +28,13 @@ function beep() {
     osc.stop(ctx.currentTime + 0.5);
     osc.onended = () => ctx.close();
   } catch {
-    // browser may block autoplay â€” ignore silently
+    // browser may block autoplay â ” ignore silently
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 //  Filter tabs
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 type FilterTab = 'active' | 'ready' | 'done' | 'all';
 
 const STATUS_LABELS: Record<DemoOrderStatus, string> = {
@@ -62,9 +62,9 @@ function filterOrders(orders: DemoOrder[], tab: FilterTab): DemoOrder[] {
   }
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 //  Order card
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 function OrderCard({ order, onStatusChange }: { order: DemoOrder; onStatusChange: () => void }) {
   const [expanded, setExpanded] = useState(order.status === 'pending');
   const nextStatus = STATUS_FLOW[STATUS_FLOW.indexOf(order.status) + 1] as DemoOrderStatus | undefined;
@@ -109,7 +109,7 @@ function OrderCard({ order, onStatusChange }: { order: DemoOrder; onStatusChange
               </>
             ) : (
               <>
-                <span className="text-lg">ğŸ¥¡</span>
+                <span className="text-lg">ğ ¥¡</span>
                 <span className="text-[9px] text-stone-400 font-bold leading-tight">Pickup</span>
               </>
             )}
@@ -166,10 +166,10 @@ function OrderCard({ order, onStatusChange }: { order: DemoOrder; onStatusChange
                   onClick={advance}
                   className="flex-1 py-2.5 rounded-xl font-bold text-sm bg-white text-stone-900 hover:bg-stone-100 transition-all"
                 >
-                  {nextStatus === 'preparing' ? 'âœ“ Accept â€” Start Preparing'
-                    : nextStatus === 'ready' ? 'âœ“ Mark as Ready'
-                    : nextStatus === 'delivered' ? 'âœ“ Mark Delivered'
-                    : `â†’ ${STATUS_LABELS[nextStatus]}`}
+                  {nextStatus === 'preparing' ? 'â “ Accept â ” Start Preparing'
+                    : nextStatus === 'ready' ? 'â “ Mark as Ready'
+                    : nextStatus === 'delivered' ? 'â “ Mark Delivered'
+                    : `â ’ ${STATUS_LABELS[nextStatus]}`}
                 </button>
               )}
               {order.status === 'pending' && (
@@ -188,9 +188,9 @@ function OrderCard({ order, onStatusChange }: { order: DemoOrder; onStatusChange
   );
 }
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 //  Main portal
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 export default function ServiceDeskPortal() {
   const auth = getAuth();
   const session = auth.getSessionSync?.();
@@ -270,7 +270,7 @@ export default function ServiceDeskPortal() {
           <div className="flex items-center gap-3">
             {pendingCount > 0 && (
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold animate-pulse">
-                ğŸ”” {pendingCount} new
+                ğ    {pendingCount} new
               </span>
             )}
             <button
@@ -313,7 +313,7 @@ export default function ServiceDeskPortal() {
       <main className="max-w-2xl mx-auto px-4 py-4 space-y-3">
         {filtered.length === 0 ? (
           <div className="text-center py-16 text-stone-600">
-            <p className="text-4xl mb-3">ğŸ½ï¸</p>
+            <p className="text-4xl mb-3">ğ  ½ï¸</p>
             <p className="text-sm font-semibold">
               {tab === 'active' ? 'No active orders right now' : 'Nothing here yet'}
             </p>

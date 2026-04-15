@@ -72,7 +72,7 @@ export const AiChef = () => {
           ${r.whyItWorks ? `<div class="bg-blue-50/60 p-3 rounded-xl border border-blue-100"><p class="text-xs font-bold text-blue-700 uppercase tracking-widest mb-1">Why It Works</p><p class="text-sm text-stone-700">${r.whyItWorks}</p></div>` : ''}
 
           <div>
-            <h4 class="font-bold text-stone-800 uppercase text-xs tracking-widest mb-3">Ingredients <span class="normal-case font-normal text-stone-400 ml-1">‚Äî serves ${r.servings || 2}</span></h4>
+            <h4 class="font-bold text-stone-800 uppercase text-xs tracking-widest mb-3">Ingredients <span class="normal-case font-normal text-stone-400 ml-1">‚ î serves ${r.servings || 2}</span></h4>
             <ul class="space-y-1.5">
               ${r.ingredients.map((i: any) => `<li class="flex justify-between items-baseline border-b border-dashed border-cream-200 py-1.5 text-sm"><span class="text-stone-800">${i.name}${i.notes ? ` <span class="text-xs text-stone-400 italic">(${i.notes})</span>` : ''}</span><span class="font-semibold text-stone-800 ml-4 flex-shrink-0">${i.qty || ''}</span></li>`).join('')}
             </ul>
@@ -85,9 +85,9 @@ export const AiChef = () => {
             </ol>
           </div>
 
-          ${r.tips?.length ? `<div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200"><h4 class="font-bold text-amber-800 text-xs uppercase tracking-widest mb-2">Pro Tips from 50+ Years in the Kitchen</h4><ul class="space-y-2">${r.tips.map((t: string) => `<li class="flex gap-2 text-sm text-stone-700"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">‚ú¶</span><span>${t}</span></li>`).join('')}</ul></div>` : ''}
+          ${r.tips?.length ? `<div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200"><h4 class="font-bold text-amber-800 text-xs uppercase tracking-widest mb-2">Pro Tips from 50+ Years in the Kitchen</h4><ul class="space-y-2">${r.tips.map((t: string) => `<li class="flex gap-2 text-sm text-stone-700"><span class="text-amber-500 font-bold flex-shrink-0 mt-0.5">‚ ¶</span><span>${t}</span></li>`).join('')}</ul></div>` : ''}
 
-          ${(r as any).substitutions?.length ? `<div class="bg-teal-50/60 p-4 rounded-xl border border-teal-100"><h4 class="font-bold text-teal-700 text-xs uppercase tracking-widest mb-2">Substitutions &amp; Variations</h4><ul class="space-y-2">${(r as any).substitutions.map((s: string) => `<li class="flex gap-2 text-sm text-stone-700"><span class="text-teal-500 font-bold flex-shrink-0">‚Üî</span><span>${s}</span></li>`).join('')}</ul></div>` : ''}
+          ${(r as any).substitutions?.length ? `<div class="bg-teal-50/60 p-4 rounded-xl border border-teal-100"><h4 class="font-bold text-teal-700 text-xs uppercase tracking-widest mb-2">Substitutions &amp; Variations</h4><ul class="space-y-2">${(r as any).substitutions.map((s: string) => `<li class="flex gap-2 text-sm text-stone-700"><span class="text-teal-500 font-bold flex-shrink-0">‚ î</span><span>${s}</span></li>`).join('')}</ul></div>` : ''}
         </div>
       `);
     } catch (e) {
@@ -155,7 +155,7 @@ export const AiChef = () => {
       {/* Content */}
       <div className="flex-1 overflow-y-auto p-6 scrollbar-hide">
 
-        {/* ‚ïê‚ïê‚ïê CHEF TUTOR ‚ïê‚ïê‚ïê */}
+        {/* ‚‚Ä¢ê‚‚Ä¢ê‚‚Ä¢ê CHEF TUTOR ‚‚Ä¢ê‚‚Ä¢ê‚‚Ä¢ê */}
         {activeMode === 'tutor' && (
           <div className="max-w-3xl mx-auto space-y-6 animate-page-slide">
 
@@ -179,7 +179,7 @@ export const AiChef = () => {
                 <div className="p-2 bg-cream-50 rounded-full"><Icon name="restaurant_menu" size={20} /></div>
                 <div>
                   <h2 className="font-lora text-xl font-bold leading-tight">Ingredient-Based Recipe Generator</h2>
-                  <p className="text-xs text-stone-400 mt-0.5">Tell Chef Marco what you have ‚Äî he'll suggest the perfect dish.</p>
+                  <p className="text-xs text-stone-400 mt-0.5">Tell Chef Marco what you have ‚ î he'll suggest the perfect dish.</p>
                 </div>
               </div>
 
@@ -194,7 +194,7 @@ export const AiChef = () => {
                     value={ingredientInput}
                     onChange={e => setIngredientInput(e.target.value)}
                     onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); addIngredient(); } }}
-                    placeholder="e.g. chicken thighs, lemon, garlic, thyme‚Ä¶"
+                    placeholder="e.g. chicken thighs, lemon, garlic, thyme‚ ¶"
                     className="flex-1 p-3 bg-cream-50/70 rounded-xl border border-cream-200 text-stone-800 placeholder-stone-400 focus:ring-2 focus:ring-brand-400/30 focus:outline-none text-sm"
                   />
                   <button
@@ -231,12 +231,12 @@ export const AiChef = () => {
               <div>
                 <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
                   Additional Notes{' '}
-                  <span className="font-normal normal-case text-stone-400">(optional ‚Äî cuisine style, dietary needs, occasion‚Ä¶)</span>
+                  <span className="font-normal normal-case text-stone-400">(optional ‚ î cuisine style, dietary needs, occasion‚ ¶)</span>
                 </label>
                 <textarea
                   value={freeNotes}
                   onChange={e => setFreeNotes(e.target.value)}
-                  placeholder="e.g. Make it Italian, gluten-free, for a romantic date night‚Ä¶"
+                  placeholder="e.g. Make it Italian, gluten-free, for a romantic date night‚ ¶"
                   className="w-full p-3 bg-cream-50/70 rounded-xl border border-cream-200 text-stone-800 placeholder-stone-400 focus:ring-2 focus:ring-brand-400/30 focus:outline-none min-h-[72px] resize-none text-sm"
                 />
               </div>
@@ -253,7 +253,7 @@ export const AiChef = () => {
                   className="ml-auto px-6 py-3 bg-brand-400 text-white rounded-xl font-bold text-sm flex items-center gap-2 hover:bg-brand-500 disabled:opacity-50 transition-all shadow-md active:scale-95"
                 >
                   {loadingRecipe ? <Icon name="sync" size={18} className="animate-spin" /> : <Icon name="auto_awesome" size={18} />}
-                  {loadingRecipe ? 'Chef is cooking‚Ä¶' : 'Generate Recipe'}
+                  {loadingRecipe ? 'Chef is cooking‚ ¶' : 'Generate Recipe'}
                 </button>
               </div>
             </div>
@@ -275,7 +275,7 @@ export const AiChef = () => {
           </div>
         )}
 
-        {/* ‚ïê‚ïê‚ïê FOOD VISUALIZER ‚ïê‚ïê‚ïê */}
+        {/* ‚‚Ä¢ê‚‚Ä¢ê‚‚Ä¢ê FOOD VISUALIZER ‚‚Ä¢ê‚‚Ä¢ê‚‚Ä¢ê */}
         {activeMode === 'visualizer' && (
           <div className="max-w-3xl mx-auto space-y-6 animate-page-slide">
 
@@ -285,7 +285,7 @@ export const AiChef = () => {
                 <div className="p-2 bg-cream-50 rounded-full"><Icon name="image" size={20} /></div>
                 <div>
                   <h2 className="font-lora text-xl font-bold leading-tight">Plating Visualizer</h2>
-                  <p className="text-xs text-stone-400 mt-0.5">See your dish before you cook it ‚Äî plus get Chef Marco's preparation guide.</p>
+                  <p className="text-xs text-stone-400 mt-0.5">See your dish before you cook it ‚ î plus get Chef Marco's preparation guide.</p>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
@@ -294,7 +294,7 @@ export const AiChef = () => {
                   value={visPrompt}
                   onChange={e => setVisPrompt(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleVisualize()}
-                  placeholder="e.g. Wagyu beef burger on a brioche bun with truffle fries‚Ä¶"
+                  placeholder="e.g. Wagyu beef burger on a brioche bun with truffle fries‚ ¶"
                   className="flex-1 p-4 bg-cream-50/70 rounded-2xl border border-cream-200 text-stone-800 placeholder-stone-400 focus:ring-2 focus:ring-brand-400/30 focus:outline-none text-sm"
                 />
                 <button
@@ -303,7 +303,7 @@ export const AiChef = () => {
                   className="px-6 py-3 bg-brand-400 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-brand-500 disabled:opacity-50 transition-all shadow-md active:scale-95"
                 >
                   {loadingVis ? <Icon name="sync" size={18} className="animate-spin" /> : <Icon name="visibility" size={18} />}
-                  {loadingVis ? 'Rendering‚Ä¶' : 'Visualize'}
+                  {loadingVis ? 'Rendering‚ ¶' : 'Visualize'}
                 </button>
               </div>
             </div>
@@ -352,7 +352,7 @@ export const AiChef = () => {
                 {loadingAnalysis && !analysis ? (
                   <div className="flex items-center justify-center gap-3 py-10 text-stone-400">
                     <Spinner />
-                    <p className="text-sm animate-pulse">Chef Marco is preparing your guide‚Ä¶</p>
+                    <p className="text-sm animate-pulse">Chef Marco is preparing your guide‚ ¶</p>
                   </div>
                 ) : analysis && (
                   <div className="p-6 space-y-5">
@@ -397,7 +397,7 @@ export const AiChef = () => {
                         <ul className="space-y-2">
                           {analysis.proTips.map((tip: string, i: number) => (
                             <li key={i} className="flex gap-2 text-sm text-stone-700">
-                              <span className="text-amber-500 font-bold flex-shrink-0 mt-0.5">‚ú¶</span>
+                              <span className="text-amber-500 font-bold flex-shrink-0 mt-0.5">‚ ¶</span>
                               <span>{tip}</span>
                             </li>
                           ))}
@@ -420,7 +420,7 @@ export const AiChef = () => {
             {loadingVis && (
               <div className="flex flex-col items-center justify-center py-20 text-stone-400">
                 <Spinner />
-                <p className="mt-4 text-sm font-medium animate-pulse">Rendering your culinary concept‚Ä¶</p>
+                <p className="mt-4 text-sm font-medium animate-pulse">Rendering your culinary concept‚ ¶</p>
               </div>
             )}
           </div>

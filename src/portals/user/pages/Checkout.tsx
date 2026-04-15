@@ -9,7 +9,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
   // Mock Booking Data (Simulating a Hotel + Dinner bundle)
   const ORDER_DETAILS = {
     item: 'The Liora Grand',
-    type: 'Hotel Stay â€¢ 2 Nights',
+    type: 'Hotel Stay â ¢ 2 Nights',
     dates: 'Feb 14 - Feb 16',
     guests: '2 Guests',
     price: 450,
@@ -139,7 +139,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
                <div className="flex items-center gap-4">
                  <div className="w-12 h-8 bg-cream-100 rounded-lg text-white text-[10px] flex items-center justify-center font-bold tracking-[0.2em] shadow-md">VISA</div>
                  <div>
-                   <p className="text-sm font-bold text-stone-800">â€¢â€¢â€¢â€¢ 4242</p>
+                   <p className="text-sm font-bold text-stone-800">â ¢â ¢â ¢â ¢ 4242</p>
                    <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest mt-0.5">Expires 12/28</p>
                  </div>
                </div>

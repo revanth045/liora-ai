@@ -121,7 +121,7 @@ export const WellnessHub = () => {
             </div>
           ) : (
             <div className="animate-page-slide">
-              <p className="text-sm font-bold text-white mb-2">ðŸ’¡ Decoding "{activeCraving}":</p>
+              <p className="text-sm font-bold text-white mb-2">ð  ¡ Decoding "{activeCraving}":</p>
               <p className="text-xs text-white/90 leading-relaxed font-medium">{CRAVING_TIPS[activeCraving]}</p>
               <button 
                 onClick={() => setActiveCraving(null)} 

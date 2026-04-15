@@ -1,7 +1,7 @@
 ï»¿import React, { useState, useEffect } from 'react';
 import { db_listAllActivePromotions, db_getAllRestaurants, type DemoPromotion, type DemoRestaurant } from '../../../demoDb';
 
-// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â € Helpers â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 function formatDiscount(p: DemoPromotion): string {
   if (p.type === 'percent') return `${p.value}% OFF`;
   if (p.type === 'flat') return `$${(p.value / 100).toFixed(0)} OFF`;
@@ -14,7 +14,7 @@ function formatDiscountSub(p: DemoPromotion): string {
   return 'Buy one, get one free';
 }
 
-// â”€â”€â”€ Coupon copy button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â € Coupon copy button â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 function CopyCode({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
@@ -35,7 +35,7 @@ function CopyCode({ code }: { code: string }) {
   );
 }
 
-// â”€â”€â”€ Restaurant Offer Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â € Restaurant Offer Card â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; restaurantName: string }) {
   return (
     <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden">
@@ -76,7 +76,7 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
             <CopyCode code={promo.code} />
           </>
         ) : (
-          <p className="text-[11px] text-stone-400 italic">No code needed â€” discount applied automatically at {restaurantName}.</p>
+          <p className="text-[11px] text-stone-400 italic">No code needed â ” discount applied automatically at {restaurantName}.</p>
         )}
 
         <p className="text-[10px] text-stone-400">
@@ -87,7 +87,7 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
   );
 }
 
-// â”€â”€â”€ Liora Offer Card (platform-wide) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â € Liora Offer Card (platform-wide) â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 function LioraOfferCard() {
   return (
     <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden">
@@ -102,7 +102,7 @@ function LioraOfferCard() {
       </div>
       <div className="px-6 py-5 space-y-3">
         <p className="text-stone-600 text-sm leading-relaxed">
-          You completed your profile and we noticed. Here's $5 off your next order â€” valid at any restaurant on Liora. No rush, no deadline.
+          You completed your profile and we noticed. Here's $5 off your next order â ” valid at any restaurant on Liora. No rush, no deadline.
         </p>
         <div className="flex items-center gap-2">
           <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Valid at</span>
@@ -118,7 +118,7 @@ function LioraOfferCard() {
   );
 }
 
-// â”€â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// â €â €â € Main Page â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 export default function OffersPage() {
   const [restaurantPromos, setRestaurantPromos] = useState<DemoPromotion[]>([]);
   const [restaurants, setRestaurants] = useState<DemoRestaurant[]>([]);
@@ -135,18 +135,18 @@ export default function OffersPage() {
     <div className="h-full overflow-y-auto scrollbar-hide">
       <div className="max-w-md mx-auto px-4 py-8 space-y-10">
 
-        {/* â”€â”€ Restaurant Offers â”€â”€ */}
+        {/* â €â € Restaurant Offers â €â € */}
         <section>
           <div className="mb-4">
             <h2 className="font-lora text-xl font-bold text-stone-800">Restaurant Offers</h2>
-            <p className="text-xs text-stone-400 mt-1">Deals from the restaurants you love â€” use the code when ordering from that specific spot.</p>
+            <p className="text-xs text-stone-400 mt-1">Deals from the restaurants you love â ” use the code when ordering from that specific spot.</p>
           </div>
 
           {restaurantPromos.length === 0 ? (
             <div className="bg-white border border-cream-200 rounded-3xl px-6 py-10 text-center">
-              <p className="text-3xl mb-3">ğŸ½ï¸</p>
+              <p className="text-3xl mb-3">ğ  ½ï¸</p>
               <p className="font-semibold text-stone-600 text-sm">No restaurant offers right now</p>
-              <p className="text-stone-400 text-xs mt-1">Check back soon â€” restaurants update their deals regularly.</p>
+              <p className="text-stone-400 text-xs mt-1">Check back soon â ” restaurants update their deals regularly.</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -157,11 +157,11 @@ export default function OffersPage() {
           )}
         </section>
 
-        {/* â”€â”€ Liora Offers â”€â”€ */}
+        {/* â €â € Liora Offers â €â € */}
         <section>
           <div className="mb-4">
             <h2 className="font-lora text-xl font-bold text-stone-800">Liora Offers</h2>
-            <p className="text-xs text-stone-400 mt-1">Platform-wide perks from Liora â€” these work at every restaurant we partner with.</p>
+            <p className="text-xs text-stone-400 mt-1">Platform-wide perks from Liora â ” these work at every restaurant we partner with.</p>
           </div>
           <LioraOfferCard />
         </section>

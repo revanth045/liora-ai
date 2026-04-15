@@ -87,7 +87,7 @@ export default function RestaurantPortal(){
   if (!s || s.user.role!=="restaurant_owner") {
     return <div className="p-6">Please login as a restaurant owner.</div>;
   }
-  if (!restaurant) return <div className="p-6 flex items-center justify-center min-h-screen">Loading your restaurantâ€¦</div>;
+  if (!restaurant) return <div className="p-6 flex items-center justify-center min-h-screen">Loading your restaurantâ ¦</div>;
 
   const renderContent = () => {
     switch (activeTab) {

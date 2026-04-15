@@ -59,7 +59,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
     setGoogleLoading(true);
     try {
       await auth.signInWithGoogle();
-      // Page will redirect to Google ‚Äî no further action needed
+      // Page will redirect to Google ‚ î no further action needed
     } catch (err: any) {
       setError(err.message || 'Google sign-in failed');
       setGoogleLoading(false);
@@ -123,7 +123,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
           </div>
         )}
 
-        {/* Google OAuth button ‚Äî shown only when Supabase is configured and not in forgot mode */}
+        {/* Google OAuth button ‚ î shown only when Supabase is configured and not in forgot mode */}
         {auth.signInWithGoogle && mode !== 'forgot' && (
           <>
             <button
@@ -133,7 +133,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
               className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-cream-200 bg-white hover:bg-cream-50 text-stone-700 font-semibold text-sm transition-all shadow-sm disabled:opacity-60 mb-4"
             >
               {googleLoading ? <Spinner /> : <GoogleIcon />}
-              {googleLoading ? 'Redirecting to Google‚Ä¶' : 'Continue with Google'}
+              {googleLoading ? 'Redirecting to Google‚ ¶' : 'Continue with Google'}
             </button>
 
             {/* Divider */}
@@ -169,7 +169,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
                   </button>
                 )}
               </div>
-              <input className={inp} type="password" placeholder="‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢‚Ä¢" value={password}
+              <input className={inp} type="password" placeholder="‚ ¢‚ ¢‚ ¢‚ ¢‚ ¢‚ ¢‚ ¢‚ ¢" value={password}
                 onChange={e => setPassword(e.target.value)} required autoComplete={mode === 'register' ? 'new-password' : 'current-password'} />
             </div>
           )}
@@ -177,14 +177,14 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
           <button type="submit" disabled={loading || (mode === 'forgot' && msg !== '')}
             className="w-full py-3.5 rounded-xl font-bold text-sm bg-brand-400 text-white hover:bg-brand-500 transition-all shadow-sm disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
             {loading ? <Spinner /> : null}
-            {loading ? 'Please wait‚Ä¶' : mode === 'login' ? 'Sign In' : mode === 'forgot' ? 'Send Reset Link' : 'Create My Account'}
+            {loading ? 'Please wait‚ ¶' : mode === 'login' ? 'Sign In' : mode === 'forgot' ? 'Send Reset Link' : 'Create My Account'}
           </button>
         </form>
 
         {mode === 'forgot' ? (
           <div className="mt-4 pt-4 border-t border-cream-100 text-center">
             <button onClick={() => { setMode('login'); setError(''); setMsg(''); }} className="text-xs font-bold text-stone-500 hover:text-stone-800">
-              ‚Üê Back to Sign In
+              ‚ ê Back to Sign In
             </button>
           </div>
         ) : (
@@ -197,7 +197,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
       {/* Perks */}
       {mode === 'register' && (
         <div className="mt-5 grid grid-cols-3 gap-3 text-center">
-          {[['ü§ñ', 'AI Food Assistant'], ['ü•ó', 'Calorie Tracking'], ['üìÖ', 'Meal Planner']].map(([emoji, label]) => (
+          {[[' § ', 'AI Food Assistant'], [' • ', 'Calorie Tracking'], ['   ', 'Meal Planner']].map(([emoji, label]) => (
             <div key={label} className="bg-white border border-cream-200 rounded-2xl p-3 shadow-sm">
               <div className="text-2xl mb-1">{emoji}</div>
               <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider leading-tight">{label}</p>
@@ -211,7 +211,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
         <p className="text-center text-xs text-stone-400 mt-6">
           Are you a restaurant owner?{' '}
           <button onClick={onSwitchToRestaurant} className="text-brand-400 font-semibold hover:underline">
-            Restaurant login ‚Üí
+            Restaurant login ‚ í
           </button>
         </p>
       )}
