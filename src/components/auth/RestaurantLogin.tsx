@@ -70,7 +70,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
       try {
         await auth.signUpRestaurantOwner(DEMO_EMAIL, DEMO_PASSWORD, DEMO_OWNER, DEMO_RESTAURANT);
       } catch {
-        // Already registered â ” that's fine
+        // Already registered - that's fine
       }
       await auth.signInUser(DEMO_EMAIL, DEMO_PASSWORD);
     } catch (err: any) {
@@ -143,7 +143,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
         </p>
       </div>
 
-      {/* Quick Demo Banner â ” only shown for owner login */}
+      {/* Quick Demo Banner - only shown for owner login */}
       {loginType === 'owner' && (
         <button
           onClick={handleDemoLogin}
@@ -153,11 +153,11 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
           {demoLoading ? (
             <Spinner />
           ) : (
-            <span className="text-2xl group-hover:scale-110 transition-transform">ð  ½️</span>
+            <span className="text-2xl group-hover:scale-110 transition-transform">🍕</span>
           )}
           <div className="text-left">
             <p className="text-sm font-bold text-stone-800">Try the Demo Restaurant</p>
-            <p className="text-[11px] text-stone-500">Instant access â ” no signup needed</p>
+            <p className="text-[11px] text-stone-500">Instant access - no signup needed</p>
           </div>
           <Icon name="arrow_forward" size={18} className="ml-auto text-amber-500 group-hover:translate-x-1 transition-transform" />
         </button>
@@ -179,7 +179,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
         ))}
       </div>
 
-      {/* â €â € OWNER PANEL â €â € */}
+      {/* -- OWNER PANEL -- */}
       {loginType === 'owner' && (
         <>
           <div className="flex gap-0 mb-5 p-1 rounded-xl border border-cream-200 bg-cream-50">
@@ -210,7 +210,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
                   className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-cream-200 bg-white hover:bg-cream-50 text-stone-700 font-semibold text-sm transition-all shadow-sm disabled:opacity-60 mb-4"
                 >
                   {googleLoading ? <Spinner /> : <GoogleIcon />}
-                  {googleLoading ? 'Connectingâ ¦' : 'Continue with Google'}
+                  {googleLoading ? 'Connecting...' : 'Continue with Google'}
                 </button>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex-1 h-px bg-cream-200" />
@@ -242,14 +242,14 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
               </div>
               <div>
                 <label className={lbl}>Password</label>
-                <input className={inp} type="password" placeholder="â ¢â ¢â ¢â ¢â ¢â ¢â ¢â ¢" value={ownerPassword}
+                <input className={inp} type="password" placeholder="********" value={ownerPassword}
                   onChange={e => setOwnerPassword(e.target.value)} required
                   autoComplete={ownerMode === 'register' ? 'new-password' : 'current-password'} />
               </div>
               <button type="submit" disabled={loading}
                 className="w-full py-3.5 rounded-xl font-bold text-sm bg-stone-800 text-white hover:bg-stone-900 transition-all shadow-sm disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
                 {loading ? <Spinner /> : null}
-                {loading ? 'Please waitâ ¦' : ownerMode === 'login' ? 'Access Dashboard' : 'Create Restaurant Account'}
+                {loading ? 'Please wait...' : ownerMode === 'login' ? 'Access Dashboard' : 'Create Restaurant Account'}
               </button>
             </form>
             <div className="mt-4 pt-4 border-t border-cream-100">
@@ -259,7 +259,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
 
           {ownerMode === 'register' && (
             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-              {[['ð   ','AI Analytics'],['ð ¤ ','AI Menu Tools'],['⭐','Table Management']].map(([emoji, label]) => (
+              {[['📊','AI Analytics'],['🤖','AI Menu Tools'],['⭐','Table Management']].map(([emoji, label]) => (
                 <div key={label} className="bg-white border border-cream-200 rounded-2xl p-3 shadow-sm">
                   <div className="text-2xl mb-1">{emoji}</div>
                   <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider leading-tight">{label}</p>
@@ -270,7 +270,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
         </>
       )}
 
-      {/* â €â € SERVICE DESK PANEL â €â € */}
+      {/* -- SERVICE DESK PANEL -- */}
       {loginType === 'staff' && (
         <>
           <div className="flex gap-0 mb-5 p-1 rounded-xl border border-cream-200 bg-cream-50">
@@ -306,7 +306,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
                       placeholder="Ask your owner for code" value={staffCode}
                       onChange={e => setStaffCode(e.target.value.toUpperCase())} required maxLength={10} />
                     <p className="text-[10px] text-stone-400 mt-1 ml-1">
-                      Your restaurant owner can find this code in <strong>Venue Settings â ’ Staff Access</strong>.
+                      Your restaurant owner can find this code in <strong>Venue Settings &gt; Staff Access</strong>.
                     </p>
                   </div>
                 </>
@@ -318,14 +318,14 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
               </div>
               <div>
                 <label className={lbl}>Password</label>
-                <input className={inp} type="password" placeholder="â ¢â ¢â ¢â ¢â ¢â ¢â ¢â ¢" value={staffPassword}
+                <input className={inp} type="password" placeholder="********" value={staffPassword}
                   onChange={e => setStaffPassword(e.target.value)} required
                   autoComplete={staffMode === 'register' ? 'new-password' : 'current-password'} />
               </div>
               <button type="submit" disabled={loading}
                 className="w-full py-3.5 rounded-xl font-bold text-sm bg-stone-800 text-white hover:bg-stone-900 transition-all shadow-sm disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
                 {loading ? <Spinner /> : null}
-                {loading ? 'Please waitâ ¦' : staffMode === 'login' ? 'Open Service Desk' : 'Register & Join'}
+                {loading ? 'Please wait...' : staffMode === 'login' ? 'Open Service Desk' : 'Register & Join'}
               </button>
             </form>
 
@@ -339,7 +339,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
               <Icon name="info" size={18} className="text-stone-400 flex-shrink-0 mt-0.5" />
               <div className="text-xs text-stone-500 space-y-1">
                 <p className="font-semibold text-stone-700">Service Desk Access</p>
-                <p>You will only see order management â ” no financials, inventory, or staff settings.</p>
+                <p>You will only see order management - no financials, inventory, or staff settings.</p>
                 <p>First time? Ask your restaurant owner for the <strong>Staff Access Code</strong> and use "Join with Code" above.</p>
               </div>
             </div>
@@ -351,7 +351,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
         <p className="text-center text-xs text-stone-400 mt-5">
           Looking to dine?{' '}
           <button onClick={onSwitchToUser} className="text-brand-400 font-semibold hover:underline">
-            Diner login â ’
+            Diner login →
           </button>
         </p>
       )}
