@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Waiter QR Code Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d4c4 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #d4a574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #d4a574 0%, #c89456 100%);
+            color: white;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 165, 116, 0.3);
+        }
+
+        .btn-download {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-download:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-print {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #45a049;
+        }
+
+        .qr-display {
+            text-align: center;
+        }
+
+        .qr-container {
+            background: #f9f9f9;
+            border: 2px dashed #e0e0e0;
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 20px;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-container img {
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        .qr-info {
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: left;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .qr-info p {
+            margin-bottom: 8px;
+        }
+
+        .qr-info code {
+            background: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            color: #d4a574;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .table-btn {
+            padding: 12px 8px;
+            background: #f0f0f0;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .table-btn:hover {
+            background: #e0e0e0;
+            border-color: #d4a574;
+        }
+
+        .table-btn.active {
+            background: #d4a574;
+            color: white;
+            border-color: #d4a574;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+
+        .message.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left: 4px solid #4caf50;
+        }
+
+        .message.error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid #f44336;
+        }
+
+        .message.info {
+            background: #e3f2fd;
+            color: #1565c0;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ AI Waiter QR Generator</h1>
+        <p class="subtitle">Generate QR codes for your restaurant tables</p>
+
+        <div class="content">
+            <!-- Left Side: Input -->
+            <div>
+                <div class="section-title">Generate QR Code</div>
+
+                <div class="form-group">
+                    <label for="restaurantName">Restaurant Name</label>
+                    <input
+                        type="text"
+                        id="restaurantName"
+                        placeholder="e.g., The Italian Place"
+                        value="The Italian Place"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="tableNumber">Table Number</label>
+                    <input
+                        type="number"
+                        id="tableNumber"
+                        placeholder="e.g., 12"
+                        value="12"
+                        min="1"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="qrSize">QR Code Size (px)</label>
+                    <select id="qrSize">
+                        <option value="200">Small (200x200)</option>
+                        <option value="300" selected>Medium (300x300)</option>
+                        <option value="400">Large (400x400)</option>
+                        <option value="500">Extra Large (500x500)</option>
+                    </select>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-generate" onclick="generateQR()">Generate QR Code</button>
+                </div>
+
+                <div id="messageContainer"></div>
+
+                <!-- Quick Table Buttons -->
+                <div style="margin-top: 40px;">
+                    <div class="section-title">Quick Generate</div>
+                    <p style="color: #999; font-size: 13px; margin-bottom: 16px;">
+                        Click any button to quickly generate QR codes for common table numbers:
+                    </p>
+                    <div class="table-grid">
+                        <button class="table-btn" onclick="quickGenerate(1)">Table 1</button>
+                        <button class="table-btn" onclick="quickGenerate(2)">Table 2</button>
+                        <button class="table-btn" onclick="quickGenerate(3)">Table 3</button>
+                        <button class="table-btn" onclick="quickGenerate(4)">Table 4</button>
+                        <button class="table-btn" onclick="quickGenerate(5)">Table 5</button>
+                        <button class="table-btn" onclick="quickGenerate(6)">Table 6</button>
+                        <button class="table-btn" onclick="quickGenerate(12)">Table 12</button>
+                        <button class="table-btn" onclick="quickGenerate(15)">Table 15</button>
+                        <button class="table-btn" onclick="quickGenerate(20)">Table 20</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Display -->
+            <div>
+                <div class="section-title">QR Code Preview</div>
+
+                <div class="qr-container" id="qrContainer">
+                    <div style="text-align: center; color: #ccc;">
+                        <p>📱 Generated QR code will appear here</p>
+                    </div>
+                </div>
+
+                <div class="qr-info">
+                    <p><strong>QR Data:</strong></p>
+                    <code id="qrData">tableNumber:restaurantName</code>
+
+                    <p style="margin-top: 12px;"><strong>Format:</strong></p>
+                    <p>Table Number : Restaurant Name</p>
+
+                    <p style="margin-top: 12px;"><strong>How it works:</strong></p>
+                    <p>1. Customer scans this QR code with phone camera</p>
+                    <p>2. Opens AI Waiter scanning page</p>
+                    <p>3. QR is decoded to extract table & restaurant</p>
+                    <p>4. Session created automatically</p>
+                </div>
+
+                <div class="button-group" style="margin-top: 20px;">
+                    <button class="btn-download" onclick="downloadQR()">📥 Download</button>
+                    <button class="btn-print" onclick="printQR()">🖨️ Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQRUrl = '';
+        let currentTableNumber = '12';
+        let currentRestaurant = 'The Italian Place';
+
+        function generateQR() {
+            const restaurant = document.getElementById('restaurantName').value.trim();
+            const tableNum = document.getElementById('tableNumber').value.trim();
+            const size = document.getElementById('qrSize').value;
+
+            if (!restaurant || !tableNum) {
+                showMessage('Please enter both restaurant name and table number', 'error');
+                return;
+            }
+
+            currentRestaurant = restaurant;
+            currentTableNumber = tableNum;
+
+            // Encode QR data
+            const qrData = `${tableNum}:${restaurant.replace(/\s+/g, '_')}`;
+            const encoded = encodeURIComponent(qrData);
+
+            // Generate QR code using qr-server API
+            currentQRUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encoded}`;
+
+            // Display QR code
+            document.getElementById('qrContainer').innerHTML = `<img src="${currentQRUrl}" alt="QR Code">`;
+            document.getElementById('qrData').textContent = qrData;
+
+            showMessage(`✅ QR Code generated for Table ${tableNum} at ${restaurant}`, 'success');
+        }
+
+        function quickGenerate(tableNum) {
+            document.getElementById('tableNumber').value = tableNum;
+            generateQR();
+        }
+
+        function downloadQR() {
+            if (!currentQRUrl) {
+                showMessage('Generate a QR code first', 'error');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = currentQRUrl;
+            link.download = `table-${currentTableNumber}-qr.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showMessage('📥 QR code downloaded', 'success');
+        }
+
+        function printQR() {
+            if (!currentQRUrl) {
+                showMessage('Generate a QR code first', 'error');
+                return;
+            }
+
+            const printWindow = window.open('', '', 'width=600,height=700');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Print QR Code</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            min-height: 100vh;
+                            margin: 0;
+                            padding: 20px;
+                            background: white;
+                        }
+                        .card {
+                            text-align: center;
+                            border: 2px solid #ddd;
+                            border-radius: 12px;
+                            padding: 40px;
+                            background: white;
+                            margin: 20px 0;
+                        }
+                        h1 {
+                            margin: 0 0 10px 0;
+                            color: #333;
+                            font-size: 24px;
+                        }
+                        p {
+                            color: #666;
+                            margin: 5px 0;
+                        }
+                        img {
+                            margin: 20px 0;
+                            max-width: 300px;
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                        }
+                        @media print {
+                            body { background: white; }
+                            .card { page-break-inside: avoid; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="card">
+                        <h1>Table ${currentTableNumber}</h1>
+                        <p>${currentRestaurant}</p>
+                        <img src="${currentQRUrl}" alt="QR Code">
+                        <p style="font-size: 12px; color: #999;">Scan with phone camera</p>
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => printWindow.print(), 250);
+        }
+
+        function showMessage(text, type) {
+            const container = document.getElementById('messageContainer');
+            container.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 3000);
+        }
+
+        // Generate initial QR on load
+        window.addEventListener('load', () => {
+            generateQR();
+        });
+    </script>
+</body>
+</html>
+

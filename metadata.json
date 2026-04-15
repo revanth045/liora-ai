@@ -1,0 +1,9 @@
+{
+  "name": "Copy of Liora -  expanding Liora ",
+  "description": "Liora is an AI-powered dining companion app that helps users decide what to eat, where to eat, and how to enjoy it. It connects restaurants and users through smart recommendations based on mood, dietary needs, and local options.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}

@@ -1,0 +1,70 @@
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+import ordersRouter from './routes/orders.js';
+import menuRouter from './routes/menu.js';
+import analyticsRouter from './routes/analytics.js';
+import promotionsRouter from './routes/promotions.js';
+import reviewsRouter from './routes/reviews.js';
+import aiWaiterRouter from './routes/aiWaiter.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Trust proxy so rate-limit can read the real client IP
+app.set('trust proxy', 1);
+
+// ── Security middleware ────────────────────────────────────────────────────
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(cors({ origin: true, credentials: true }));
+app.use(express.json({ limit: '2mb' }));
+
+// Rate limiting — 300 req / 15 min per IP
+app.use('/api', rateLimit({ windowMs: 15 * 60 * 1000, max: 300, standardHeaders: true, legacyHeaders: false }));
+
+// ── API Routes ─────────────────────────────────────────────────────────────
+app.use('/api/orders', ordersRouter);
+app.use('/api/menu', menuRouter);
+app.use('/api/analytics', analyticsRouter);
+app.use('/api/promotions', promotionsRouter);
+app.use('/api/reviews', reviewsRouter);
+app.use('/api/ai-waiter', aiWaiterRouter);
+
+// ── Health check ───────────────────────────────────────────────────────────
+app.get('/api/health', (_req, res) => res.json({ status: 'ok', ts: Date.now() }));
+
+// ── API 404 handler ────────────────────────────────────────────────────────
+app.use('/api', (_req, res) => res.status(404).json({ error: 'Endpoint not found' }));
+
+// ── Production: serve Vite build output ────────────────────────────────────
+if (isProduction) {
+  const distPath = path.resolve(__dirname, '..', 'dist');
+  app.use(express.static(distPath));
+
+  // SPA fallback — serve index.html for all non-API routes
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
+// ── Error handler ──────────────────────────────────────────────────────────
+app.use((err, _req, res, _next) => {
+  console.error('[Server Error]', err.message);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+app.listen(PORT, () => {
+  console.log(`🍽️  Liora API server running on http://localhost:${PORT}`);
+  console.log(`   Mode: ${isProduction ? 'production' : 'development'}`);
+  console.log(`   Health: http://localhost:${PORT}/api/health`);
+});
+
+export default app;
