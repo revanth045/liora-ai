@@ -58,7 +58,7 @@ export default function RestoFinance({ restaurant }: { restaurant: DemoRestauran
               <div key={i} className="group">
                 <div className="flex justify-between items-end text-sm mb-2">
                   <span className="font-bold text-stone-800">{item.label}</span>
-                  <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{item.amt} <span className="opacity-50">â� �¢ {item.val}</span></span>
+                  <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{item.amt} <span className="opacity-50">ââ ¬¢ {item.val}</span></span>
                 </div>
                 <div className="w-full bg-cream-50 rounded-full h-4 shadow-inner overflow-hidden">
                   <div 
@@ -95,7 +95,7 @@ export default function RestoFinance({ restaurant }: { restaurant: DemoRestauran
                   </div>
                   <div>
                     <p className="font-bold text-stone-800 text-sm">Weekly Settlement</p>
-                    <p className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{tx.date} â� �¢ {tx.bank}</p>
+                    <p className="text-[10px] font-bold text-stone-400 uppercase tracking-wider">{tx.date} ââ ¬¢ {tx.bank}</p>
                   </div>
                 </div>
                 <div className="text-right">

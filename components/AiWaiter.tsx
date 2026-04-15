@@ -109,7 +109,7 @@ export const AiWaiter = () => {
         chatContainerRef.current?.scrollTo({ top: chatContainerRef.current.scrollHeight, behavior: 'smooth' });
     }, [messages]);
 
-    // QR Scanner initialization ‚ î auto-starts scanning once camera is ready
+    // QR Scanner initialization √¢ ‚Äù auto-starts scanning once camera is ready
     useEffect(() => {
         if (!showQRScanner) return;
 
@@ -125,7 +125,7 @@ export const AiWaiter = () => {
                     videoRef.current.srcObject = stream;
                     streamRef.current = stream;
                 }
-                // Auto-start scanning ‚ î poll every 300ms until video has data
+                // Auto-start scanning √¢ ‚Äù poll every 300ms until video has data
                 scanIntervalRef.current = setInterval(() => {
                     if (videoRef.current?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
                         scanQRCode();
@@ -246,11 +246,11 @@ export const AiWaiter = () => {
     }, [showMenu]);
 
     const QUICK_ACTION_CONFIG: Record<string, { icon: string; alertMessage: string; confirmation: string }> = {
-        'Call Waiter':    { icon: '   Ô∏è', alertMessage: `Table ${session.tableNumber} is calling for a waiter`, confirmation: "A waiter has been notified and will be with you shortly!" },
-        'Order Drinks':   { icon: '  ∑', alertMessage: `Table ${session.tableNumber} would like to order drinks`, confirmation: "Your drink order request has been sent! Someone will be right over." },
-        'Request Bill':   { icon: ' ßæ', alertMessage: `Table ${session.tableNumber} is requesting the bill`, confirmation: "Your bill is being prepared and will be brought to you shortly!" },
-        'Dietary Question': { icon: ' • ', alertMessage: `Table ${session.tableNumber} has a dietary question for the kitchen`, confirmation: "Your question has been forwarded to the kitchen team!" },
-        'Get Manager':    { icon: '   ', alertMessage: `Table ${session.tableNumber} is requesting to speak with the manager`, confirmation: "The manager has been notified and will be with you soon!" },
+        'Call Waiter':    { icon: '√∞   Ô∏è', alertMessage: `Table ${session.tableNumber} is calling for a waiter`, confirmation: "A waiter has been notified and will be with you shortly!" },
+        'Order Drinks':   { icon: '√∞  ¬∑', alertMessage: `Table ${session.tableNumber} would like to order drinks`, confirmation: "Your drink order request has been sent! Someone will be right over." },
+        'Request Bill':   { icon: '√∞ ¬ß¬æ', alertMessage: `Table ${session.tableNumber} is requesting the bill`, confirmation: "Your bill is being prepared and will be brought to you shortly!" },
+        'Dietary Question': { icon: '√∞ ¬• ', alertMessage: `Table ${session.tableNumber} has a dietary question for the kitchen`, confirmation: "Your question has been forwarded to the kitchen team!" },
+        'Get Manager':    { icon: '√∞   ', alertMessage: `Table ${session.tableNumber} is requesting to speak with the manager`, confirmation: "The manager has been notified and will be with you soon!" },
     };
 
     const handleQuickAction = (action: string) => {
@@ -264,7 +264,7 @@ export const AiWaiter = () => {
                 setMessages(prev => [...prev, {
                     id: uid(),
                     author: MessageAuthor.SYSTEM,
-                    text: ' •  Please type your dietary question in the message box below first, then tap "Dietary Question".',
+                    text: '√∞ ¬•  Please type your dietary question in the message box below first, then tap "Dietary Question".',
                 }]);
                 return;
             }
@@ -277,7 +277,7 @@ export const AiWaiter = () => {
             setMessages(prev => [...prev, {
                 id: uid(),
                 author: MessageAuthor.SYSTEM,
-                text: ` •  Your question has been sent to the kitchen: "${question}"`,
+                text: `√∞ ¬•  Your question has been sent to the kitchen: "${question}"`,
             }]);
             setInput('');
             return;
@@ -330,7 +330,7 @@ export const AiWaiter = () => {
         setMessages(prev => [...prev, {
             id: uid(),
             author: MessageAuthor.SYSTEM,
-            text: `  ΩÔ∏è Your order has been sent to ${session.restaurantName}! The kitchen will prepare your items shortly.`,
+            text: `√∞  ¬ΩÔ∏è Your order has been sent to ${session.restaurantName}! The kitchen will prepare your items shortly.`,
         }]);
 
         setTimeout(() => {
@@ -465,7 +465,7 @@ export const AiWaiter = () => {
                             <div className="p-6 space-y-3 border-t border-cream-200">
                                 <div className="flex items-center justify-center gap-2 text-sm text-green-600 font-medium py-2">
                                     <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                    Scanning automatically ‚ î point camera at QR code
+                                    Scanning automatically √¢ ‚Äù point camera at QR code
                                 </div>
                                 <button
                                     onClick={handleManualConnect}
@@ -618,7 +618,7 @@ export const AiWaiter = () => {
                                                     <button
                                                         onClick={() => adjustCart(item.id, -1)}
                                                         className="w-8 h-8 rounded-full bg-white border-2 border-stone-200 text-stone-600 font-bold text-lg hover:border-red-300 hover:text-red-500 transition-all flex items-center justify-center"
-                                                    >‚ í</button>
+                                                    >√¢ ‚Äô</button>
                                                     <span className="w-6 text-center font-bold text-stone-800 text-sm">{qty}</span>
                                                     <button
                                                         onClick={() => adjustCart(item.id, 1)}
@@ -637,7 +637,7 @@ export const AiWaiter = () => {
                             })}
                         </div>
 
-                        {/* Footer ‚ î cart summary + send button */}
+                        {/* Footer √¢ ‚Äù cart summary + send button */}
                         <div className="p-4 border-t border-cream-200 bg-white flex-shrink-0 space-y-3">
                             {cartCount > 0 && (
                                 <div className="flex items-center justify-between px-1">
@@ -736,12 +736,12 @@ export const AiWaiter = () => {
             {/* Quick Actions Bar - Scrollable Left to Right */}
             <div className="px-4 py-3 flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide border-t border-cream-200 bg-white overscroll-x-contain touch-pan-x">
                 {[
-                    { label: "Call Waiter", icon: "   Ô∏è" },
-                    { label: "Order Drinks", icon: "  ∑" },
-                    { label: "Request Bill", icon: " ßæ" },
-                    { label: "Dietary Question", icon: " • " },
+                    { label: "Call Waiter", icon: "√∞   Ô∏è" },
+                    { label: "Order Drinks", icon: "√∞  ¬∑" },
+                    { label: "Request Bill", icon: "√∞ ¬ß¬æ" },
+                    { label: "Dietary Question", icon: "√∞ ¬• " },
                     { label: "See Specials", icon: "‚≠ê" },
-                    { label: "Get Manager", icon: "   " },
+                    { label: "Get Manager", icon: "√∞   " },
                 ].map(({ label, icon }) => (
                     <button 
                         key={label}

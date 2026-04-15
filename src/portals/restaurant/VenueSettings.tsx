@@ -107,7 +107,7 @@ export default function RestoVenueSettings({ restaurant }: { restaurant: DemoRes
                   type="text"
                   value={cuisine}
                   onChange={e => setCuisine(e.target.value)}
-                  placeholder="e.g. Modern American, Bistro‚ ¶"
+                  placeholder="e.g. Modern American, Bistro√¢ ¬¶"
                   className="w-full p-4 bg-cream-50/50 rounded-2xl text-stone-800 outline-none font-bold border border-transparent focus:border-cream-200/20 focus:bg-white transition-all shadow-sm"
                 />
               </div>
@@ -141,7 +141,7 @@ export default function RestoVenueSettings({ restaurant }: { restaurant: DemoRes
               <textarea
                 value={bio}
                 onChange={e => setBio(e.target.value)}
-                placeholder="Tell guests your story‚ ¶"
+                placeholder="Tell guests your story√¢ ¬¶"
                 className="w-full p-4 bg-cream-50/50 rounded-2xl text-stone-800 outline-none font-medium border border-transparent focus:border-cream-200/20 focus:bg-white transition-all shadow-sm min-h-[120px] resize-none"
               />
             </div>
@@ -179,7 +179,7 @@ export default function RestoVenueSettings({ restaurant }: { restaurant: DemoRes
                       onChange={e => setOpen(i, e.target.value)}
                       className="p-2.5 bg-white border border-cream-200 rounded-xl text-xs font-bold text-center w-28 shadow-sm focus:ring-1 focus:ring-brand-400 outline-none"
                     />
-                    <span className="text-stone-400 font-bold">‚ ì</span>
+                    <span className="text-stone-400 font-bold">√¢ ‚Äú</span>
                     <input
                       type="text"
                       value={hours[i].close}
@@ -234,7 +234,7 @@ export default function RestoVenueSettings({ restaurant }: { restaurant: DemoRes
             <Icon name="info" size={16} className="text-amber-600 flex-shrink-0 mt-0.5" />
             <div className="text-xs text-amber-800">
               <p className="font-semibold">How it works</p>
-              <p className="mt-0.5">Staff members go to the restaurant login page, select <strong>Service Desk</strong>, choose <strong>Join with Code</strong>, and enter this code to link their account to your restaurant. They will only see order management ‚ î not financials or settings.</p>
+              <p className="mt-0.5">Staff members go to the restaurant login page, select <strong>Service Desk</strong>, choose <strong>Join with Code</strong>, and enter this code to link their account to your restaurant. They will only see order management √¢ ‚Äù not financials or settings.</p>
             </div>
           </div>
         </div>

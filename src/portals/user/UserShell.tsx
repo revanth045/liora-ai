@@ -49,7 +49,7 @@ function SimplePageWrapper({ children }: { children: React.ReactNode }) {
     );
 }
 
-// Full-page wrapper (no padding ‚ î for immersive views)
+// Full-page wrapper (no padding √¢ ‚Äù for immersive views)
 function FullPageWrapper({ children }: { children: React.ReactNode }) {
     return (
         <div className="flex-1 overflow-y-auto custom-scrollbar">

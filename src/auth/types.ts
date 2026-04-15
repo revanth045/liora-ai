@@ -19,9 +19,9 @@ export interface AuthAdapter {
   /** Register a staff member using an owner-generated staff access code. */
   signUpStaff?(email: string, password: string, name: string, staffCode: string): Promise<void>;
   signInFromSwitcher?(email: string): Promise<void>;
-  /** Synchronous session read ‚ î only available on DemoAuth. */
+  /** Synchronous session read √¢ ‚Äù only available on DemoAuth. */
   getSessionSync?(): Session;
-  /** Sign in with Google OAuth ‚ î only available when Supabase is configured. */
+  /** Sign in with Google OAuth √¢ ‚Äù only available when Supabase is configured. */
   signInWithGoogle?(): Promise<void>;
   /** Send a password-reset email to the given address. */
   resetPassword?(email: string): Promise<void>;

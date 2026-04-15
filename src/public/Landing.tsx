@@ -69,13 +69,13 @@ export default function Landing({ onGoToLogin, onGoToRestaurants, onGetStarted, 
               Your charming <em className="italic">dining companion</em>, for every occasion
             </h2>
             <p className="text-stone-500 text-sm leading-relaxed mb-4">
-              Whether you seek a quiet corner for a meaningful meal, the perfect first-date restaurant, or a curated wellness plan ‚ î Liora brings the artistry of a Michelin sommelier to your pocket.
+              Whether you seek a quiet corner for a meaningful meal, the perfect first-date restaurant, or a curated wellness plan √¢ ‚Äù Liora brings the artistry of a Michelin sommelier to your pocket.
             </p>
             <p className="text-stone-500 text-sm leading-relaxed mb-8">
               Powered by Google Gemini AI, Liora learns your palate, understands your lifestyle, and becomes smarter with every conversation.
             </p>
             <div className="border-t border-cream-200 pt-5">
-              <p className="font-display text-xl italic text-stone-600">‚ î Liora, your AI concierge</p>
+              <p className="font-display text-xl italic text-stone-600">√¢ ‚Äù Liora, your AI concierge</p>
             </div>
             <button onClick={onGetStarted} className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-stone-700 hover:text-brand-400 transition-colors uppercase tracking-wider">
               <span>Discover Liora</span>
@@ -96,7 +96,7 @@ export default function Landing({ onGoToLogin, onGoToRestaurants, onGetStarted, 
             Every meal is your own<br /><em className="italic">personal sanctuary</em>
           </h2>
           <p className="text-cream-200/70 text-sm leading-relaxed max-w-sm mb-8">
-            Liora curates dining moments that fit your mood, health goals, and the occasion ‚ î because every meal deserves intention.
+            Liora curates dining moments that fit your mood, health goals, and the occasion √¢ ‚Äù because every meal deserves intention.
           </p>
           <button onClick={onGetStarted} className="inline-flex items-center gap-3 text-white font-medium text-sm hover:text-brand-300 transition-colors uppercase tracking-wider">
             <span className="btn-circle-gold !w-9 !h-9">
@@ -124,7 +124,7 @@ export default function Landing({ onGoToLogin, onGoToRestaurants, onGetStarted, 
           <div className="grid md:grid-cols-2 gap-8">
             {[
               { img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80', label: 'Food Discovery', price: 'AI-Powered', tag: null, desc: 'Find the perfect restaurant based on mood, diet, and occasion with real-time AI recommendations.' },
-              { img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80', label: 'Date Night Planner', price: 'Personalized', tag: 'Popular', desc: 'Complete date night packages ‚ î venue, conversation starters, and after-dinner plans curated just for you.' },
+              { img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80', label: 'Date Night Planner', price: 'Personalized', tag: 'Popular', desc: 'Complete date night packages √¢ ‚Äù venue, conversation starters, and after-dinner plans curated just for you.' },
               { img: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80', label: 'Wellness & Nutrition', price: 'Science-Based', tag: null, desc: 'Track calories, scan meals, and get personalized nutrition plans that align food with your health goals.' },
               { img: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80', label: 'AI Chef Studio', price: 'Premium', tag: 'New', desc: 'Get restaurant-quality recipes crafted around ingredients you have at home, with step-by-step guidance.' },
             ].map((f) => (
@@ -161,7 +161,7 @@ export default function Landing({ onGoToLogin, onGoToRestaurants, onGetStarted, 
               <p className="font-semibold text-stone-800 text-sm">Sarah Chen</p>
               <p className="text-xs text-stone-400 flex items-center justify-center gap-1 mt-0.5">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="#C8891A"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                Trustpilot ‚ î 5 stars
+                Trustpilot √¢ ‚Äù 5 stars
               </p>
             </div>
             <button className="w-8 h-8 rounded-full border border-cream-300 flex items-center justify-center text-stone-400 hover:border-brand-400 hover:text-brand-400 transition-colors">

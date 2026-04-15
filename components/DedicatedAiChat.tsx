@@ -101,11 +101,11 @@ export const DedicatedAiChat: React.FC = () => {
             <div className="flex-shrink-0 bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 min-w-0">
                     <span className="flex-shrink-0 px-2 py-0.5 rounded-full bg-amber-200 text-amber-800 text-[10px] font-bold uppercase tracking-widest">Testing Phase</span>
-                    <p className="text-xs text-amber-800 truncate">We&apos;re live and improving ‚ î your feedback shapes what comes next.</p>
+                    <p className="text-xs text-amber-800 truncate">We&apos;re live and improving √¢ ‚Äù your feedback shapes what comes next.</p>
                 </div>
                 <button
                     onClick={() => {
-                        setInput('  ° Suggestion: ');
+                        setInput('√∞  ¬° Suggestion: ');
                         // focus input after a tick
                         setTimeout(() => {
                             const inp = document.querySelector<HTMLInputElement>('input[placeholder*="Message Liora"]');
@@ -127,14 +127,14 @@ export const DedicatedAiChat: React.FC = () => {
                         <div className="p-6 bg-white rounded-3xl border border-cream-200 shadow-sm">
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest mb-3">
                                 <Icon name="sparkles" className="w-3 h-3" />
-                                Testing Phase ‚ î In Active Development
+                                Testing Phase √¢ ‚Äù In Active Development
                             </div>
                             <h3 className="font-lora text-xl font-bold text-stone-800 mb-2">Ask me anything...</h3>
                             <p className="text-sm text-stone-400 mb-1 leading-relaxed">
                                 Discuss restaurant picks, plan your weekend, or dive into nutrition science with me in real-time.
                             </p>
                             <p className="text-xs text-stone-400 mb-5 leading-relaxed">
-                                We're continuously improving ‚ î if something feels off or you have ideas, tap <strong className="text-amber-600">Suggest</strong> above and tell us!
+                                We're continuously improving √¢ ‚Äù if something feels off or you have ideas, tap <strong className="text-amber-600">Suggest</strong> above and tell us!
                             </p>
                             <div className="grid grid-cols-1 gap-2">
                                 {[
@@ -142,13 +142,13 @@ export const DedicatedAiChat: React.FC = () => {
                                     "Suggest a 3-stop date night in Manhattan",
                                     "Explain the gut-brain connection",
                                     "Find me a luxury hotel with a great view",
-                                    "  ° Suggestion: I'd love a feature that‚ ¶"
+                                    "√∞  ¬° Suggestion: I'd love a feature that√¢ ¬¶"
                                 ].map((q, i) => (
                                     <button 
                                         key={i} 
                                         onClick={() => handleSendMessage(q)}
                                         className={`text-left p-3 text-xs border rounded-xl transition-colors ${
-                                            q.startsWith('  °')
+                                            q.startsWith('√∞  ¬°')
                                                 ? 'bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 font-medium'
                                                 : 'bg-cream-100/80 hover:bg-cream-50 border-cream-200/60 text-stone-400'
                                         }`}

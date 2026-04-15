@@ -50,13 +50,13 @@ export interface SessionData {
  */
 export const checkBackendHealth = async (): Promise<boolean> => {
   try {
-    console.log('ð  ¥ Checking backend health...');
+    console.log('Ã°  Â¥ Checking backend health...');
     const response = await fetch(`${API_BASE}/health`);
     const isHealthy = response.ok;
-    console.log(isHealthy ? 'â … Backend is healthy' : 'â Œ Backend is not responding');
+    console.log(isHealthy ? 'Ã¢ â€¦ Backend is healthy' : 'Ã¢ Å’ Backend is not responding');
     return isHealthy;
   } catch (error) {
-    console.error('â Œ Backend unreachable:', error);
+    console.error('Ã¢ Å’ Backend unreachable:', error);
     return false;
   }
 };
@@ -69,8 +69,8 @@ export const connectToTable = async (
   restaurantName: string
 ): Promise<TableSession> => {
   try {
-    console.log('ð    Connecting to table...', { tableNumber, restaurantName });
-    console.log('ð  ¡ API URL:', `${API_BASE}/connect`);
+    console.log('Ã°    Connecting to table...', { tableNumber, restaurantName });
+    console.log('Ã°  Â¡ API URL:', `${API_BASE}/connect`);
 
     const response = await fetch(`${API_BASE}/connect`, {
       method: 'POST',
@@ -78,20 +78,20 @@ export const connectToTable = async (
       body: JSON.stringify({ tableNumber, restaurantName })
     });
 
-    console.log('ð    Response status:', response.status);
+    console.log('Ã°    Response status:', response.status);
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('â Œ API Error:', error);
+      console.error('Ã¢ Å’ API Error:', error);
       throw new Error(error.error || `API Error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('â … Connection successful:', data);
+    console.log('Ã¢ â€¦ Connection successful:', data);
     return data;
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-    console.error('â Œ Connection failed:', errorMsg);
+    console.error('Ã¢ Å’ Connection failed:', errorMsg);
     throw new Error(`Failed to connect to table: ${errorMsg}`);
   }
 };

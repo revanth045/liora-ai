@@ -697,11 +697,11 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     setAttendance(prev => [...prev.filter(a => !(a.staffId === member.id && a.date === attendanceDate)), updated]);
                   };
                   const workedHours = () => {
-                    if (!rec?.clockIn || !rec?.clockOut) return 'â ”';
+                    if (!rec?.clockIn || !rec?.clockOut) return 'Ã¢ â€';
                     const [ih, im] = rec.clockIn.split(':').map(Number);
                     const [oh, om] = rec.clockOut.split(':').map(Number);
                     const mins = (oh * 60 + om) - (ih * 60 + im);
-                    if (mins <= 0) return 'â ”';
+                    if (mins <= 0) return 'Ã¢ â€';
                     const h = Math.floor(mins / 60);
                     const m = mins % 60;
                     return m > 0 ? `${h}h ${m}m` : `${h}h`;
@@ -776,7 +776,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     <tbody>
                       {staff.filter(m => m.status === 'active').map(member => {
                         const statusEmoji: Record<AttendanceStatus, string> = {
-                          present: 'ğ  ¢', late: 'ğ  ¡', half_day: 'ğ  µ', absent: 'ğ  ´',
+                          present: 'Ã°  Â¢', late: 'Ã°  Â¡', half_day: 'Ã°  Âµ', absent: 'Ã°  Â´',
                         };
                         const days = Array.from({length:7},(_,i)=>{
                           const d = new Date();
@@ -805,7 +805,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     </tbody>
                   </table>
                   <div className="flex gap-4 mt-4 text-[10px] text-stone-400 font-medium">
-                    <span>ğ  ¢ Present</span><span>ğ  ¡ Late</span><span>ğ  µ Half Day</span><span>ğ  ´ Absent</span><span>â¬œ No Record</span>
+                    <span>Ã°  Â¢ Present</span><span>Ã°  Â¡ Late</span><span>Ã°  Âµ Half Day</span><span>Ã°  Â´ Absent</span><span>â¬œ No Record</span>
                   </div>
                 </div>
               </div>

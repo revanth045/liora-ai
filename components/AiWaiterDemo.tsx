@@ -26,9 +26,9 @@ export const AiWaiterDemo = () => {
     setLoading(true);
     try {
       await connectTableViaQR(tableNumber, selectedRestaurant);
-      alert(`â … Connected to Table ${tableNumber} at ${selectedRestaurant}`);
+      alert(`Ã¢ â€¦ Connected to Table ${tableNumber} at ${selectedRestaurant}`);
     } catch (error) {
-      alert(`â Œ Connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      alert(`Ã¢ Å’ Connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ export const AiWaiterDemo = () => {
 
   return (
     <div className="p-8 bg-cream-50 rounded-3xl border border-cream-200 max-w-2xl mx-auto space-y-6">
-      <h2 className="text-2xl font-lora font-bold text-stone-800">ð §ª AI Waiter Demo</h2>
+      <h2 className="text-2xl font-lora font-bold text-stone-800">Ã° Â§Âª AI Waiter Demo</h2>
 
       {/* Quick Connect Section */}
       <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4">
@@ -77,20 +77,20 @@ export const AiWaiterDemo = () => {
             disabled={loading}
             className="w-full py-3 bg-brand-400 text-white rounded-xl font-bold hover:bg-cream-200 disabled:opacity-50 transition-all"
           >
-            {loading ? 'ð    Connecting...' : 'â … Connect to Table'}
+            {loading ? 'Ã°    Connecting...' : 'Ã¢ â€¦ Connect to Table'}
           </button>
         </div>
       </div>
 
       {/* QR Code Generator Section */}
       <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4">
-        <h3 className="font-bold text-lg text-stone-800">ð  ± Generate QR Codes</h3>
+        <h3 className="font-bold text-lg text-stone-800">Ã°  Â± Generate QR Codes</h3>
 
         <button
           onClick={() => setShowQRGenerator(!showQRGenerator)}
           className="w-full py-3 bg-cream-100 text-stone-800 rounded-xl font-bold border border-cream-200 hover:bg-cream-200 transition-all"
         >
-          {showQRGenerator ? 'â Œ Hide QR Codes' : 'ð  ² Show QR Codes'}
+          {showQRGenerator ? 'Ã¢ Å’ Hide QR Codes' : 'Ã°  Â² Show QR Codes'}
         </button>
 
         {showQRGenerator && (
@@ -119,7 +119,7 @@ export const AiWaiterDemo = () => {
 
       {/* API Testing Section */}
       <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4">
-        <h3 className="font-bold text-lg text-stone-800">ð  § API Testing</h3>
+        <h3 className="font-bold text-lg text-stone-800">Ã°  Â§ API Testing</h3>
 
         <div className="space-y-2 text-xs font-mono bg-stone-900 text-green-400 p-4 rounded-xl overflow-auto max-h-40">
           <p># Test Connect Endpoint</p>
@@ -139,46 +139,46 @@ export const AiWaiterDemo = () => {
 
       {/* Documentation Section */}
       <div className="bg-blue-50 p-6 rounded-2xl border border-blue-200 space-y-3">
-        <h3 className="font-bold text-lg text-blue-900">ð    Documentation</h3>
+        <h3 className="font-bold text-lg text-blue-900">Ã°    Documentation</h3>
         <ul className="space-y-2 text-sm text-blue-800">
-          <li>ð    <strong>Full Docs:</strong> AI_WAITER_DOCS.md</li>
-          <li>ð    <strong>Setup Guide:</strong> AI_WAITER_SETUP.md</li>
-          <li>ð  ¾ <strong>Backend Routes:</strong> server/routes/aiWaiter.js</li>
-          <li>ð  ¨ <strong>Component:</strong> components/AiWaiter.tsx</li>
-          <li>ð    <strong>Service:</strong> services/aiWaiterService.ts</li>
+          <li>Ã°    <strong>Full Docs:</strong> AI_WAITER_DOCS.md</li>
+          <li>Ã°    <strong>Setup Guide:</strong> AI_WAITER_SETUP.md</li>
+          <li>Ã°  Â¾ <strong>Backend Routes:</strong> server/routes/aiWaiter.js</li>
+          <li>Ã°  Â¨ <strong>Component:</strong> components/AiWaiter.tsx</li>
+          <li>Ã°    <strong>Service:</strong> services/aiWaiterService.ts</li>
         </ul>
       </div>
 
       {/* Feature Checklist */}
       <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-3">
-        <h3 className="font-bold text-lg text-stone-800">â ¨ Features Ready</h3>
+        <h3 className="font-bold text-lg text-stone-800">Ã¢ Â¨ Features Ready</h3>
         <div className="space-y-2 text-sm">
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>QR Code Scanning (camera-based)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>Manual Table Entry (fallback)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>AI Chat with Waiter</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>Table Session Management</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>Assistance Requests (waiter, bill, etc.)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>Order Placement API</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">Ã¢ â€¦</span>
             <span>Session Data Tracking</span>
           </div>
         </div>

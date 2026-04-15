@@ -6,7 +6,7 @@ import {
   type DemoInventoryItem, type DemoRestaurant, type InventoryCategory, type InventoryUnit,
 } from '../../demoDb';
 
-// ‚ Ä‚ Ä‚ Ä Constants ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Constants √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 const CATEGORIES: InventoryCategory[] = [
   'Proteins', 'Produce', 'Dairy', 'Bakery', 'Pantry',
   'Beverages', 'Alcohol', 'Frozen', 'Spices', 'Other',
@@ -15,7 +15,7 @@ const UNITS: InventoryUnit[] = [
   'units', 'kg', 'g', 'litres', 'ml', 'bottles', 'cans', 'bags', 'boxes', 'portions',
 ];
 
-// ‚ Ä‚ Ä‚ Ä Status helper ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Status helper √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 function deriveStatus(qty: number, reorder: number): 'out' | 'critical' | 'low' | 'good' {
   if (qty === 0) return 'out';
   if (qty <= reorder * 0.5) return 'critical';
@@ -23,7 +23,7 @@ function deriveStatus(qty: number, reorder: number): 'out' | 'critical' | 'low' 
   return 'good';
 }
 
-// ‚ Ä‚ Ä‚ Ä Types ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Types √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 type ItemForm = {
   name: string;
   category: InventoryCategory;
@@ -39,7 +39,7 @@ const EMPTY_FORM: ItemForm = {
   reorderPoint: '10', costPerUnit: '', supplier: '', notes: '',
 };
 
-// ‚ Ä‚ Ä‚ Ä Input helpers ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Input helpers √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 const FieldWrap = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="space-y-1.5">
     <label className="text-[11px] font-bold text-stone-400 uppercase tracking-widest">{label}</label>
@@ -48,7 +48,7 @@ const FieldWrap = ({ label, children }: { label: string; children: React.ReactNo
 );
 const inputCls = "w-full px-4 py-2.5 rounded-xl border border-cream-200 bg-cream-50 text-stone-800 text-sm focus:outline-none focus:border-forest-900/30 focus:bg-white transition-colors";
 
-// ‚ Ä‚ Ä‚ Ä Item Modal ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Item Modal √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
   title: string; form: ItemForm; onChange: (f: ItemForm) => void;
   onSave: () => void; onClose: () => void; saving: boolean;
@@ -115,7 +115,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
           </button>
           <button onClick={onSave} disabled={saving}
             className="flex-1 px-4 py-2.5 rounded-xl bg-forest-900 text-white text-sm font-bold hover:bg-forest-900/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
-            {saving ? <><Icon name="autorenew" size={16} /> Saving‚ ¶</> : <><Icon name="check" size={16} /> Save Item</>}
+            {saving ? <><Icon name="autorenew" size={16} /> Saving√¢ ¬¶</> : <><Icon name="check" size={16} /> Save Item</>}
           </button>
         </div>
       </div>
@@ -123,7 +123,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
   );
 }
 
-// ‚ Ä‚ Ä‚ Ä Delete Confirm ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Delete Confirm √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 function DeleteConfirm({ name, onConfirm, onClose }: { name: string; onConfirm: () => void; onClose: () => void }) {
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
@@ -144,7 +144,7 @@ function DeleteConfirm({ name, onConfirm, onClose }: { name: string; onConfirm: 
   );
 }
 
-// ‚ Ä‚ Ä‚ Ä Main Component ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+// √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Main Component √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
 export default function RestoInventory({ restaurant }: { restaurant: DemoRestaurant }) {
   const [items, setItems] = useState<DemoInventoryItem[]>([]);
   const [search, setSearch] = useState('');
@@ -161,7 +161,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
   const load = () => setItems(db_listInventory(restaurant.id));
   useEffect(() => { load(); }, [restaurant.id]);
 
-  // ‚ Ä‚ Ä‚ Ä Derived stats ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Derived stats √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const alerts = items.filter(i => {
     const s = deriveStatus(i.quantity, i.reorderPoint);
     return s === 'low' || s === 'critical' || s === 'out';
@@ -171,7 +171,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     return sum + (i.costPerUnit != null ? i.quantity * i.costPerUnit : 0);
   }, 0);
 
-  // ‚ Ä‚ Ä‚ Ä Filter + search ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Filter + search √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const visible = items.filter(i => {
     const s = deriveStatus(i.quantity, i.reorderPoint);
     if (filterStatus !== 'all' && s !== filterStatus) return false;
@@ -180,14 +180,14 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     return true;
   });
 
-  // ‚ Ä‚ Ä‚ Ä Open Add Modal ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Open Add Modal √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const openAdd = () => {
     setEditTarget(null);
     setForm(EMPTY_FORM);
     setShowModal(true);
   };
 
-  // ‚ Ä‚ Ä‚ Ä Open Edit Modal ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Open Edit Modal √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const openEdit = (item: DemoInventoryItem) => {
     setEditTarget(item);
     setForm({
@@ -203,7 +203,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     setShowModal(true);
   };
 
-  // ‚ Ä‚ Ä‚ Ä Save ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Save √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const handleSave = () => {
     if (!form.name.trim()) return;
     const qty = parseFloat(form.quantity);
@@ -246,14 +246,14 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     load();
   };
 
-  // ‚ Ä‚ Ä‚ Ä Quick qty adjust ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Quick qty adjust √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const adjustQty = (item: DemoInventoryItem, delta: number) => {
     const next = Math.max(0, item.quantity + delta);
     db_updateInventoryItem({ ...item, quantity: next, updatedAt: Date.now() });
     load();
   };
 
-  // ‚ Ä‚ Ä‚ Ä Delete ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Delete √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const handleDelete = () => {
     if (!deleteTarget) return;
     db_deleteInventoryItem(deleteTarget.id);
@@ -261,7 +261,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     load();
   };
 
-  // ‚ Ä‚ Ä‚ Ä Status badge ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Status badge √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   const statusBadge = (status: ReturnType<typeof deriveStatus>) => {
     const map = {
       out: 'bg-red-100 text-red-700 border-red-200',
@@ -276,7 +276,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     );
   };
 
-  // ‚ Ä‚ Ä‚ Ä Progress bar ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä 
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Progress bar √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ 
   const progressBar = (qty: number, reorder: number, status: ReturnType<typeof deriveStatus>) => {
     const max = Math.max(reorder * 2, qty);
     const pct = max > 0 ? Math.min((qty / max) * 100, 100) : 0;
@@ -288,7 +288,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     );
   };
 
-  // ‚ Ä‚ Ä‚ Ä Render ‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä‚ Ä
+  // √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨ Render √¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨√¢ ‚Ç¨
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-page-slide pb-20">
 
@@ -323,7 +323,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
         <div className="p-4 bg-white rounded-xl border border-cream-200 shadow-sm">
           <div className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Est. Value</div>
           <div className="text-2xl font-lora font-bold text-stone-800">
-            {estValue > 0 ? `$${estValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '‚ î'}
+            {estValue > 0 ? `$${estValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '√¢ ‚Äù'}
           </div>
         </div>
         <button
@@ -431,7 +431,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
             {/* Search */}
             <div className="relative flex-1 sm:w-52">
               <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-                placeholder="Search items‚ ¶"
+                placeholder="Search items√¢ ¬¶"
                 className="w-full pl-8 pr-4 py-2 bg-white border border-cream-200 rounded-xl text-xs outline-none focus:ring-1 focus:ring-forest-900/20 shadow-sm" />
               <Icon name="search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
             </div>
@@ -482,7 +482,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
                           {/* Quick adjust */}
                           <button onClick={() => adjustQty(item, -1)}
                             className="w-6 h-6 rounded-full border border-cream-200 flex items-center justify-center text-stone-400 hover:text-stone-700 hover:border-stone-300 transition-colors text-sm font-bold flex-shrink-0">
-                            ‚ í
+                            √¢ ‚Äô
                           </button>
                           <div className="flex flex-col gap-1 min-w-0">
                             <span className="text-xs font-bold text-stone-800">{item.quantity} {item.unit}</span>

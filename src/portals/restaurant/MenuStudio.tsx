@@ -6,7 +6,7 @@ import {
   type DemoMenuItem, type DemoRestaurant,
 } from '../../demoDb';
 
-// â €â €â € Types â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬ Types Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬
 type ItemForm = {
   name: string;
   description: string;
@@ -26,14 +26,14 @@ const SUGGESTED_CATEGORIES = [
   'Desserts', 'Beverages', 'Cocktails', 'Wine', 'Non-Alcoholic',
 ];
 
-// â €â €â € Helpers â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬ Helpers Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬
 function fmtPrice(cents: number) { return `$${(cents / 100).toFixed(2)}`; }
 function parseCents(val: string): number | null {
   const n = parseFloat(val.replace(/[^0-9.]/g, ''));
   return isNaN(n) || n < 0 ? null : Math.round(n * 100);
 }
 
-// â €â €â € Modal Input helpers â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬ Modal Input helpers Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬
 const FieldWrap = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="space-y-1.5">
     <label className="text-[11px] font-bold text-stone-400 uppercase tracking-widest">{label}</label>
@@ -42,7 +42,7 @@ const FieldWrap = ({ label, children }: { label: string; children: React.ReactNo
 );
 const inputCls = "w-full px-4 py-2.5 rounded-xl border border-cream-200 bg-cream-50 text-stone-800 text-sm focus:outline-none focus:border-forest-900/30 focus:bg-white transition-colors";
 
-// â €â €â € Item Form Modal â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬ Item Form Modal Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬
 function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
   title: string; form: ItemForm; onChange: (f: ItemForm) => void;
   onSave: () => void; onClose: () => void; saving: boolean;
@@ -66,7 +66,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
           </FieldWrap>
           <FieldWrap label="Description">
             <textarea value={form.description} onChange={e => onChange({ ...form, description: e.target.value })}
-              rows={3} placeholder="Short description of the dishâ ¦"
+              rows={3} placeholder="Short description of the dishÃ¢ Â¦"
               className="w-full px-4 py-2.5 rounded-xl border border-cream-200 bg-cream-50 text-stone-800 text-sm focus:outline-none focus:border-forest-900/30 focus:bg-white transition-colors resize-none" />
           </FieldWrap>
           <div className="grid grid-cols-2 gap-4">
@@ -77,7 +77,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
             <FieldWrap label="Category">
               <>
                 <input list="cat-list" value={form.category} onChange={e => onChange({ ...form, category: e.target.value })}
-                  placeholder="Select or typeâ ¦" className={inputCls} />
+                  placeholder="Select or typeÃ¢ Â¦" className={inputCls} />
                 <datalist id="cat-list">
                   {SUGGESTED_CATEGORIES.map(c => <option key={c} value={c} />)}
                 </datalist>
@@ -105,7 +105,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
           </button>
           <button onClick={onSave} disabled={saving || !form.name.trim() || !form.priceCents.trim()}
             className="px-6 py-2.5 rounded-xl bg-forest-900 text-white text-sm font-bold disabled:opacity-50 hover:bg-forest-900/90 transition-colors flex items-center gap-2">
-            {saving ? <><Icon name="refresh" size={14} className="animate-spin" /> Savingâ ¦</> : 'Save Item'}
+            {saving ? <><Icon name="refresh" size={14} className="animate-spin" /> SavingÃ¢ Â¦</> : 'Save Item'}
           </button>
         </div>
       </div>
@@ -113,7 +113,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
   );
 }
 
-// â €â €â € Delete Confirm â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬ Delete Confirm Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬
 function DeleteConfirm({ name, onConfirm, onCancel }: { name: string; onConfirm: () => void; onCancel: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
@@ -132,7 +132,7 @@ function DeleteConfirm({ name, onConfirm, onCancel }: { name: string; onConfirm:
   );
 }
 
-// â €â €â € Main â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬ Main Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬Ã¢ â‚¬
 export default function RestoMenuStudio({ restaurant }: { restaurant: DemoRestaurant }) {
   const [items, setItems] = useState<DemoMenuItem[]>([]);
   const [search, setSearch] = useState('');
@@ -245,7 +245,7 @@ export default function RestoMenuStudio({ restaurant }: { restaurant: DemoRestau
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1">
           <Icon name="search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
-          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search itemsâ ¦"
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search itemsÃ¢ Â¦"
             className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-cream-200 bg-white text-sm focus:outline-none focus:border-forest-900/30 transition-colors" />
         </div>
         <select value={filterCat} onChange={e => setFilterCat(e.target.value)}
@@ -326,7 +326,7 @@ export default function RestoMenuStudio({ restaurant }: { restaurant: DemoRestau
       ))}
 
       {showAdd && <ItemModal title="Add Menu Item" form={form} onChange={setForm} onSave={handleSaveNew} onClose={() => setShowAdd(false)} saving={saving} />}
-      {editItem && <ItemModal title={`Edit â ” ${editItem.name}`} form={form} onChange={setForm} onSave={handleSaveEdit} onClose={() => setEditItem(null)} saving={saving} />}
+      {editItem && <ItemModal title={`Edit Ã¢ â€ ${editItem.name}`} form={form} onChange={setForm} onSave={handleSaveEdit} onClose={() => setEditItem(null)} saving={saving} />}
       {deleteItem && <DeleteConfirm name={deleteItem.name} onConfirm={handleDelete} onCancel={() => setDeleteItem(null)} />}
     </div>
   );

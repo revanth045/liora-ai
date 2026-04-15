@@ -44,9 +44,9 @@ const QUICK_ACTIONS: { img: string; label: string; view: View }[] = [
 ];
 
 const CUISINE_EMOJI: Record<string, string> = {
-    italian: '   ', japanese: '  ±', indian: '   ', mexican: '  Æ',
-    chinese: ' •°', american: '   ', thai: '   ', mediterranean: ' • ',
-    french: ' • ', korean: '  ≤', default: '  ΩÔ∏è',
+    italian: '√∞   ', japanese: '√∞  ¬±', indian: '√∞   ', mexican: '√∞  ¬Æ',
+    chinese: '√∞ ¬•¬°', american: '√∞   ', thai: '√∞   ', mediterranean: '√∞ ¬• ',
+    french: '√∞ ¬• ', korean: '√∞  ¬≤', default: '√∞  ¬ΩÔ∏è',
 };
 function cuisineEmoji(cuisine?: string) {
     if (!cuisine) return CUISINE_EMOJI.default;
@@ -89,22 +89,22 @@ export default function HomePage({ setView }: HomeProps) {
     return (
         <div className="min-h-screen bg-cream-50 pb-28">
 
-            {/* ‚ Ä‚ Ä Hero Banner ‚ Ä‚ Ä */}
+            {/* √¢ ‚Ç¨√¢ ‚Ç¨ Hero Banner √¢ ‚Ç¨√¢ ‚Ç¨ */}
             <div className="relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-900 px-6 pt-10 pb-14">
                 <div className="relative z-10 max-w-2xl">
                     <p className="text-amber-400 text-sm font-bold uppercase tracking-widest mb-1">{timeGreeting()}</p>
                     <h1 className="text-3xl font-lora font-bold text-white mb-2">
-                        Welcome back, {userName.split(' ')[0]}    
+                        Welcome back, {userName.split(' ')[0]} √∞   
                     </h1>
                     <p className="text-white/60 text-sm">What are you in the mood for today?</p>
 
-                    {/* Search bar ‚ í opens restaurants */}
+                    {/* Search bar √¢ ‚Äô opens restaurants */}
                     <button
                         onClick={() => setView('restaurants')}
                         className="mt-5 w-full flex items-center gap-3 bg-white/10 backdrop-blur border border-white/20 rounded-2xl px-4 py-3 text-white/60 text-sm hover:bg-white/20 transition-colors text-left"
                     >
                         <Icon name="search" size={18} />
-                        <span>Search restaurants, cuisines‚ ¶</span>
+                        <span>Search restaurants, cuisines√¢ ¬¶</span>
                     </button>
                 </div>
                 {/* Decorative circles */}
@@ -112,7 +112,7 @@ export default function HomePage({ setView }: HomeProps) {
                 <div className="absolute top-16 -right-4 w-24 h-24 bg-amber-400/10 rounded-full pointer-events-none" />
             </div>
 
-            {/* ‚ Ä‚ Ä Active Order Alert ‚ Ä‚ Ä */}
+            {/* √¢ ‚Ç¨√¢ ‚Ç¨ Active Order Alert √¢ ‚Ç¨√¢ ‚Ç¨ */}
             {activeOrders.length > 0 && (
                 <div className="mx-4 -mt-6 relative z-20">
                     <button
@@ -135,7 +135,7 @@ export default function HomePage({ setView }: HomeProps) {
 
             <div className="px-4 mt-6 space-y-8">
 
-                {/* ‚ Ä‚ Ä Quick Actions ‚ Ä‚ Ä */}
+                {/* √¢ ‚Ç¨√¢ ‚Ç¨ Quick Actions √¢ ‚Ç¨√¢ ‚Ç¨ */}
                 <section>
                     <h2 className="text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-3">Quick Access</h2>
                     <div className="grid grid-cols-4 gap-3">
@@ -154,7 +154,7 @@ export default function HomePage({ setView }: HomeProps) {
                     </div>
                 </section>
 
-                {/* ‚ Ä‚ Ä Restaurants Near You ‚ Ä‚ Ä */}
+                {/* √¢ ‚Ç¨√¢ ‚Ç¨ Restaurants Near You √¢ ‚Ç¨√¢ ‚Ç¨ */}
                 {restaurants.length > 0 && (
                     <section>
                         <div className="flex items-center justify-between mb-3">
@@ -192,7 +192,7 @@ export default function HomePage({ setView }: HomeProps) {
                     </section>
                 )}
 
-                {/* ‚ Ä‚ Ä Active Deals ‚ Ä‚ Ä */}
+                {/* √¢ ‚Ç¨√¢ ‚Ç¨ Active Deals √¢ ‚Ç¨√¢ ‚Ç¨ */}
                 {promos.length > 0 && (
                     <section>
                         <div className="flex items-center justify-between mb-3">
@@ -220,7 +220,7 @@ export default function HomePage({ setView }: HomeProps) {
                     </section>
                 )}
 
-                {/* ‚ Ä‚ Ä Recent Orders ‚ Ä‚ Ä */}
+                {/* √¢ ‚Ç¨√¢ ‚Ç¨ Recent Orders √¢ ‚Ç¨√¢ ‚Ç¨ */}
                 {myOrders.length > 0 && (
                     <section>
                         <div className="flex items-center justify-between mb-3">
@@ -238,7 +238,7 @@ export default function HomePage({ setView }: HomeProps) {
                                         className="w-full bg-white rounded-2xl border border-cream-200 shadow-sm px-4 py-3 flex items-center gap-4 hover:shadow-md transition-shadow text-left"
                                     >
                                         <div className="w-10 h-10 bg-cream-100 rounded-xl flex items-center justify-center text-xl shrink-0">
-                                              ΩÔ∏è
+                                            √∞  ¬ΩÔ∏è
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm font-bold text-stone-800 truncate">{rName}</p>
@@ -257,14 +257,14 @@ export default function HomePage({ setView }: HomeProps) {
                     </section>
                 )}
 
-                {/* ‚ Ä‚ Ä AI Assistant CTA (empty state / always shown) ‚ Ä‚ Ä */}
+                {/* √¢ ‚Ç¨√¢ ‚Ç¨ AI Assistant CTA (empty state / always shown) √¢ ‚Ç¨√¢ ‚Ç¨ */}
                 <section>
                     <button
                         onClick={() => setView('ai_chat')}
                         className="w-full bg-gradient-to-br from-violet-600 to-violet-800 rounded-3xl p-6 flex items-center gap-4 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
                     >
                         <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center shrink-0 text-3xl">
-                            ‚ ¶
+                            √¢ ¬¶
                         </div>
                         <div className="text-left">
                             <p className="text-white font-lora font-bold text-lg">Ask Liora anything</p>

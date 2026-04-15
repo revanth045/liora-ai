@@ -84,7 +84,7 @@ export const OnboardingWizard = ({ onComplete }: OnboardingProps) => {
           <div className="space-y-6 animate-page-slide">
             <div className="bg-white p-6 rounded-3xl rounded-tl-none shadow-sm border border-cream-200">
               <p className="text-stone-800 text-lg font-medium">
-                Nice to meet you, <span className="font-bold capitalize">{name}</span>. ð    <br/><br/>
+                Nice to meet you, <span className="font-bold capitalize">{name}</span>. Ã°    <br/><br/>
                 To personalize the Food Hub, do you have any dietary preferences I should know about?
               </p>
             </div>

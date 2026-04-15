@@ -9,7 +9,7 @@ import { Icon } from './Icon';
 import { Spinner } from './Spinner';
 import { uid } from '../utils/uid';
 
-// ├вт Эт м├вт Эт м├вт Эт м Dashboard content config ├вт Эт м├вт Эт м├вт Эт м
+// ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м Dashboard content config ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м
 const DASHBOARD = {
     hero: {
         greeting: () => {
@@ -30,7 +30,7 @@ const DASHBOARD = {
         { title: 'Fitness', subtitle: 'Track nutrition & goals', icon: 'fitness_center', route: 'fitness' as View, gradient: 'from-blue-500/20 to-cyan-500/20', iconColor: 'text-blue-400', comingSoon: true },
     ],
     spotlight: {
-        title: "Chef's Table т Ф AI Kitchen",
+        title: "Chef's Table ├в тАЭ AI Kitchen",
         subtitle: 'Get a recipe from ingredients you have at home',
         prompt: 'Help me create a recipe from what I have in my fridge',
         icon: 'soup_kitchen',
@@ -43,7 +43,7 @@ const DASHBOARD = {
     ],
 };
 
-// ├вт Эт м├вт Эт м├вт Эт м Render helpers ├вт Эт м├вт Эт м├вт Эт м
+// ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м Render helpers ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м
 
 function renderStars(rating: number) {
     return (
@@ -104,13 +104,13 @@ function renderMarkdown(text: string) {
             .replace(/\*(.+?)\*/g, '<em>$1</em>')
             .replace(/^### (.+)/g, '<h3 class="text-base font-semibold text-stone-800 mt-3 mb-1">$1</h3>')
             .replace(/^## (.+)/g, '<h2 class="text-lg font-bold text-stone-800 mt-3 mb-1">$1</h2>')
-            .replace(/^[-├вт м┬в] (.+)/g, '<li class="ml-4 list-disc text-stone-600">$1</li>')
+            .replace(/^[-├в├в ┬м┬в] (.+)/g, '<li class="ml-4 list-disc text-stone-600">$1</li>')
             .replace(/^\d+\. (.+)/g, '<li class="ml-4 list-decimal text-stone-600">$1</li>');
         return <div key={i} dangerouslySetInnerHTML={{ __html: processed || '<br/>' }} />;
     });
 }
 
-// ├вт Эт м├вт Эт м├вт Эт м Main Component ├вт Эт м├вт Эт м├вт Эт м
+// ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м Main Component ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м
 
 interface ChatInterfaceProps {
     favorites: ChatMessage[];
@@ -219,7 +219,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
     const showDashboard = history.length <= 1;
     const isFavorite = (id: string) => favorites.some(f => f.id === id);
 
-    // ├вт Эт м├вт Эт м├вт Эт м Dashboard View ├вт Эт м├вт Эт м├вт Эт м
+    // ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м Dashboard View ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м
     if (showDashboard) {
         return (
             <div className="flex flex-col h-full">
@@ -268,10 +268,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                     {/* Coming Soon Toast */}
                     <div className={`fixed bottom-24 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${comingSoonToast ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
                         <div className="bg-forest-900 text-cream-50 px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 min-w-[260px]">
-                            <span className="text-xl">т и</span>
+                            <span className="text-xl">├в ┬и</span>
                             <div>
                                 <p className="font-semibold text-sm">Something exciting is coming!</p>
-                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this т Ф stay tuned Ё  тАв</p>
+                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this ├в тАЭ stay tuned ├░  тАв</p>
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
         );
     }
 
-    // ├вт Эт м├вт Эт м├вт Эт м Chat View ├вт Эт м├вт Эт м├вт Эт м
+    // ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м Chat View ├в├в  ├в ┬м├в├в  ├в ┬м├в├в  ├в ┬м
     function renderInput() {
         return (
             <div className="flex-shrink-0 p-3 border-t border-cream-200">

@@ -99,7 +99,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
             {profiles.slice(0, 6).map((p, i) => (
               <div key={p.name} className="flex items-center gap-4 px-6 py-4 hover:bg-cream-50/30 transition-colors">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${i === 0 ? 'bg-amber-100 text-amber-600' : i === 1 ? 'bg-stone-200 text-stone-600' : i === 2 ? 'bg-orange-100 text-orange-600' : 'bg-cream-100 text-stone-500'}`}>
-                  {i < 3 ? [' • ',' • ',' • '][i] : i + 1}
+                  {i < 3 ? ['√∞ ¬• ','√∞ ¬• ','√∞ ¬• '][i] : i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-stone-800 text-sm truncate">{p.name}</p>
@@ -135,7 +135,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
                   <div
                     className="w-full rounded-t-sm bg-brand-400/20 group-hover:bg-brand-400/60 transition-all relative"
                     style={{ height: `${(count / maxPeak) * 100}%`, minHeight: count > 0 ? '4px' : '0' }}
-                    title={`${hour}:00 ‚ î ${count} orders`}
+                    title={`${hour}:00 √¢ ‚Äù ${count} orders`}
                   />
                   {(hour === 12 || hour === 18 || hour === 21 || hour === 14) && (
                     <span className="text-[9px] text-stone-400 font-bold">{hour < 12 ? `${hour}a` : hour === 12 ? '12p' : `${hour - 12}p`}</span>
@@ -201,7 +201,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
             </div>
           </div>
           <p className="text-white/80 text-sm leading-relaxed max-w-xl">
-            Your busiest window is <strong className="text-white">6‚ ì9 PM</strong>. Consider running a happy hour promotion from <strong className="text-white">4‚ ì6 PM</strong> to increase early-evening revenue by an estimated <strong className="text-white">18‚ ì25%</strong>. Your top customers tend to order {topDishes[0]?.name || 'signature items'} ‚ î prompt them to try the new menu items next visit.
+            Your busiest window is <strong className="text-white">6√¢ ‚Äú9 PM</strong>. Consider running a happy hour promotion from <strong className="text-white">4√¢ ‚Äú6 PM</strong> to increase early-evening revenue by an estimated <strong className="text-white">18√¢ ‚Äú25%</strong>. Your top customers tend to order {topDishes[0]?.name || 'signature items'} √¢ ‚Äù prompt them to try the new menu items next visit.
           </p>
         </div>
         <div className="absolute -bottom-6 -right-6 opacity-5 pointer-events-none">

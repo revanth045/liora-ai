@@ -29,11 +29,11 @@ function timeAgo(ts: number) {
 }
 
 const ALERT_CONFIG: Record<string, { icon: string; color: string; bg: string; border: string }> = {
-  'Call Waiter':      { icon: 'ğ   ï¸', color: 'text-amber-700',  bg: 'bg-amber-50',  border: 'border-amber-300' },
-  'Order Drinks':     { icon: 'ğ  ·', color: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-300' },
-  'Request Bill':     { icon: 'ğ §¾', color: 'text-blue-700',   bg: 'bg-blue-50',   border: 'border-blue-300' },
-  'Dietary Question': { icon: 'ğ ¥ ', color: 'text-green-700',  bg: 'bg-green-50',  border: 'border-green-300' },
-  'Get Manager':      { icon: 'ğ   ', color: 'text-red-700',    bg: 'bg-red-50',    border: 'border-red-300' },
+  'Call Waiter':      { icon: 'Ã°   ï¸', color: 'text-amber-700',  bg: 'bg-amber-50',  border: 'border-amber-300' },
+  'Order Drinks':     { icon: 'Ã°  Â·', color: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-300' },
+  'Request Bill':     { icon: 'Ã° Â§Â¾', color: 'text-blue-700',   bg: 'bg-blue-50',   border: 'border-blue-300' },
+  'Dietary Question': { icon: 'Ã° Â¥ ', color: 'text-green-700',  bg: 'bg-green-50',  border: 'border-green-300' },
+  'Get Manager':      { icon: 'Ã°   ', color: 'text-red-700',    bg: 'bg-red-50',    border: 'border-red-300' },
 };
 
 export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant }) {
@@ -123,7 +123,7 @@ export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant
           </div>
           <div className="divide-y divide-amber-100">
             {alerts.map(alert => {
-              const cfg = ALERT_CONFIG[alert.action] ?? { icon: 'ğ  £', color: 'text-stone-700', bg: 'bg-stone-50', border: 'border-stone-200' };
+              const cfg = ALERT_CONFIG[alert.action] ?? { icon: 'Ã°  Â£', color: 'text-stone-700', bg: 'bg-stone-50', border: 'border-stone-200' };
               return (
                 <div key={alert.id} className={`flex items-center gap-4 px-5 py-3.5 ${cfg.bg} hover:brightness-95 transition-all`}>
                   <span className="text-xl flex-shrink-0">{cfg.icon}</span>

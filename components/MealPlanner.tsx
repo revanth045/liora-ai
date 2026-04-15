@@ -22,12 +22,12 @@ interface MealPlanConstraints {
 }
 
 const moods = [
-    { name: 'Adventurous', emoji: '๐  บ๏ธ' },
-    { name: 'Cozy', emoji: 'โ •' },
-    { name: 'Healthy', emoji: '๐ ฅ ' },
-    { name: 'Celebratory', emoji: '๐   ' },
-    { name: 'Quick & Easy', emoji: 'โ ก' },
-    { name: 'Comfort', emoji: '๐  ฒ' },
+    { name: 'Adventurous', emoji: 'รฐ  ยบ๏ธ' },
+    { name: 'Cozy', emoji: 'รข โ€ข' },
+    { name: 'Healthy', emoji: 'รฐ ยฅ ' },
+    { name: 'Celebratory', emoji: 'รฐ   ' },
+    { name: 'Quick & Easy', emoji: 'รข ยก' },
+    { name: 'Comfort', emoji: 'รฐ  ยฒ' },
 ];
 
 export const MealPlanner: React.FC<MealPlannerProps> = ({ demoTrigger = 0, prefillData, onPrefillConsumed }) => {

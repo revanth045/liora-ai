@@ -13,7 +13,7 @@ async function fetchReviews(restaurantId: string): Promise<{ reviews: Review[]; 
     if (!r.ok) throw new Error('api error');
     return r.json();
   } catch {
-    // API unavailable â ” return empty state
+    // API unavailable Ã¢ â€ return empty state
     return {
       avgRating: 0, totalCount: 0,
       distribution: [{ star: 5, count: 0 }, { star: 4, count: 0 }, { star: 3, count: 0 }, { star: 2, count: 0 }, { star: 1, count: 0 }],
@@ -129,7 +129,7 @@ export default function RestoReviews({ restaurant }: { restaurant: DemoRestauran
                   />
                   <div className="flex gap-2">
                     <button onClick={() => handleReply(review.id)} disabled={submitting || !replyText.trim()} className="btn-gold text-xs px-4 py-2 font-semibold disabled:opacity-50">
-                      {submitting ? 'Postingâ ¦' : 'Post Reply'}
+                      {submitting ? 'PostingÃ¢ Â¦' : 'Post Reply'}
                     </button>
                     <button onClick={() => { setReplyId(null); setReplyText(''); }} className="text-xs px-4 py-2 text-stone-500 hover:text-stone-700 bg-cream-100 rounded-lg">Cancel</button>
                   </div>

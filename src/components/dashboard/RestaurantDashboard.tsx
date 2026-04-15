@@ -39,11 +39,11 @@ export default function RestaurantDashboard(){
   if (!session || session.user.role!=="restaurant_owner"){
     return <div className="p-6">Please login as a restaurant owner.</div>;
   }
-  if (!restaurant) return <div className="p-6">Setting up your restaurantâ ¦</div>;
+  if (!restaurant) return <div className="p-6">Setting up your restaurantÃ¢ Â¦</div>;
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h2 className="text-2xl font-semibold mb-4">{restaurant.name} â ” Dashboard</h2>
+      <h2 className="text-2xl font-semibold mb-4">{restaurant.name} Ã¢ â€ Dashboard</h2>
 
       <div className="flex gap-2 mb-4">
         {["profile","menu","reservations","analytics"].map(t=>(
@@ -115,7 +115,7 @@ function MenuTab({restaurantId, menu, onChange}:{restaurantId:string; menu:DemoM
           {(menu||[]).map(item=>(
             <div key={item.id} className="border rounded p-3 flex items-center justify-between">
               <div>
-                <div className="font-medium">{item.name} <span className="text-stone-400">â ” {dollars(item.priceCents)}</span></div>
+                <div className="font-medium">{item.name} <span className="text-stone-400">Ã¢ â€ {dollars(item.priceCents)}</span></div>
                 {item.description && <div className="text-sm text-stone-600">{item.description}</div>}
                 {(item.tags||[]).length>0 && <div className="text-xs text-stone-400 mt-1">#{item.tags?.join("  #")}</div>}
                 {!item.available && <div className="text-xs text-red-600 mt-1">Unavailable</div>}

@@ -106,7 +106,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
 
       {/* Info banner */}
       <div className="mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-start gap-3">
-        <span className="text-xl flex-shrink-0 mt-0.5">ğ  ¡</span>
+        <span className="text-xl flex-shrink-0 mt-0.5">Ã°  Â¡</span>
         <div className="text-sm text-amber-800">
           <p className="font-semibold">How table ordering works</p>
           <p className="mt-0.5 text-amber-700">
@@ -118,7 +118,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
       {/* Table grid */}
       {sorted.length === 0 ? (
         <div className="text-center py-20 border-2 border-dashed border-cream-200 rounded-2xl">
-          <p className="text-4xl mb-3">ğ ª </p>
+          <p className="text-4xl mb-3">Ã° Âª </p>
           <p className="text-stone-600 font-semibold">No tables yet</p>
           <p className="text-stone-400 text-sm mt-1 mb-4">Add your first table to get started.</p>
           <button
@@ -135,7 +135,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
               key={t.id}
               className="relative bg-white border border-cream-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all group"
             >
-              {/* Table number â ” large, prominent */}
+              {/* Table number Ã¢ â€ large, prominent */}
               <div className="text-center mb-3">
                 <div className="w-14 h-14 mx-auto rounded-2xl bg-stone-800 flex items-center justify-center shadow">
                   <span className="text-2xl font-bold text-white">{t.number}</span>
@@ -151,11 +151,11 @@ export default function RestoTables({ restaurant }: TablesProps) {
                   <p className="text-xs font-semibold text-stone-700 truncate">{t.label}</p>
                 )}
                 {t.seats && (
-                  <p className="text-[10px] text-stone-400">ğ ª  {t.seats} seats</p>
+                  <p className="text-[10px] text-stone-400">Ã° Âª  {t.seats} seats</p>
                 )}
               </div>
 
-              {/* Action buttons â ” visible on hover */}
+              {/* Action buttons Ã¢ â€ visible on hover */}
               <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => openEdit(t)}
@@ -181,7 +181,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
         </div>
       )}
 
-      {/* â €â € Add / Edit Modal â €â € */}
+      {/* Ã¢ â‚¬Ã¢ â‚¬ Add / Edit Modal Ã¢ â‚¬Ã¢ â‚¬ */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4">
           <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6">
@@ -257,13 +257,13 @@ export default function RestoTables({ restaurant }: TablesProps) {
         </div>
       )}
 
-      {/* â €â € Delete Confirm Modal â €â € */}
+      {/* Ã¢ â‚¬Ã¢ â‚¬ Delete Confirm Modal Ã¢ â‚¬Ã¢ â‚¬ */}
       {deleteConfirm && (() => {
         const t = tables.find(x => x.id === deleteConfirm);
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 text-center">
-              <p className="text-3xl mb-3">ğ   ï¸</p>
+              <p className="text-3xl mb-3">Ã°   ï¸</p>
               <h2 className="font-display text-xl font-semibold text-stone-800 mb-2">Delete Table {t?.number}?</h2>
               <p className="text-stone-500 text-sm mb-6">This cannot be undone. Existing orders with this table number are not affected.</p>
               <div className="flex gap-3">
