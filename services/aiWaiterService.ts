@@ -53,10 +53,10 @@ export const checkBackendHealth = async (): Promise<boolean> => {
     console.log('ð  ¥ Checking backend health...');
     const response = await fetch(`${API_BASE}/health`);
     const isHealthy = response.ok;
-    console.log(isHealthy ? 'â … Backend is healthy' : 'â Œ Backend is not responding');
+    console.log(isHealthy ? '✨ Backend is healthy' : '❌ Backend is not responding');
     return isHealthy;
   } catch (error) {
-    console.error('â Œ Backend unreachable:', error);
+    console.error('❌ Backend unreachable:', error);
     return false;
   }
 };
@@ -70,7 +70,7 @@ export const connectToTable = async (
 ): Promise<TableSession> => {
   try {
     console.log('ð    Connecting to table...', { tableNumber, restaurantName });
-    console.log('ð  ¡ API URL:', `${API_BASE}/connect`);
+    console.log('🟡 API URL:', `${API_BASE}/connect`);
 
     const response = await fetch(`${API_BASE}/connect`, {
       method: 'POST',
@@ -82,16 +82,16 @@ export const connectToTable = async (
 
     if (!response.ok) {
       const error = await response.json();
-      console.error('â Œ API Error:', error);
+      console.error('❌ API Error:', error);
       throw new Error(error.error || `API Error: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('â … Connection successful:', data);
+    console.log('✨ Connection successful:', data);
     return data;
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-    console.error('â Œ Connection failed:', errorMsg);
+    console.error('❌ Connection failed:', errorMsg);
     throw new Error(`Failed to connect to table: ${errorMsg}`);
   }
 };

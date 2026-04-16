@@ -44,9 +44,9 @@ const QUICK_ACTIONS: { img: string; label: string; view: View }[] = [
 ];
 
 const CUISINE_EMOJI: Record<string, string> = {
-    italian: '📈', japanese: 'ð  ±', indian: '📈', mexican: 'ð  ®',
-    chinese: 'ð ¥¡', american: '📈', thai: '📈', mediterranean: '🥗',
-    french: '🥗', korean: 'ð  ²', default: 'ð  ½️',
+    italian: '🍝', japanese: '🍣', indian: '🍝', mexican: '🌮',
+    chinese: '🥡', american: '🍝', thai: '🍝', mediterranean: '🥗',
+    french: '🥗', korean: '🍲', default: '🍽️',
 };
 function cuisineEmoji(cuisine?: string) {
     if (!cuisine) return CUISINE_EMOJI.default;
@@ -94,7 +94,7 @@ export default function HomePage({ setView }: HomeProps) {
                 <div className="relative z-10 max-w-2xl">
                     <p className="text-amber-400 text-sm font-bold uppercase tracking-widest mb-1">{timeGreeting()}</p>
                     <h1 className="text-3xl font-lora font-bold text-white mb-2">
-                        Welcome back, {userName.split(' ')[0]} 📈
+                        Welcome back, {userName.split(' ')[0]} 🍝
                     </h1>
                     <p className="text-white/60 text-sm">What are you in the mood for today?</p>
 
@@ -238,7 +238,7 @@ export default function HomePage({ setView }: HomeProps) {
                                         className="w-full bg-white rounded-2xl border border-cream-200 shadow-sm px-4 py-3 flex items-center gap-4 hover:shadow-md transition-shadow text-left"
                                     >
                                         <div className="w-10 h-10 bg-cream-100 rounded-xl flex items-center justify-center text-xl shrink-0">
-                                            ð  ½️
+                                            🍽️
                                         </div>
                                         <div className="flex-1 min-w-0">
                                             <p className="text-sm font-bold text-stone-800 truncate">{rName}</p>

@@ -26,9 +26,9 @@ export const AiWaiterDemo = () => {
     setLoading(true);
     try {
       await connectTableViaQR(tableNumber, selectedRestaurant);
-      alert(`â … Connected to Table ${tableNumber} at ${selectedRestaurant}`);
+      alert(`✨ Connected to Table ${tableNumber} at ${selectedRestaurant}`);
     } catch (error) {
-      alert(`â Œ Connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      alert(`❌ Connection failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setLoading(false);
     }
@@ -77,20 +77,20 @@ export const AiWaiterDemo = () => {
             disabled={loading}
             className="w-full py-3 bg-brand-400 text-white rounded-xl font-bold hover:bg-cream-200 disabled:opacity-50 transition-all"
           >
-            {loading ? 'ð    Connecting...' : 'â … Connect to Table'}
+            {loading ? 'ð    Connecting...' : '✨ Connect to Table'}
           </button>
         </div>
       </div>
 
       {/* QR Code Generator Section */}
       <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-4">
-        <h3 className="font-bold text-lg text-stone-800">ð  ± Generate QR Codes</h3>
+        <h3 className="font-bold text-lg text-stone-800">🍣 Generate QR Codes</h3>
 
         <button
           onClick={() => setShowQRGenerator(!showQRGenerator)}
           className="w-full py-3 bg-cream-100 text-stone-800 rounded-xl font-bold border border-cream-200 hover:bg-cream-200 transition-all"
         >
-          {showQRGenerator ? 'â Œ Hide QR Codes' : 'ð  ² Show QR Codes'}
+          {showQRGenerator ? '❌ Hide QR Codes' : '🍲 Show QR Codes'}
         </button>
 
         {showQRGenerator && (
@@ -151,34 +151,34 @@ export const AiWaiterDemo = () => {
 
       {/* Feature Checklist */}
       <div className="bg-white p-6 rounded-2xl border border-cream-200 space-y-3">
-        <h3 className="font-bold text-lg text-stone-800">â ¨ Features Ready</h3>
+        <h3 className="font-bold text-lg text-stone-800">✨ Features Ready</h3>
         <div className="space-y-2 text-sm">
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>QR Code Scanning (camera-based)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>Manual Table Entry (fallback)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>AI Chat with Waiter</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>Table Session Management</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>Assistance Requests (waiter, bill, etc.)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>Order Placement API</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-green-500">â …</span>
+            <span className="text-green-500">✨</span>
             <span>Session Data Tracking</span>
           </div>
         </div>

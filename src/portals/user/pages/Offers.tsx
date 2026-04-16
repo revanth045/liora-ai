@@ -144,7 +144,7 @@ export default function OffersPage() {
 
           {restaurantPromos.length === 0 ? (
             <div className="bg-white border border-cream-200 rounded-3xl px-6 py-10 text-center">
-              <p className="text-3xl mb-3">ð  ½️</p>
+              <p className="text-3xl mb-3">🍽️</p>
               <p className="font-semibold text-stone-600 text-sm">No restaurant offers right now</p>
               <p className="text-stone-400 text-xs mt-1">Check back soon — restaurants update their deals regularly.</p>
             </div>

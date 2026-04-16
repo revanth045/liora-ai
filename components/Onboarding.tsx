@@ -16,11 +16,11 @@ const ALLERGIES = [
 ];
 
 const LIFESTYLES = [
-  { id: '', label: 'No Preference', icon: 'ð  ½️' },
+  { id: '', label: 'No Preference', icon: '🍽️' },
   { id: 'vegetarian', label: 'Vegetarian', icon: 'ð ¥¦' },
-  { id: 'vegan', label: 'Vegan', icon: 'ð  ±' },
+  { id: 'vegan', label: 'Vegan', icon: '🍣' },
   { id: 'pescatarian', label: 'Pescatarian', icon: 'ð   ' },
-  { id: 'keto', label: 'Keto / Low-Carb', icon: 'ð ¥©' },
+  { id: 'keto', label: 'Keto / Low-Carb', icon: '🥩' },
   { id: 'paleo', label: 'Paleo', icon: 'ð ¦´' },
   { id: 'whole30', label: 'Whole30', icon: 'ð ¥ ' },
 ];
@@ -45,10 +45,10 @@ const SPICE_LABELS: Record<number, string> = { 1: 'Mild', 2: 'A little kick', 3:
 const BUDGET_LABELS: Record<string, string> = { '$': 'Budget-friendly', '$$': 'Mid-range', '$$$': 'Fine dining' };
 
 const LOADING_MESSAGES = [
-  'Curating your culinary identityâ ¦',
-  'Mapping your flavour profileâ ¦',
-  'Personalising your Liora experienceâ ¦',
-  'Crafting your taste summaryâ ¦',
+  'Curating your culinary identity...',
+  'Mapping your flavour profile...',
+  'Personalising your Liora experience...',
+  'Crafting your taste summary...',
 ];
 
 const initialAnswers: OnboardingAnswers = {
@@ -190,7 +190,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
       <Spinner />
       <div className="text-center">
         <p className="font-semibold text-stone-800">{loadingMessage}</p>
-        <p className="text-sm text-stone-400 mt-1">Just a momentâ ¦</p>
+        <p className="text-sm text-stone-400 mt-1">Just a moment...</p>
       </div>
     </div>
   );
@@ -241,14 +241,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
           </div>
           <div className="flex-1 min-w-0">
             <span className="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">Welcome Offer</span>
-            <p className="font-bold text-stone-800 text-base mt-1 leading-snug">Save <span className="text-amber-600 text-xl">$5</span> on your first order â ” just complete your profile!</p>
+            <p className="font-bold text-stone-800 text-base mt-1 leading-snug">Save <span className="text-amber-600 text-xl">$5</span> on your first order — just complete your profile!</p>
             <p className="text-xs text-stone-500 mt-1 leading-relaxed">Scroll through and fill in the sections below. <span className="text-stone-400">Min. order $50 · T&amp;Cs apply</span></p>
           </div>
         </div>
       </div>
 
-      {/* Section 1 â ” Allergies */}
-      <SectionCard step={1} title="Allergies & Intolerances" subtitle="Select all that apply â ” we'll keep your dining safe.">
+      {/* Section 1 — Allergies */}
+      <SectionCard step={1} title="Allergies & Intolerances" subtitle="Select all that apply — we'll keep your dining safe.">
         <div className="space-y-4">
           <div className="flex flex-wrap gap-2">
             {ALLERGIES.map(a => (
@@ -260,12 +260,12 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
             <div className={`mt-0.5 w-5 h-5 rounded border flex-shrink-0 flex items-center justify-center transition-all ${answers.severeAllergy ? 'bg-red-500 border-red-500' : 'border-stone-300'}`}>
               {answers.severeAllergy && <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
             </div>
-            <span className="text-sm text-stone-600 leading-snug">I have a <strong className="text-red-600">severe / life-threatening allergy</strong> â ” flag this on all recommendations.</span>
+            <span className="text-sm text-stone-600 leading-snug">I have a <strong className="text-red-600">severe / life-threatening allergy</strong> — flag this on all recommendations.</span>
           </label>
         </div>
       </SectionCard>
 
-      {/* Section 2 â ” Lifestyle */}
+      {/* Section 2 — Lifestyle */}
       <SectionCard step={2} title="Lifestyle & Diet" subtitle="Choose the one that best describes your eating style.">
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {LIFESTYLES.map(l => (
@@ -278,7 +278,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
         </div>
       </SectionCard>
 
-      {/* Section 3 â ” Religious & Cultural */}
+      {/* Section 3 — Religious & Cultural */}
       <SectionCard step={3} title="Religious & Cultural" subtitle="We respect every tradition at the Liora table.">
         <div className="space-y-4">
           <div className="flex flex-wrap gap-2">
@@ -288,12 +288,12 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
           </div>
           <div>
             <label className="text-sm font-medium text-stone-600 block mb-1.5">Any other cultural or religious requirements?</label>
-            <input type="text" value={answers.customReligious ?? ''} onChange={e => set({ customReligious: e.target.value })} placeholder="e.g., Jain vegetarian, no cross-contaminationâ ¦" className="w-full px-4 py-3 rounded-xl border border-stone-200 text-sm text-stone-700 bg-white focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10" />
+            <input type="text" value={answers.customReligious ?? ''} onChange={e => set({ customReligious: e.target.value })} placeholder="e.g., Jain vegetarian, no cross-contamination..." className="w-full px-4 py-3 rounded-xl border border-stone-200 text-sm text-stone-700 bg-white focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10" />
           </div>
         </div>
       </SectionCard>
 
-      {/* Section 4 â ” Health */}
+      {/* Section 4 — Health */}
       <SectionCard step={4} title="Health & Medical" subtitle="So we can surface the right options for your wellbeing.">
         <div className="flex flex-wrap gap-2">
           {HEALTH.map(h => (
@@ -303,7 +303,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
         </div>
       </SectionCard>
 
-      {/* Section 5 â ” Cuisine & Preferences */}
+      {/* Section 5 — Cuisine & Preferences */}
       <SectionCard step={5} title="Cuisine & Preferences" subtitle="Help Liora personalise every recommendation.">
         <div className="space-y-5">
           <div>
@@ -319,7 +319,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
                 value={customCuisine}
                 onChange={e => setCustomCuisine(e.target.value)}
                 onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); if (customCuisine.trim()) { set({ cuisines: toggleArr(answers.cuisines, customCuisine.trim()) }); setCustomCuisine(''); } } }}
-                placeholder="Add anotherâ ¦"
+                placeholder="Add another..."
                 className="flex-1 px-3 py-2 rounded-lg border border-stone-200 text-sm focus:outline-none focus:border-brand-400"
               />
               <button onClick={() => { if (customCuisine.trim()) { set({ cuisines: toggleArr(answers.cuisines, customCuisine.trim()) }); setCustomCuisine(''); } }} className="px-4 py-2 bg-cream-100 text-stone-600 text-sm rounded-lg hover:bg-cream-200 border border-stone-200">Add</button>
@@ -337,19 +337,19 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
             </div>
           </div>
           <div>
-            <p className="text-sm font-medium text-stone-600 mb-2">Spice tolerance â ” <span className="text-brand-400 font-semibold">{SPICE_LABELS[answers.spice]}</span></p>
+            <p className="text-sm font-medium text-stone-600 mb-2">Spice tolerance — <span className="text-brand-400 font-semibold">{SPICE_LABELS[answers.spice]}</span></p>
             <input type="range" min={1} max={5} value={answers.spice} onChange={e => set({ spice: Number(e.target.value) })} className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-amber-500 bg-stone-200" />
             <div className="flex justify-between text-xs text-stone-400 mt-1"><span>Mild</span><span>ð  ¥ Blazing</span></div>
           </div>
         </div>
       </SectionCard>
 
-      {/* Section 6 â ” Final Notes */}
+      {/* Section 6 — Final Notes */}
       <SectionCard step={6} title="Final Notes" subtitle="Anything else Liora should know?">
         <textarea
           value={answers.notes ?? ''}
           onChange={e => set({ notes: e.target.value })}
-          placeholder="e.g., I love outdoor seating, always order dessert, need high chair for toddlerâ ¦"
+          placeholder="e.g., I love outdoor seating, always order dessert, need high chair for toddler..."
           rows={4}
           className="w-full px-4 py-3 rounded-xl border border-stone-200 text-sm text-stone-700 bg-white resize-none focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10"
         />

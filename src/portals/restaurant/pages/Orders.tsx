@@ -29,11 +29,11 @@ function timeAgo(ts: number) {
 }
 
 const ALERT_CONFIG: Record<string, { icon: string; color: string; bg: string; border: string }> = {
-  'Call Waiter':      { icon: '📈️', color: 'text-amber-700',  bg: 'bg-amber-50',  border: 'border-amber-300' },
-  'Order Drinks':     { icon: 'ð  ·', color: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-300' },
-  'Request Bill':     { icon: 'ð §¾', color: 'text-blue-700',   bg: 'bg-blue-50',   border: 'border-blue-300' },
+  'Call Waiter':      { icon: '🍝️', color: 'text-amber-700',  bg: 'bg-amber-50',  border: 'border-amber-300' },
+  'Order Drinks':     { icon: '🍷', color: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-300' },
+  'Request Bill':     { icon: '🧾', color: 'text-blue-700',   bg: 'bg-blue-50',   border: 'border-blue-300' },
   'Dietary Question': { icon: '🥗', color: 'text-green-700',  bg: 'bg-green-50',  border: 'border-green-300' },
-  'Get Manager':      { icon: '📈', color: 'text-red-700',    bg: 'bg-red-50',    border: 'border-red-300' },
+  'Get Manager':      { icon: '🍝', color: 'text-red-700',    bg: 'bg-red-50',    border: 'border-red-300' },
 };
 
 export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant }) {
@@ -123,7 +123,7 @@ export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant
           </div>
           <div className="divide-y divide-amber-100">
             {alerts.map(alert => {
-              const cfg = ALERT_CONFIG[alert.action] ?? { icon: 'ð  £', color: 'text-stone-700', bg: 'bg-stone-50', border: 'border-stone-200' };
+              const cfg = ALERT_CONFIG[alert.action] ?? { icon: '🛎️', color: 'text-stone-700', bg: 'bg-stone-50', border: 'border-stone-200' };
               return (
                 <div key={alert.id} className={`flex items-center gap-4 px-5 py-3.5 ${cfg.bg} hover:brightness-95 transition-all`}>
                   <span className="text-xl flex-shrink-0">{cfg.icon}</span>

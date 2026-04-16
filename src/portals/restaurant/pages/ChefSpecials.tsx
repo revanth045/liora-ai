@@ -23,10 +23,10 @@ interface SpecialForm {
 }
 
 const EMPTY_FORM: SpecialForm = {
-  name: '', description: '', priceCents: 2500, category: 'daily_special', chefNote: '', imageEmoji: 'ð  ½️', isAvailable: true,
+  name: '', description: '', priceCents: 2500, category: 'daily_special', chefNote: '', imageEmoji: '🍽️', isAvailable: true,
 };
 
-const EMOJI_OPTIONS = ['ð  ½️','📈','ð ¥©','📈','ð «•','🥗','ð  ±','ð ¦ ','ð § ','🥗','ð  ¿','📈'];
+const EMOJI_OPTIONS = ['🍽️','🍝','🥩','🍝','🍕','🥗','🍣','🍔','🧂','🥗','💆‍♀️','🍝'];
 
 export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRestaurant }) {
   const [specials, setSpecials] = useState<DemoChefSpecial[]>([]);
@@ -43,7 +43,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
   const openCreate = () => { setEditId(null); setForm(EMPTY_FORM); setShowForm(true); };
   const openEdit = (s: DemoChefSpecial) => {
     setEditId(s.id);
-    setForm({ name: s.name, description: s.description, priceCents: s.priceCents, category: s.category, chefNote: s.chefNote || '', imageEmoji: s.imageEmoji || 'ð  ½️', isAvailable: s.isAvailable });
+    setForm({ name: s.name, description: s.description, priceCents: s.priceCents, category: s.category, chefNote: s.chefNote || '', imageEmoji: s.imageEmoji || '🍽️', isAvailable: s.isAvailable });
     setShowForm(true);
   };
 
@@ -133,7 +133,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
                   <div className="p-6">
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-14 h-14 rounded-2xl bg-cream-100 flex items-center justify-center text-3xl flex-shrink-0">
-                        {special.imageEmoji || 'ð  ½️'}
+                        {special.imageEmoji || '🍽️'}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">

@@ -171,7 +171,7 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
                     <div className="p-4 bg-gradient-to-br from-cream-100 to-cream-50 rounded-xl shadow-sm border border-cream-200">
                         <SmartImage src={dinnerImg} alt={plan.dinner.name} className="w-full h-32 object-cover rounded-lg mb-3" />
                         <h4 className="font-bold text-lg text-stone-800">{plan.dinner.name}</h4>
-                        <p className="text-sm text-stone-400 mb-2">{plan.dinner.cuisine} ââ ¬¢ {plan.dinner.rating}â˜â ¦</p>
+                        <p className="text-sm text-stone-400 mb-2">{plan.dinner.cuisine} ââ ¬¢ {plan.dinner.rating}â˜...</p>
                         <p className="text-xs text-stone-400 italic mb-3">"{plan.dinner.why_matched}"</p>
                         <button className="w-full bg-white border border-cream-200 text-stone-800 font-bold py-2 rounded-lg text-sm hover:bg-cream-100/80">View Details</button>
                     </div>

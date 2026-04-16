@@ -132,7 +132,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
                   </div>
                   <p className="text-xs text-stone-400 font-medium truncate">{item.action}</p>
                   {item.notes && (
-                    <p className="text-[10px] text-amber-600 mt-0.5 truncate">â   {item.notes}</p>
+                    <p className="text-[10px] text-amber-600 mt-0.5 truncate">  {item.notes}</p>
                   )}
                 </div>
                 <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${

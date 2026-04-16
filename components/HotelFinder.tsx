@@ -68,7 +68,7 @@ export const HotelFinder = () => {
                 <div key={idx} className="p-4 bg-white rounded-xl border border-cream-200 shadow-sm flex justify-between items-center hover:shadow-md transition-all cursor-pointer">
                     <div>
                         <h4 className="font-bold text-stone-800">{hotel.name}</h4>
-                        <p className="text-xs text-stone-400">{hotel.city} â ¢ {hotel.rating}â …</p>
+                        <p className="text-xs text-stone-400">{hotel.city} • {hotel.rating}✨</p>
                         <div className="flex gap-2 mt-1">
                             {hotel.tags.map(t => <span key={t} className="text-[10px] bg-cream-100/50 px-1.5 py-0.5 rounded text-stone-400">{t}</span>)}
                         </div>

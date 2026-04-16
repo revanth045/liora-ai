@@ -776,7 +776,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     <tbody>
                       {staff.filter(m => m.status === 'active').map(member => {
                         const statusEmoji: Record<AttendanceStatus, string> = {
-                          present: '🥩', late: 'ð  ¡', half_day: 'ð  µ', absent: 'ð  ´',
+                          present: '🥩', late: '🟡', half_day: '🟠', absent: '🔴',
                         };
                         const days = Array.from({length:7},(_,i)=>{
                           const d = new Date();
@@ -805,7 +805,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     </tbody>
                   </table>
                   <div className="flex gap-4 mt-4 text-[10px] text-stone-400 font-medium">
-                    <span>🥩 Present</span><span>ð  ¡ Late</span><span>ð  µ Half Day</span><span>ð  ´ Absent</span><span>⬜ No Record</span>
+                    <span>🥩 Present</span><span>🟡 Late</span><span>🟠 Half Day</span><span>🔴 Absent</span><span>⬜ No Record</span>
                   </div>
                 </div>
               </div>

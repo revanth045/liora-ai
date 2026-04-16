@@ -109,7 +109,7 @@ function OrderCard({ order, onStatusChange }: { order: DemoOrder; onStatusChange
               </>
             ) : (
               <>
-                <span className="text-lg">ð ¥¡</span>
+                <span className="text-lg">🥡</span>
                 <span className="text-[9px] text-stone-400 font-bold leading-tight">Pickup</span>
               </>
             )}
@@ -270,7 +270,7 @@ export default function ServiceDeskPortal() {
           <div className="flex items-center gap-3">
             {pendingCount > 0 && (
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold animate-pulse">
-                📈 {pendingCount} new
+                🍝 {pendingCount} new
               </span>
             )}
             <button
@@ -313,7 +313,7 @@ export default function ServiceDeskPortal() {
       <main className="max-w-2xl mx-auto px-4 py-4 space-y-3">
         {filtered.length === 0 ? (
           <div className="text-center py-16 text-stone-600">
-            <p className="text-4xl mb-3">ð  ½️</p>
+            <p className="text-4xl mb-3">🍽️</p>
             <p className="text-sm font-semibold">
               {tab === 'active' ? 'No active orders right now' : 'Nothing here yet'}
             </p>

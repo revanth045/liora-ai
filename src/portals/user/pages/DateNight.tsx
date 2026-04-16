@@ -12,7 +12,7 @@ export default function DateNightPage() {
                     Date Night Planner
                 </h1>
                 <p className="text-stone-600 text-base leading-relaxed mb-4">
-                    Good food brings people together... what if it also sparks something more?&nbsp;📈
+                    Good food brings people together... what if it also sparks something more?&nbsp;🍝
                 </p>
                 <p className="text-stone-400 text-sm leading-relaxed mb-8">
                     We&apos;re going live soon — get ready to discover delicious moments and maybe even a little romance.
@@ -21,7 +21,7 @@ export default function DateNightPage() {
                     <Icon name="sparkles" className="w-4 h-4 text-brand-400" />
                     Coming Soon
                 </div>
-                <p className="mt-6 text-xs text-stone-300">Stay tuned — something delicious is cooking ð  ½️</p>
+                <p className="mt-6 text-xs text-stone-300">Stay tuned — something delicious is cooking 🍽️</p>
             </div>
         </div>
     );

@@ -109,7 +109,7 @@ export const AiWaiter = () => {
         chatContainerRef.current?.scrollTo({ top: chatContainerRef.current.scrollHeight, behavior: 'smooth' });
     }, [messages]);
 
-    // QR Scanner initialization â ” auto-starts scanning once camera is ready
+    // QR Scanner initialization — auto-starts scanning once camera is ready
     useEffect(() => {
         if (!showQRScanner) return;
 
@@ -125,7 +125,7 @@ export const AiWaiter = () => {
                     videoRef.current.srcObject = stream;
                     streamRef.current = stream;
                 }
-                // Auto-start scanning â ” poll every 300ms until video has data
+                // Auto-start scanning — poll every 300ms until video has data
                 scanIntervalRef.current = setInterval(() => {
                     if (videoRef.current?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
                         scanQRCode();
@@ -247,8 +247,8 @@ export const AiWaiter = () => {
 
     const QUICK_ACTION_CONFIG: Record<string, { icon: string; alertMessage: string; confirmation: string }> = {
         'Call Waiter':    { icon: 'ð   ️', alertMessage: `Table ${session.tableNumber} is calling for a waiter`, confirmation: "A waiter has been notified and will be with you shortly!" },
-        'Order Drinks':   { icon: 'ð  ·', alertMessage: `Table ${session.tableNumber} would like to order drinks`, confirmation: "Your drink order request has been sent! Someone will be right over." },
-        'Request Bill':   { icon: 'ð §¾', alertMessage: `Table ${session.tableNumber} is requesting the bill`, confirmation: "Your bill is being prepared and will be brought to you shortly!" },
+        'Order Drinks':   { icon: '🍷', alertMessage: `Table ${session.tableNumber} would like to order drinks`, confirmation: "Your drink order request has been sent! Someone will be right over." },
+        'Request Bill':   { icon: '🧾', alertMessage: `Table ${session.tableNumber} is requesting the bill`, confirmation: "Your bill is being prepared and will be brought to you shortly!" },
         'Dietary Question': { icon: 'ð ¥ ', alertMessage: `Table ${session.tableNumber} has a dietary question for the kitchen`, confirmation: "Your question has been forwarded to the kitchen team!" },
         'Get Manager':    { icon: 'ð   ', alertMessage: `Table ${session.tableNumber} is requesting to speak with the manager`, confirmation: "The manager has been notified and will be with you soon!" },
     };
@@ -330,7 +330,7 @@ export const AiWaiter = () => {
         setMessages(prev => [...prev, {
             id: uid(),
             author: MessageAuthor.SYSTEM,
-            text: `ð  ½️ Your order has been sent to ${session.restaurantName}! The kitchen will prepare your items shortly.`,
+            text: `🍽️ Your order has been sent to ${session.restaurantName}! The kitchen will prepare your items shortly.`,
         }]);
 
         setTimeout(() => {
@@ -465,7 +465,7 @@ export const AiWaiter = () => {
                             <div className="p-6 space-y-3 border-t border-cream-200">
                                 <div className="flex items-center justify-center gap-2 text-sm text-green-600 font-medium py-2">
                                     <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                    Scanning automatically â ” point camera at QR code
+                                    Scanning automatically — point camera at QR code
                                 </div>
                                 <button
                                     onClick={handleManualConnect}
@@ -637,7 +637,7 @@ export const AiWaiter = () => {
                             })}
                         </div>
 
-                        {/* Footer â ” cart summary + send button */}
+                        {/* Footer — cart summary + send button */}
                         <div className="p-4 border-t border-cream-200 bg-white flex-shrink-0 space-y-3">
                             {cartCount > 0 && (
                                 <div className="flex items-center justify-between px-1">
@@ -737,8 +737,8 @@ export const AiWaiter = () => {
             <div className="px-4 py-3 flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide border-t border-cream-200 bg-white overscroll-x-contain touch-pan-x">
                 {[
                     { label: "Call Waiter", icon: "ð   ️" },
-                    { label: "Order Drinks", icon: "ð  ·" },
-                    { label: "Request Bill", icon: "ð §¾" },
+                    { label: "Order Drinks", icon: "🍷" },
+                    { label: "Request Bill", icon: "🧾" },
                     { label: "Dietary Question", icon: "ð ¥ " },
                     { label: "See Specials", icon: "⭐" },
                     { label: "Get Manager", icon: "ð   " },

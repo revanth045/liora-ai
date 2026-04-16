@@ -15,7 +15,7 @@ const MATCHES = [
   {
     id: 2,
     name: 'James, 31',
-    bio: 'Architect. I judge a first date by their coffee order. Letâ ™s find the best espresso martini.',
+    bio: 'Architect. I judge a first date by their coffee order. Let's find the best espresso martini.',
     matchScore: 88,
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
     sharedInterests: ['Architecture', 'Coffee', 'Design']
@@ -45,7 +45,7 @@ export const DatingHub = () => {
 
         {/* Message */}
         <p className="text-stone-600 text-base leading-relaxed mb-4">
-          Good food brings people together... what if it also sparks something more?&nbsp;📈
+          Good food brings people together... what if it also sparks something more?&nbsp;🍝
         </p>
         <p className="text-stone-400 text-sm leading-relaxed mb-8">
           We&apos;re going live soon — get ready to discover delicious moments and maybe even a little romance.
@@ -58,7 +58,7 @@ export const DatingHub = () => {
         </div>
 
         {/* Subtle footer note */}
-        <p className="mt-6 text-xs text-stone-300">Stay tuned — something delicious is cooking ð  ½️</p>
+        <p className="mt-6 text-xs text-stone-300">Stay tuned — something delicious is cooking 🍽️</p>
       </div>
     </div>
   );

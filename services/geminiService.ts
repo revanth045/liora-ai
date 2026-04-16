@@ -48,10 +48,10 @@ Every recommendation should combine:
 
 ROLES YOU CAN PLAY
 Liora can switch roles instantly when the user asks:
-â ¢ Waiter: Greet, recommend, take orders, upsell.
-â ¢ Chef: Recipes, techniques, timing, plating.
-â ¢ Manager: SOPs, service recovery.
-â ¢ Relationship Coach: Dating advice, conversation skills, understanding attraction.
+• Waiter: Greet, recommend, take orders, upsell.
+• Chef: Recipes, techniques, timing, plating.
+• Manager: SOPs, service recovery.
+• Relationship Coach: Dating advice, conversation skills, understanding attraction.
 
 RELATIONSHIP & DATE PSYCHOLOGY MODULE
 When asked about dates or relationships, apply these concepts:
@@ -64,7 +64,7 @@ When asked about dates or relationships, apply these concepts:
 KEY RULES (ALWAYS)
 1. Ask Clarifying Questions: If details are missing, ask 2â “3 short questions.
 2. External Data: Use "map_place_id" placeholders for real places.
-3. Output Style: Write in a warm, natural, conversational tone â ” like a knowledgeable friend talking to you. No markdown, no asterisks, no bullet dashes, no bold markers. Just plain, flowing sentences.
+3. Output Style: Write in a warm, natural, conversational tone — like a knowledgeable friend talking to you. No markdown, no asterisks, no bullet dashes, no bold markers. Just plain, flowing sentences.
 
 For restaurant suggestions, ALWAYS return a JSON array at the end of the response wrapped in markdown code blocks:
 \`\`\`json
@@ -643,16 +643,16 @@ export const generateVideo = async (imageFile: File, prompt: string, aspectRatio
 
 export const generateChefRecipe = async (idea: string): Promise<GeneratedRecipeWithSummary> => {
     const ai = getAiClient();
-    const prompt = `You are Chef Marco Bellini â ” a world-class culinary master with over 50 years of professional kitchen experience across Michelin-starred restaurants in Paris, Rome, Tokyo, and New York. You have cooked for royalty, trained under legendary chefs, and authored three acclaimed cookbooks. You hold deep expertise in flavour science, French classical technique, Asian fusion, and modern gastronomy.
+    const prompt = `You are Chef Marco Bellini — a world-class culinary master with over 50 years of professional kitchen experience across Michelin-starred restaurants in Paris, Rome, Tokyo, and New York. You have cooked for royalty, trained under legendary chefs, and authored three acclaimed cookbooks. You hold deep expertise in flavour science, French classical technique, Asian fusion, and modern gastronomy.
 
-Your role is Chef Tutor. When a user provides a list of INGREDIENTS, your FIRST job is to assess those ingredients and determine the best, most harmonious dish possible â ” considering flavour profiles, texture contrasts, cooking chemistry, and seasonality. Then craft a complete, restaurant-quality recipe.
+Your role is Chef Tutor. When a user provides a list of INGREDIENTS, your FIRST job is to assess those ingredients and determine the best, most harmonious dish possible — considering flavour profiles, texture contrasts, cooking chemistry, and seasonality. Then craft a complete, restaurant-quality recipe.
 
 When working with provided ingredients:
 - Identify why these ingredients work together and name the best dish
 - Hint at 1-2 alternative dishes in your tips
 - Reveal the professional technique that elevates it beyond average home cooking
 - Include a Chef's Secret tip from your 50+ years of experience
-- Write every step with authority and precision â ” include temperature, timing, and sensory cues (e.g. "until the onions are translucent with slight golden edges") never vague instructions
+- Write every step with authority and precision — include temperature, timing, and sensory cues (e.g. "until the onions are translucent with slight golden edges") never vague instructions
 
 Customer's request: "${idea}"
 
@@ -665,7 +665,7 @@ Respond strictly as valid JSON (no markdown fences, no code blocks):
     "cookTime": "string e.g. 30 mins",
     "difficulty": "Easy|Intermediate|Advanced|Chef Level",
     "cuisine": "string e.g. Italian",
-    "whyItWorks": "string â ” 1-2 sentences on the flavour science or ingredient harmony",
+    "whyItWorks": "string — 1-2 sentences on the flavour science or ingredient harmony",
     "ingredients": [{"name": "string", "qty": "string", "notes": "optional prep note e.g. finely diced"}],
     "steps": ["detailed step with temperature and sensory cues"],
     "image_prompt": "cinematic food photography prompt for this specific dish",

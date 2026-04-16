@@ -50,7 +50,7 @@ const ALL_FEATURES = [
     'Gluten-Free Options', 'Bar', 'Private Dining', 'Catering',
 ];
 
-const EMOJIS = ['ð  •', 'ð  £', '📈', 'ð  ®', '📈', '🥗', 'ð  ±', 'ð ¥©', 'ð ¦ ', '📈', '🥗', '📈', 'ð «•', '🥗', 'ð § ', 'ð  ¯', '📈', '🥗', 'ð « ', 'ð § '];
+const EMOJIS = ['🏃‍♂️', '🛎️', '🍝', '🌮', '🍝', '🥗', '🍣', '🥩', '🍔', '🍝', '🥗', '🍝', '🍕', '🥗', '🧂', '🥨', '🍝', '🥗', '🥂', '🧂'];
 
 const RKEY = 'liora_public_restaurants';
 
@@ -78,7 +78,7 @@ function portalRestaurantToDisplay(r: DemoRestaurant): Restaurant {
         features: ['Dine-in'],
         description: r.bio || '',
         hours: r.hours ? formatDayHours(r.hours) : '',
-        imageEmoji: 'ð  ½️',
+        imageEmoji: '🍽️',
         addedAt: Date.now(),
         isPartner: true,
     };
@@ -139,7 +139,7 @@ function MenuItemCard({ item, qty = 0, onAdd, onRemove }: {
         <div className="flex flex-col items-center bg-[#1c1c1e] border border-white/8 rounded-2xl p-4 gap-3 relative overflow-hidden group">
             {/* circular food image / emoji */}
             <div className="w-20 h-20 rounded-full bg-[#2a2a2d] border-2 border-white/10 flex items-center justify-center text-4xl shadow-lg group-hover:scale-105 transition-transform">
-                {item.tags?.find(t => /^\p{Emoji}/u.test(t)) || 'ð  ½️'}
+                {item.tags?.find(t => /^\p{Emoji}/u.test(t)) || '🍽️'}
             </div>
             <div className="text-center">
                 <p className="font-semibold text-white text-sm leading-snug">{item.name}</p>
@@ -348,7 +348,7 @@ function RestaurantPage({
             <div className="fixed inset-0 z-40 bg-[#111113] flex flex-col items-center justify-center p-8 text-center overflow-y-auto">
                 <div className="max-w-sm w-full py-8">
                     <div className="w-20 h-20 rounded-full bg-[#f5c842]/10 border-2 border-[#f5c842]/30 flex items-center justify-center text-4xl mx-auto mb-6">
-                        📈
+                        🍝
                     </div>
                     <h2 className="text-2xl font-bold text-white mb-2">Order Placed!</h2>
                     <p className="text-white/50 text-sm mb-1">Table <span className="text-white font-semibold">{placedOrder.tableNumber}</span> · {r.name}</p>
@@ -519,7 +519,7 @@ function RestaurantPage({
                 {/* No menu */}
                 {r.isPartner && menuItems.length === 0 && specials.length === 0 && (
                     <div className="text-center py-16">
-                        <p className="text-4xl mb-3">ð  ½️</p>
+                        <p className="text-4xl mb-3">🍽️</p>
                         <p className="text-white/50 text-sm">Menu coming soon</p>
                         <p className="text-white/30 text-xs mt-1">The restaurant hasn't published their menu yet.</p>
                     </div>
@@ -562,7 +562,7 @@ function RestaurantPage({
                                     item={item}
                                     qty={getQty(item.id)}
                                     onAdd={() => addToCart(item.id, item.name, item.priceCents,
-                                        item.tags?.find(t => /^\p{Emoji}/u.test(t)) || 'ð  ½️')}
+                                        item.tags?.find(t => /^\p{Emoji}/u.test(t)) || '🍽️')}
                                     onRemove={() => removeFromCart(item.id)}
                                 />
                             ))}
@@ -744,7 +744,7 @@ const EMPTY_FORM = {
     name: '', cuisine: 'American', zip: '', address: '', phone: '', website: '',
     priceRange: '$$' as Restaurant['priceRange'], rating: 4.0,
     features: ['Dine-in'] as string[], description: '', hours: '',
-    imageEmoji: 'ð  ½️',
+    imageEmoji: '🍽️',
 };
 
 function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded: (r: Restaurant) => void }) {
@@ -1120,7 +1120,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
             {/* Results */}
             {filtered.length === 0 ? (
                 <div className="text-center py-16">
-                    <p className="text-4xl mb-4">ð  ½️</p>
+                    <p className="text-4xl mb-4">🍽️</p>
                     <p className="font-semibold text-stone-700">
                         {zipQuery ? `No restaurants found for ZIP ${zipQuery}` : 'No restaurants yet'}
                     </p>

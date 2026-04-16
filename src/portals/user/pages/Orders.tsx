@@ -58,7 +58,7 @@ function OrderCard({ order, restaurantName, isExpanded, onToggle }: {
       <button onClick={onToggle}
         className="w-full flex items-center gap-4 p-5 hover:bg-cream-50/30 text-left transition-colors">
         <div className="w-11 h-11 rounded-2xl bg-forest-900/8 flex items-center justify-center text-xl flex-shrink-0">
-          ð  ½️
+          🍽️
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">

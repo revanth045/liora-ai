@@ -30,7 +30,7 @@ const DASHBOARD = {
         { title: 'Fitness', subtitle: 'Track nutrition & goals', icon: 'fitness_center', route: 'fitness' as View, gradient: 'from-blue-500/20 to-cyan-500/20', iconColor: 'text-blue-400', comingSoon: true },
     ],
     spotlight: {
-        title: "Chef's Table â ” AI Kitchen",
+        title: "Chef's Table — AI Kitchen",
         subtitle: 'Get a recipe from ingredients you have at home',
         prompt: 'Help me create a recipe from what I have in my fridge',
         icon: 'soup_kitchen',
@@ -268,10 +268,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                     {/* Coming Soon Toast */}
                     <div className={`fixed bottom-24 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${comingSoonToast ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
                         <div className="bg-forest-900 text-cream-50 px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 min-w-[260px]">
-                            <span className="text-xl">â ¨</span>
+                            <span className="text-xl">✨</span>
                             <div>
                                 <p className="font-semibold text-sm">Something exciting is coming!</p>
-                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this â ” stay tuned ð  •</p>
+                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this — stay tuned 🏃‍♂️</p>
                             </div>
                         </div>
                     </div>

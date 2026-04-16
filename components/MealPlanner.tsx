@@ -27,7 +27,7 @@ const moods = [
     { name: 'Healthy', emoji: 'ð ¥ ' },
     { name: 'Celebratory', emoji: 'ð   ' },
     { name: 'Quick & Easy', emoji: 'â ¡' },
-    { name: 'Comfort', emoji: 'ð  ²' },
+    { name: 'Comfort', emoji: '🍲' },
 ];
 
 export const MealPlanner: React.FC<MealPlannerProps> = ({ demoTrigger = 0, prefillData, onPrefillConsumed }) => {

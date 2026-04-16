@@ -53,9 +53,9 @@ export const Header: React.FC<HeaderProps> = ({ setView, onMenuClick, canGoBack 
 
   return (
     <header className="bg-forest-900 px-4 py-3 flex justify-between items-center sticky top-0 z-40 border-b border-white/10 gap-3 shadow-md">
-        {/* LEFT â ” hamburger / back + logo + name */}
+        {/* LEFT — hamburger / back + logo + name */}
         <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Hamburger â ” mobile only (sidebar is always visible on desktop) */}
+            {/* Hamburger — mobile only (sidebar is always visible on desktop) */}
             <button
                 className="md:hidden p-2 rounded-xl hover:bg-white/10 text-cream-200 transition-colors flex-shrink-0"
                 onClick={onMenuClick}
@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ setView, onMenuClick, canGoBack 
                 <Icon name="menu" className="w-5 h-5" />
             </button>
 
-            {/* Back button â ” shown when there's history */}
+            {/* Back button — shown when there's history */}
             {canGoBack && (
                 <button
                     onClick={onBack}
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ setView, onMenuClick, canGoBack 
                 </button>
             )}
 
-            {/* Logo â ” always visible; onHomeClick resets history stack, plain setView just navigates */}
+            {/* Logo — always visible; onHomeClick resets history stack, plain setView just navigates */}
             <button
                 onClick={() => (onHomeClick ? onHomeClick() : setView('home'))}
                 className="flex items-center gap-2 hover:opacity-80 transition-opacity ml-1 cursor-pointer"
@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({ setView, onMenuClick, canGoBack 
             </button>
         </div>
 
-        {/* CENTRE â ” search bar (desktop only) */}
+        {/* CENTRE — search bar (desktop only) */}
         <div className="hidden md:flex flex-1 justify-center px-4">
             <form onSubmit={handleSearch} className="w-full max-w-lg relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -99,14 +99,14 @@ export const Header: React.FC<HeaderProps> = ({ setView, onMenuClick, canGoBack 
                     type="search"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search restaurants, cuisineâ ¦"
+                    placeholder="Search restaurants, cuisine..."
                     className="w-full py-2 pl-9 pr-4 bg-white/10 border border-white/15 rounded-xl text-sm text-cream-100 placeholder-cream-300/50 focus:outline-none focus:border-brand-400/60 focus:ring-1 focus:ring-brand-400/20 transition-all"
                     aria-label="Search restaurants"
                 />
             </form>
         </div>
 
-        {/* RIGHT â ” user menu */}
+        {/* RIGHT — user menu */}
         <div className="flex-shrink-0 relative" ref={menuRef}>
             {session ? (
                 <>
