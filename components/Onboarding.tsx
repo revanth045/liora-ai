@@ -224,7 +224,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
       <div className="bg-cream-50 border border-cream-200 rounded-xl p-4 text-sm text-stone-700 leading-relaxed">{profile.summary}</div>
       <div className="flex flex-wrap gap-3">
         <button onClick={handleStartOver} className="px-5 py-2.5 bg-cream-100 text-stone-700 rounded-xl text-sm font-semibold border border-stone-200 hover:bg-cream-200 transition-colors">Edit Profile</button>
-        <button onClick={onProfileCreated} className="px-5 py-2.5 bg-forest-800 text-cream-50 rounded-xl text-sm font-semibold hover:bg-forest-700 transition-colors">Start Exploring â ’</button>
+        <button onClick={onProfileCreated} className="px-5 py-2.5 bg-forest-800 text-cream-50 rounded-xl text-sm font-semibold hover:bg-forest-700 transition-colors flex items-center justify-center gap-2">
+          Start Exploring <Icon name="arrow_forward" size={16} />
+        </button>
       </div>
     </div>
   );
@@ -364,7 +366,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
         onClick={handleSubmit}
         className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-forest-800 text-cream-50 font-bold text-base hover:bg-forest-700 transition-colors shadow-lg"
       >
-        Create My Profile <Icon name="sparkles" className="w-5 h-5" />
+        Create My Profile <Icon name="arrow_forward" className="w-5 h-5" />
       </button>
     </div>
   );
