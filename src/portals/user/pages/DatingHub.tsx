@@ -15,7 +15,7 @@ const MATCHES = [
   {
     id: 2,
     name: 'James, 31',
-    bio: 'Architect. I judge a first date by their coffee order. Let's find the best espresso martini.',
+    bio: "Architect. I judge a first date by their coffee order. Let's find the best espresso martini.",
     matchScore: 88,
     image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80',
     sharedInterests: ['Architecture', 'Coffee', 'Design']
