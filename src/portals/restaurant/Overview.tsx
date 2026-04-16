@@ -1,4 +1,4 @@
-﻿
+
 import React, { useEffect, useState } from 'react';
 import { Icon } from '../../../components/Icon';
 import {
@@ -178,7 +178,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
                     <span className={`text-[10px] font-bold uppercase tracking-widest ${
                       alert.level === 'critical' ? 'text-red-500' : alert.level === 'warning' ? 'text-orange-500' : 'text-blue-500'
                     }`}>
-                      {alert.level === 'critical' ? '← Urgent' : alert.level === 'warning' ? 'â † Warning' : 'â ‰ Info'}
+                      {alert.level === 'critical' ? '← Urgent' : alert.level === 'warning' ? '⚠️ Warning' : 'ℹ️ Info'}
                     </span>
                   </div>
                 ))}

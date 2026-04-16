@@ -202,7 +202,7 @@ function ChefSpecialCard({ special, qty = 0, onAdd, onRemove }: {
                 )}
                 {special.chefNote && (
                     <p className="text-[#f5c842]/70 text-[11px] mt-1.5 italic line-clamp-2">
-                        👨‍🍳←👨‍🍳 "{special.chefNote}"
+                        👨‍🍳 "{special.chefNote}"
                     </p>
                 )}
             </div>

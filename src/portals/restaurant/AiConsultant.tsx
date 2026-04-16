@@ -74,7 +74,7 @@ export default function RestoAiConsultant({ restaurant }: { restaurant: DemoRest
               <div className={`max-w-[80%] p-5 rounded-3xl text-sm leading-relaxed whitespace-pre-wrap shadow-sm border ${
                 msg.role === 'ai' 
                   ? 'bg-white border-cream-200 text-stone-800 rounded-tl-none' 
-                  : 'bg-cream-100 text-white border-cream-200 rounded-tr-none'
+                  : 'bg-stone-800 text-white border-stone-800 rounded-tr-none'
               }`}>
                 <div dangerouslySetInnerHTML={{ 
                   __html: msg.content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') 
@@ -121,7 +121,7 @@ export default function RestoAiConsultant({ restaurant }: { restaurant: DemoRest
             <button 
               onClick={() => handleSend()}
               disabled={!input.trim() || isTyping}
-              className="absolute right-2.5 top-2.5 p-2.5 bg-cream-100 text-white rounded-xl disabled:opacity-30 hover:bg-cream-200 transition-all active:scale-90 shadow-md"
+              className="absolute right-2.5 top-2.5 p-2.5 bg-stone-800 text-white rounded-xl disabled:opacity-30 hover:bg-stone-900 transition-all active:scale-90 shadow-md"
             >
               <Icon name="send" size={20} />
             </button>

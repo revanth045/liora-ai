@@ -33,7 +33,7 @@ function getRecipeResponse(text: string): string {
     if (lower.includes(key)) return response;
   }
   if (lower.includes('ratio') || lower.includes('proportion')) {
-    return `**Recipe Ratios & Proportions**\n\nHere are some foundational culinary ratios:\n\n- **Beurre blanc:** 3 parts butter : 1 part reduction\n- **Vinaigrette:** 3 parts oil : 1 part vinegar\n- **Brine (basic):** 5% salt by weight of water\n- **Cake sponge:** 1:1:1:1 (flour:sugar:butter:eggs by weight)\n- **Crème brûlée:** 6 yolks : 500ml cream : 80g sugar\n- **Short pastry:** 3:2:1 (flour:butter:water)\n\nAsk me about a specific recipe or technique for a more detailed breakdown! 👨‍🍳←👨‍🍳`;
+    return `**Recipe Ratios & Proportions**\n\nHere are some foundational culinary ratios:\n\n- **Beurre blanc:** 3 parts butter : 1 part reduction\n- **Vinaigrette:** 3 parts oil : 1 part vinegar\n- **Brine (basic):** 5% salt by weight of water\n- **Cake sponge:** 1:1:1:1 (flour:sugar:butter:eggs by weight)\n- **Crème brûlée:** 6 yolks : 500ml cream : 80g sugar\n- **Short pastry:** 3:2:1 (flour:butter:water)\n\nAsk me about a specific recipe or technique for a more detailed breakdown! 👨‍🍳`;
   }
   if (lower.includes('temperature') || lower.includes('temp') || lower.includes('celsius')) {
     return `**Internal Cooking Temperatures (°C)**\n\n| Protein | Rare | Med-Rare | Medium | Well |\n|---|---|---|---|---|\n| Beef/Lamb | 50 | 55 | 60 | 70+ |\n| Pork | — | 60 | 65 | 72 |\n| Chicken | — | — | — | 74 |\n| Fish (most) | 45 | 50 | 55 | 60 |\n| Duck breast | — | 54 | 58 | 65 |\n\n**Carryover cooking:** Remove proteins 3-5°C below target. A rested 500g steak will rise ~5°C.\n\n**Pastry:**\n- Choux: 93°C internal\n- Custard: 82°C (nappé)\n- Bread: 88-96°C (depending on style)\n\nAlways rest before serving for best texture and moisture retention. ð  ¡️`;
@@ -48,7 +48,7 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: 'chef',
-      content: `Welcome, Chef! I'm Chef GPT — your AI culinary assistant for ${restaurant.name}.\n\nAsk me anything: recipes, techniques, ratios, substitutions, temperatures, or plating ideas. What are we cooking today? 👨‍🍳←👨‍🍳`,
+      content: `Welcome, Chef! I'm Chef GPT — your AI culinary assistant for ${restaurant.name}.\n\nAsk me anything: recipes, techniques, ratios, substitutions, temperatures, or plating ideas. What are we cooking today? 👨‍🍳`,
     },
   ]);
   const [input, setInput] = useState('');
@@ -84,7 +84,7 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
       {/* Header */}
       <div className="mb-6 flex items-center gap-4">
         <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-lg border-2 border-white bg-gradient-to-br from-amber-400 to-orange-500">
-          👨‍🍳←👨‍🍳
+          👨‍🍳
         </div>
         <div>
           <h2 className="font-lora text-2xl font-bold text-stone-800">Chef GPT</h2>
@@ -107,12 +107,12 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
                   ? 'bg-gradient-to-br from-amber-400 to-orange-500'
                   : 'bg-cream-200 text-stone-700'
               }`}>
-                {msg.role === 'chef' ? '👨‍🍳←👨‍🍳' : <Icon name="person" size={18} />}
+                {msg.role === 'chef' ? '👨‍🍳' : <Icon name="person" size={18} />}
               </div>
               <div className={`max-w-[82%] px-5 py-4 rounded-3xl text-sm leading-relaxed shadow-sm border ${
                 msg.role === 'chef'
                   ? 'bg-white border-cream-200 text-stone-800 rounded-tl-none'
-                  : 'bg-amber-500 border-amber-400 text-white rounded-tr-none'
+                  : 'bg-stone-800 border-stone-800 text-white rounded-tr-none'
               }`}>
                 <div dangerouslySetInnerHTML={{ __html: formatContent(msg.content) }} />
               </div>
@@ -120,7 +120,7 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
           ))}
           {isTyping && (
             <div className="flex gap-3 animate-pulse">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-lg shadow-sm">👨‍🍳←👨‍🍳</div>
+              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-lg shadow-sm">👨‍🍳</div>
               <div className="bg-white border border-cream-200 px-5 py-4 rounded-3xl rounded-tl-none text-xs text-stone-400 italic shadow-sm flex items-center gap-2">
                 <span className="inline-flex gap-1">
                   <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
