@@ -135,7 +135,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
               key={t.id}
               className="relative bg-white border border-cream-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all group"
             >
-              {/* Table number â ” large, prominent */}
+              {/* Table number — large, prominent */}
               <div className="text-center mb-3">
                 <div className="w-14 h-14 mx-auto rounded-2xl bg-stone-800 flex items-center justify-center shadow">
                   <span className="text-2xl font-bold text-white">{t.number}</span>
@@ -155,7 +155,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
                 )}
               </div>
 
-              {/* Action buttons â ” visible on hover */}
+              {/* Action buttons — visible on hover */}
               <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => openEdit(t)}
@@ -181,7 +181,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
         </div>
       )}
 
-      {/* â €â € Add / Edit Modal â €â € */}
+      {/* -- Add / Edit Modal -- */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4">
           <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6">
@@ -257,13 +257,13 @@ export default function RestoTables({ restaurant }: TablesProps) {
         </div>
       )}
 
-      {/* â €â € Delete Confirm Modal â €â € */}
+      {/* -- Delete Confirm Modal -- */}
       {deleteConfirm && (() => {
         const t = tables.find(x => x.id === deleteConfirm);
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/60 backdrop-blur-sm p-4">
             <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6 text-center">
-              <p className="text-3xl mb-3">ð   ️</p>
+              <p className="text-3xl mb-3">📈️</p>
               <h2 className="font-display text-xl font-semibold text-stone-800 mb-2">Delete Table {t?.number}?</h2>
               <p className="text-stone-500 text-sm mb-6">This cannot be undone. Existing orders with this table number are not affected.</p>
               <div className="flex gap-3">

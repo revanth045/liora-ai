@@ -29,11 +29,11 @@ function timeAgo(ts: number) {
 }
 
 const ALERT_CONFIG: Record<string, { icon: string; color: string; bg: string; border: string }> = {
-  'Call Waiter':      { icon: 'ð   ️', color: 'text-amber-700',  bg: 'bg-amber-50',  border: 'border-amber-300' },
+  'Call Waiter':      { icon: '📈️', color: 'text-amber-700',  bg: 'bg-amber-50',  border: 'border-amber-300' },
   'Order Drinks':     { icon: 'ð  ·', color: 'text-purple-700', bg: 'bg-purple-50', border: 'border-purple-300' },
   'Request Bill':     { icon: 'ð §¾', color: 'text-blue-700',   bg: 'bg-blue-50',   border: 'border-blue-300' },
-  'Dietary Question': { icon: 'ð ¥ ', color: 'text-green-700',  bg: 'bg-green-50',  border: 'border-green-300' },
-  'Get Manager':      { icon: 'ð   ', color: 'text-red-700',    bg: 'bg-red-50',    border: 'border-red-300' },
+  'Dietary Question': { icon: '🥗', color: 'text-green-700',  bg: 'bg-green-50',  border: 'border-green-300' },
+  'Get Manager':      { icon: '📈', color: 'text-red-700',    bg: 'bg-red-50',    border: 'border-red-300' },
 };
 
 export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant }) {

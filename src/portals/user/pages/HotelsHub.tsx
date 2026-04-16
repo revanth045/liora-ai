@@ -8,17 +8,17 @@ export const HotelsHub = ({ onNavigate }: { onNavigate: (tab: View) => void }) =
 
         {/* Floating emoji row */}
         <div className="flex justify-center gap-4 mb-8 text-4xl select-none">
-          <span className="animate-bounce" style={{ animationDelay: '0ms' }}>ð  ¨</span>
+          <span className="animate-bounce" style={{ animationDelay: '0ms' }}>👨‍🍳</span>
           <span className="animate-bounce" style={{ animationDelay: '150ms' }}>â ¨</span>
           <span className="animate-bounce" style={{ animationDelay: '300ms' }}>ð  •</span>
-          <span className="animate-bounce" style={{ animationDelay: '450ms' }}>ð   </span>
-          <span className="animate-bounce" style={{ animationDelay: '600ms' }}>ð   ️</span>
+          <span className="animate-bounce" style={{ animationDelay: '450ms' }}>📈</span>
+          <span className="animate-bounce" style={{ animationDelay: '600ms' }}>📈️</span>
         </div>
 
         {/* Card */}
         <div className="bg-white border border-cream-200 rounded-3xl shadow-sm p-8 md:p-10 text-center space-y-5">
           <div className="inline-flex items-center gap-2 bg-forest-900 text-cream-50 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">
-            <span>ð   </span> Coming Soon
+            <span>📈</span> Coming Soon
           </div>
 
           <h1 className="text-3xl md:text-4xl font-lora font-bold text-stone-800 leading-tight">
@@ -26,7 +26,7 @@ export const HotelsHub = ({ onNavigate }: { onNavigate: (tab: View) => void }) =
           </h1>
 
           <p className="text-stone-500 leading-relaxed text-base">
-            Shh&hellip; our secret hideaways aren&rsquo;t fully revealed yet&nbsp;ð   
+            Shh&hellip; our secret hideaways aren&rsquo;t fully revealed yet&nbsp;📈
           </p>
 
           <div className="w-full h-px bg-cream-200 my-2" />
@@ -44,11 +44,11 @@ export const HotelsHub = ({ onNavigate }: { onNavigate: (tab: View) => void }) =
           {/* Decorative tag row */}
           <div className="flex flex-wrap justify-center gap-2 pt-2">
             {[
-              { emoji: 'ð   ️', label: 'Beach Retreats' },
-              { emoji: 'ð   ️', label: 'Mountain Hideaways' },
-              { emoji: 'ð   ', label: 'City Stays' },
+              { emoji: '📈️', label: 'Beach Retreats' },
+              { emoji: '📈️', label: 'Mountain Hideaways' },
+              { emoji: '📈', label: 'City Stays' },
               { emoji: 'ð  ¿', label: 'Wellness Resorts' },
-              { emoji: 'ð   ', label: 'Luxury Suites' },
+              { emoji: '📈', label: 'Luxury Suites' },
             ].map(({ emoji, label }) => (
               <span
                 key={label}

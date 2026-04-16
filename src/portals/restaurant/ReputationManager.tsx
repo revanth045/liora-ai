@@ -90,7 +90,7 @@ export default function RestoReputation({ restaurant }: { restaurant: DemoRestau
                           <Icon key={i} name={i < review.rating ? "star-solid" : "star"} size={14} className={i >= review.rating ? 'opacity-20' : ''} />
                         ))}
                       </div>
-                      <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest">{review.source} ââ ¬¢ {review.date}</span>
+                      <span className="text-[10px] text-stone-400 font-bold uppercase tracking-widest">{review.source} • {review.date}</span>
                     </div>
                   </div>
                 </div>

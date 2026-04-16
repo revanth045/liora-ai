@@ -7,7 +7,7 @@ import {
 import { useSession } from '../../../auth/useSession';
 import { useUserProfile } from '../../../../hooks/useUserProfile';
 
-// â €â €â € Types â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Types --------------------------------------------------------------------
 interface Restaurant {
     id: string;
     name: string;
@@ -26,7 +26,7 @@ interface Restaurant {
     isPartner?: boolean;
 }
 
-// â €â €â € Cart â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Cart ---------------------------------------------------------------------
 interface CartItem {
     id: string;
     name: string;
@@ -35,7 +35,7 @@ interface CartItem {
     emoji: string;
 }
 
-// â €â €â € Constants â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Constants ----------------------------------------------------------------
 const CUISINES = [
     'American', 'Italian', 'Mexican', 'Japanese', 'Chinese', 'Indian',
     'Mediterranean', 'Thai', 'French', 'Greek', 'Korean', 'Vietnamese',
@@ -50,15 +50,15 @@ const ALL_FEATURES = [
     'Gluten-Free Options', 'Bar', 'Private Dining', 'Catering',
 ];
 
-const EMOJIS = ['ð  •', 'ð  £', 'ð   ', 'ð  ®', 'ð   ', 'ð ¥ ', 'ð  ±', 'ð ¥©', 'ð ¦ ', 'ð   ', 'ð ¥ ', 'ð   ', 'ð «•', 'ð ¥ ', 'ð § ', 'ð  ¯', 'ð   ', 'ð ¥ ', 'ð « ', 'ð § '];
+const EMOJIS = ['ð  •', 'ð  £', '📈', 'ð  ®', '📈', '🥗', 'ð  ±', 'ð ¥©', 'ð ¦ ', '📈', '🥗', '📈', 'ð «•', '🥗', 'ð § ', 'ð  ¯', '📈', '🥗', 'ð « ', 'ð § '];
 
 const RKEY = 'liora_public_restaurants';
 
-// â €â €â € Portal restaurant bridge â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Portal restaurant bridge -------------------------------------------------
 function formatDayHours(hours: DayHours[]): string {
     const ABBR = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const open = hours
-        .map((h, i) => h.closed ? null : `${ABBR[i]} ${h.open}â “${h.close}`)
+        .map((h, i) => h.closed ? null : `${ABBR[i]} ${h.open}-${h.close}`)
         .filter(Boolean);
     return open.join(' · ');
 }
@@ -84,7 +84,7 @@ function portalRestaurantToDisplay(r: DemoRestaurant): Restaurant {
     };
 }
 
-// â €â €â € Storage helpers â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Storage helpers ----------------------------------------------------------
 function readRestaurants(): Restaurant[] {
     try { return JSON.parse(localStorage.getItem(RKEY) || '[]'); } catch { return []; }
 }
@@ -97,7 +97,7 @@ function getAll(): Restaurant[] {
     return readRestaurants();
 }
 
-// â €â €â € Sub-components â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Sub-components -----------------------------------------------------------
 function StarRating({ rating }: { rating: number }) {
     return (
         <div className="flex items-center gap-0.5">
@@ -127,7 +127,7 @@ function FeatureTag({ label }: { label: string }) {
     );
 }
 
-// â €â €â € Menu item card (dark food template) â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Menu item card (dark food template) -------------------------------------
 function MenuItemCard({ item, qty = 0, onAdd, onRemove }: {
     item: DemoMenuItem;
     qty?: number;
@@ -169,7 +169,7 @@ function MenuItemCard({ item, qty = 0, onAdd, onRemove }: {
     );
 }
 
-// â €â €â € Chef special card (dark food template) â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Chef special card (dark food template) -----------------------------------
 const SPECIAL_CATEGORY_LABEL: Record<string, string> = {
     daily_special: "Daily Special",
     seasonal: "Seasonal",
@@ -202,7 +202,7 @@ function ChefSpecialCard({ special, qty = 0, onAdd, onRemove }: {
                 )}
                 {special.chefNote && (
                     <p className="text-[#f5c842]/70 text-[11px] mt-1.5 italic line-clamp-2">
-                        ð  ¨â  ð  ³ "{special.chefNote}"
+                        👨‍🍳←👨‍🍳 "{special.chefNote}"
                     </p>
                 )}
             </div>
@@ -228,7 +228,7 @@ function ChefSpecialCard({ special, qty = 0, onAdd, onRemove }: {
     );
 }
 
-// â €â €â € Full Restaurant Page (replaces modal) â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Full Restaurant Page (replaces modal) -----------------------------------
 function RestaurantPage({
     r,
     onBack,
@@ -342,13 +342,13 @@ function RestaurantPage({
         setSavedNote(true);
     };
 
-    // â €â € Order success screen â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+    // -- Order success screen -------------------------------------------------
     if (orderPlaced && placedOrder) {
         return (
             <div className="fixed inset-0 z-40 bg-[#111113] flex flex-col items-center justify-center p-8 text-center overflow-y-auto">
                 <div className="max-w-sm w-full py-8">
                     <div className="w-20 h-20 rounded-full bg-[#f5c842]/10 border-2 border-[#f5c842]/30 flex items-center justify-center text-4xl mx-auto mb-6">
-                        ð   
+                        📈
                     </div>
                     <h2 className="text-2xl font-bold text-white mb-2">Order Placed!</h2>
                     <p className="text-white/50 text-sm mb-1">Table <span className="text-white font-semibold">{placedOrder.tableNumber}</span> · {r.name}</p>
@@ -371,12 +371,12 @@ function RestaurantPage({
                     {/* Liora post-order dietary follow-up */}
                     {!savedNote ? (
                         <div className="bg-[#1c1c1e] rounded-2xl p-4 text-left mb-5 border border-[#f5c842]/15">
-                            <p className="text-[#f5c842] text-[10px] font-bold uppercase tracking-widest mb-1">â ¦ Liora Asks</p>
+                            <p className="text-[#f5c842] text-[10px] font-bold uppercase tracking-widest mb-1">... Liora Asks</p>
                             <p className="text-white text-sm font-semibold mb-3">Any dietary notes or food preferences we should know for this visit?</p>
                             <textarea
                                 value={postOrderNote}
                                 onChange={e => setPostOrderNote(e.target.value)}
-                                placeholder="e.g. I prefer less spice, please avoid nuts, dairy-freeâ ¦"
+                                placeholder="e.g. I prefer less spice, please avoid nuts, dairy-free..."
                                 rows={2}
                                 className="w-full px-3 py-2.5 rounded-xl bg-[#111113] border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:border-[#f5c842]/40 resize-none"
                             />
@@ -395,7 +395,7 @@ function RestaurantPage({
                         </div>
                     ) : (
                         <div className="bg-[#1c1c1e] rounded-2xl p-4 text-center mb-5">
-                            <p className="text-white/50 text-sm">â “ Thanks for your feedback!</p>
+                            <p className="text-white/50 text-sm">- Thanks for your feedback!</p>
                         </div>
                     )}
 
@@ -410,7 +410,7 @@ function RestaurantPage({
         );
     }
 
-    // â €â € Main full-page restaurant view â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+    // -- Main full-page restaurant view ---------------------------------------
     return (
         <div className="fixed inset-0 z-40 bg-[#111113] overflow-y-auto">
             {/* Sticky top nav */}
@@ -448,7 +448,7 @@ function RestaurantPage({
                         <div className="flex items-center gap-3 mt-2">
                             {r.rating > 0
                                 ? <StarRating rating={r.rating} />
-                                : <span className="text-[10px] font-bold text-[#f5c842] uppercase tracking-wider">â ¦ New on Liora</span>}
+                                : <span className="text-[10px] font-bold text-[#f5c842] uppercase tracking-wider">... New on Liora</span>}
                             {r.priceRange && <span className="text-xs font-bold text-white/30">{r.priceRange}</span>}
                         </div>
                         {r.description && <p className="text-white/40 text-xs mt-2 leading-relaxed line-clamp-2">{r.description}</p>}
@@ -505,7 +505,7 @@ function RestaurantPage({
                                             : 'bg-white/8 text-white/50 hover:text-white hover:bg-white/15'
                                     }`}
                                 >
-                                    {sec === 'specials' ? 'â ¦ Specials' : sec}
+                                    {sec === 'specials' ? '... Specials' : sec}
                                 </button>
                             ))}
                         </div>
@@ -530,7 +530,7 @@ function RestaurantPage({
                     <div ref={el => { sectionRefs.current['specials'] = el; }}>
                         <div className="flex items-center gap-3 mb-5">
                             <div className="flex-1 h-px bg-white/8" />
-                            <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#f5c842]">â ¦ Chef Specials</h3>
+                            <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#f5c842]">... Chef Specials</h3>
                             <div className="flex-1 h-px bg-white/8" />
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -661,7 +661,7 @@ function RestaurantPage({
                                 <textarea
                                     value={specialInstructions}
                                     onChange={e => setSpecialInstructions(e.target.value)}
-                                    placeholder="Allergies, dietary needs, preferencesâ ¦"
+                                    placeholder="Allergies, dietary needs, preferences..."
                                     rows={3}
                                     className="w-full px-4 py-3 rounded-xl bg-[#111113] border border-white/10 text-white text-sm placeholder-white/30 focus:outline-none focus:border-[#f5c842]/50 resize-none"
                                 />
@@ -739,7 +739,7 @@ function InfoBody({ r }: { r: Restaurant }) {
     );
 }
 
-// â €â €â € Add Restaurant Modal â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Add Restaurant Modal -----------------------------------------------------
 const EMPTY_FORM = {
     name: '', cuisine: 'American', zip: '', address: '', phone: '', website: '',
     priceRange: '$$' as Restaurant['priceRange'], rating: 4.0,
@@ -912,7 +912,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
                         <input
                             value={form.hours}
                             onChange={e => setForm(f => ({ ...f, hours: e.target.value }))}
-                            placeholder="e.g. Monâ “Sun 11amâ “10pm"
+                            placeholder="e.g. Mon-Sun 11am-10pm"
                             className="w-full px-3.5 py-2.5 rounded-xl border border-cream-200 text-sm bg-white text-stone-800 focus:outline-none focus:ring-2 focus:ring-brand-400/30"
                         />
                     </div>
@@ -923,7 +923,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
                         <textarea
                             value={form.description}
                             onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                            placeholder="Tell guests what makes this place specialâ ¦"
+                            placeholder="Tell guests what makes this place special..."
                             rows={3}
                             className="w-full px-3.5 py-2.5 rounded-xl border border-cream-200 text-sm bg-white text-stone-800 focus:outline-none focus:ring-2 focus:ring-brand-400/30 resize-none"
                         />
@@ -958,7 +958,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
     );
 }
 
-// â €â €â € Restaurant Card â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Restaurant Card ----------------------------------------------------------
 function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void }) {
     const topFeatures = r.features.slice(0, 4);
     return (
@@ -1007,7 +1007,7 @@ function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void }) 
     );
 }
 
-// â €â €â € Main Page â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Main Page ----------------------------------------------------------------
 export default function RestaurantsPage({ setView }: { setView?: (v: string) => void }) {
     const [all, setAll] = useState<Restaurant[]>([]);
     const [zipQuery, setZipQuery] = useState('');
@@ -1094,7 +1094,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
                         type="text"
                         value={zipQuery}
                         onChange={e => setZipQuery(e.target.value.replace(/\D/g, '').slice(0, 5))}
-                        placeholder="Search by ZIP codeâ ¦"
+                        placeholder="Search by ZIP code..."
                         className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-cream-200 bg-white text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400/50"
                     />
                     {zipQuery && (
@@ -1125,7 +1125,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
                         {zipQuery ? `No restaurants found for ZIP ${zipQuery}` : 'No restaurants yet'}
                     </p>
                     <p className="text-sm text-stone-400 mt-1 mb-6">
-                        {zipQuery ? 'Try a different ZIP code' : 'No restaurants listed yet â ” check back soon!'}
+                        {zipQuery ? 'Try a different ZIP code' : 'No restaurants listed yet — check back soon!'}
                     </p>
                 </div>
             ) : (

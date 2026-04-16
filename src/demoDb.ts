@@ -55,7 +55,7 @@ export function db_seedMenuIfEmpty(restaurantId: string) {
     { restaurantId, name: 'Tiramisu', description: 'House-made tiramisu with espresso-soaked ladyfingers, mascarpone cream and dark cocoa.', priceCents: 1100, tags: ['Dessert'], available: true },
     { restaurantId, name: 'Panna Cotta', description: 'Vanilla panna cotta with a seasonal berry coulis and candied orange zest.', priceCents: 950, tags: ['Dessert'], available: true },
     { restaurantId, name: 'Still / Sparkling Water', description: '500ml bottle.', priceCents: 450, tags: ['Drinks'], available: true },
-    { restaurantId, name: 'House Red Wine (Glass)', description: 'Rotating selection of Italian reds â ” ask your waiter for today\'s pour.', priceCents: 1100, tags: ['Drinks'], available: true },
+    { restaurantId, name: 'House Red Wine (Glass)', description: 'Rotating selection of Italian reds — ask your waiter for today\'s pour.', priceCents: 1100, tags: ['Drinks'], available: true },
     { restaurantId, name: 'Espresso', description: 'Single or double shot of our signature espresso blend.', priceCents: 400, tags: ['Drinks', 'Coffee'], available: true },
   ];
   const all = read<DemoMenuItem[]>(MKEY, []);
@@ -85,9 +85,9 @@ export function db_seedIfEmpty(ownerId:string){
   }
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // ORDERS
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const OKEY = 'liora_demo_orders';
 
 export type DemoOrderItem = { menuItemId?: string; name: string; qty: number; priceCents: number };
@@ -128,12 +128,12 @@ export function db_deleteOrder(id: string) {
 export function db_listAllOrders(): DemoOrder[] {
   return read<DemoOrder[]>(OKEY, []).sort((a, b) => b.createdAt - a.createdAt);
 }
-/** @deprecated No-op on live server â ” orders are created by real customers. */
+/** @deprecated No-op on live server — orders are created by real customers. */
 export function db_seedOrders(_restaurantId: string) { /* no-op */ }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // PROMOTIONS
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const PROMOKEY = 'liora_demo_promotions';
 
 export type DemoPromotion = {
@@ -176,12 +176,12 @@ export function db_listAllActivePromotions(): DemoPromotion[] {
 export function db_getAllRestaurants(): DemoRestaurant[] {
   return read<DemoRestaurant[]>(RKEY, []);
 }
-/** @deprecated No-op on live server â ” promotions are created by the restaurant owner. */
+/** @deprecated No-op on live server — promotions are created by the restaurant owner. */
 export function db_seedPromotions(_restaurantId: string) { /* no-op */ }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // CHEF SPECIALS
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const CSKEY = 'liora_demo_chef_specials';
 
 export type DemoChefSpecialCategory = 'daily_special' | 'seasonal' | 'chef_choice';
@@ -215,7 +215,7 @@ export function db_updateChefSpecial(item: DemoChefSpecial) {
 export function db_deleteChefSpecial(id: string) {
   write(CSKEY, read<DemoChefSpecial[]>(CSKEY,[]).filter(c => c.id !== id));
 }
-/** @deprecated No-op on live server â ” chef specials are added by the restaurant. */
+/** @deprecated No-op on live server — chef specials are added by the restaurant. */
 export function db_seedChefSpecials(_restaurantId: string) { /* no-op */ }
 
 // -------------------------------------------------------------
@@ -275,9 +275,9 @@ export function db_listOpenDineSessions(restaurantId: string): DineInSession[] {
   return db_listDineSessions(restaurantId).filter(s => s.status !== 'paid');
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // INVENTORY
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const INVKEY = 'liora_demo_inventory';
 
 export type InventoryUnit = 'units' | 'kg' | 'g' | 'litres' | 'ml' | 'bottles' | 'cans' | 'bags' | 'boxes' | 'portions';
@@ -318,9 +318,9 @@ export function db_deleteInventoryItem(id: string) {
   write(INVKEY, read<DemoInventoryItem[]>(INVKEY, []).filter(x => x.id !== id));
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // STAFF
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const STAFFKEY = 'liora_demo_staff';
 const SHIFTKEY = 'liora_demo_shifts';
 
@@ -357,7 +357,7 @@ export type DemoShift = {
   notes?: string;
 };
 
-// â €â €â € Staff CRUD â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Staff CRUD ----------------------------------------------------------------
 export function db_listStaff(restaurantId: string): DemoStaffMember[] {
   return read<DemoStaffMember[]>(STAFFKEY, [])
     .filter(s => s.restaurantId === restaurantId)
@@ -381,7 +381,7 @@ export function db_deleteStaffMember(id: string) {
   write(SHIFTKEY, read<DemoShift[]>(SHIFTKEY, []).filter(s => s.staffId !== id));
 }
 
-// â €â €â € Shift CRUD â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Shift CRUD ----------------------------------------------------------------
 export function db_listShifts(restaurantId: string, weekStart: string): DemoShift[] {
   return read<DemoShift[]>(SHIFTKEY, [])
     .filter(s => s.restaurantId === restaurantId && s.weekStart === weekStart);
@@ -402,9 +402,9 @@ export function db_deleteShift(id: string) {
   write(SHIFTKEY, read<DemoShift[]>(SHIFTKEY, []).filter(x => x.id !== id));
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // TABLES
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const TKEY = 'liora_demo_tables';
 
 export type DemoTable = {
@@ -436,9 +436,9 @@ export function db_deleteTable(id: string) {
   write(TKEY, read<DemoTable[]>(TKEY, []).filter(x => x.id !== id));
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // ATTENDANCE
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const ATTKEY = 'liora_demo_attendance';
 
 export type AttendanceStatus = 'present' | 'absent' | 'late' | 'half_day';
@@ -492,16 +492,16 @@ export function db_seedAttendance(restaurantId: string, staffIds: string[]) {
   write(ATTKEY, [...existing, ...records]);
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // RESTAURANT HELPERS
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 export function db_getRestaurantById(id: string): DemoRestaurant | null {
   return read<DemoRestaurant[]>(RKEY, []).find(r => r.id === id) ?? null;
 }
 
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 // TABLE ALERTS (Quick-action notifications from diners)
-// â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// -----------------------------------------
 const ALERTS_KEY = 'liora_demo_table_alerts';
 
 export type DemoTableAlert = {

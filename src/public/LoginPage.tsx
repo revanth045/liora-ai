@@ -21,11 +21,11 @@ export default function LoginPage({ onBackToHome, loginAs = 'user', onSwitchRole
 
   const subline = isRestaurant
     ? 'Control orders, manage your menu, and grow revenue with AI-powered insights.'
-    : 'Discover extraordinary dining, plan perfect date nights, and nourish your body â ” guided by AI.';
+    : 'Discover extraordinary dining, plan perfect date nights, and nourish your body — guided by AI.';
 
   return (
     <div className="min-h-screen bg-cream-50 grid md:grid-cols-2">
-      {/* Left â ” decorative panel */}
+      {/* Left — decorative panel */}
       <div className="hidden md:block relative overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${bgImage}')` }} />
         <div className="absolute inset-0 bg-stone-900/55" />
@@ -52,7 +52,7 @@ export default function LoginPage({ onBackToHome, loginAs = 'user', onSwitchRole
         </div>
       </div>
 
-      {/* Right â ” form */}
+      {/* Right — form */}
       <div className="flex flex-col items-center justify-center p-6 md:p-12 overflow-y-auto">
         <div className="w-full max-w-md">
           <button onClick={onBackToHome}

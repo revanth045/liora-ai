@@ -3,7 +3,7 @@ import { Icon } from '../../../../components/Icon';
 import { db_listAllOrders, db_getAllRestaurants, type DemoOrder, type DemoOrderStatus, type DemoRestaurant } from '../../../demoDb';
 import { useSession } from '../../../auth/useSession';
 
-// â €â €â € Status config (dine-in flow only) â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Status config (dine-in flow only) ---------------------------------------
 const STATUS_STEPS: { key: DemoOrderStatus; label: string; icon: string }[] = [
   { key: 'pending',   label: 'Order Placed', icon: 'check_circle' },
   { key: 'preparing', label: 'Preparing',    icon: 'restaurant' },
@@ -42,7 +42,7 @@ function statusPill(status: DemoOrderStatus) {
   );
 }
 
-// â €â €â € Order Card â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Order Card ---------------------------------------------------------------
 function OrderCard({ order, restaurantName, isExpanded, onToggle }: {
   order: DemoOrder;
   restaurantName: string;
@@ -151,7 +151,7 @@ function OrderCard({ order, restaurantName, isExpanded, onToggle }: {
   );
 }
 
-// â €â €â € Main Page â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
+// --- Main Page ----------------------------------------------------------------
 export default function OrdersPage() {
   const [tab, setTab] = useState<'active' | 'history'>('active');
   const [expandedId, setExpandedId] = useState<string | null>(null);

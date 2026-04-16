@@ -697,11 +697,11 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     setAttendance(prev => [...prev.filter(a => !(a.staffId === member.id && a.date === attendanceDate)), updated]);
                   };
                   const workedHours = () => {
-                    if (!rec?.clockIn || !rec?.clockOut) return 'â ”';
+                    if (!rec?.clockIn || !rec?.clockOut) return '—';
                     const [ih, im] = rec.clockIn.split(':').map(Number);
                     const [oh, om] = rec.clockOut.split(':').map(Number);
                     const mins = (oh * 60 + om) - (ih * 60 + im);
-                    if (mins <= 0) return 'â ”';
+                    if (mins <= 0) return '—';
                     const h = Math.floor(mins / 60);
                     const m = mins % 60;
                     return m > 0 ? `${h}h ${m}m` : `${h}h`;
@@ -776,7 +776,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     <tbody>
                       {staff.filter(m => m.status === 'active').map(member => {
                         const statusEmoji: Record<AttendanceStatus, string> = {
-                          present: 'ð  ¢', late: 'ð  ¡', half_day: 'ð  µ', absent: 'ð  ´',
+                          present: '🥩', late: 'ð  ¡', half_day: 'ð  µ', absent: 'ð  ´',
                         };
                         const days = Array.from({length:7},(_,i)=>{
                           const d = new Date();
@@ -805,7 +805,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     </tbody>
                   </table>
                   <div className="flex gap-4 mt-4 text-[10px] text-stone-400 font-medium">
-                    <span>ð  ¢ Present</span><span>ð  ¡ Late</span><span>ð  µ Half Day</span><span>ð  ´ Absent</span><span>⬜ No Record</span>
+                    <span>🥩 Present</span><span>ð  ¡ Late</span><span>ð  µ Half Day</span><span>ð  ´ Absent</span><span>⬜ No Record</span>
                   </div>
                 </div>
               </div>

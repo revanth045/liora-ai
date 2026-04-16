@@ -26,7 +26,7 @@ const EMPTY_FORM: SpecialForm = {
   name: '', description: '', priceCents: 2500, category: 'daily_special', chefNote: '', imageEmoji: 'ð  ½️', isAvailable: true,
 };
 
-const EMOJI_OPTIONS = ['ð  ½️','ð   ','ð ¥©','ð   ','ð «•','ð ¥ ','ð  ±','ð ¦ ','ð § ','ð ¥ ','ð  ¿','ð   '];
+const EMOJI_OPTIONS = ['ð  ½️','📈','ð ¥©','📈','ð «•','🥗','ð  ±','ð ¦ ','ð § ','🥗','ð  ¿','📈'];
 
 export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRestaurant }) {
   const [specials, setSpecials] = useState<DemoChefSpecial[]>([]);
@@ -146,7 +146,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
 
                     {special.chefNote && (
                       <div className="flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3 mb-4">
-                        <span className="text-lg flex-shrink-0">ð  ¨â  ð  ³</span>
+                        <span className="text-lg flex-shrink-0">👨‍🍳←👨‍🍳</span>
                         <p className="text-sm text-amber-700 italic leading-relaxed">{special.chefNote}</p>
                       </div>
                     )}

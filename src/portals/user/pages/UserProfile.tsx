@@ -67,7 +67,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ setView }) => {
     }
   };
 
-  // Safe primitive coercion helper â ” handles AI returning objects/arrays instead of strings
+  // Safe primitive coercion helper — handles AI returning objects/arrays instead of strings
   const toProfileStr = (v: unknown): string => {
     if (typeof v === 'string') return v;
     if (Array.isArray(v)) return (v as unknown[]).map(String).join(', ');
@@ -288,7 +288,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ setView }) => {
                                     </div>
                                     <div className="overflow-hidden">
                                         <h4 className="font-bold text-stone-800 text-lg truncate">{order.restaurantName}</h4>
-                                        <p className="text-xs text-stone-400 font-medium uppercase tracking-wide">{new Date(order.date).toLocaleDateString()} ââ ¬¢ {order.items.length} items</p>
+                                        <p className="text-xs text-stone-400 font-medium uppercase tracking-wide">{new Date(order.date).toLocaleDateString()} • {order.items.length} items</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-6 w-full sm:w-auto justify-between sm:justify-end">
@@ -329,7 +329,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ setView }) => {
                             <div className="flex items-center gap-4">
                                 <div className="w-12 h-8 bg-black rounded-md flex items-center justify-center text-[10px] font-bold text-white tracking-widest">VISA</div>
                                 <div>
-                                    <p className="font-bold text-stone-800">ââ ¬¢ââ ¬¢ââ ¬¢ââ ¬¢ 4242</p>
+                                    <p className="font-bold text-stone-800">•••• 4242</p>
                                     <p className="text-[10px] text-stone-400 font-bold uppercase">Expires 12/28</p>
                                 </div>
                             </div>

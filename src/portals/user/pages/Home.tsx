@@ -44,9 +44,9 @@ const QUICK_ACTIONS: { img: string; label: string; view: View }[] = [
 ];
 
 const CUISINE_EMOJI: Record<string, string> = {
-    italian: 'ð   ', japanese: 'ð  ±', indian: 'ð   ', mexican: 'ð  ®',
-    chinese: 'ð ¥¡', american: 'ð   ', thai: 'ð   ', mediterranean: 'ð ¥ ',
-    french: 'ð ¥ ', korean: 'ð  ²', default: 'ð  ½️',
+    italian: '📈', japanese: 'ð  ±', indian: '📈', mexican: 'ð  ®',
+    chinese: 'ð ¥¡', american: '📈', thai: '📈', mediterranean: '🥗',
+    french: '🥗', korean: 'ð  ²', default: 'ð  ½️',
 };
 function cuisineEmoji(cuisine?: string) {
     if (!cuisine) return CUISINE_EMOJI.default;
@@ -89,22 +89,22 @@ export default function HomePage({ setView }: HomeProps) {
     return (
         <div className="min-h-screen bg-cream-50 pb-28">
 
-            {/* â €â € Hero Banner â €â € */}
+            {/* -- Hero Banner -- */}
             <div className="relative overflow-hidden bg-gradient-to-br from-forest-900 via-forest-800 to-forest-900 px-6 pt-10 pb-14">
                 <div className="relative z-10 max-w-2xl">
                     <p className="text-amber-400 text-sm font-bold uppercase tracking-widest mb-1">{timeGreeting()}</p>
                     <h1 className="text-3xl font-lora font-bold text-white mb-2">
-                        Welcome back, {userName.split(' ')[0]} ð   
+                        Welcome back, {userName.split(' ')[0]} 📈
                     </h1>
                     <p className="text-white/60 text-sm">What are you in the mood for today?</p>
 
-                    {/* Search bar â ’ opens restaurants */}
+                    {/* Search bar → opens restaurants */}
                     <button
                         onClick={() => setView('restaurants')}
                         className="mt-5 w-full flex items-center gap-3 bg-white/10 backdrop-blur border border-white/20 rounded-2xl px-4 py-3 text-white/60 text-sm hover:bg-white/20 transition-colors text-left"
                     >
                         <Icon name="search" size={18} />
-                        <span>Search restaurants, cuisinesâ ¦</span>
+                        <span>Search restaurants, cuisines...</span>
                     </button>
                 </div>
                 {/* Decorative circles */}
@@ -112,7 +112,7 @@ export default function HomePage({ setView }: HomeProps) {
                 <div className="absolute top-16 -right-4 w-24 h-24 bg-amber-400/10 rounded-full pointer-events-none" />
             </div>
 
-            {/* â €â € Active Order Alert â €â € */}
+            {/* -- Active Order Alert -- */}
             {activeOrders.length > 0 && (
                 <div className="mx-4 -mt-6 relative z-20">
                     <button
@@ -135,7 +135,7 @@ export default function HomePage({ setView }: HomeProps) {
 
             <div className="px-4 mt-6 space-y-8">
 
-                {/* â €â € Quick Actions â €â € */}
+                {/* -- Quick Actions -- */}
                 <section>
                     <h2 className="text-[11px] font-bold uppercase tracking-widest text-stone-400 mb-3">Quick Access</h2>
                     <div className="grid grid-cols-4 gap-3">
@@ -154,7 +154,7 @@ export default function HomePage({ setView }: HomeProps) {
                     </div>
                 </section>
 
-                {/* â €â € Restaurants Near You â €â € */}
+                {/* -- Restaurants Near You -- */}
                 {restaurants.length > 0 && (
                     <section>
                         <div className="flex items-center justify-between mb-3">
@@ -192,7 +192,7 @@ export default function HomePage({ setView }: HomeProps) {
                     </section>
                 )}
 
-                {/* â €â € Active Deals â €â € */}
+                {/* -- Active Deals -- */}
                 {promos.length > 0 && (
                     <section>
                         <div className="flex items-center justify-between mb-3">
@@ -220,7 +220,7 @@ export default function HomePage({ setView }: HomeProps) {
                     </section>
                 )}
 
-                {/* â €â € Recent Orders â €â € */}
+                {/* -- Recent Orders -- */}
                 {myOrders.length > 0 && (
                     <section>
                         <div className="flex items-center justify-between mb-3">
@@ -257,14 +257,14 @@ export default function HomePage({ setView }: HomeProps) {
                     </section>
                 )}
 
-                {/* â €â € AI Assistant CTA (empty state / always shown) â €â € */}
+                {/* -- AI Assistant CTA (empty state / always shown) -- */}
                 <section>
                     <button
                         onClick={() => setView('ai_chat')}
                         className="w-full bg-gradient-to-br from-violet-600 to-violet-800 rounded-3xl p-6 flex items-center gap-4 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
                     >
                         <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center shrink-0 text-3xl">
-                            â ¦
+                            ...
                         </div>
                         <div className="text-left">
                             <p className="text-white font-lora font-bold text-lg">Ask Liora anything</p>

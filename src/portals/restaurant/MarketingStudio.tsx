@@ -21,7 +21,7 @@ const imageLoadingMessages = [
 ];
 
 export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoRestaurant }) {
-  const [idea, setIdea] = useState('Penne alla Vodka winter special â ” cozy, under $20, Huntington, NY.');
+  const [idea, setIdea] = useState('Penne alla Vodka winter special — cozy, under $20, Huntington, NY.');
   const [copy, setCopy] = useState<string>("");
   const [img, setImg] = useState<string>("");
   const [isCopyLoading, setIsCopyLoading] = useState(false);
@@ -55,7 +55,7 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
     setImgError("");
     setImg("");
     try {
-        const { imageUrl } = await restoGenImagePrompt(restaurant.name + " â ” " + idea);
+        const { imageUrl } = await restoGenImagePrompt(restaurant.name + " — " + idea);
         if (imageUrl) setImg(imageUrl);
     } catch (e: any) {
         setImgError(e.message || "Failed to generate image.");

@@ -83,7 +83,7 @@ export default function ForRestaurants({ onGoToLogin, onBackToHome }: ForRestaur
                         <p className="font-display text-2xl md:text-3xl italic text-stone-700 leading-relaxed mb-6">
                             "Liora's marketing studio saved us 10 hours a week on social media. The AI-generated copy is better than what we were writing ourselves."
                         </p>
-                        <p className="font-semibold text-brand-400">ââ ¬â   Maria, Owner of The Corner Bistro</p>
+                        <p className="font-semibold text-brand-400">ââ ¬← Maria, Owner of The Corner Bistro</p>
                     </div>
                 </div>
             </section>

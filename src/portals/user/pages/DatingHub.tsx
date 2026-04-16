@@ -45,10 +45,10 @@ export const DatingHub = () => {
 
         {/* Message */}
         <p className="text-stone-600 text-base leading-relaxed mb-4">
-          Good food brings people togetherâ ¦ what if it also sparks something more?&nbsp;ð   
+          Good food brings people together... what if it also sparks something more?&nbsp;📈
         </p>
         <p className="text-stone-400 text-sm leading-relaxed mb-8">
-          We&apos;re going live soon â ” get ready to discover delicious moments and maybe even a little romance.
+          We&apos;re going live soon — get ready to discover delicious moments and maybe even a little romance.
         </p>
 
         {/* Coming Soon badge */}
@@ -58,7 +58,7 @@ export const DatingHub = () => {
         </div>
 
         {/* Subtle footer note */}
-        <p className="mt-6 text-xs text-stone-300">Stay tuned â ” something delicious is cooking ð  ½️</p>
+        <p className="mt-6 text-xs text-stone-300">Stay tuned — something delicious is cooking ð  ½️</p>
       </div>
     </div>
   );
