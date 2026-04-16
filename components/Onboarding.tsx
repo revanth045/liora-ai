@@ -17,12 +17,12 @@ const ALLERGIES = [
 
 const LIFESTYLES = [
   { id: '', label: 'No Preference', icon: '🍽️' },
-  { id: 'vegetarian', label: 'Vegetarian', icon: 'ð ¥¦' },
-  { id: 'vegan', label: 'Vegan', icon: '🍣' },
-  { id: 'pescatarian', label: 'Pescatarian', icon: 'ð   ' },
+  { id: 'vegetarian', label: 'Vegetarian', icon: '🥗' },
+  { id: 'vegan', label: 'Vegan', icon: '🌱' },
+  { id: 'pescatarian', label: 'Pescatarian', icon: '🐟' },
   { id: 'keto', label: 'Keto / Low-Carb', icon: '🥩' },
-  { id: 'paleo', label: 'Paleo', icon: 'ð ¦´' },
-  { id: 'whole30', label: 'Whole30', icon: 'ð ¥ ' },
+  { id: 'paleo', label: 'Paleo', icon: '🍗' },
+  { id: 'whole30', label: 'Whole30', icon: '🥑' },
 ];
 
 const RELIGIOUS = [
@@ -41,7 +41,7 @@ const HEALTH = [
 ];
 
 const POPULAR_CUISINES = ['Italian', 'Mexican', 'Thai', 'Japanese', 'Chinese', 'Indian', 'American', 'Mediterranean', 'Greek', 'Korean', 'Vietnamese', 'French'];
-const SPICE_LABELS: Record<number, string> = { 1: 'Mild', 2: 'A little kick', 3: 'Just right', 4: 'Spicy!', 5: 'ð  ¥ Bring the heat!' };
+const SPICE_LABELS: Record<number, string> = { 1: 'Mild', 2: 'A little kick', 3: 'Just right', 4: 'Spicy!', 5: '🔥 Bring the heat!' };
 const BUDGET_LABELS: Record<string, string> = { '$': 'Budget-friendly', '$$': 'Mid-range', '$$$': 'Fine dining' };
 
 const LOADING_MESSAGES = [
@@ -239,7 +239,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
         <div className="absolute -right-2 -bottom-6 w-16 h-16 rounded-full bg-orange-400/10" />
         <div className="flex items-start gap-3 relative">
           <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-amber-400 flex items-center justify-center shadow-md">
-            <span className="text-xl">ð   </span>
+            <span className="text-xl">🎁</span>
           </div>
           <div className="flex-1 min-w-0">
             <span className="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">Welcome Offer</span>
