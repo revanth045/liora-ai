@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Icon } from '../../../components/Icon';
 import type { DemoRestaurant } from '../../demoDb';
 
@@ -8,10 +8,10 @@ export default function RestoFinance({ restaurant }: { restaurant: DemoRestauran
       
       {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-cream-100 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
+        <div className="bg-stone-800 text-white p-8 rounded-[2rem] shadow-xl relative overflow-hidden group">
           <div className="relative z-10">
             <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">Total Revenue (Feb)</p>
-            <h2 className="text-4xl font-lora font-bold">$42,890.00</h2>
+            <h2 className="text-4xl font-lora font-bold text-white">$42,890.00</h2>
             <div className="mt-4 flex items-center gap-2 text-green-400 text-sm font-bold">
               <Icon name="trending_up" size={16} /> +18.2% <span className="opacity-60 font-normal">vs Jan</span>
             </div>

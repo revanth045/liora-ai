@@ -246,11 +246,11 @@ export const AiWaiter = () => {
     }, [showMenu]);
 
     const QUICK_ACTION_CONFIG: Record<string, { icon: string; alertMessage: string; confirmation: string }> = {
-        'Call Waiter':    { icon: 'ð   ️', alertMessage: `Table ${session.tableNumber} is calling for a waiter`, confirmation: "A waiter has been notified and will be with you shortly!" },
+        'Call Waiter':    { icon: '🙋‍♂️', alertMessage: `Table ${session.tableNumber} is calling for a waiter`, confirmation: "A waiter has been notified and will be with you shortly!" },
         'Order Drinks':   { icon: '🍷', alertMessage: `Table ${session.tableNumber} would like to order drinks`, confirmation: "Your drink order request has been sent! Someone will be right over." },
         'Request Bill':   { icon: '🧾', alertMessage: `Table ${session.tableNumber} is requesting the bill`, confirmation: "Your bill is being prepared and will be brought to you shortly!" },
-        'Dietary Question': { icon: 'ð ¥ ', alertMessage: `Table ${session.tableNumber} has a dietary question for the kitchen`, confirmation: "Your question has been forwarded to the kitchen team!" },
-        'Get Manager':    { icon: 'ð   ', alertMessage: `Table ${session.tableNumber} is requesting to speak with the manager`, confirmation: "The manager has been notified and will be with you soon!" },
+        'Dietary Question': { icon: '🥗', alertMessage: `Table ${session.tableNumber} has a dietary question for the kitchen`, confirmation: "Your question has been forwarded to the kitchen team!" },
+        'Get Manager':    { icon: '👔', alertMessage: `Table ${session.tableNumber} is requesting to speak with the manager`, confirmation: "The manager has been notified and will be with you soon!" },
     };
 
     const handleQuickAction = (action: string) => {
@@ -264,7 +264,7 @@ export const AiWaiter = () => {
                 setMessages(prev => [...prev, {
                     id: uid(),
                     author: MessageAuthor.SYSTEM,
-                    text: 'ð ¥  Please type your dietary question in the message box below first, then tap "Dietary Question".',
+                    text: '🥗 Please type your dietary question in the message box below first, then tap "Dietary Question".',
                 }]);
                 return;
             }
@@ -277,7 +277,7 @@ export const AiWaiter = () => {
             setMessages(prev => [...prev, {
                 id: uid(),
                 author: MessageAuthor.SYSTEM,
-                text: `ð ¥  Your question has been sent to the kitchen: "${question}"`,
+                text: `🥗 Your question has been sent to the kitchen: "${question}"`,
             }]);
             setInput('');
             return;
@@ -736,12 +736,12 @@ export const AiWaiter = () => {
             {/* Quick Actions Bar - Scrollable Left to Right */}
             <div className="px-4 py-3 flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide border-t border-cream-200 bg-white overscroll-x-contain touch-pan-x">
                 {[
-                    { label: "Call Waiter", icon: "ð   ️" },
+                    { label: "Call Waiter", icon: "🙋‍♂️" },
                     { label: "Order Drinks", icon: "🍷" },
                     { label: "Request Bill", icon: "🧾" },
-                    { label: "Dietary Question", icon: "ð ¥ " },
+                    { label: "Dietary Question", icon: "🥗" },
                     { label: "See Specials", icon: "⭐" },
-                    { label: "Get Manager", icon: "ð   " },
+                    { label: "Get Manager", icon: "👔" },
                 ].map(({ label, icon }) => (
                     <button 
                         key={label}

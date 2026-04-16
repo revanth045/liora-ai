@@ -116,12 +116,12 @@ export default function RestoAiConsultant({ restaurant }: { restaurant: DemoRest
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask about sales, inventory, or staff..."
-              className="w-full p-4.5 pr-14 bg-white border border-cream-200 rounded-2xl outline-none text-stone-800 placeholder-stone-400 focus:ring-1 focus:ring-brand-400 transition-all font-medium shadow-inner"
+              className="w-full py-4 pr-16 pl-6 bg-white border-2 border-cream-200 rounded-2xl outline-none text-stone-800 placeholder-stone-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-400/20 transition-all font-medium shadow-sm"
             />
             <button 
               onClick={() => handleSend()}
               disabled={!input.trim() || isTyping}
-              className="absolute right-2.5 top-2.5 p-2.5 bg-stone-800 text-white rounded-xl disabled:opacity-30 hover:bg-stone-900 transition-all active:scale-90 shadow-md"
+              className="absolute right-2 top-2 p-2.5 bg-stone-800 text-white rounded-xl disabled:opacity-40 disabled:bg-stone-400 hover:bg-stone-900 transition-all active:scale-95 shadow-md flex items-center justify-center"
             >
               <Icon name="send" size={20} />
             </button>
