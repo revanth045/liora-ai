@@ -81,7 +81,8 @@ export default function RestaurantPortal(){
       const orders = db_listOrders(restaurant.id);
       if (orderCount !== null && orders.length > orderCount) {
         const newest = orders[orders.length - 1];
-        setToast({ title: 'New Order Received', message: `Table ${newest.tableNumber || '?'} ordered ${newest.items.length} items.` });
+        const allergensStr = newest.allergens && newest.allergens.length > 0 ? ` ⚠️ Allergies: ${newest.allergens.join(', ')}` : '';
+        setToast({ title: 'New Order Received', message: `Table ${newest.tableNumber || '?'} ordered ${newest.items.length} items.${allergensStr}` });
         setTimeout(() => setToast(null), 5000);
       }
       setOrderCount(orders.length);

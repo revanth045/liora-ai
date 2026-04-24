@@ -329,7 +329,9 @@ function RestaurantPage({
         });
 
         const alertId = uid();
-        const notificationMessage = `Order placed with ${cart.length} items (${cart.map(c => `${c.qty}x ${c.name}`).join(', ')})`;
+        const allergensList = (userProfile?.profile?.allergens && userProfile.profile.allergens.length > 0) ? userProfile.profile.allergens.join(', ') : '';
+        let notificationMessage = `Order placed with ${cart.length} items (${cart.map(c => `${c.qty}x ${c.name}`).join(', ')})`;
+        if (allergensList) notificationMessage += ` | ⚠️ ALLERGY WARNING: ${allergensList}`;
 
         db_addTableAlert({
             id: alertId,

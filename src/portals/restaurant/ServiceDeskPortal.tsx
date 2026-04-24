@@ -237,7 +237,8 @@ export default function ServiceDeskPortal() {
       beep();
       const newestPending = all.filter(o => o.status === 'pending').sort((a, b) => b.createdAt - a.createdAt)[0];
       if (newestPending) {
-        setToast({ title: 'New Order Received', message: `Table ${newestPending.tableNumber || '?'} ordered ${newestPending.items.length} items.` });
+        const allergensStr = newestPending.allergens && newestPending.allergens.length > 0 ? ` ⚠️ Allergies: ${newestPending.allergens.join(', ')}` : '';
+        setToast({ title: 'New Order Received', message: `Table ${newestPending.tableNumber || '?'} ordered ${newestPending.items.length} items.${allergensStr}` });
         setTimeout(() => setToast(null), 5000);
       }
     }

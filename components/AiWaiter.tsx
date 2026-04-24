@@ -354,7 +354,9 @@ export const AiWaiter = () => {
         sbAddOrder(orderPayload).catch(e => console.warn('Supabase order sync failed:', e));
 
         const alertId = uid();
-        const notificationMessage = `Order placed with ${items.length} items (${items.map(i => `${i.qty}x ${i.name}`).join(', ')})`;
+        const allergensList = (profile?.profile?.allergens && profile.profile.allergens.length > 0) ? profile.profile.allergens.join(', ') : '';
+        let notificationMessage = `Order placed with ${items.length} items (${items.map(i => `${i.qty}x ${i.name}`).join(', ')})`;
+        if (allergensList) notificationMessage += ` | ⚠️ ALLERGY WARNING: ${allergensList}`;
 
         db_addTableAlert({
             id: alertId,
