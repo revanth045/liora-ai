@@ -520,8 +520,19 @@ export const AiWaiter = () => {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="ml-4 text-right flex-shrink-0">
+                                    <div className="ml-4 flex flex-col items-end gap-2 flex-shrink-0">
                                         <p className="font-bold text-brand-400 text-base">${(item.priceCents / 100).toFixed(2)}</p>
+                                        <div className="flex items-center gap-1.5">
+                                            {(cartQty[item.id] ?? 0) > 0 ? (
+                                                <>
+                                                    <button onClick={() => adjustCart(item.id, -1)} className="w-7 h-7 rounded-full bg-white border border-stone-200 text-stone-600 font-bold text-sm hover:border-red-300 hover:text-red-500 transition-all flex items-center justify-center">−</button>
+                                                    <span className="w-4 text-center font-bold text-stone-800 text-xs">{(cartQty[item.id] ?? 0)}</span>
+                                                    <button onClick={() => adjustCart(item.id, 1)} className="w-7 h-7 rounded-full bg-brand-400 text-white font-bold text-sm hover:bg-amber-500 transition-all flex items-center justify-center shadow-sm">+</button>
+                                                </>
+                                            ) : (
+                                                <button onClick={() => adjustCart(item.id, 1)} className="w-8 h-8 rounded-full bg-brand-400 text-white font-bold text-lg hover:bg-amber-500 transition-all flex items-center justify-center shadow-sm">+</button>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             )) : (
@@ -549,13 +560,38 @@ export const AiWaiter = () => {
                                 ))
                             )}
                         </div>
-                        <div className="p-4 border-t border-cream-200">
-                            <button
-                                onClick={() => setShowSpecials(false)}
-                                className="w-full py-3 bg-brand-400 text-white font-bold rounded-2xl shadow-md hover:bg-amber-500 transition-all"
-                            >
-                                Close
-                            </button>
+                        {orderSuccess && (
+                            <div className="absolute inset-0 bg-white z-10 flex flex-col items-center justify-center gap-4">
+                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center">
+                                    <Icon name="check_circle" size={48} className="text-green-500" />
+                                </div>
+                                <p className="font-lora font-bold text-2xl text-stone-800">Order Sent!</p>
+                                <p className="text-stone-400 text-sm">The kitchen is on it.</p>
+                            </div>
+                        )}
+                        <div className="p-4 border-t border-cream-200 bg-white flex-shrink-0 space-y-3">
+                            {cartCount > 0 ? (
+                                <>
+                                    <div className="flex items-center justify-between px-1">
+                                        <span className="text-sm font-bold text-stone-600">{cartCount} item{cartCount !== 1 ? 's' : ''} selected</span>
+                                        <span className="text-sm font-bold text-stone-800">${(cartTotal / 100).toFixed(2)}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => { handleSendOrder(); setShowSpecials(false); }}
+                                        className="w-full py-3.5 bg-brand-400 text-white font-bold rounded-2xl shadow-md hover:bg-amber-500 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        <Icon name="send" size={18} />
+                                        Send Order · ${(cartTotal / 100).toFixed(2)}
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    onClick={() => setShowSpecials(false)}
+                                    className="w-full py-3 bg-brand-400 text-white font-bold rounded-2xl shadow-md hover:bg-amber-500 transition-all"
+                                >
+                                    Close
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -618,7 +654,7 @@ export const AiWaiter = () => {
                                                     <button
                                                         onClick={() => adjustCart(item.id, -1)}
                                                         className="w-8 h-8 rounded-full bg-white border-2 border-stone-200 text-stone-600 font-bold text-lg hover:border-red-300 hover:text-red-500 transition-all flex items-center justify-center"
-                                                    >â ’</button>
+                                                    >−</button>
                                                     <span className="w-6 text-center font-bold text-stone-800 text-sm">{qty}</span>
                                                     <button
                                                         onClick={() => adjustCart(item.id, 1)}
