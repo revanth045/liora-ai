@@ -4,7 +4,8 @@ import { Icon } from '../../../components/Icon';
 import {
   db_listOrders, db_listMenu, db_listInventory,
   db_listReservations, db_listChefSpecials,
-  type DemoRestaurant, type DemoOrder, type DemoInventoryItem,
+  db_listTableAlerts, db_dismissTableAlert,
+  type DemoRestaurant, type DemoOrder, type DemoInventoryItem, type DemoTableAlert,
 } from '../../demoDb';
 
 function fmt(cents: number) { return `$${(cents / 100).toFixed(2)}`; }
@@ -22,6 +23,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
   const [menuCount, setMenuCount] = useState(0);
   const [reservationCount, setReservationCount] = useState(0);
   const [specialsCount, setSpecialsCount] = useState(0);
+  const [tableAlerts, setTableAlerts] = useState<DemoTableAlert[]>([]);
 
   const reload = () => {
     const allOrders = db_listOrders(restaurant.id).sort((a, b) => b.createdAt - a.createdAt);
@@ -30,6 +32,12 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
     setMenuCount(db_listMenu(restaurant.id).filter(m => m.available).length);
     setReservationCount(db_listReservations(restaurant.id).filter(r => r.status !== 'canceled').length);
     setSpecialsCount(db_listChefSpecials(restaurant.id).filter(c => c.isAvailable).length);
+    setTableAlerts(db_listTableAlerts(restaurant.name).sort((a,b) => b.createdAt - a.createdAt));
+  };
+
+  const handleDismissAlert = (id: string) => {
+    db_dismissTableAlert(id);
+    reload();
   };
 
   useEffect(() => {
@@ -60,6 +68,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
     id: o.id,
     time: timeAgo(o.createdAt),
     table: o.tableNumber || '—',
+    customer: o.customerName || 'Guest',
     action: `${o.items.map(i => `${i.qty}× ${i.name}`).join(', ')} · ${fmt(o.totalCents)}`,
     type: o.status === 'pending' ? 'pending' : o.status === 'preparing' ? 'order' : o.status === 'ready' ? 'service' : 'done',
     status: o.status,
@@ -68,11 +77,12 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
 
   // Alerts based on real data
   const ALERTS = [
-    ...(pendingOrders.length > 0 ? [{ level: 'critical', msg: `${pendingOrders.length} order${pendingOrders.length > 1 ? 's' : ''} waiting to be accepted`, link: 'orders' }] : []),
-    ...(lowStockItems.slice(0, 2).map(item => ({ level: 'warning', msg: `Low stock: ${item.name} (${item.quantity} ${item.unit} remaining)`, link: 'inventory' }))),
-    ...(reservationCount > 0 ? [{ level: 'info', msg: `${reservationCount} active reservation${reservationCount > 1 ? 's' : ''}`, link: 'orders' }] : []),
-    ...(menuCount === 0 ? [{ level: 'warning', msg: 'No menu items published yet — customers can\'t order', link: 'menu' }] : []),
-  ].slice(0, 4);
+    ...tableAlerts.map(a => ({ id: a.id, level: 'critical', msg: `[Table ${a.tableNumber}] ${a.action}: ${a.message}`, isTableAlert: true })),
+    ...(pendingOrders.length > 0 ? [{ id: 'pending', level: 'critical', msg: `${pendingOrders.length} order${pendingOrders.length > 1 ? 's' : ''} waiting to be accepted` }] : []),
+    ...(lowStockItems.slice(0, 2).map(item => ({ id: `stock-${item.id}`, level: 'warning', msg: `Low stock: ${item.name} (${item.quantity} ${item.unit} remaining)` }))),
+    ...(reservationCount > 0 ? [{ id: 'res', level: 'info', msg: `${reservationCount} active reservation${reservationCount > 1 ? 's' : ''}` }] : []),
+    ...(menuCount === 0 ? [{ id: 'nomenu', level: 'warning', msg: 'No menu items published yet — customers can\'t order' }] : []),
+  ].slice(0, 6);
 
   const STATUS_ICON: Record<string, string> = { pending: 'pending_actions', order: 'restaurant', service: 'done_all', done: 'check_circle' };
   const STATUS_COLOR: Record<string, string> = { pending: 'bg-amber-100 text-amber-600', order: 'bg-green-100 text-green-600', service: 'bg-blue-100 text-blue-600', done: 'bg-stone-100 text-stone-500' };
@@ -126,7 +136,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-center mb-0.5">
                     <span className="font-bold text-stone-800 text-sm">
-                      {item.table !== '—' ? `Table ${item.table}` : 'Pickup'}
+                      {item.table !== '—' ? `Table ${item.table} (${item.customer})` : `Pickup (${item.customer})`}
                     </span>
                     <span className="text-[10px] font-bold text-stone-400 uppercase bg-cream-100/50 px-2 py-0.5 rounded-full">{item.time}</span>
                   </div>
@@ -168,18 +178,25 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
               </div>
             ) : (
               <div className="divide-y divide-cream-200">
-                {ALERTS.map((alert, idx) => (
-                  <div key={idx} className={`p-5 border-l-4 transition-colors ${
+                {ALERTS.map((alert) => (
+                  <div key={alert.id} className={`p-5 border-l-4 transition-colors relative ${
                     alert.level === 'critical' ? 'border-l-red-500 bg-red-50/20 hover:bg-red-50/40' : 
                     alert.level === 'warning' ? 'border-l-orange-500 bg-orange-50/20 hover:bg-orange-50/40' : 
                     'border-l-blue-500 bg-blue-50/20 hover:bg-blue-50/40'
                   }`}>
-                    <p className="text-sm font-bold text-stone-800 mb-2 leading-relaxed">{alert.msg}</p>
-                    <span className={`text-[10px] font-bold uppercase tracking-widest ${
-                      alert.level === 'critical' ? 'text-red-500' : alert.level === 'warning' ? 'text-orange-500' : 'text-blue-500'
-                    }`}>
-                      {alert.level === 'critical' ? '← Urgent' : alert.level === 'warning' ? '⚠️ Warning' : 'ℹ️ Info'}
-                    </span>
+                    <div className="pr-8">
+                      <p className="text-sm font-bold text-stone-800 mb-2 leading-relaxed">{alert.msg}</p>
+                      <span className={`text-[10px] font-bold uppercase tracking-widest ${
+                        alert.level === 'critical' ? 'text-red-500' : alert.level === 'warning' ? 'text-orange-500' : 'text-blue-500'
+                      }`}>
+                        {alert.level === 'critical' ? '← Urgent' : alert.level === 'warning' ? '⚠️ Warning' : 'ℹ️ Info'}
+                      </span>
+                    </div>
+                    {alert.isTableAlert && (
+                       <button onClick={() => handleDismissAlert(alert.id)} className="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center bg-white border border-stone-200 text-stone-400 hover:text-green-600 hover:border-green-300 transition-colors shadow-sm">
+                         <Icon name="check" size={18} />
+                       </button>
+                    )}
                   </div>
                 ))}
               </div>
