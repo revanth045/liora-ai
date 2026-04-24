@@ -86,6 +86,65 @@ export function db_seedIfEmpty(ownerId:string){
 }
 
 // -----------------------------------------
+// DEMO RESTAURANT SEEDING (4 restaurants)
+// -----------------------------------------
+const DEMO_RESTAURANTS: Omit<DemoRestaurant,'id'|'ownerId'>[] = [
+  {
+    name: 'The Golden Fork',
+    address: '42 Sunset Blvd, New York, NY 10001',
+    phone: '+1 212-555-0101',
+    website: 'https://thegoldenfork.com',
+    cuisine: 'Italian-American',
+    bio: 'Fine dining since 1998. Fresh pasta, grilled meats and a curated wine list in a warm, candlelit setting.',
+  },
+  {
+    name: 'Sakura Blossom',
+    address: '88 Cherry Lane, San Francisco, CA 94102',
+    phone: '+1 415-555-0188',
+    website: 'https://sakurablossomsf.com',
+    cuisine: 'Japanese',
+    bio: 'Authentic Japanese cuisine featuring sushi, ramen and seasonal kaiseki menus sourced from local farms.',
+  },
+  {
+    name: 'Spice Route',
+    address: '7 Curry Mile, Chicago, IL 60601',
+    phone: '+1 312-555-0177',
+    website: 'https://spiceroutechicago.com',
+    cuisine: 'Indian',
+    bio: 'A celebration of South Asian flavours — from tandoor-roasted meats to fragrant biryanis and live dosa station.',
+  },
+  {
+    name: 'The Rustic Table',
+    address: '15 Oak Street, Austin, TX 73301',
+    phone: '+1 512-555-0199',
+    website: 'https://therustictable.com',
+    cuisine: 'American Farm-to-Table',
+    bio: 'Seasonal, locally-sourced comfort food. Wood-fired steaks, fresh salads and house-brewed craft beers on tap.',
+  },
+];
+
+/** Call once at app bootstrap to ensure the 4 demo restaurants exist.
+ *  Uses a fixed synthetic owner ID so the records survive across sessions. */
+export const DEMO_OWNER_ID = 'demo_owner_liora_2026';
+
+export function db_seedDemoRestaurants() {
+  const all = read<DemoRestaurant[]>(RKEY, []);
+  let changed = false;
+  for (const tmpl of DEMO_RESTAURANTS) {
+    if (!all.some(r => r.name.toLowerCase() === tmpl.name.toLowerCase())) {
+      all.push({ id: uid(), ownerId: DEMO_OWNER_ID, ...tmpl });
+      changed = true;
+    }
+  }
+  if (changed) write(RKEY, all);
+  // Seed menus for each demo restaurant
+  for (const r of all.filter(r => r.ownerId === DEMO_OWNER_ID)) {
+    db_seedMenuIfEmpty(r.id);
+  }
+}
+
+
+// -----------------------------------------
 // ORDERS
 // -----------------------------------------
 const OKEY = 'liora_demo_orders';

@@ -4,8 +4,11 @@ import App from './App';
 import { ConversationProvider } from './store/conversation';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { demoAutoRestore } from './src/auth/demoAuth';
+import { db_seedDemoRestaurants } from './src/demoDb';
 
 demoAutoRestore();
+db_seedDemoRestaurants(); // ensure all 4 demo restaurants exist in localStorage
+
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

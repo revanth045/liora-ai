@@ -23,6 +23,7 @@ import RestoChefSpecials from './pages/ChefSpecials';
 import RestoTables from './pages/Tables';
 import RestoLoyalty from './pages/LoyaltyProgram';
 import RestoChefGPT from './ChefGPT';
+import RestoNotifications from './pages/Notifications';
 const MENU_GROUPS = [
   {
     label: 'Intelligence',
@@ -37,6 +38,7 @@ const MENU_GROUPS = [
     label: 'Operations',
     items: [
       { id: 'orders', label: 'Order Management', icon: 'receipt_long', isNew: true },
+      { id: 'notifications', label: 'Notifications', icon: 'notifications_active', isNew: true },
       { id: 'menu', label: 'Menu Studio', icon: 'restaurant_menu' },
       { id: 'chef_specials', label: 'Chef Specials', icon: 'restaurant', isNew: true },
       { id: 'inventory', label: 'Inventory', icon: 'inventory_2' },
@@ -96,6 +98,7 @@ export default function RestaurantPortal(){
       case 'analytics': return <RestoKPIs restaurant={restaurant} />;
       case 'customer_insights': return <RestoCustomerInsights restaurant={restaurant} />;
       case 'orders': return <RestoOrders restaurant={restaurant} />;
+      case 'notifications': return <RestoNotifications restaurant={restaurant} />;
       case 'menu': return <RestoMenuStudio restaurant={restaurant} />;
       case 'chef_specials': return <RestoChefSpecials restaurant={restaurant} />;
       case 'inventory': return <RestoInventory restaurant={restaurant} />;

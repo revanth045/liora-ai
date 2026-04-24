@@ -68,33 +68,36 @@ export const connectToTable = async (
   tableNumber: string | number,
   restaurantName: string
 ): Promise<TableSession> => {
+  // Try to reach the backend. On any failure silently fall back to a local
+  // demo session so the QR-scanned restaurant name is always applied.
   try {
-    console.log('ð    Connecting to table...', { tableNumber, restaurantName });
-    console.log('🟡 API URL:', `${API_BASE}/connect`);
-
     const response = await fetch(`${API_BASE}/connect`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tableNumber, restaurantName })
+      body: JSON.stringify({ tableNumber, restaurantName }),
+      signal: AbortSignal.timeout(4000), // 4 s timeout
     });
 
-    console.log('ð    Response status:', response.status);
-
-    if (!response.ok) {
-      const error = await response.json();
-      console.error('❌ API Error:', error);
-      throw new Error(error.error || `API Error: ${response.status}`);
+    if (response.ok) {
+      const data = await response.json();
+      console.log('✨ Backend session created:', data);
+      return data;
     }
-
-    const data = await response.json();
-    console.log('✨ Connection successful:', data);
-    return data;
-  } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Unknown error';
-    console.error('❌ Connection failed:', errorMsg);
-    throw new Error(`Failed to connect to table: ${errorMsg}`);
+    console.warn('⚠️ Backend returned non-OK response — using local session');
+  } catch (_err) {
+    console.warn('⚠️ Backend unreachable — using local session fallback');
   }
+
+  // Local fallback: build a session from the QR data directly
+  return {
+    sessionId: `local_${Date.now()}`,
+    tableNumber: String(tableNumber),
+    restaurantName,
+    createdAt: Date.now(),
+    status: 'active',
+  };
 };
+
 
 /**
  * Place an order for a table session
