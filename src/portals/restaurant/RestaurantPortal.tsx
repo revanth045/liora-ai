@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useSession } from "../../auth/useSession";
-import { db_getRestaurantsByOwner, db_seedIfEmpty, type DemoRestaurant } from "../../demoDb";
+import { db_getRestaurantsByOwner, db_seedIfEmpty, db_listOrders, type DemoRestaurant } from "../../demoDb";
 import { getAuth } from "../../auth";
 import { Icon } from "../../../components/Icon";
 
@@ -72,6 +72,24 @@ export default function RestaurantPortal(){
   const [activeTab, setActiveTab] = useState('overview');
   const [restaurant, setRestaurant] = useState<DemoRestaurant|null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [orderCount, setOrderCount] = useState<number | null>(null);
+  const [toast, setToast] = useState<{title: string, message: string} | null>(null);
+
+  useEffect(() => {
+    if (!restaurant) return;
+    const checkOrders = () => {
+      const orders = db_listOrders(restaurant.id);
+      if (orderCount !== null && orders.length > orderCount) {
+        const newest = orders[orders.length - 1];
+        setToast({ title: 'New Order Received', message: `Table ${newest.tableNumber || '?'} ordered ${newest.items.length} items.` });
+        setTimeout(() => setToast(null), 5000);
+      }
+      setOrderCount(orders.length);
+    };
+    checkOrders();
+    const interval = setInterval(checkOrders, 3000);
+    return () => clearInterval(interval);
+  }, [restaurant, orderCount]);
 
   useEffect(()=>{
     if (!ownerId) return;
@@ -228,6 +246,24 @@ export default function RestaurantPortal(){
            {renderContent()}
         </div>
       </main>
+
+      {/* Global Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
+          <div className="bg-brand-500 text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
+            <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+              🛎️
+            </div>
+            <div>
+              <h4 className="font-bold text-sm tracking-wide uppercase">{toast.title}</h4>
+              <p className="text-white/80 text-sm mt-0.5">{toast.message}</p>
+            </div>
+            <button onClick={() => setToast(null)} className="ml-4 p-2 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
+              <Icon name="close" size={18} />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

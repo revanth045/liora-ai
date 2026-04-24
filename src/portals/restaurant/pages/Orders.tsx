@@ -237,8 +237,26 @@ export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant
                       </div>
                     </div>
 
+                    {order.allergens && order.allergens.length > 0 ? (
+                      <div className="flex items-start gap-2 p-3 bg-red-50 border-2 border-red-200 rounded-2xl mb-3">
+                        <Icon name="warning" size={16} className="text-red-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-[10px] font-bold text-red-600 uppercase tracking-widest mb-0.5">Allergy Warning</p>
+                          <p className="text-sm font-bold text-red-800">{order.allergens.join(', ')}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-start gap-2 p-3 bg-green-50 border border-green-200 rounded-2xl mb-3">
+                        <Icon name="check_circle" size={16} className="text-green-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-0.5">Dietary Notes</p>
+                          <p className="text-sm font-medium text-green-800">No allergies or dietary restrictions mentioned.</p>
+                        </div>
+                      </div>
+                    )}
+
                     {order.notes && (
-                      <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-2xl">
+                      <div className="flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-2xl mb-3">
                         <Icon name="info" size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
                         <p className="text-sm text-amber-700"><span className="font-bold">Note:</span> {order.notes}</p>
                       </div>

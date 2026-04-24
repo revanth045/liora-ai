@@ -20,6 +20,7 @@ const ACTION_META: Record<string, { icon: string; color: string; label: string }
   'Request Bill':     { icon: 'receipt_long',   color: 'bg-purple-100 text-purple-700 border-purple-200', label: 'Bill Request' },
   'Dietary Question': { icon: 'eco',             color: 'bg-green-100 text-green-700 border-green-200', label: 'Dietary Query' },
   'Get Manager':      { icon: 'manage_accounts', color: 'bg-red-100 text-red-700 border-red-200',       label: 'Manager Needed' },
+  'New Order':        { icon: 'restaurant_menu', color: 'bg-teal-100 text-teal-700 border-teal-200',    label: 'New Order Placed' },
 };
 
 function getActionMeta(action: string) {

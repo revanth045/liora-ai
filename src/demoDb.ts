@@ -163,6 +163,7 @@ export type DemoOrder = {
   createdAt: number;
   updatedAt: number;
   notes?: string;
+  allergens?: string[];
 };
 
 export function db_listOrders(restaurantId: string): DemoOrder[] {

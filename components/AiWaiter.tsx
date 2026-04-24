@@ -3,6 +3,7 @@ import { Icon } from './Icon';
 import { Spinner } from './Spinner';
 import { useDining } from '../src/context/DiningContext';
 import { useSession } from '../src/auth/useSession';
+import { useUserProfile } from '../src/hooks/useUserProfile';
 import { ChatMessage, MessageAuthor } from '../types';
 import { uid } from '../utils/uid';
 import {
@@ -37,6 +38,7 @@ const CHAT_STORAGE_KEY = (userEmail: string | null, restaurantName: string | nul
 export const AiWaiter = () => {
     const { session, endSession, connectTableViaQR, addAssistanceRequest, updateOrders, updateAssistanceRequests } = useDining();
     const authSession = useSession();
+    const { profile } = useUserProfile();
     const userEmail = authSession?.user?.email ?? null;
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [input, setInput] = useState('');
@@ -331,11 +333,13 @@ export const AiWaiter = () => {
             status: 'pending',
             totalCents: cartTotal,
             createdAt: Date.now(),
+            allergens: profile?.profile?.allergens && profile.profile.allergens.length > 0 ? profile.profile.allergens : undefined,
         });
 
         // Also write to Supabase for cross-device sync
+        const orderId = `ord_${Date.now()}_${Math.random().toString(36).slice(2)}`;
         const orderPayload = {
-            id: `ord_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+            id: orderId,
             restaurantId: session.restaurantName, // name used as ID for cross-device lookup
             customerName: `Table ${session.tableNumber} Guest`,
             customerEmail: userEmail ?? undefined,
@@ -345,8 +349,30 @@ export const AiWaiter = () => {
             totalCents: cartTotal,
             createdAt: Date.now(),
             updatedAt: Date.now(),
+            allergens: profile?.profile?.allergens && profile.profile.allergens.length > 0 ? profile.profile.allergens : undefined,
         };
         sbAddOrder(orderPayload).catch(e => console.warn('Supabase order sync failed:', e));
+
+        const alertId = uid();
+        const notificationMessage = `Order placed with ${items.length} items (${items.map(i => `${i.qty}x ${i.name}`).join(', ')})`;
+
+        db_addTableAlert({
+            id: alertId,
+            restaurantName: session.restaurantName,
+            tableNumber: String(session.tableNumber),
+            action: 'New Order',
+            message: notificationMessage,
+            status: 'active',
+            createdAt: Date.now()
+        });
+
+        sbAddTableAlert({
+            id: alertId,
+            restaurantName: session.restaurantName,
+            tableNumber: String(session.tableNumber),
+            action: 'New Order',
+            message: notificationMessage,
+        }).catch(e => console.warn('Supabase alert sync failed:', e));
 
         setOrderSuccess(true);
         setMessages(prev => [...prev, {

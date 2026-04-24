@@ -2,8 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Icon } from '../../../../components/Icon';
 import {
     db_getAllRestaurants, db_listMenu, db_listChefSpecials, db_addOrder,
+    db_addTableAlert,
     type DemoRestaurant, type DayHours, type DemoMenuItem, type DemoChefSpecial,
 } from '../../../demoDb';
+import { sbAddOrder, sbAddTableAlert } from '../../../lib/supabaseDb';
+import { uid } from '../../../../utils/uid';
 import { useSession } from '../../../auth/useSession';
 import { useUserProfile } from '../../../../hooks/useUserProfile';
 
@@ -233,6 +236,7 @@ function RestaurantPage({
     r,
     onBack,
     autoNote,
+    userProfile,
     customerName,
     customerEmail,
     onDineIn,
@@ -240,6 +244,7 @@ function RestaurantPage({
     r: Restaurant;
     onBack: () => void;
     autoNote: string;
+    userProfile?: any;
     customerName: string;
     customerEmail?: string;
     onDineIn?: () => void;
@@ -320,7 +325,36 @@ function RestaurantPage({
             totalCents: cartTotal,
             createdAt: Date.now(),
             notes: specialInstructions.trim() || undefined,
+            allergens: userProfile?.profile?.allergens && userProfile.profile.allergens.length > 0 ? userProfile.profile.allergens : undefined,
         });
+
+        const alertId = uid();
+        const notificationMessage = `Order placed with ${cart.length} items (${cart.map(c => `${c.qty}x ${c.name}`).join(', ')})`;
+
+        db_addTableAlert({
+            id: alertId,
+            restaurantName: r.name,
+            tableNumber: tableNum.trim(),
+            action: 'New Order',
+            message: notificationMessage,
+            status: 'active',
+            createdAt: Date.now()
+        });
+
+        // Background sync to Supabase
+        const payload = {
+            ...order,
+            updatedAt: Date.now()
+        };
+        sbAddOrder(payload).catch(e => console.warn('Supabase sync failed:', e));
+        sbAddTableAlert({
+            id: alertId,
+            restaurantName: r.name,
+            tableNumber: tableNum.trim(),
+            action: 'New Order',
+            message: notificationMessage,
+        }).catch(e => console.warn('Supabase alert sync failed:', e));
+
         setPlacedOrder(order);
         setOrderPlaced(true);
         setShowCheckout(false);
@@ -1059,6 +1093,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
                 r={selected}
                 onBack={() => setSelected(null)}
                 autoNote={autoNote}
+                userProfile={profile}
                 customerName={session?.user?.name ?? session?.user?.email ?? 'Guest'}
                 customerEmail={session?.user?.email}
                 onDineIn={setView ? () => setView('ai_waiter') : undefined}

@@ -150,7 +150,18 @@ function OrderCard({ order, onStatusChange }: { order: DemoOrder; onStatusChange
             ))}
           </ul>
 
-          {/* Notes */}
+          {/* Notes and Allergies */}
+          {order.allergens && order.allergens.length > 0 ? (
+            <div className="p-2.5 rounded-lg bg-red-950/40 border border-red-500/30 text-xs text-red-200 mb-2">
+              <span className="font-bold text-red-400 uppercase tracking-wider text-[10px]">Allergy Warning:</span>{' '}
+              {order.allergens.join(', ')}
+            </div>
+          ) : (
+            <div className="p-2.5 rounded-lg bg-green-950/40 border border-green-500/30 text-xs text-green-200 mb-2">
+              <span className="font-bold text-green-400 uppercase tracking-wider text-[10px]">Dietary Notes:</span>{' '}
+              No allergies or dietary restrictions mentioned.
+            </div>
+          )}
           {order.notes && (
             <div className="p-2.5 rounded-lg bg-stone-800/60 border border-stone-700/40 text-xs text-stone-300">
               <span className="font-bold text-stone-400 uppercase tracking-wider text-[10px]">Note:</span>{' '}
@@ -201,6 +212,7 @@ export default function ServiceDeskPortal() {
 
   const [orders, setOrders] = useState<DemoOrder[]>([]);
   const [tab, setTab] = useState<FilterTab>('active');
+  const [toast, setToast] = useState<{title: string, message: string} | null>(null);
   const prevPendingIds = useRef<Set<string>>(new Set());
 
   const reload = () => {
@@ -216,9 +228,19 @@ export default function ServiceDeskPortal() {
 
     // Beep on new pending orders
     const currentPendingIds = new Set(all.filter(o => o.status === 'pending').map(o => o.id));
+    let hasNew = false;
     currentPendingIds.forEach(id => {
-      if (!prevPendingIds.current.has(id)) beep();
+      if (!prevPendingIds.current.has(id)) hasNew = true;
     });
+    
+    if (hasNew) {
+      beep();
+      const newestPending = all.filter(o => o.status === 'pending').sort((a, b) => b.createdAt - a.createdAt)[0];
+      if (newestPending) {
+        setToast({ title: 'New Order Received', message: `Table ${newestPending.tableNumber || '?'} ordered ${newestPending.items.length} items.` });
+        setTimeout(() => setToast(null), 5000);
+      }
+    }
     prevPendingIds.current = currentPendingIds;
   };
 
@@ -330,6 +352,26 @@ export default function ServiceDeskPortal() {
       <div className="max-w-2xl mx-auto px-4 pb-6 text-center">
         <p className="text-[10px] text-stone-700">Auto-refreshes every 5 seconds</p>
       </div>
+
+      {/* Global Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-slide-up">
+          <div className="bg-amber-500 text-stone-900 px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-amber-400">
+            <div className="w-10 h-10 bg-amber-900/10 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+              🛎️
+            </div>
+            <div>
+              <h4 className="font-bold text-sm tracking-wide uppercase">{toast.title}</h4>
+              <p className="text-stone-800 font-medium text-sm mt-0.5">{toast.message}</p>
+            </div>
+            <button onClick={() => setToast(null)} className="ml-4 p-2 bg-amber-900/5 hover:bg-amber-900/10 rounded-xl transition-colors">
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
