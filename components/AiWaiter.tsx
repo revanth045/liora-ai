@@ -20,6 +20,7 @@ import {
   type DemoMenuItem,
   type DemoOrderItem
 } from '../src/demoDb';
+import { sbAddOrder, sbAddTableAlert } from '../src/lib/supabaseDb';
 import { BillSplitter } from './BillSplitter';
 import jsQR from 'jsqr';
 
@@ -274,6 +275,9 @@ export const AiWaiter = () => {
                 action: 'Dietary Question',
                 message: `Table ${session.tableNumber} dietary question: "${question}"`,
             });
+            // Cross-device sync
+            const alertId = `alert_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+            sbAddTableAlert({ id: alertId, restaurantName: session.restaurantName, tableNumber: String(session.tableNumber), action: 'Dietary Question', message: `Table ${session.tableNumber} dietary question: "${question}"` }).catch(e => console.warn('Supabase alert sync failed:', e));
             setMessages(prev => [...prev, {
                 id: uid(),
                 author: MessageAuthor.SYSTEM,
@@ -291,6 +295,9 @@ export const AiWaiter = () => {
             action,
             message: config.alertMessage,
         });
+        // Cross-device sync
+        const alertId2 = `alert_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+        sbAddTableAlert({ id: alertId2, restaurantName: session.restaurantName, tableNumber: String(session.tableNumber), action, message: config.alertMessage }).catch(e => console.warn('Supabase alert sync failed:', e));
 
         setMessages(prev => [...prev, {
             id: uid(),
@@ -325,6 +332,21 @@ export const AiWaiter = () => {
             totalCents: cartTotal,
             createdAt: Date.now(),
         });
+
+        // Also write to Supabase for cross-device sync
+        const orderPayload = {
+            id: `ord_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+            restaurantId: session.restaurantName, // name used as ID for cross-device lookup
+            customerName: `Table ${session.tableNumber} Guest`,
+            customerEmail: userEmail ?? undefined,
+            tableNumber: String(session.tableNumber),
+            items,
+            status: 'pending' as const,
+            totalCents: cartTotal,
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+        };
+        sbAddOrder(orderPayload).catch(e => console.warn('Supabase order sync failed:', e));
 
         setOrderSuccess(true);
         setMessages(prev => [...prev, {

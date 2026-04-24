@@ -7,6 +7,7 @@ import {
   db_listTableAlerts, db_dismissTableAlert,
   type DemoRestaurant, type DemoOrder, type DemoInventoryItem, type DemoTableAlert,
 } from '../../demoDb';
+import { sbListOrders, sbListTableAlerts, sbDismissTableAlert } from '../../lib/supabaseDb';
 
 function fmt(cents: number) { return `$${(cents / 100).toFixed(2)}`; }
 function timeAgo(ts: number) {
@@ -25,18 +26,31 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
   const [specialsCount, setSpecialsCount] = useState(0);
   const [tableAlerts, setTableAlerts] = useState<DemoTableAlert[]>([]);
 
-  const reload = () => {
-    const allOrders = db_listOrders(restaurant.id).sort((a, b) => b.createdAt - a.createdAt);
+  const reload = async () => {
+    // Merge localStorage orders with Supabase orders (deduped by id)
+    const localOrders = db_listOrders(restaurant.id);
+    let sbOrders: DemoOrder[] = [];
+    try { sbOrders = await sbListOrders(restaurant.name); } catch {}
+    const merged = [...localOrders];
+    sbOrders.forEach(o => { if (!merged.some(m => m.id === o.id)) merged.push(o); });
+    const allOrders = merged.sort((a, b) => b.createdAt - a.createdAt);
     setOrders(allOrders);
     setInventory(db_listInventory(restaurant.id));
     setMenuCount(db_listMenu(restaurant.id).filter(m => m.available).length);
     setReservationCount(db_listReservations(restaurant.id).filter(r => r.status !== 'canceled').length);
     setSpecialsCount(db_listChefSpecials(restaurant.id).filter(c => c.isAvailable).length);
-    setTableAlerts(db_listTableAlerts(restaurant.name).sort((a,b) => b.createdAt - a.createdAt));
+    // Merge alerts from both sources
+    const localAlerts = db_listTableAlerts(restaurant.name);
+    let sbAlerts: DemoTableAlert[] = [];
+    try { sbAlerts = await sbListTableAlerts(restaurant.name); } catch {}
+    const allAlerts = [...sbAlerts];
+    localAlerts.forEach(a => { if (!allAlerts.some(x => x.id === a.id)) allAlerts.push(a); });
+    setTableAlerts(allAlerts.filter(a => a.status === 'active').sort((a,b) => b.createdAt - a.createdAt));
   };
 
-  const handleDismissAlert = (id: string) => {
+  const handleDismissAlert = async (id: string) => {
     db_dismissTableAlert(id);
+    try { await sbDismissTableAlert(id); } catch {}
     reload();
   };
 

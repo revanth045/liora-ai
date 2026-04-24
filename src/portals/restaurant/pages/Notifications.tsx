@@ -4,6 +4,7 @@ import {
   db_listTableAlerts, db_dismissTableAlert,
   type DemoTableAlert, type DemoRestaurant,
 } from '../../../demoDb';
+import { sbListTableAlerts, sbDismissTableAlert } from '../../../lib/supabaseDb';
 
 function timeAgo(ts: number) {
   const m = Math.floor((Date.now() - ts) / 60000);
@@ -32,14 +33,14 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
   const [lastCount, setLastCount] = useState(0);
   const [flash, setFlash]     = useState(false);
 
-  const refresh = useCallback(() => {
-    const ALERT_KEY = 'liora_demo_table_alerts';
-    const raw: DemoTableAlert[] = (() => {
-      try { return JSON.parse(localStorage.getItem(ALERT_KEY) || '[]'); } catch { return []; }
-    })();
-    const forThis = raw.filter(a => a.restaurantName.toLowerCase() === restaurant.name.toLowerCase());
-    const act = forThis.filter(a => a.status === 'active').sort((a, b) => b.createdAt - a.createdAt);
-    const hist = forThis.filter(a => a.status === 'dismissed').sort((a, b) => b.createdAt - a.createdAt);
+  const refresh = useCallback(async () => {
+    const localAlerts = db_listTableAlerts(restaurant.name);
+    let sbAlerts: DemoTableAlert[] = [];
+    try { sbAlerts = await sbListTableAlerts(restaurant.name); } catch {}
+    const all = [...sbAlerts];
+    localAlerts.forEach(a => { if (!all.some(x => x.id === a.id)) all.push(a); });
+    const act = all.filter(a => a.status === 'active').sort((a, b) => b.createdAt - a.createdAt);
+    const hist = all.filter(a => a.status === 'dismissed').sort((a, b) => b.createdAt - a.createdAt);
     if (act.length > lastCount && lastCount !== 0) {
       setFlash(true);
       setTimeout(() => setFlash(false), 1500);
@@ -55,8 +56,9 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
     return () => clearInterval(t);
   }, [refresh]);
 
-  const handleDismiss = (id: string) => {
+  const handleDismiss = async (id: string) => {
     db_dismissTableAlert(id);
+    try { await sbDismissTableAlert(id); } catch {}
     refresh();
   };
 
