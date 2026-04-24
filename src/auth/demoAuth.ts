@@ -67,15 +67,25 @@ export function forgetSavedAccount(email: string) {
 async function signInFromSwitcher(email: string) {
     const users = read<DemoUser[]>(UKEY, []);
     const u = users.find(x => x.email === email);
-    if (!u) throw new Error("Account not found for quick access.");
 
-    write(SKEY, { id: u.id, email: u.email, role: u.role, name: u.name, restaurantId: u.restaurantId });
-    localStorage.setItem(LKEY, u.email);
-    localStorage.setItem(PKEY, u.role);
-
-    u.lastUsedAt = Date.now(); 
-    write(UKEY, users);
-    upsertSavedAccount({ email: u.email, role: u.role, name: u.name });
+    if (u) {
+      // Full session restore from stored user
+      write(SKEY, { id: u.id, email: u.email, role: u.role, name: u.name, restaurantId: u.restaurantId });
+      localStorage.setItem(LKEY, u.email);
+      localStorage.setItem(PKEY, u.role);
+      u.lastUsedAt = Date.now();
+      write(UKEY, users);
+      upsertSavedAccount({ email: u.email, role: u.role, name: u.name });
+    } else {
+      // User not found in store (localStorage was cleared) — restore from saved accounts
+      const saved = read<SavedAccount[]>(AKEY, []).find(x => x.email === email);
+      if (!saved) throw new Error("Account not found. Please sign in with your email and password.");
+      // Create a minimal session so the user gets back in
+      const tempId = cryptoRandom();
+      write(SKEY, { id: tempId, email: saved.email, role: saved.role, name: saved.name });
+      localStorage.setItem(LKEY, saved.email);
+      localStorage.setItem(PKEY, saved.role);
+    }
 
     emit();
 }
@@ -94,8 +104,13 @@ export const DemoAuth: AuthAdapter = {
     write(UKEY, users);
     upsertSavedAccount({ email, role: "user", name: fullName });
     localStorage.setItem('liora-needs-onboarding', 'true');
-    // Sync to Supabase
+    // Set session immediately so the user is logged in after signup
+    write(SKEY, { id: u.id, email: u.email, role: u.role, name: u.name });
+    localStorage.setItem(LKEY, u.email);
+    localStorage.setItem(PKEY, u.role);
+    // Sync to Supabase (fire-and-forget)
     sbUpsertUser(u.id, email, 'user', fullName).catch(() => {});
+    emit();
   },
 
   async signInUser(email: string, password: string) {

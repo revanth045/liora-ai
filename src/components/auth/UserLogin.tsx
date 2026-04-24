@@ -36,8 +36,8 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
     setLoading(true);
     try {
       if (mode === 'register') {
+        // signUpUser now handles session creation + emit() internally
         await auth.signUpUser(email, password, fullName);
-        await auth.signInUser(email, password);
       } else if (mode === 'forgot') {
         if (!auth.resetPassword) throw new Error("Password reset not supported");
         await auth.resetPassword(email);
