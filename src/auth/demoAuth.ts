@@ -154,6 +154,11 @@ export const DemoAuth: AuthAdapter = {
       // Sync restaurant to Supabase
       sbUpsertRestaurant({ id: newResto.id, ownerId: owner.id, name: restaurantName }).catch(() => {});
     }
+    // Set session immediately — user is logged in after registration
+    write(SKEY, { id: owner.id, email: owner.email, role: owner.role, name: owner.name });
+    localStorage.setItem(LKEY, owner.email);
+    localStorage.setItem(PKEY, owner.role);
+    emit();
   },
   
   async resetPassword(email) {
@@ -211,5 +216,10 @@ export const DemoAuth: AuthAdapter = {
     users.push(u);
     write(UKEY, users);
     upsertSavedAccount({ email, role: 'staff', name });
+    // Set session immediately
+    write(SKEY, { id: u.id, email: u.email, role: u.role, name: u.name, restaurantId: u.restaurantId });
+    localStorage.setItem(LKEY, u.email);
+    localStorage.setItem(PKEY, u.role);
+    emit();
   },
 };

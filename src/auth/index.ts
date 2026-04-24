@@ -1,10 +1,8 @@
 import { DemoAuth } from "./demoAuth";
-import { SupabaseAuth } from "./supabaseAuth";
-import { hasSupabase } from "../lib/supabaseClient";
 import type { AuthAdapter } from "./types";
 
-// Automatically use Supabase when VITE_SUPABASE_URL + VITE_SUPABASE_ANON_KEY are set,
-// otherwise fall back to in-memory DemoAuth (localStorage).
+// Always use DemoAuth, as it now has built-in dual-write sync to Supabase.
+// This ensures Quick Access profiles and Demo Restaurant logins continue to work perfectly.
 export function getAuth(): AuthAdapter {
-  return hasSupabase ? SupabaseAuth : DemoAuth;
+  return DemoAuth;
 }

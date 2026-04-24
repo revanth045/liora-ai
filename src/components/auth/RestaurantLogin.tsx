@@ -72,11 +72,13 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
     setError('');
     try {
       try {
+        // Try signup first (creates the account if it doesn't exist yet)
         await auth.signUpRestaurantOwner(r.email, DEMO_PASSWORD, r.owner, r.name);
+        // signUpRestaurantOwner now handles session + emit, so we're done
       } catch {
-        // Already registered – that's fine
+        // Already registered — just sign in normally
+        await auth.signInUser(r.email, DEMO_PASSWORD);
       }
-      await auth.signInUser(r.email, DEMO_PASSWORD);
     } catch (err: any) {
       setError(err.message || 'Demo login failed');
     } finally {
@@ -90,8 +92,8 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
     setLoading(true);
     try {
       if (ownerMode === 'register') {
+        // signUpRestaurantOwner now handles session + emit
         await auth.signUpRestaurantOwner(ownerEmail, ownerPassword, ownerName, restaurantName);
-        await auth.signInUser(ownerEmail, ownerPassword);
       } else {
         await auth.signInUser(ownerEmail, ownerPassword);
       }
@@ -109,8 +111,8 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
     try {
       if (staffMode === 'register') {
         if (!auth.signUpStaff) throw new Error('Staff registration not supported.');
+        // signUpStaff now handles session + emit
         await auth.signUpStaff(staffEmail, staffPassword, staffName, staffCode);
-        await auth.signInUser(staffEmail, staffPassword);
       } else {
         await auth.signInUser(staffEmail, staffPassword);
       }
