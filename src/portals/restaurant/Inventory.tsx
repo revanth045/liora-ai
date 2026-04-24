@@ -1,10 +1,13 @@
-﻿
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Icon } from '../../../components/Icon';
 import {
   db_listInventory, db_addInventoryItem, db_updateInventoryItem, db_deleteInventoryItem,
   type DemoInventoryItem, type DemoRestaurant, type InventoryCategory, type InventoryUnit,
 } from '../../demoDb';
+import {
+  sbListInventory, sbAddInventoryItem, sbUpdateInventoryItem, sbDeleteInventoryItem,
+} from '../../lib/supabaseDb';
 
 // --- Constants ----------------------------------------------------------------
 const CATEGORIES: InventoryCategory[] = [
@@ -158,7 +161,12 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
   const [saving, setSaving] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<DemoInventoryItem | null>(null);
 
-  const load = () => setItems(db_listInventory(restaurant.id));
+  const load = async () => {
+    let data: DemoInventoryItem[] = [];
+    try { data = await sbListInventory(restaurant.id); } catch {}
+    if (data.length === 0) data = db_listInventory(restaurant.id);
+    setItems(data);
+  };
   useEffect(() => { load(); }, [restaurant.id]);
 
   // --- Derived stats ----------------------------------------------------------
@@ -215,30 +223,23 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
     const cost = form.costPerUnit !== '' ? parseFloat(form.costPerUnit) : undefined;
 
     if (editTarget) {
-      db_updateInventoryItem({
-        ...editTarget,
-        name: form.name.trim(),
-        category: form.category,
-        quantity: qty,
-        unit: form.unit,
-        reorderPoint: reorder,
-        costPerUnit: cost,
-        supplier: form.supplier.trim() || undefined,
-        notes: form.notes.trim() || undefined,
-        updatedAt: Date.now(),
-      });
+      const updated: DemoInventoryItem = {
+        ...editTarget, name: form.name.trim(), category: form.category,
+        quantity: qty, unit: form.unit, reorderPoint: reorder,
+        costPerUnit: cost, supplier: form.supplier.trim() || undefined,
+        notes: form.notes.trim() || undefined, updatedAt: Date.now(),
+      };
+      db_updateInventoryItem(updated);
+      sbUpdateInventoryItem(updated).catch(() => {});
     } else {
-      db_addInventoryItem({
-        restaurantId: restaurant.id,
-        name: form.name.trim(),
-        category: form.category,
-        quantity: qty,
-        unit: form.unit,
-        reorderPoint: reorder,
-        costPerUnit: cost,
-        supplier: form.supplier.trim() || undefined,
+      const payload = {
+        restaurantId: restaurant.id, name: form.name.trim(), category: form.category,
+        quantity: qty, unit: form.unit, reorderPoint: reorder,
+        costPerUnit: cost, supplier: form.supplier.trim() || undefined,
         notes: form.notes.trim() || undefined,
-      });
+      };
+      db_addInventoryItem(payload);
+      sbAddInventoryItem(payload).catch(() => {});
     }
 
     setSaving(false);
@@ -249,7 +250,9 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
   // --- Quick qty adjust -------------------------------------------------------
   const adjustQty = (item: DemoInventoryItem, delta: number) => {
     const next = Math.max(0, item.quantity + delta);
-    db_updateInventoryItem({ ...item, quantity: next, updatedAt: Date.now() });
+    const updated = { ...item, quantity: next, updatedAt: Date.now() };
+    db_updateInventoryItem(updated);
+    sbUpdateInventoryItem(updated).catch(() => {});
     load();
   };
 
@@ -257,6 +260,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
   const handleDelete = () => {
     if (!deleteTarget) return;
     db_deleteInventoryItem(deleteTarget.id);
+    sbDeleteInventoryItem(deleteTarget.id).catch(() => {});
     setDeleteTarget(null);
     load();
   };

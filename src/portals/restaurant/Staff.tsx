@@ -8,6 +8,11 @@ import {
   type DemoStaffMember, type DemoShift, type StaffRole, type StaffStatus, type ShiftDay,
   type DemoRestaurant, type DemoAttendanceRecord, type AttendanceStatus,
 } from '../../demoDb';
+import {
+  sbListStaff, sbAddStaff, sbUpdateStaff, sbDeleteStaff,
+  sbListShifts, sbAddShift, sbUpdateShift, sbDeleteShift,
+  sbListAttendance, sbUpsertAttendance,
+} from '../../lib/supabaseDb';
 
 // --- Constants ----------------------------------------------------------------
 const ROLES: StaffRole[] = [
@@ -254,14 +259,27 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
   const [attendance, setAttendance] = useState<DemoAttendanceRecord[]>([]);
 
 
-  const loadStaff = () => {
-    const members = db_listStaff(restaurant.id);
+  const loadStaff = async () => {
+    // Fetch from Supabase first, fall back to localStorage
+    let members: DemoStaffMember[] = [];
+    try { members = await sbListStaff(restaurant.id); } catch {}
+    if (members.length === 0) members = db_listStaff(restaurant.id);
     setStaff(members);
     if (members.length > 0) db_seedAttendance(restaurant.id, members.map(m => m.id));
     setAttendance(db_listAttendance(restaurant.id));
   };
-  const loadShifts = () => setShifts(db_listShifts(restaurant.id, weekStart));
-  const loadAttendance = () => setAttendance(db_listAttendance(restaurant.id));
+  const loadShifts = async () => {
+    let shifts: DemoShift[] = [];
+    try { shifts = await sbListShifts(restaurant.id, weekStart); } catch {}
+    if (shifts.length === 0) shifts = db_listShifts(restaurant.id, weekStart);
+    setShifts(shifts);
+  };
+  const loadAttendance = async () => {
+    let att: DemoAttendanceRecord[] = [];
+    try { att = await sbListAttendance(restaurant.id); } catch {}
+    if (att.length === 0) att = db_listAttendance(restaurant.id);
+    setAttendance(att);
+  };
 
   useEffect(() => { loadStaff(); }, [restaurant.id]);
   useEffect(() => { loadShifts(); }, [restaurant.id, weekStart]);
@@ -290,22 +308,27 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
     setStaffForm({ name: m.name, role: m.role, phone: m.phone ?? '', email: m.email ?? '', hourlyRate: m.hourlyRate != null ? String(m.hourlyRate) : '', status: m.status, notes: m.notes ?? '' });
     setStaffModal(true);
   };
-  const handleSaveStaff = () => {
+  const handleSaveStaff = async () => {
     if (!staffForm.name.trim()) return;
     setStaffSaving(true);
     const rate = staffForm.hourlyRate !== '' ? parseFloat(staffForm.hourlyRate) : undefined;
     if (editStaff) {
-      db_updateStaffMember({ ...editStaff, name: staffForm.name.trim(), role: staffForm.role, phone: staffForm.phone.trim() || undefined, email: staffForm.email.trim() || undefined, hourlyRate: rate, status: staffForm.status, notes: staffForm.notes.trim() || undefined });
+      const updated = { ...editStaff, name: staffForm.name.trim(), role: staffForm.role, phone: staffForm.phone.trim() || undefined, email: staffForm.email.trim() || undefined, hourlyRate: rate, status: staffForm.status, notes: staffForm.notes.trim() || undefined };
+      db_updateStaffMember(updated);
+      sbUpdateStaff(updated).catch(() => {});
     } else {
-      db_addStaffMember({ restaurantId: restaurant.id, name: staffForm.name.trim(), role: staffForm.role, phone: staffForm.phone.trim() || undefined, email: staffForm.email.trim() || undefined, hourlyRate: rate, status: staffForm.status, notes: staffForm.notes.trim() || undefined });
+      const payload = { restaurantId: restaurant.id, name: staffForm.name.trim(), role: staffForm.role, phone: staffForm.phone.trim() || undefined, email: staffForm.email.trim() || undefined, hourlyRate: rate, status: staffForm.status, notes: staffForm.notes.trim() || undefined };
+      db_addStaffMember(payload);
+      sbAddStaff(payload).catch(() => {});
     }
     setStaffSaving(false);
     setStaffModal(false);
     loadStaff();
   };
-  const handleDeleteStaff = () => {
+  const handleDeleteStaff = async () => {
     if (!deleteStaff) return;
     db_deleteStaffMember(deleteStaff.id);
+    sbDeleteStaff(deleteStaff.id).catch(() => {});
     setDeleteStaff(null);
     loadStaff();
     loadShifts();
@@ -322,21 +345,26 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
     setShiftForm({ staffId: s.staffId, day: s.day, startTime: s.startTime, endTime: s.endTime, notes: s.notes ?? '' });
     setShiftModal(true);
   };
-  const handleSaveShift = () => {
+  const handleSaveShift = async () => {
     if (!shiftForm.staffId) return;
     setShiftSaving(true);
     if (editShift) {
-      db_updateShift({ ...editShift, staffId: shiftForm.staffId, day: shiftForm.day, startTime: shiftForm.startTime, endTime: shiftForm.endTime, notes: shiftForm.notes.trim() || undefined });
+      const updated = { ...editShift, staffId: shiftForm.staffId, day: shiftForm.day, startTime: shiftForm.startTime, endTime: shiftForm.endTime, notes: shiftForm.notes.trim() || undefined };
+      db_updateShift(updated);
+      sbUpdateShift(updated).catch(() => {});
     } else {
-      db_addShift({ restaurantId: restaurant.id, weekStart, staffId: shiftForm.staffId, day: shiftForm.day, startTime: shiftForm.startTime, endTime: shiftForm.endTime, notes: shiftForm.notes.trim() || undefined });
+      const payload = { restaurantId: restaurant.id, weekStart, staffId: shiftForm.staffId, day: shiftForm.day, startTime: shiftForm.startTime, endTime: shiftForm.endTime, notes: shiftForm.notes.trim() || undefined };
+      db_addShift(payload);
+      sbAddShift(payload).catch(() => {});
     }
     setShiftSaving(false);
     setShiftModal(false);
     loadShifts();
   };
-  const handleDeleteShift = () => {
+  const handleDeleteShift = async () => {
     if (!deleteShift) return;
     db_deleteShift(deleteShift.id);
+    sbDeleteShift(deleteShift.id).catch(() => {});
     setDeleteShiftTarget(null);
     loadShifts();
   };
@@ -682,7 +710,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     half_day: { label: 'Half Day', cls: 'bg-blue-100 text-blue-700' },
                     absent:   { label: 'Absent',   cls: 'bg-red-100 text-red-600' },
                   };
-                  const saveRec = (patch: Partial<DemoAttendanceRecord>) => {
+                  const saveRec = async (patch: Partial<DemoAttendanceRecord>) => {
                     const updated = db_upsertAttendance({
                       id: rec?.id,
                       staffId: member.id,
@@ -694,6 +722,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                       notes: rec?.notes ?? '',
                       ...patch,
                     });
+                    sbUpsertAttendance(updated).catch(() => {});
                     setAttendance(prev => [...prev.filter(a => !(a.staffId === member.id && a.date === attendanceDate)), updated]);
                   };
                   const workedHours = () => {

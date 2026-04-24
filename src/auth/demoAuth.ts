@@ -1,4 +1,5 @@
 import { AuthAdapter, Role, Session } from "./types";
+import { sbUpsertUser, sbUpsertRestaurant } from "../lib/supabaseDb";
 
 const UKEY = "liora_demo_users";
 const RKEY = "liora_demo_restaurants";
@@ -89,25 +90,30 @@ export const DemoAuth: AuthAdapter = {
     const users = read<DemoUser[]>(UKEY, []);
     if (users.some(u=>u.email===email)) throw new Error("Email already registered");
     const u: DemoUser = { id: cryptoRandom(), email, password, role: "user", name: fullName, lastUsedAt: Date.now() };
-    users.push(u); 
+    users.push(u);
     write(UKEY, users);
     upsertSavedAccount({ email, role: "user", name: fullName });
     localStorage.setItem('liora-needs-onboarding', 'true');
+    // Sync to Supabase
+    sbUpsertUser(u.id, email, 'user', fullName).catch(() => {});
   },
 
   async signInUser(email: string, password: string) {
     const users = read<DemoUser[]>(UKEY, []);
     const u = users.find(x => x.email === email && x.password === password);
     if (!u) throw new Error("Invalid email or password");
-    
+
     write(SKEY, { id: u.id, email: u.email, role: u.role, name: u.name, restaurantId: u.restaurantId });
     localStorage.setItem(LKEY, u.email);
     localStorage.setItem(PKEY, u.role);
 
-    u.lastUsedAt = Date.now(); 
+    u.lastUsedAt = Date.now();
     write(UKEY, users);
     upsertSavedAccount({ email: u.email, role: u.role, name: u.name });
-    
+
+    // Sync to Supabase
+    sbUpsertUser(u.id, u.email, u.role, u.name).catch(() => {});
+
     emit();
   },
   
@@ -120,13 +126,18 @@ export const DemoAuth: AuthAdapter = {
     const users = read<DemoUser[]>(UKEY, []);
     if (users.some(u=>u.email===email)) throw new Error("Email already registered");
     const owner: DemoUser = { id: cryptoRandom(), email, password, role: "restaurant_owner", name: ownerName, lastUsedAt: Date.now() };
-    users.push(owner); 
+    users.push(owner);
     write(UKEY, users);
     upsertSavedAccount({ email, role: "restaurant_owner", name: ownerName });
+    // Sync owner account to Supabase
+    sbUpsertUser(owner.id, email, 'restaurant_owner', ownerName).catch(() => {});
     if (restaurantName){
       const r = read<DemoRestaurant[]>(RKEY, []);
-      r.push({ id: cryptoRandom(), ownerId: owner.id, name: restaurantName });
+      const newResto = { id: cryptoRandom(), ownerId: owner.id, name: restaurantName };
+      r.push(newResto);
       write(RKEY, r);
+      // Sync restaurant to Supabase
+      sbUpsertRestaurant({ id: newResto.id, ownerId: owner.id, name: restaurantName }).catch(() => {});
     }
   },
   

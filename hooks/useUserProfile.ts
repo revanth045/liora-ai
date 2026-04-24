@@ -1,6 +1,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { StoredUserProfile } from '../types';
+import { sbUpsertCustomerProfile, sbGetCustomerProfile } from '../src/lib/supabaseDb';
 
 const LOCAL_STORAGE_KEY = 'liora-user-profile';
 
@@ -61,19 +62,75 @@ export const useUserProfile = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        try {
-            const storedProfile = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (storedProfile) {
-                const raw = JSON.parse(storedProfile);
-                const clean = sanitizeProfile(raw);
-                if (clean) setProfile(clean);
+        const loadProfile = async () => {
+            try {
+                const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+                const raw = stored ? JSON.parse(stored) : null;
+                const local = sanitizeProfile(raw);
+                if (local) {
+                    setProfile(local);
+                    setIsLoading(false);
+                    // Try to also pull from Supabase for freshness
+                    const email = local.profile?.email ||
+                        ((() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).email : null; } catch { return null; } })());
+                    if (email) {
+                        sbGetCustomerProfile(email).then(sbProfile => {
+                            if (sbProfile && sbProfile.updated_at && sbProfile.updated_at > (raw?.updatedAt ?? 0)) {
+                                const merged: StoredUserProfile = {
+                                    summary: sbProfile.summary ?? local.summary,
+                                    profile: {
+                                        name: sbProfile.name ?? local.profile.name,
+                                        city: sbProfile.city ?? local.profile.city,
+                                        budget: sbProfile.budget ?? local.profile.budget,
+                                        cuisines: sbProfile.cuisines ?? local.profile.cuisines,
+                                        spice: sbProfile.spice_level ?? local.profile.spice,
+                                        allergens: sbProfile.allergens ?? local.profile.allergens,
+                                        diet: sbProfile.diet ?? local.profile.diet,
+                                        avoid: sbProfile.avoid ?? local.profile.avoid,
+                                        vibe: sbProfile.vibe ?? local.profile.vibe,
+                                    },
+                                    aiPreferences: {
+                                        tone: (sbProfile.ai_tone as any) ?? local.aiPreferences?.tone ?? 'friendly',
+                                        style: (sbProfile.ai_style as any) ?? local.aiPreferences?.style ?? 'classic',
+                                    },
+                                };
+                                setProfile(merged);
+                                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(merged));
+                            }
+                        }).catch(() => {});
+                    }
+                    return;
+                }
+                // No local profile: try Supabase
+                const email = (() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).email : null; } catch { return null; } })();
+                if (email) {
+                    const sbProfile = await sbGetCustomerProfile(email).catch(() => null);
+                    if (sbProfile) {
+                        const fromSb: StoredUserProfile = {
+                            summary: sbProfile.summary ?? 'Your dining profile is ready.',
+                            profile: {
+                                name: sbProfile.name ?? '', city: sbProfile.city ?? '',
+                                budget: sbProfile.budget ?? '$$',
+                                cuisines: sbProfile.cuisines ?? [],
+                                spice: sbProfile.spice_level ?? 3,
+                                allergens: sbProfile.allergens ?? [],
+                                diet: sbProfile.diet ?? 'No specific diet',
+                                avoid: sbProfile.avoid ?? [], vibe: sbProfile.vibe ?? 'Cozy and casual',
+                            },
+                            aiPreferences: { tone: (sbProfile.ai_tone as any) ?? 'friendly', style: (sbProfile.ai_style as any) ?? 'classic' },
+                        };
+                        setProfile(fromSb);
+                        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(fromSb));
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to load user profile', e);
+                localStorage.removeItem(LOCAL_STORAGE_KEY);
+            } finally {
+                setIsLoading(false);
             }
-        } catch (e) {
-            console.error("Failed to parse user profile from localStorage", e);
-            localStorage.removeItem(LOCAL_STORAGE_KEY);
-        } finally {
-            setIsLoading(false);
-        }
+        };
+        loadProfile();
     }, []);
 
     const saveProfile = useCallback((newProfile: StoredUserProfile) => {
@@ -81,10 +138,32 @@ export const useUserProfile = () => {
             const clean = sanitizeProfile(newProfile) ?? newProfile;
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(clean));
             setProfile(clean as StoredUserProfile);
+            // Sync to Supabase
+            const email = (() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).email : null; } catch { return null; } })();
+            const userId = (() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).id : null; } catch { return null; } })();
+            if (email && userId) {
+                sbUpsertCustomerProfile({
+                    id: userId, email,
+                    name: clean.profile?.name,
+                    city: clean.profile?.city,
+                    budget: clean.profile?.budget,
+                    cuisines: clean.profile?.cuisines,
+                    spice_level: clean.profile?.spice,
+                    allergens: clean.profile?.allergens,
+                    diet: clean.profile?.diet,
+                    avoid: clean.profile?.avoid,
+                    vibe: clean.profile?.vibe,
+                    ai_tone: clean.aiPreferences?.tone,
+                    ai_style: clean.aiPreferences?.style,
+                    summary: clean.summary,
+                    updated_at: Date.now(),
+                }).catch(() => {});
+            }
         } catch (e) {
-            console.error("Failed to save user profile to localStorage", e);
+            console.error('Failed to save user profile', e);
         }
     }, []);
+
 
     const clearProfile = useCallback(() => {
         try {
