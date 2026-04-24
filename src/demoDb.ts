@@ -571,6 +571,7 @@ export type DemoTableAlert = {
   action: string;
   message: string;
   status: 'active' | 'dismissed';
+  orderId?: string;
   createdAt: number;
 };
 

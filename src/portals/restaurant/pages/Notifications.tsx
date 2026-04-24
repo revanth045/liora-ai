@@ -2,7 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Icon } from '../../../../components/Icon';
 import {
   db_listTableAlerts, db_dismissTableAlert,
-  type DemoTableAlert, type DemoRestaurant,
+  db_listOrders,
+  type DemoTableAlert, type DemoRestaurant, type DemoOrder
 } from '../../../demoDb';
 import { sbListTableAlerts, sbDismissTableAlert } from '../../../lib/supabaseDb';
 
@@ -33,6 +34,8 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
   const [filter, setFilter]   = useState<string>('all');
   const [lastCount, setLastCount] = useState(0);
   const [flash, setFlash]     = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<DemoOrder | null>(null);
+  const [showModal, setShowModal] = useState(false);
 
   const refresh = useCallback(async () => {
     const localAlerts = db_listTableAlerts(restaurant.name);
@@ -67,6 +70,19 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
     active.forEach(a => db_dismissTableAlert(a.id));
     refresh();
   };
+
+  const handleAlertClick = (alert: DemoTableAlert) => {
+    if (alert.orderId) {
+      const orders = db_listOrders(restaurant.id);
+      const order = orders.find(o => o.id === alert.orderId);
+      if (order) {
+        setSelectedOrder(order);
+        setShowModal(true);
+      }
+    }
+  };
+
+  const fmt = (cents: number) => `£${(cents / 100).toFixed(2)}`;
 
   const filtered = filter === 'all' ? active : active.filter(a => a.action === filter);
   const actions = Array.from(new Set(active.map(a => a.action)));
@@ -139,7 +155,8 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
           return (
             <div
               key={alert.id}
-              className={`flex items-start gap-4 p-5 bg-white rounded-3xl border-2 shadow-sm hover:shadow-md transition-all ${meta.color}`}
+              onClick={() => handleAlertClick(alert)}
+              className={`flex items-start gap-4 p-5 bg-white rounded-3xl border-2 shadow-sm hover:shadow-md transition-all cursor-pointer ${meta.color}`}
             >
               <div className={`p-3 rounded-2xl border ${meta.color} flex-shrink-0`}>
                 <Icon name={meta.icon} size={22} />
@@ -166,9 +183,10 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
         })}
       </div>
 
-      {/* History section */}
+      {/* History section omitted for brevity, but let's add the modal at the end */}
       {history.length > 0 && (
         <div className="bg-white border border-cream-200 rounded-3xl overflow-hidden shadow-sm">
+          {/* ... (history content) */}
           <div className="p-5 border-b border-cream-200 flex items-center gap-3">
             <Icon name="history" size={20} className="text-stone-400" />
             <h3 className="font-lora font-bold text-lg text-stone-800">Handled · Last 20</h3>
@@ -177,7 +195,11 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
             {history.slice(0, 20).map(alert => {
               const meta = getActionMeta(alert.action);
               return (
-                <div key={alert.id} className="flex items-center gap-4 px-5 py-3.5 opacity-60 hover:opacity-100 transition-opacity">
+                <div 
+                  key={alert.id} 
+                  onClick={() => handleAlertClick(alert)}
+                  className={`flex items-center gap-4 px-5 py-3.5 opacity-60 hover:opacity-100 transition-opacity ${alert.orderId ? 'cursor-pointer hover:bg-stone-50' : ''}`}
+                >
                   <div className={`p-2 rounded-xl border ${meta.color} flex-shrink-0`}>
                     <Icon name={meta.icon} size={16} />
                   </div>
@@ -192,6 +214,82 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
                 </div>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Order Details Modal */}
+      {showModal && selectedOrder && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm transition-all duration-300">
+          <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl animate-modal-pop">
+            <div className="p-8 space-y-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h3 className="text-2xl font-lora font-bold text-stone-800">Order Details</h3>
+                  <p className="text-sm text-stone-400 font-medium">Table {selectedOrder.tableNumber} · {selectedOrder.customerName}</p>
+                </div>
+                <button 
+                  onClick={() => setShowModal(false)}
+                  className="p-2 hover:bg-stone-100 rounded-full text-stone-400 transition-colors"
+                >
+                  <Icon name="close" size={24} />
+                </button>
+              </div>
+
+              {/* Allergens block */}
+              {selectedOrder.allergens && selectedOrder.allergens.length > 0 ? (
+                <div className="p-4 bg-red-50 border border-red-100 rounded-2xl flex gap-3">
+                  <Icon name="warning" className="text-red-500 shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs font-bold text-red-600 uppercase tracking-widest">Allergy Warning</p>
+                    <p className="text-sm font-bold text-red-800 mt-0.5">{selectedOrder.allergens.join(', ')}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-4 bg-green-50 border border-green-100 rounded-2xl flex gap-3">
+                  <Icon name="check_circle" className="text-green-600 shrink-0" size={20} />
+                  <div>
+                    <p className="text-xs font-bold text-green-600 uppercase tracking-widest">Dietary Notes</p>
+                    <p className="text-sm font-medium text-green-800 mt-0.5">No allergies or dietary restrictions mentioned.</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Items List */}
+              <div className="space-y-3">
+                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Items</p>
+                <div className="max-h-[300px] overflow-y-auto space-y-2 pr-2 custom-scrollbar">
+                  {selectedOrder.items.map((item, idx) => (
+                    <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-50 last:border-0">
+                      <div className="flex items-center gap-3">
+                        <span className="w-8 h-8 flex items-center justify-center bg-stone-100 rounded-xl text-xs font-bold text-stone-500">{item.qty}×</span>
+                        <span className="text-sm font-bold text-stone-800">{item.name}</span>
+                      </div>
+                      <span className="text-sm font-bold text-stone-800">{fmt(item.qty * item.priceCents)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {selectedOrder.notes && (
+                <div className="p-4 bg-brand-50 border border-brand-100 rounded-2xl">
+                  <p className="text-[10px] font-bold text-brand-600 uppercase tracking-widest mb-1">Special Instructions</p>
+                  <p className="text-sm text-stone-700 italic">"{selectedOrder.notes}"</p>
+                </div>
+              )}
+
+              <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
+                <span className="text-stone-400 font-bold text-sm">Amount due</span>
+                <span className="text-2xl font-lora font-bold text-stone-800">{fmt(selectedOrder.totalCents)}</span>
+              </div>
+
+              <button 
+                onClick={() => setShowModal(false)}
+                className="w-full py-4 bg-stone-800 text-white rounded-2xl font-bold hover:bg-stone-950 transition-all shadow-lg"
+              >
+                Close Details
+              </button>
+            </div>
           </div>
         </div>
       )}

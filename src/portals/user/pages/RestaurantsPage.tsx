@@ -340,6 +340,7 @@ function RestaurantPage({
             action: 'New Order',
             message: notificationMessage,
             status: 'active',
+            orderId: order.id,
             createdAt: Date.now()
         });
 

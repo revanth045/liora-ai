@@ -365,6 +365,7 @@ export const AiWaiter = () => {
             action: 'New Order',
             message: notificationMessage,
             status: 'active',
+            orderId: orderId,
             createdAt: Date.now()
         });
 
