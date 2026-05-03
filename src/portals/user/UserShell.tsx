@@ -17,7 +17,7 @@ const HomePage         = lazy(() => import('./pages/Home'));
 const NearbyPage       = lazy(() => import('./pages/Nearby'));
 const DateNightPage    = lazy(() => import('./pages/DateNight'));
 const PlannerPage      = lazy(() => import('./pages/Planner'));
-const WellnessHub      = lazy(() => import('./pages/WellnessHub').then(m => ({ default: m.WellnessHub })));
+const FitnessHub       = lazy(() => import('./pages/FitnessHub'));
 const HotelsPage       = lazy(() => import('./pages/Hotels'));
 const CheckoutPage     = lazy(() => import('./pages/Checkout'));
 const AiWaiterPage     = lazy(() => import('./pages/AiWaiterPage'));
@@ -167,7 +167,7 @@ export default function UserShell() {
             case 'date_night':   return <PaddedPage><DateNightPage /></PaddedPage>;
             case 'dating':       return <PaddedPage><DatingHub setView={setView} /></PaddedPage>;
             case 'planner':      return <PaddedPage><PlannerPage /></PaddedPage>;
-            case 'fitness':      return <PaddedPage><WellnessHub /></PaddedPage>;
+            case 'fitness':      return <PaddedPage><FitnessHub setView={setView} /></PaddedPage>;
             case 'hotels':       return <PaddedPage><HotelsPage onNavigate={setView} /></PaddedPage>;
             case 'ai_waiter':    return <FullPage><AiWaiterPage /></FullPage>;
             case 'chef_mode':

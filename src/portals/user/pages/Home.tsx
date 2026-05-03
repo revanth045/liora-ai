@@ -31,7 +31,7 @@ const QUICK_ACTIONS: { icon: string; label: string; view: View; tint: string; ic
     { icon: 'sparkle_chat',   label: 'AI Concierge',view: 'ai_chat',     tint: 'from-violet-50 to-fuchsia-100',  iconBg: 'bg-gradient-to-br from-violet-400 via-violet-500 to-fuchsia-600' },
     { icon: 'concierge_bell', label: 'AI Waiter',   view: 'ai_waiter',   tint: 'from-sky-50 to-cyan-100',        iconBg: 'bg-gradient-to-br from-sky-400 via-sky-500 to-cyan-600' },
     { icon: 'chef_hat',       label: 'AI Chef',     view: 'chef_mode',   tint: 'from-teal-50 to-emerald-100',    iconBg: 'bg-gradient-to-br from-teal-400 via-teal-500 to-emerald-600' },
-    { icon: 'wellness_leaf',  label: 'Wellness',    view: 'fitness',     tint: 'from-emerald-50 to-green-100',   iconBg: 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-green-600' },
+    { icon: 'fitness_center', label: 'Fitness',     view: 'fitness',     tint: 'from-emerald-50 to-green-100',   iconBg: 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-green-600' },
     { icon: 'deal_tag',       label: 'Offers',      view: 'offers',      tint: 'from-fuchsia-50 to-pink-100',    iconBg: 'bg-gradient-to-br from-fuchsia-400 via-fuchsia-500 to-pink-600' },
     { icon: 'hotel',          label: 'Hotels',      view: 'hotels',      tint: 'from-indigo-50 to-blue-100',     iconBg: 'bg-gradient-to-br from-indigo-400 via-indigo-500 to-blue-600' },
 ];
