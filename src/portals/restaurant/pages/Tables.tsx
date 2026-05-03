@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Icon } from '../../../../components/Icon';
 import {
   db_listTables,
   db_addTable,
@@ -7,6 +8,38 @@ import {
   DemoTable,
   DemoRestaurant,
 } from '../../../demoDb';
+
+// ── QR helpers ────────────────────────────────────────────────────────
+function qrUrl(data: string, size = 300): string {
+  return `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(data)}&margin=8&format=png`;
+}
+function buildQRData(restaurantName: string, tableNumber: number | string): string {
+  return `${tableNumber}:${restaurantName.replace(/ /g, '_')}`;
+}
+function downloadQRImage(restaurantName: string, tableNumber: string, qrData: string) {
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext('2d')!;
+    ctx.drawImage(img, 0, 0);
+    canvas.toBlob((blob) => {
+      if (!blob) { window.open(qrUrl(qrData, 600), '_blank'); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${restaurantName.replace(/ /g, '_')}_Table_${tableNumber}_QR.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+  };
+  img.onerror = () => window.open(qrUrl(qrData, 600), '_blank');
+  img.src = qrUrl(qrData, 600);
+}
 
 interface TablesProps {
   restaurant: DemoRestaurant;
@@ -27,6 +60,7 @@ export default function RestoTables({ restaurant }: TablesProps) {
   const [form, setForm] = useState<TableFormState>(EMPTY_FORM);
   const [formError, setFormError] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [qrPreview, setQrPreview] = useState<{ tableNumber: string; label?: string; qrData: string } | null>(null);
 
   const reload = () => setTables(db_listTables(restaurant.id));
 
@@ -158,6 +192,13 @@ export default function RestoTables({ restaurant }: TablesProps) {
               {/* Action buttons — visible on hover */}
               <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <button
+                  onClick={() => setQrPreview({ tableNumber: String(t.number), label: t.label, qrData: buildQRData(restaurant.name, t.number) })}
+                  className="w-7 h-7 rounded-lg bg-brand-50 hover:bg-brand-100 flex items-center justify-center transition-colors"
+                  title="Generate QR"
+                >
+                  <Icon name="qr_code_2" size={14} className="text-brand-600" />
+                </button>
+                <button
                   onClick={() => openEdit(t)}
                   className="w-7 h-7 rounded-lg bg-stone-100 hover:bg-stone-200 flex items-center justify-center transition-colors"
                   title="Edit"
@@ -280,6 +321,138 @@ export default function RestoTables({ restaurant }: TablesProps) {
           </div>
         );
       })()}
+
+      {/* ── QR Code Generator Section ─────────────────────────── */}
+      {sorted.length > 0 && (
+        <div className="mt-10 border-t border-cream-200 pt-8">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-xl bg-brand-100 text-brand-600">
+                <Icon name="qr_code_2" size={22} />
+              </div>
+              <div>
+                <h2 className="font-display text-xl font-semibold text-stone-900">QR Codes</h2>
+                <p className="text-xs text-stone-400 mt-0.5">Generate & download QR codes for your tables. Customers scan → place orders instantly.</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  sorted.forEach((t, idx) => {
+                    setTimeout(() => downloadQRImage(restaurant.name, String(t.number), buildQRData(restaurant.name, t.number)), idx * 400);
+                  });
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-800 text-white text-xs font-bold hover:bg-stone-900 transition-all"
+              >
+                <Icon name="download" size={14} /> Download All
+              </button>
+              <button
+                onClick={() => {
+                  const printWindow = window.open('', '_blank');
+                  if (!printWindow) return;
+                  printWindow.document.write(`<!DOCTYPE html><html><head><title>${restaurant.name} — Table QR Codes</title>
+                    <style>
+                      * { margin: 0; padding: 0; box-sizing: border-box; }
+                      body { font-family: system-ui, -apple-system, sans-serif; padding: 20px; }
+                      .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+                      .card { text-align: center; border: 2px solid #e5e7eb; border-radius: 16px; padding: 24px 16px; page-break-inside: avoid; }
+                      .card img { width: 180px; height: 180px; margin: 0 auto 12px; }
+                      .card h3 { font-size: 28px; font-weight: 800; color: #1c1917; }
+                      .card p { font-size: 13px; color: #78716c; margin-top: 4px; }
+                      .card .restaurant { font-size: 11px; color: #a8a29e; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; }
+                      @media print { .grid { grid-template-columns: repeat(3, 1fr); } }
+                    </style></head><body><div class="grid">
+                    ${sorted.map(t => {
+                      const d = buildQRData(restaurant.name, t.number);
+                      return `<div class="card"><img src="${qrUrl(d, 360)}" /><h3>Table ${t.number}</h3>${t.label ? `<p>${t.label}</p>` : ''}<p class="restaurant">${restaurant.name}</p><p style="font-size:11px;color:#a8a29e;margin-top:6px;">Scan to order</p></div>`;
+                    }).join('')}
+                    </div><script>window.onload = () => { window.print(); window.close(); }<\/script></body></html>`);
+                  printWindow.document.close();
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 text-white text-xs font-bold hover:bg-brand-600 transition-all"
+              >
+                <Icon name="print" size={14} /> Print All
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {sorted.map(t => {
+              const data = buildQRData(restaurant.name, t.number);
+              return (
+                <div
+                  key={`qr-${t.id}`}
+                  onClick={() => setQrPreview({ tableNumber: String(t.number), label: t.label, qrData: data })}
+                  className="bg-white rounded-2xl border border-cream-200 shadow-sm p-4 text-center hover:shadow-lg hover:border-brand-300 transition-all cursor-pointer group"
+                >
+                  <img
+                    src={qrUrl(data, 200)}
+                    alt={`Table ${t.number} QR`}
+                    className="w-full max-w-[140px] mx-auto rounded-xl mb-2 group-hover:scale-105 transition-transform"
+                  />
+                  <h4 className="text-base font-bold text-stone-800">Table {t.number}</h4>
+                  {t.label && <p className="text-[10px] text-stone-400">{t.label}</p>}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); downloadQRImage(restaurant.name, String(t.number), data); }}
+                    className="mt-2 flex items-center gap-1.5 mx-auto px-3 py-1.5 rounded-lg bg-stone-800 text-white text-[10px] font-bold hover:bg-stone-900 transition-all"
+                  >
+                    <Icon name="download" size={12} /> Download
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── QR Preview Modal ──────────────────────────────────── */}
+      {qrPreview && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm">
+          <div className="bg-white rounded-[2rem] w-full max-w-sm overflow-hidden shadow-2xl">
+            <div className="p-7 text-center space-y-5">
+              <div className="flex justify-between items-start">
+                <div className="text-left">
+                  <h3 className="text-xl font-display font-bold text-stone-800">Table {qrPreview.tableNumber}</h3>
+                  {qrPreview.label && <p className="text-xs text-stone-400 font-medium">{qrPreview.label}</p>}
+                </div>
+                <button onClick={() => setQrPreview(null)} className="p-2 hover:bg-stone-100 rounded-full text-stone-400 transition-colors">
+                  <Icon name="close" size={22} />
+                </button>
+              </div>
+              <div className="bg-cream-50 rounded-2xl p-5 border border-cream-200">
+                <img src={qrUrl(qrPreview.qrData, 400)} alt={`Table ${qrPreview.tableNumber} QR`} className="w-full max-w-[220px] mx-auto rounded-xl" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-stone-800">{restaurant.name}</p>
+                <p className="text-xs text-stone-400 mt-0.5">Scan to connect & order</p>
+              </div>
+              <div className="p-3 bg-stone-50 rounded-xl border border-stone-100">
+                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">QR Data</p>
+                <p className="text-xs font-mono text-stone-600 break-all">{qrPreview.qrData}</p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => downloadQRImage(restaurant.name, qrPreview.tableNumber, qrPreview.qrData)}
+                  className="flex-1 py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all flex items-center justify-center gap-2"
+                >
+                  <Icon name="download" size={16} /> Download PNG
+                </button>
+                <button
+                  onClick={() => {
+                    const pw = window.open('', '_blank');
+                    if (!pw) return;
+                    pw.document.write(`<!DOCTYPE html><html><head><title>Table ${qrPreview.tableNumber} QR</title><style>body{font-family:system-ui;text-align:center;padding:40px}img{width:300px;height:300px}h1{font-size:36px;margin:16px 0 4px}p{color:#78716c;font-size:14px}.r{font-size:12px;color:#a8a29e;text-transform:uppercase;letter-spacing:1px;margin-top:12px}</style></head><body><img src="${qrUrl(qrPreview.qrData, 600)}"/><h1>Table ${qrPreview.tableNumber}</h1>${qrPreview.label ? `<p>${qrPreview.label}</p>` : ''}<p class="r">${restaurant.name}</p><p style="margin-top:8px">Scan to order</p><script>window.onload=()=>{window.print();window.close()}<\/script></body></html>`);
+                    pw.document.close();
+                  }}
+                  className="py-3 px-4 rounded-xl border border-cream-200 text-stone-600 text-sm font-bold hover:bg-cream-50 transition-all"
+                >
+                  <Icon name="print" size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

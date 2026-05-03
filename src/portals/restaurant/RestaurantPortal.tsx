@@ -24,7 +24,7 @@ import RestoTables from './pages/Tables';
 import RestoLoyalty from './pages/LoyaltyProgram';
 import RestoChefGPT from './ChefGPT';
 import RestoNotifications from './pages/Notifications';
-
+import RestoQRCodes from './pages/QRCodes';
 const MENU_GROUPS = [
   {
     label: 'Intelligence',
@@ -38,14 +38,15 @@ const MENU_GROUPS = [
   {
     label: 'Operations',
     items: [
-      { id: 'orders',       label: 'Order Management',  icon: 'receipt_long',       isNew: true },
+      { id: 'orders',       label: 'Order Management',  icon: 'receipt_long',         isNew: true },
       { id: 'notifications',label: 'Notifications',     icon: 'notifications_active', isNew: true },
       { id: 'menu',         label: 'Menu Studio',       icon: 'restaurant_menu' },
-      { id: 'chef_specials',label: 'Chef Specials',     icon: 'chef_hat',           isNew: true },
+      { id: 'chef_specials',label: 'Chef Specials',     icon: 'chef_hat',             isNew: true },
       { id: 'inventory',    label: 'Inventory',         icon: 'inventory_2' },
       { id: 'tables',       label: 'Table Management',  icon: 'table_restaurant' },
+      { id: 'qr_codes',     label: 'QR Codes',          icon: 'qr_code_2',            isNew: true },
       { id: 'staff',        label: 'Staff & Scheduling',icon: 'badge' },
-      { id: 'chef_gpt',     label: 'Chef GPT',          icon: 'soup_kitchen',       isNew: true },
+      { id: 'chef_gpt',     label: 'Chef GPT',          icon: 'soup_kitchen',         isNew: true },
     ]
   },
   {
@@ -125,6 +126,7 @@ export default function RestaurantPortal(){
       case 'chef_specials':     return <RestoChefSpecials restaurant={restaurant} />;
       case 'inventory':         return <RestoInventory restaurant={restaurant} />;
       case 'tables':            return <RestoTables restaurant={restaurant} />;
+      case 'qr_codes':          return <RestoQRCodes restaurant={restaurant} />;
       case 'staff':             return <RestoStaff restaurant={restaurant} />;
       case 'chef_gpt':          return <RestoChefGPT restaurant={restaurant} />;
       case 'marketing':         return <RestoMarketingStudio restaurant={restaurant} />;
