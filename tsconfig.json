@@ -23,7 +23,7 @@
         "./*"
       ],
       "@assets/*": [
-        "../attached_assets/*"
+        "./src/attached_assets/*"
       ]
     },
     "allowImportingTsExtensions": true,
