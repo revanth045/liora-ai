@@ -174,7 +174,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ view, setView, onDemoClick, is
                 <nav className="flex-grow flex flex-col gap-y-0.5 overflow-y-auto px-3 py-2 scrollbar-hide">
                     {!collapsed && <div className={groupCls}>{t(settings.locale, 'nav.discover')}</div>}
                     <NavItem icon="home" label="Home" viewName="home" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="amber" />
-                    <NavItem icon="sparkle_chat" label="AI Concierge" viewName="ai_chat" currentView={view} onClick={handleNavItemClick} badge="Beta" collapsed={collapsed} tint="violet" />
+                    <NavItem icon="sparkle_chat" label="AI Concierge" viewName="ai_chat" currentView={view} onClick={handleNavItemClick} badge="Testing" collapsed={collapsed} tint="violet" />
                     <NavItem icon="plate_fork" label="Restaurants" viewName="restaurants" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="amber" />
                     <NavItem icon="heart" label="Date Night" viewName="date_night" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="rose" />
                     <NavItem icon="deal_tag" label="Offers" viewName="offers" currentView={view} onClick={handleNavItemClick} badge="Hot" collapsed={collapsed} tint="fuchsia" />
@@ -183,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ view, setView, onDemoClick, is
                     <NavItem icon="receipt_dot" label="My Orders" viewName="orders" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="orange" />
 
                     {!collapsed && <div className={groupCls}>{t(settings.locale, 'nav.lifestyle')}</div>}
-                    <NavItem icon="fitness_center" label="Fitness" viewName="fitness" currentView={view} onClick={handleNavItemClick} badge="Beta" collapsed={collapsed} tint="emerald" />
+                    <NavItem icon="fitness_center" label="Fitness" viewName="fitness" currentView={view} onClick={handleNavItemClick} badge="Testing" collapsed={collapsed} tint="emerald" />
                     <NavItem icon="hotel" label="Hotels" viewName="hotels" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="indigo" />
 
                     {!collapsed && <div className={groupCls}>{t(settings.locale, 'nav.proTools')}</div>}
