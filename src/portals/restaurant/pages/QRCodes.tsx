@@ -74,22 +74,40 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
     setBulkTo('');
   };
 
-  // Download single QR
-  const downloadQR = async (qr: typeof generatedQRs[0]) => {
-    try {
-      const response = await fetch(qrUrl(qr.qrData, 600));
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${restaurant.name.replace(/ /g, '_')}_Table_${qr.tableNumber}_QR.png`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch {
+  // Download single QR — uses a hidden canvas to avoid CORS issues
+  const downloadQR = (qr: typeof generatedQRs[0]) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d')!;
+      ctx.drawImage(img, 0, 0);
+      canvas.toBlob((blob) => {
+        if (!blob) { window.open(qrUrl(qr.qrData, 600), '_blank'); return; }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${restaurant.name.replace(/ /g, '_')}_Table_${qr.tableNumber}_QR.png`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    };
+    img.onerror = () => {
+      // Fallback: open in new tab so user can right-click → Save As
       window.open(qrUrl(qr.qrData, 600), '_blank');
-    }
+    };
+    img.src = qrUrl(qr.qrData, 600);
+  };
+
+  // Download all QRs sequentially
+  const downloadAll = () => {
+    generatedQRs.forEach((qr, idx) => {
+      setTimeout(() => downloadQR(qr), idx * 400);
+    });
   };
 
   // Print all QRs
@@ -261,6 +279,12 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
             </div>
             <div className="flex gap-2">
               <button
+                onClick={downloadAll}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-800 text-white text-xs font-bold hover:bg-stone-900 transition-all"
+              >
+                <Icon name="download" size={14} /> Download All
+              </button>
+              <button
                 onClick={printAll}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-500 text-white text-xs font-bold hover:bg-brand-600 transition-all"
               >
@@ -292,12 +316,12 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
                   <p className="text-xs text-stone-400 mt-0.5">{qr.label}</p>
                 )}
                 <p className="text-[9px] text-stone-300 mt-1 uppercase tracking-widest font-bold">{restaurant.name}</p>
-                <div className="mt-3 flex gap-1 justify-center">
+                <div className="mt-3 flex gap-2 justify-center">
                   <button
                     onClick={(e) => { e.stopPropagation(); downloadQR(qr); }}
-                    className="px-3 py-1.5 rounded-lg bg-stone-100 text-stone-600 text-[10px] font-bold hover:bg-stone-200 transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-stone-800 text-white text-xs font-bold hover:bg-stone-900 transition-all shadow-sm"
                   >
-                    Download
+                    <Icon name="download" size={13} /> Download
                   </button>
                 </div>
               </div>
