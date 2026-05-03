@@ -53,16 +53,16 @@ function OrderCard({ order, restaurantName, isExpanded, onToggle }: {
   const stepIdx = getStepIndex(order.status);
 
   return (
-    <div className="bg-white rounded-3xl border border-cream-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-3xl border border-cream-200 shadow-sm overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
       {/* Header row */}
       <button onClick={onToggle}
-        className="w-full flex items-center gap-4 p-5 hover:bg-cream-50/30 text-left transition-colors">
-        <div className="w-11 h-11 rounded-2xl bg-forest-900/8 flex items-center justify-center text-xl flex-shrink-0">
+        className="w-full flex items-center gap-4 p-5 hover:bg-cream-50/50 text-left transition-colors group">
+        <div className="w-11 h-11 rounded-2xl bg-forest-900/8 flex items-center justify-center text-xl flex-shrink-0 group-hover:scale-105 transition-transform">
           🍽️
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="font-bold text-stone-800 text-sm">{restaurantName}</span>
+            <span className="font-bold text-stone-800 text-sm group-hover:text-amber-700 transition-colors">{restaurantName}</span>
             {statusPill(order.status)}
           </div>
           <p className="text-xs text-stone-400 truncate">
@@ -183,17 +183,17 @@ export default function OrdersPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-6 pb-24 px-4">
       {/* Header */}
-      <div className="pt-4">
+      <div className="pt-4 animate-slide-up stagger-1">
         <h1 className="font-lora text-3xl font-bold text-stone-800">My Orders</h1>
         <p className="text-stone-500 text-sm mt-1">Track dine-in orders and browse your history.</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-0 p-1 rounded-xl border border-cream-200 bg-cream-100 max-w-xs">
+      <div className="flex gap-0 p-1 rounded-xl border border-cream-200 bg-cream-100 max-w-xs animate-slide-up stagger-2">
         {(['active', 'history'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
             className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-              tab === t ? 'bg-white text-stone-800 shadow-sm border border-cream-200' : 'text-stone-500 hover:text-stone-700'
+              tab === t ? 'bg-white text-stone-800 shadow-sm border border-cream-200' : 'text-stone-500 hover:text-stone-700 hover:bg-white/50'
             }`}>
             {t === 'active' ? `Active (${activeOrders.length})` : `History (${pastOrders.length})`}
           </button>

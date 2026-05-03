@@ -25,7 +25,7 @@ function CopyCode({ code }: { code: string }) {
   return (
     <button
       onClick={copy}
-      className="flex items-center gap-2 bg-cream-50 border border-dashed border-cream-300 rounded-2xl px-4 py-3 w-full hover:bg-cream-100 transition-colors group"
+      className="flex items-center gap-2 bg-cream-50 border border-dashed border-cream-300 rounded-2xl px-4 py-3 w-full hover:bg-amber-50 hover:border-amber-300 hover:shadow-sm transition-all group"
     >
       <span className="font-mono font-bold text-lg text-stone-800 tracking-[0.18em] flex-1 text-left">{code}</span>
       <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${copied ? 'text-emerald-500' : 'text-stone-400 group-hover:text-stone-600'}`}>
@@ -38,7 +38,7 @@ function CopyCode({ code }: { code: string }) {
 // --- Restaurant Offer Card ----------------------------------------------------
 function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; restaurantName: string }) {
   return (
-    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden">
+    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
       {/* Top band */}
       <div className="bg-forest-900 px-6 py-4 flex items-center justify-between">
         <div>
@@ -90,7 +90,7 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
 // --- Liora Offer Card (platform-wide) ----------------------------------------
 function LioraOfferCard() {
   return (
-    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden">
+    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
       <div className="bg-forest-900 px-6 py-4 flex items-center justify-between">
         <div>
           <p className="text-cream-300 text-[10px] font-bold uppercase tracking-widest mb-0.5">Liora Offer</p>
@@ -136,7 +136,7 @@ export default function OffersPage() {
       <div className="max-w-md mx-auto px-4 py-8 space-y-10">
 
         {/* -- Restaurant Offers -- */}
-        <section>
+        <section className="animate-slide-up stagger-1">
           <div className="mb-4">
             <h2 className="font-lora text-xl font-bold text-stone-800">Restaurant Offers</h2>
             <p className="text-xs text-stone-400 mt-1">Deals from the restaurants you love — use the code when ordering from that specific spot.</p>
@@ -158,7 +158,7 @@ export default function OffersPage() {
         </section>
 
         {/* -- Liora Offers -- */}
-        <section>
+        <section className="animate-slide-up stagger-2">
           <div className="mb-4">
             <h2 className="font-lora text-xl font-bold text-stone-800">Liora Offers</h2>
             <p className="text-xs text-stone-400 mt-1">Platform-wide perks from Liora — these work at every restaurant we partner with.</p>
