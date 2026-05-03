@@ -464,6 +464,41 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z" />
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 8h6M9 12h6M9 16h4" />
         </>
+    ),
+    fitness_center: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.5 10.5V13.5M3.5 10.5V13.5M16 8V16M8 8V16M16 12H8" />
+        <rect x="4" y="6" width="4" height="12" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="16" y="6" width="4" height="12" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+      </>
+    ),
+    play_circle: (
+      <>
+        <circle cx="12" cy="12" r="9" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 8l6 4-6 4z" />
+      </>
+    ),
+    self_improvement: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21c-4.5 0-8-3.5-8-8 0-1.5.5-2.9 1.4-4M20.6 9c.9 1.1 1.4 2.5 1.4 4 0 4.5-3.5 8-8 8" />
+        <circle cx="12" cy="8" r="3" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 11v6m-3-3h6" />
+      </>
+    ),
+    directions_run: (
+      <>
+        <circle cx="12" cy="5" r="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 7l-2 5h3l2 8m-5-3l-4 4m9-11l4 2-1 4" />
+      </>
+    ),
+    monitor_heart: (
+      <>
+        <rect x="2" y="4" width="20" height="16" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h3l2-4 3 8 2-4h4" />
+      </>
+    ),
+    thumb_up: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3" />
     )
   };
 
