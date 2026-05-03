@@ -10,6 +10,15 @@ import { Icon } from '../../../../components/Icon';
 import { useSettings } from '../../../context/SettingsContext';
 import { t } from '../../../lib/i18n';
 
+import imgRestaurants from '../../../assets/quick_actions/restaurants_1776233894365.png';
+import imgOrders from '../../../assets/quick_actions/orders_1776233886335.png';
+import imgAiChat from '../../../assets/quick_actions/AiChat_1776233876053.png';
+import imgAiWaiter from '../../../assets/quick_actions/Aiwaiter_1776233866008.png';
+import imgAiChef from '../../../assets/quick_actions/Happy_robot_chef_in_action_1776233731026.png';
+import imgFitness from '../../../assets/quick_actions/calorie_1776233856996.png';
+import imgOffers from '../../../assets/quick_actions/offers_1776233841155.png';
+import imgHotels from '../../../assets/quick_actions/Nearby_1776233850952.png';
+
 interface HomeProps {
     favorites: ChatMessage[];
     addFavorite: (msg: ChatMessage) => void;
@@ -25,15 +34,15 @@ function timeGreetingKey() {
 }
 const fmt = (cents: number) => `$${(cents / 100).toFixed(2)}`;
 
-const QUICK_ACTIONS: { icon: string; label: string; view: View; tint: string; iconBg: string }[] = [
-    { icon: 'plate_fork',     label: 'Restaurants', view: 'restaurants', tint: 'from-amber-50 to-orange-100',    iconBg: 'bg-gradient-to-br from-amber-400 via-amber-500 to-orange-600' },
-    { icon: 'receipt_dot',    label: 'My Orders',   view: 'orders',      tint: 'from-orange-50 to-amber-100',    iconBg: 'bg-gradient-to-br from-orange-400 via-orange-500 to-rose-500' },
-    { icon: 'sparkle_chat',   label: 'AI Concierge',view: 'ai_chat',     tint: 'from-violet-50 to-fuchsia-100',  iconBg: 'bg-gradient-to-br from-violet-400 via-violet-500 to-fuchsia-600' },
-    { icon: 'concierge_bell', label: 'AI Waiter',   view: 'ai_waiter',   tint: 'from-sky-50 to-cyan-100',        iconBg: 'bg-gradient-to-br from-sky-400 via-sky-500 to-cyan-600' },
-    { icon: 'chef_hat',       label: 'AI Chef',     view: 'chef_mode',   tint: 'from-teal-50 to-emerald-100',    iconBg: 'bg-gradient-to-br from-teal-400 via-teal-500 to-emerald-600' },
-    { icon: 'fitness_center', label: 'Fitness',     view: 'fitness',     tint: 'from-emerald-50 to-green-100',   iconBg: 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-green-600' },
-    { icon: 'deal_tag',       label: 'Offers',      view: 'offers',      tint: 'from-fuchsia-50 to-pink-100',    iconBg: 'bg-gradient-to-br from-fuchsia-400 via-fuchsia-500 to-pink-600' },
-    { icon: 'hotel',          label: 'Hotels',      view: 'hotels',      tint: 'from-indigo-50 to-blue-100',     iconBg: 'bg-gradient-to-br from-indigo-400 via-indigo-500 to-blue-600' },
+const QUICK_ACTIONS: { img: string; label: string; view: View; tint: string }[] = [
+    { img: imgRestaurants, label: 'Restaurants', view: 'restaurants', tint: 'from-amber-50 to-orange-100' },
+    { img: imgOrders,      label: 'My Orders',   view: 'orders',      tint: 'from-orange-50 to-amber-100' },
+    { img: imgAiChat,      label: 'AI Concierge',view: 'ai_chat',     tint: 'from-violet-50 to-fuchsia-100' },
+    { img: imgAiWaiter,    label: 'AI Waiter',   view: 'ai_waiter',   tint: 'from-sky-50 to-cyan-100' },
+    { img: imgAiChef,      label: 'AI Chef',     view: 'chef_mode',   tint: 'from-teal-50 to-emerald-100' },
+    { img: imgFitness,     label: 'Fitness',     view: 'fitness',     tint: 'from-emerald-50 to-green-100' },
+    { img: imgOffers,      label: 'Offers',      view: 'offers',      tint: 'from-fuchsia-50 to-pink-100' },
+    { img: imgHotels,      label: 'Hotels',      view: 'hotels',      tint: 'from-indigo-50 to-blue-100' },
 ];
 
 const CUISINE_EMOJI: Record<string, string> = {
@@ -162,10 +171,8 @@ export default function HomePage({ setView }: HomeProps) {
                                 onClick={() => setView(action.view)}
                                 className={`group relative flex flex-col items-center gap-2 p-3 rounded-2xl bg-gradient-to-br ${action.tint} dark:from-surface-100 dark:to-surface-200 border border-cream-200 dark:border-surface-300 hover:shadow-lift hover:-translate-y-0.5 transition-all active:scale-95`}
                             >
-                                <div className={`relative w-12 h-12 rounded-2xl ${action.iconBg} flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all ring-1 ring-white/30`}>
-                                    {/* 3D bevelled top highlight */}
-                                    <span className="absolute inset-x-1.5 top-1 h-1/3 rounded-t-xl bg-gradient-to-b from-white/55 to-white/0 pointer-events-none" />
-                                    <Icon name={action.icon} className="w-5 h-5 relative drop-shadow-sm" />
+                                <div className={`relative w-14 h-14 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                                    <img src={action.img} alt={action.label} className="w-11 h-11 object-contain drop-shadow-md relative z-10" />
                                 </div>
                                 <span className="text-[10px] font-bold text-stone-800 dark:text-stone-700 text-center leading-tight tracking-tight">{action.label}</span>
                             </button>
