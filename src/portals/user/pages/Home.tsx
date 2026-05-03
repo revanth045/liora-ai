@@ -172,7 +172,7 @@ export default function HomePage({ setView }: HomeProps) {
                                 className={`group relative flex flex-col items-center gap-2 p-3 rounded-2xl bg-gradient-to-br ${action.tint} dark:from-surface-100 dark:to-surface-200 border border-cream-200 dark:border-surface-300 hover:shadow-lift hover:-translate-y-0.5 transition-all active:scale-95`}
                             >
                                 <div className={`relative w-14 h-14 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                                    <img src={action.img} alt={action.label} className="w-11 h-11 object-contain drop-shadow-md relative z-10" />
+                                    <img src={action.img} alt={action.label} className="w-11 h-11 object-contain drop-shadow-md relative z-10 rounded-[12px]" />
                                 </div>
                                 <span className="text-[10px] font-bold text-stone-800 dark:text-stone-700 text-center leading-tight tracking-tight">{action.label}</span>
                             </button>
