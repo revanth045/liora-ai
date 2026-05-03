@@ -231,30 +231,33 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
         </div>
 
         {/* Method 3: Bulk */}
-        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 space-y-4">
+        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 space-y-4 overflow-hidden">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
               <Icon name="grid_view" size={18} />
             </div>
             <h3 className="font-bold text-stone-800 text-sm">Bulk Generate</h3>
           </div>
-          <div className="flex gap-2">
+          <p className="text-xs text-stone-400 leading-relaxed">
+            Generate QR codes for a range of table numbers at once.
+          </p>
+          <div className="flex items-center gap-2">
             <input
               type="number"
               min={1}
               value={bulkFrom}
               onChange={e => setBulkFrom(e.target.value)}
               placeholder="From"
-              className="flex-1 px-3 py-2.5 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 text-sm focus:outline-none focus:border-brand-400 transition-all"
+              className="w-full min-w-0 px-3 py-2.5 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 text-sm focus:outline-none focus:border-brand-400 transition-all"
             />
-            <span className="self-center text-stone-300 font-bold">→</span>
+            <span className="text-stone-300 font-bold flex-shrink-0">→</span>
             <input
               type="number"
               min={1}
               value={bulkTo}
               onChange={e => setBulkTo(e.target.value)}
               placeholder="To"
-              className="flex-1 px-3 py-2.5 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 text-sm focus:outline-none focus:border-brand-400 transition-all"
+              className="w-full min-w-0 px-3 py-2.5 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 text-sm focus:outline-none focus:border-brand-400 transition-all"
             />
           </div>
           <button
