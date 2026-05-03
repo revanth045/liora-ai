@@ -178,34 +178,34 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
         {/* Method 1: From existing tables */}
-        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center">
+        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 flex flex-col">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center flex-shrink-0">
               <Icon name="table_restaurant" size={18} />
             </div>
             <h3 className="font-bold text-stone-800 text-sm">From Existing Tables</h3>
           </div>
-          <p className="text-xs text-stone-400 leading-relaxed">
+          <p className="text-xs text-stone-400 leading-relaxed mb-4">
             Auto-generate QR codes for all {tables.length} table{tables.length !== 1 ? 's' : ''} you've already configured.
           </p>
           <button
             onClick={generateFromTables}
             disabled={tables.length === 0}
-            className="w-full py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-auto"
           >
             {tables.length === 0 ? 'No Tables Configured' : `Generate ${tables.length} QR Codes`}
           </button>
         </div>
 
         {/* Method 2: Manual */}
-        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 flex flex-col">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
               <Icon name="edit" size={18} />
             </div>
             <h3 className="font-bold text-stone-800 text-sm">Single Table</h3>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 mb-4">
             <input
               type="text"
               value={manualTable}
@@ -224,24 +224,24 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
           <button
             onClick={generateManual}
             disabled={!manualTable.trim()}
-            className="w-full py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-auto"
           >
             Generate QR
           </button>
         </div>
 
         {/* Method 3: Bulk */}
-        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 space-y-4 overflow-hidden">
-          <div className="flex items-center gap-3">
+        <div className="bg-white rounded-3xl border border-cream-200 shadow-sm p-6 flex flex-col overflow-hidden">
+          <div className="flex items-center gap-3 mb-3">
             <div className="w-8 h-8 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center flex-shrink-0">
               <Icon name="grid_view" size={18} />
             </div>
             <h3 className="font-bold text-stone-800 text-sm">Bulk Generate</h3>
           </div>
-          <p className="text-xs text-stone-400 leading-relaxed">
+          <p className="text-xs text-stone-400 leading-relaxed mb-4">
             Generate QR codes for a range of table numbers at once.
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-4">
             <input
               type="number"
               min={1}
@@ -263,7 +263,7 @@ export default function RestoQRCodes({ restaurant }: { restaurant: DemoRestauran
           <button
             onClick={generateBulk}
             disabled={!bulkFrom || !bulkTo}
-            className="w-full py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-xl bg-stone-800 text-white text-sm font-bold hover:bg-stone-900 transition-all disabled:opacity-40 disabled:cursor-not-allowed mt-auto"
           >
             Generate Range
           </button>
