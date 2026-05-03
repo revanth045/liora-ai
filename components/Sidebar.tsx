@@ -183,7 +183,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ view, setView, onDemoClick, is
                     <NavItem icon="receipt_dot" label="My Orders" viewName="orders" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="orange" />
 
                     {!collapsed && <div className={groupCls}>{t(settings.locale, 'nav.lifestyle')}</div>}
-                    <NavItem icon="fitness_center" label="Fitness" viewName="fitness" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="emerald" />
+                    <NavItem icon="fitness_center" label="Fitness" viewName="fitness" currentView={view} onClick={handleNavItemClick} badge="Beta" collapsed={collapsed} tint="emerald" />
                     <NavItem icon="hotel" label="Hotels" viewName="hotels" currentView={view} onClick={handleNavItemClick} collapsed={collapsed} tint="indigo" />
 
                     {!collapsed && <div className={groupCls}>{t(settings.locale, 'nav.proTools')}</div>}
