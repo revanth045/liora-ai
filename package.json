@@ -7,7 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "dev": "concurrently -n client,server -c cyan,green \"vite\" \"node --env-file=.env server/index.js\"",
+    "dev": "concurrently -n client,server -c cyan,green \"vite\" \"node server/index.js\"",
     "dev:client": "vite",
     "dev:server": "nodemon server/index.js",
     "build": "vite build",
