@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { getAuth } from '../../auth';
+import { LogoMark } from '../../../components/Logo';
 import { Icon } from '../../../components/Icon';
 import { Spinner } from '../../../components/Spinner';
 import AccountSwitcher from './AccountSwitcher';
+import DemoAccountsPanel from './DemoAccountsPanel';
 
 interface UserLoginProps {
   onSwitchToRestaurant?: () => void;
 }
 
-// Google "G" logo SVG
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4" />
@@ -31,78 +32,62 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setMsg('');
-    setLoading(true);
+    setError(''); setMsg(''); setLoading(true);
     try {
-      if (mode === 'register') {
-        // signUpUser now handles session creation + emit() internally
-        await auth.signUpUser(email, password, fullName);
-      } else if (mode === 'forgot') {
+      if (mode === 'register')      await auth.signUpUser(email, password, fullName);
+      else if (mode === 'forgot') {
         if (!auth.resetPassword) throw new Error("Password reset not supported");
         await auth.resetPassword(email);
         setMsg("Check your email for a password reset link.");
-      } else {
-        await auth.signInUser(email, password);
-      }
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
+      } else                         await auth.signInUser(email, password);
+    } catch (err: any) { setError(err.message || 'Something went wrong'); }
+    finally             { setLoading(false); }
   };
 
   const handleGoogle = async () => {
     if (!auth.signInWithGoogle) return;
-    setError('');
-    setMsg('');
-    setGoogleLoading(true);
-    try {
-      await auth.signInWithGoogle('user');
-      // If real OAuth: browser will redirect; if demo: session fires and component unmounts.
-    } catch (err: any) {
-      setError(err.message || 'Google sign-in failed');
-    } finally {
-      setGoogleLoading(false);
-    }
+    setError(''); setMsg(''); setGoogleLoading(true);
+    try { await auth.signInWithGoogle(); }
+    catch (err: any) { setError(err.message || 'Google sign-in failed'); setGoogleLoading(false); }
   };
 
-  const inp = "w-full px-4 py-3 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/30 transition-all text-sm";
-  const lbl = "block text-xs font-semibold text-stone-500 uppercase tracking-wider mb-1.5";
+  const inp = "w-full px-4 py-3.5 rounded-2xl bg-white border border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/15 transition-all text-[15px]";
+  const lbl = "block text-[10px] font-bold text-stone-700 uppercase tracking-[0.2em] mb-2";
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full">
       {/* Greeting */}
       <div className="mb-8">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-full bg-brand-400 flex items-center justify-center shadow">
-            <span className="font-display font-bold text-white text-xl">L</span>
+        <div className="flex items-center gap-3 mb-6 md:hidden">
+          <LogoMark className="h-10 w-10" />
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-xl font-semibold text-stone-900 tracking-tight">Liora</span>
+            <span className="text-[8px] font-bold text-stone-800 uppercase tracking-[0.32em] mt-1">Maison de cuisine</span>
           </div>
-          <span className="font-display text-2xl font-semibold text-stone-800">Liora</span>
         </div>
-        <h1 className="font-display text-3xl font-light text-stone-900 leading-snug">
-          {mode === 'login'
-            ? <>Welcome <span className="italic">back, foodie</span></>
-            : mode === 'forgot'
-              ? <>Reset <span className="italic">password</span></>
-              : <>Start your <span className="italic">food journey</span></>}
+        <p className="text-[10px] font-bold text-brand-600 uppercase tracking-[0.28em] mb-3">
+          {mode === 'login' ? 'Members access' : mode === 'forgot' ? 'Account recovery' : 'New membership'}
+        </p>
+        <h1 className="font-display text-4xl font-light text-stone-900 leading-[1.05] tracking-tight">
+          {mode === 'login'  && <>Welcome <em className="italic text-brand-600">back.</em></>}
+          {mode === 'forgot' && <>Reset your <em className="italic text-brand-600">password.</em></>}
+          {mode === 'register' && <>Begin your <em className="italic text-brand-600">journey.</em></>}
         </h1>
-        <p className="text-stone-500 text-sm mt-2">
-          {mode === 'login'
-            ? 'Sign in to discover, plan and eat smarter.'
-            : mode === 'forgot'
-              ? "Enter your email and we'll send you a link to reset your password."
-              : 'Create your free account and meet your AI dining companion.'}
+        <p className="text-stone-800 text-sm mt-3 font-light leading-relaxed">
+          {mode === 'login'    && 'Sign in to continue your curated dining journey.'}
+          {mode === 'forgot'   && 'Enter your email and we’ll send you a secure reset link.'}
+          {mode === 'register' && 'Create your private account and meet your AI concierge.'}
         </p>
       </div>
 
-      {/* Mode toggle (hide in forgot mode) */}
+      {/* Mode toggle */}
       {mode !== 'forgot' && (
-        <div className="flex gap-0 mb-6 p-1 rounded-xl border border-cream-200 bg-cream-100">
+        <div className="flex gap-1 mb-6 p-1 rounded-2xl border border-stone-200 bg-cream-100">
           {(['login', 'register'] as const).map(m => (
             <button key={m} onClick={() => { setMode(m); setError(''); setMsg(''); }}
-              className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${mode === m ? 'bg-white text-stone-800 shadow-sm border border-cream-200' : 'text-stone-500 hover:text-stone-700'
-                }`}>
+              className={`flex-1 py-2.5 rounded-xl text-[13px] font-bold transition-all tracking-wide ${
+                mode === m ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-800 hover:text-stone-800'
+              }`}>
               {m === 'login' ? 'Sign In' : 'Create Account'}
             </button>
           ))}
@@ -110,38 +95,29 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
       )}
 
       {/* Form card */}
-      <div className="bg-white border border-cream-200 rounded-2xl p-6 shadow-sm">
+      <div className="card p-7 md:p-8">
         {error && (
-          <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm flex items-center gap-2">
-            <Icon name="x" className="w-4 h-4 flex-shrink-0" />
-            {error}
+          <div className="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2 font-medium">
+            <Icon name="x" className="w-4 h-4 flex-shrink-0" />{error}
           </div>
         )}
         {msg && (
-          <div className="mb-4 p-3 rounded-lg bg-green-50 border border-green-200 text-green-700 text-sm flex items-center gap-2">
-            <Icon name="check" className="w-4 h-4 flex-shrink-0" />
-            {msg}
+          <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm flex items-center gap-2 font-medium">
+            <Icon name="check" className="w-4 h-4 flex-shrink-0" />{msg}
           </div>
         )}
 
-        {/* Google OAuth button - shown only when Supabase is configured and not in forgot mode */}
         {auth.signInWithGoogle && mode !== 'forgot' && (
           <>
-            <button
-              type="button"
-              onClick={handleGoogle}
-              disabled={googleLoading}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-cream-200 bg-white hover:bg-cream-50 text-stone-700 font-semibold text-sm transition-all shadow-sm disabled:opacity-60 mb-4"
-            >
+            <button type="button" onClick={handleGoogle} disabled={googleLoading}
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-2xl border border-stone-200 bg-white hover:border-stone-400 text-stone-800 font-semibold text-[14px] transition-all disabled:opacity-60 mb-5 shadow-sm hover:shadow">
               {googleLoading ? <Spinner /> : <GoogleIcon />}
-              {googleLoading ? 'Signing you in...' : 'Continue with Google'}
+              {googleLoading ? 'Redirecting…' : 'Continue with Google'}
             </button>
-
-            {/* Divider */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex-1 h-px bg-cream-200" />
-              <span className="text-xs text-stone-400 font-medium uppercase tracking-wider">or</span>
-              <div className="flex-1 h-px bg-cream-200" />
+            <div className="flex items-center gap-3 mb-5">
+              <div className="flex-1 h-px bg-stone-200" />
+              <span className="text-[10px] text-stone-800 font-bold uppercase tracking-[0.25em]">or with email</span>
+              <div className="flex-1 h-px bg-stone-200" />
             </div>
           </>
         )}
@@ -159,60 +135,52 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
             <input className={inp} type="email" placeholder="you@email.com" value={email}
               onChange={e => setEmail(e.target.value)} required autoComplete="email" />
           </div>
-
           {mode !== 'forgot' && (
             <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-xs font-semibold text-stone-500 uppercase tracking-wider">Password</label>
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-[10px] font-bold text-stone-700 uppercase tracking-[0.2em]">Password</label>
                 {mode === 'login' && auth.resetPassword && (
-                  <button type="button" onClick={() => { setMode('forgot'); setError(''); setMsg(''); }} className="text-[10px] font-bold text-brand-400 hover:text-brand-500">
-                    Forgot password?
+                  <button type="button" onClick={() => { setMode('forgot'); setError(''); setMsg(''); }}
+                    className="text-[10px] font-bold text-brand-600 hover:text-brand-700 uppercase tracking-wider">
+                    Forgot?
                   </button>
                 )}
               </div>
-              <input className={inp} type="password" placeholder="********" value={password}
-                onChange={e => setPassword(e.target.value)} required autoComplete={mode === 'register' ? 'new-password' : 'current-password'} />
+              <input className={inp} type="password" placeholder="••••••••" value={password}
+                onChange={e => setPassword(e.target.value)} required
+                autoComplete={mode === 'register' ? 'new-password' : 'current-password'} />
             </div>
           )}
 
           <button type="submit" disabled={loading || (mode === 'forgot' && msg !== '')}
-            className="w-full py-3.5 rounded-xl font-bold text-sm bg-brand-400 text-white hover:bg-brand-500 transition-all shadow-sm disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
+            className="btn-primary w-full !py-4 !text-sm mt-2 anim-glow">
             {loading ? <Spinner /> : null}
-            {loading ? 'Please wait...' : mode === 'login' ? 'Sign In' : mode === 'forgot' ? 'Send Reset Link' : 'Create My Account'}
+            {loading ? 'Please wait…' : mode === 'login' ? 'Sign In' : mode === 'forgot' ? 'Send Reset Link' : 'Create my account'}
           </button>
         </form>
 
         {mode === 'forgot' ? (
-          <div className="mt-4 pt-4 border-t border-cream-100 text-center">
-            <button onClick={() => { setMode('login'); setError(''); setMsg(''); }} className="text-xs font-bold text-stone-500 hover:text-stone-800">
-              Back to Sign In
+          <div className="mt-5 pt-5 border-t border-stone-100 text-center">
+            <button onClick={() => { setMode('login'); setError(''); setMsg(''); }}
+              className="text-[11px] font-bold text-stone-800 hover:text-stone-900 uppercase tracking-widest underline-luxe">
+              ← Back to sign in
             </button>
           </div>
         ) : (
-          <div className="mt-4 pt-4 border-t border-cream-100">
+          <div className="mt-5 pt-5 border-t border-stone-100">
             <AccountSwitcher />
           </div>
         )}
-      </div>
 
-      {/* Perks */}
-      {mode === 'register' && (
-        <div className="mt-5 grid grid-cols-3 gap-3 text-center">
-          {[['🤖', 'AI Food Assistant'], ['🥗', 'Calorie Tracking'], ['📊', 'Meal Planner']].map(([emoji, label]) => (
-            <div key={label} className="bg-white border border-cream-200 rounded-2xl p-3 shadow-sm">
-              <div className="text-2xl mb-1">{emoji}</div>
-              <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider leading-tight">{label}</p>
-            </div>
-          ))}
-        </div>
-      )}
+        {mode === 'login' && <DemoAccountsPanel kind="user" />}
+      </div>
 
       {/* Switch to restaurant */}
       {onSwitchToRestaurant && (
-        <p className="text-center text-xs text-stone-400 mt-6">
+        <p className="text-center text-[12px] text-stone-800 mt-7 font-medium">
           Are you a restaurant owner?{' '}
-          <button onClick={onSwitchToRestaurant} className="text-brand-400 font-semibold hover:underline">
-            Restaurant login →
+          <button onClick={onSwitchToRestaurant} className="text-brand-600 font-bold hover:text-brand-700 underline-luxe">
+            Restaurant access →
           </button>
         </p>
       )}

@@ -1,0 +1,23 @@
+{
+  "name": "Liora — AI Food & Lifestyle Concierge",
+  "short_name": "Liora",
+  "description": "Your private AI sommelier. Discover, reserve, and savour the world's finest tables.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#1c1917",
+  "theme_color": "#E85D2A",
+  "categories": ["food", "lifestyle", "travel", "shopping"],
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "AI Concierge",  "short_name": "Concierge",  "url": "/?shortcut=concierge",  "description": "Talk to your AI sommelier" },
+    { "name": "Reservations",  "short_name": "Reserve",    "url": "/?shortcut=reservations","description": "Book a table tonight" },
+    { "name": "Restaurants",   "short_name": "Discover",   "url": "/?shortcut=restaurants","description": "Browse the curated list" }
+  ]
+}

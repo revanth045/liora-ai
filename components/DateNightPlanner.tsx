@@ -171,16 +171,16 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
                     <div className="p-4 bg-gradient-to-br from-cream-100 to-cream-50 rounded-xl shadow-sm border border-cream-200">
                         <SmartImage src={dinnerImg} alt={plan.dinner.name} className="w-full h-32 object-cover rounded-lg mb-3" />
                         <h4 className="font-bold text-lg text-stone-800">{plan.dinner.name}</h4>
-                        <p className="text-sm text-stone-400 mb-2">{plan.dinner.cuisine} ââ ¬¢ {plan.dinner.rating}â˜...</p>
-                        <p className="text-xs text-stone-400 italic mb-3">"{plan.dinner.why_matched}"</p>
+                        <p className="text-sm text-stone-600 mb-2">{plan.dinner.cuisine} ââ ¬¢ {plan.dinner.rating}â˜...</p>
+                        <p className="text-xs text-stone-600 italic mb-3">"{plan.dinner.why_matched}"</p>
                         <button className="w-full bg-white border border-cream-200 text-stone-800 font-bold py-2 rounded-lg text-sm hover:bg-cream-100/80">View Details</button>
                     </div>
 
                     <div className="p-4 bg-gradient-to-br from-cream-100 to-cream-50 rounded-xl shadow-sm border border-cream-200">
                         <SmartImage src={activityImg} alt={plan.after_dinner.name} className="w-full h-32 object-cover rounded-lg mb-3" />
                         <h4 className="font-bold text-lg text-stone-800">{plan.after_dinner.name}</h4>
-                        <p className="text-sm text-stone-400 mb-2 capitalize">{plan.after_dinner.type}</p>
-                        <p className="text-xs text-stone-400 italic">"{plan.after_dinner.why_matched}"</p>
+                        <p className="text-sm text-stone-600 mb-2 capitalize">{plan.after_dinner.type}</p>
+                        <p className="text-xs text-stone-600 italic">"{plan.after_dinner.why_matched}"</p>
                     </div>
                 </div>
             );
@@ -194,7 +194,7 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
             <div className="flex-shrink-0 p-4 border-b border-cream-200 bg-white/80 backdrop-blur-md flex justify-between items-center">
                 <div>
                     <h2 className="text-xl font-lora font-bold text-stone-800">Date Night Planner</h2>
-                    <p className="text-xs text-stone-400">Plans & Advice</p>
+                    <p className="text-xs text-stone-600">Plans & Advice</p>
                 </div>
                 {!isPremium && (
                     <button onClick={() => openModal('pricing')} className="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-1 rounded-full flex items-center gap-1">
@@ -217,7 +217,7 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
                         <div className="space-y-3 animate-fade-in">
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
-                                    <label className="block text-xs font-semibold text-stone-400 mb-1">Vibe</label>
+                                    <label className="block text-xs font-semibold text-stone-600 mb-1">Vibe</label>
                                     <select 
                                         value={constraints.vibe} 
                                         onChange={(e) => setConstraints({...constraints, vibe: e.target.value})} 
@@ -227,7 +227,7 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-xs font-semibold text-stone-400 mb-1">Budget</label>
+                                    <label className="block text-xs font-semibold text-stone-600 mb-1">Budget</label>
                                     <select 
                                         value={constraints.budget} 
                                         onChange={(e) => setConstraints({...constraints, budget: e.target.value})} 
@@ -257,13 +257,13 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
 
                 {/* Dating Intelligence Pills */}
                 <div>
-                    <h3 className="text-xs font-bold text-stone-400 uppercase tracking-wide mb-2">Dating Intelligence</h3>
+                    <h3 className="text-xs font-bold text-stone-600 uppercase tracking-wide mb-2">Dating Intelligence</h3>
                     <div className="flex flex-wrap gap-2">
                         {adviceTopics.map(topic => (
                             <button
                                 key={topic.label}
                                 onClick={() => handleSendMessage(topic.prompt)}
-                                className="px-3 py-1.5 bg-white border border-cream-200 rounded-full text-xs font-semibold text-stone-400 hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-all shadow-sm"
+                                className="px-3 py-1.5 bg-white border border-cream-200 rounded-full text-xs font-semibold text-stone-600 hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-all shadow-sm"
                             >
                                 {topic.label}
                             </button>
@@ -275,8 +275,8 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
                 <div className="space-y-4 pb-4">
                     {messages.length === 0 && (
                         <div className="text-center py-8 opacity-50">
-                            <Icon name="heart" className="w-12 h-12 mx-auto mb-2 text-stone-400" />
-                            <p className="text-sm text-stone-400">Ask for advice or generate a plan.</p>
+                            <Icon name="heart" className="w-12 h-12 mx-auto mb-2 text-stone-600" />
+                            <p className="text-sm text-stone-600">Ask for advice or generate a plan.</p>
                         </div>
                     )}
                     {messages.map((msg) => (
@@ -294,7 +294,7 @@ export const DateNightPlanner: React.FC<DateNightPlannerProps> = ({ prefillData,
                         <div className="flex gap-3">
                             <div className="w-8 h-8 rounded-full bg-brand-400 flex-shrink-0"></div>
                             <div className="bg-white p-3 rounded-2xl rounded-bl-none border border-cream-200/60 shadow-sm flex items-center gap-2">
-                                <Spinner /> <span className="text-xs text-stone-400">Thinking...</span>
+                                <Spinner /> <span className="text-xs text-stone-600">Thinking...</span>
                             </div>
                         </div>
                     )}

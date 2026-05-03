@@ -53,7 +53,7 @@ export const ChefMode = () => {
             {step < 3 && (
                 <div className="text-center">
                     <h2 className="text-2xl font-lora font-bold text-stone-800">Chef Mode</h2>
-                    <p className="text-stone-400 text-sm">Turn your ingredients into a masterpiece.</p>
+                    <p className="text-stone-600 text-sm">Turn your ingredients into a masterpiece.</p>
                 </div>
             )}
 
@@ -79,7 +79,7 @@ export const ChefMode = () => {
             {step === 1 && (
                 <div className="text-center py-12">
                     <Spinner />
-                    <p className="text-stone-400 mt-4">Inventing recipes...</p>
+                    <p className="text-stone-600 mt-4">Inventing recipes...</p>
                 </div>
             )}
 
@@ -95,9 +95,9 @@ export const ChefMode = () => {
                                 <h4 className="font-bold text-lg text-stone-800">{recipe.name}</h4>
                                 <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded font-bold">{recipe.difficulty}</span>
                             </div>
-                            <p className="text-sm text-stone-400 mb-3">{recipe.summary}</p>
+                            <p className="text-sm text-stone-600 mb-3">{recipe.summary}</p>
                             <div className="flex items-center justify-between mt-4">
-                                <span className="text-xs font-bold text-stone-400 flex items-center gap-1">
+                                <span className="text-xs font-bold text-stone-600 flex items-center gap-1">
                                     <Icon name="scale" className="w-3 h-3" /> {recipe.time}
                                 </span>
                                 <button 
@@ -114,7 +114,7 @@ export const ChefMode = () => {
 
             {step === 3 && selectedRecipe && (
                 <div className="animate-fade-in">
-                    <button onClick={() => setStep(2)} className="flex items-center gap-1 text-sm text-stone-400 hover:text-stone-800 mb-4">
+                    <button onClick={() => setStep(2)} className="flex items-center gap-1 text-sm text-stone-600 hover:text-stone-800 mb-4">
                         <Icon name="chevron-left" className="w-4 h-4" /> Back to Menu
                     </button>
                     <h2 className="text-2xl font-lora font-bold text-stone-800 mb-6">{selectedRecipe.name}</h2>

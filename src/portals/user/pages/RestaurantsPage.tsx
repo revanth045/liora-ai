@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Icon } from '../../../../components/Icon';
 import {
-    db_getAllRestaurants, db_listMenu, db_listChefSpecials, db_addOrder,
+    db_getAllRestaurants, db_listMenu, db_listChefSpecials, db_addOrder, db_getRestaurantById,
     db_addTableAlert,
     type DemoRestaurant, type DayHours, type DemoMenuItem, type DemoChefSpecial,
 } from '../../../demoDb';
@@ -11,6 +11,10 @@ import { useSession } from '../../../auth/useSession';
 import { useUserProfile } from '../../../../hooks/useUserProfile';
 
 // --- Types --------------------------------------------------------------------
+import { getMenuTheme, dividerGlyph } from '../../../lib/menuTheme';
+import { DateNightModal } from './DateNightModal';
+import { RestaurantReviewsBlock, LeaveRestaurantReviewModal } from '../../../components/reviews/RestaurantReviews';
+
 interface Restaurant {
     id: string;
     name: string;
@@ -72,7 +76,7 @@ function portalRestaurantToDisplay(r: DemoRestaurant): Restaurant {
         id: r.id,
         name: r.name,
         cuisine: r.cuisine || 'Other',
-        zip: zipMatch ? zipMatch[0] : '',
+        zip: (r.zip && r.zip.trim()) || (zipMatch ? zipMatch[0] : ''),
         address: r.address || '',
         phone: r.phone || '',
         website: r.website || '',
@@ -94,7 +98,6 @@ function readRestaurants(): Restaurant[] {
 function writeRestaurants(list: Restaurant[]) {
     localStorage.setItem(RKEY, JSON.stringify(list));
 }
-function uid() { return Math.random().toString(36).slice(2) + Date.now().toString(36); }
 
 function getAll(): Restaurant[] {
     return readRestaurants();
@@ -130,41 +133,49 @@ function FeatureTag({ label }: { label: string }) {
     );
 }
 
-// --- Menu item card (dark food template) -------------------------------------
-function MenuItemCard({ item, qty = 0, onAdd, onRemove }: {
+// --- Menu item card (themed per-restaurant) ----------------------------------
+function MenuItemCard({ item, qty = 0, onAdd, onRemove, theme }: { key?: React.Key } & {
     item: DemoMenuItem;
     qty?: number;
     onAdd?: () => void;
     onRemove?: () => void;
+    theme: import('../../../lib/menuTheme').MenuTheme;
 }) {
     const price = `$${(item.priceCents / 100).toFixed(2)}`;
+    const emoji = item.tags?.find(t => /^\p{Emoji}/u.test(t)) || '🍽️';
+    const imgRadius = theme.imageShape === 'circle' ? '50%' : theme.imageShape === 'square' ? '4px' : '14px';
     return (
-        <div className="flex flex-col items-center bg-[#1c1c1e] border border-white/8 rounded-2xl p-4 gap-3 relative overflow-hidden group">
-            {/* circular food image / emoji */}
-            <div className="w-20 h-20 rounded-full bg-[#2a2a2d] border-2 border-white/10 flex items-center justify-center text-4xl shadow-lg group-hover:scale-105 transition-transform">
-                {item.tags?.find(t => /^\p{Emoji}/u.test(t)) || '🍽️'}
-            </div>
+        <div className="flex flex-col items-center p-4 gap-3 relative overflow-hidden group border" style={theme.css.card}>
+            {theme.imageShape !== 'none' && (
+                <div className="w-20 h-20 flex items-center justify-center text-4xl shadow-lg group-hover:scale-105 transition-transform"
+                     style={{ background: theme.colors.bg, border: `2px solid ${theme.colors.border}`, borderRadius: imgRadius }}>
+                    {emoji}
+                </div>
+            )}
             <div className="text-center">
-                <p className="font-semibold text-white text-sm leading-snug">{item.name}</p>
-                {item.description && (
-                    <p className="text-white/40 text-[11px] mt-0.5 line-clamp-2 leading-relaxed">{item.description}</p>
+                <p className="text-sm leading-snug font-semibold" style={theme.css.itemName}>{item.name}</p>
+                {theme.show.descriptions && item.description && (
+                    <p className="text-[11px] mt-0.5 line-clamp-2 leading-relaxed" style={theme.css.description}>{item.description}</p>
                 )}
             </div>
             <div className="flex items-center justify-between w-full mt-auto pt-1">
-                <span className="text-[#f5c842] font-bold text-base">{price}</span>
+                {theme.show.prices && <span className="text-base" style={theme.css.price}>{price}</span>}
                 {qty > 0 ? (
                     <div className="flex items-center gap-1.5">
-                        <button onClick={onRemove} className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white/25 transition-colors">
+                        <button onClick={onRemove} className="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
+                            style={{ background: `${theme.colors.text}22`, color: theme.colors.text }}>
                             <Icon name="minus" className="w-3 h-3" />
                         </button>
-                        <span className="text-white font-bold text-sm w-4 text-center">{qty}</span>
-                        <button onClick={onAdd} className="w-7 h-7 rounded-full bg-[#f5c842] flex items-center justify-center text-black shadow-md hover:bg-yellow-300 transition-colors">
+                        <span className="font-bold text-sm w-4 text-center" style={{ color: theme.colors.heading }}>{qty}</span>
+                        <button onClick={onAdd} className="w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-colors"
+                            style={{ background: theme.colors.accent, color: theme.colors.bg }}>
                             <Icon name="add" className="w-3 h-3" />
                         </button>
                     </div>
                 ) : (
-                    <button onClick={onAdd} className="w-7 h-7 rounded-full bg-[#f5c842] flex items-center justify-center shadow-md hover:bg-yellow-300 transition-colors">
-                        <Icon name="add" className="w-4 h-4 text-black" />
+                    <button onClick={onAdd} className="w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-colors"
+                        style={{ background: theme.colors.accent }}>
+                        <Icon name="add" className="w-4 h-4" style={{ color: theme.colors.bg }} />
                     </button>
                 )}
             </div>
@@ -179,51 +190,60 @@ const SPECIAL_CATEGORY_LABEL: Record<string, string> = {
     chef_choice: "Chef's Choice",
 };
 
-function ChefSpecialCard({ special, qty = 0, onAdd, onRemove }: {
+function ChefSpecialCard({ special, qty = 0, onAdd, onRemove, theme }: { key?: React.Key } & {
     special: DemoChefSpecial;
     qty?: number;
     onAdd?: () => void;
     onRemove?: () => void;
+    theme: import('../../../lib/menuTheme').MenuTheme;
 }) {
     const price = `$${(special.priceCents / 100).toFixed(2)}`;
+    const accent = theme.colors.accent;
+    const imgRadius = theme.imageShape === 'circle' ? '50%' : theme.imageShape === 'square' ? '4px' : '14px';
     return (
-        <div className="flex flex-col items-center bg-[#1c1c1e] border border-[#f5c842]/20 rounded-2xl p-4 gap-3 relative overflow-hidden group">
-            {/* Gold corner accent */}
-            <div className="absolute top-0 right-0 w-16 h-16 bg-[#f5c842]/5 rounded-bl-full" />
-            {/* circular emoji */}
-            <div className="w-20 h-20 rounded-full bg-[#2a2a2d] border-2 border-[#f5c842]/30 flex items-center justify-center text-4xl shadow-lg group-hover:scale-105 transition-transform">
-                {special.imageEmoji || '⭐'}
-            </div>
-            {/* category badge */}
-            <span className="text-[9px] font-bold uppercase tracking-widest text-[#f5c842] bg-[#f5c842]/10 px-2.5 py-1 rounded-full border border-[#f5c842]/20">
+        <div className="flex flex-col items-center p-4 gap-3 relative overflow-hidden group border-2"
+             style={{ ...theme.css.card, borderColor: `${accent}55` }}>
+            {/* Accent corner flourish */}
+            <div className="absolute top-0 right-0 w-16 h-16 rounded-bl-full pointer-events-none" style={{ background: `${accent}14` }} />
+            {theme.imageShape !== 'none' && (
+                <div className="w-20 h-20 flex items-center justify-center text-4xl shadow-lg group-hover:scale-105 transition-transform"
+                    style={{ background: theme.colors.bg, border: `2px solid ${accent}66`, borderRadius: imgRadius }}>
+                    {special.imageEmoji || '⭐'}
+                </div>
+            )}
+            <span className="text-[9px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                style={{ color: accent, background: `${accent}1a`, border: `1px solid ${accent}40` }}>
                 {SPECIAL_CATEGORY_LABEL[special.category] || special.category}
             </span>
             <div className="text-center">
-                <p className="font-semibold text-white text-sm leading-snug">{special.name}</p>
-                {special.description && (
-                    <p className="text-white/40 text-[11px] mt-0.5 line-clamp-2 leading-relaxed">{special.description}</p>
+                <p className="text-sm leading-snug font-semibold" style={theme.css.itemName}>{special.name}</p>
+                {theme.show.descriptions && special.description && (
+                    <p className="text-[11px] mt-0.5 line-clamp-2 leading-relaxed" style={theme.css.description}>{special.description}</p>
                 )}
                 {special.chefNote && (
-                    <p className="text-[#f5c842]/70 text-[11px] mt-1.5 italic line-clamp-2">
+                    <p className="text-[11px] mt-1.5 italic line-clamp-2" style={{ color: accent, opacity: 0.85 }}>
                         👨‍🍳 "{special.chefNote}"
                     </p>
                 )}
             </div>
             <div className="flex items-center justify-between w-full mt-auto pt-1">
-                <span className="text-[#f5c842] font-bold text-base">{price}</span>
+                {theme.show.prices && <span className="text-base" style={theme.css.price}>{price}</span>}
                 {qty > 0 ? (
                     <div className="flex items-center gap-1.5">
-                        <button onClick={onRemove} className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center text-white hover:bg-white/25 transition-colors">
+                        <button onClick={onRemove} className="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
+                            style={{ background: `${theme.colors.text}22`, color: theme.colors.text }}>
                             <Icon name="minus" className="w-3 h-3" />
                         </button>
-                        <span className="text-white font-bold text-sm w-4 text-center">{qty}</span>
-                        <button onClick={onAdd} className="w-7 h-7 rounded-full bg-[#f5c842] flex items-center justify-center text-black shadow-md hover:bg-yellow-300 transition-colors">
+                        <span className="font-bold text-sm w-4 text-center" style={{ color: theme.colors.heading }}>{qty}</span>
+                        <button onClick={onAdd} className="w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-colors"
+                            style={{ background: accent, color: theme.colors.bg }}>
                             <Icon name="add" className="w-3 h-3" />
                         </button>
                     </div>
                 ) : (
-                    <button onClick={onAdd} className="w-7 h-7 rounded-full bg-[#f5c842] flex items-center justify-center shadow-md hover:bg-yellow-300 transition-colors">
-                        <Icon name="add" className="w-4 h-4 text-black" />
+                    <button onClick={onAdd} className="w-7 h-7 rounded-full flex items-center justify-center shadow-md transition-colors"
+                        style={{ background: accent }}>
+                        <Icon name="add" className="w-4 h-4" style={{ color: theme.colors.bg }} />
                     </button>
                 )}
             </div>
@@ -240,6 +260,7 @@ function RestaurantPage({
     customerName,
     customerEmail,
     onDineIn,
+    initialTableNumber,
 }: {
     r: Restaurant;
     onBack: () => void;
@@ -248,18 +269,24 @@ function RestaurantPage({
     customerName: string;
     customerEmail?: string;
     onDineIn?: () => void;
+    initialTableNumber?: string;
 }) {
     const [menuItems, setMenuItems] = React.useState<DemoMenuItem[]>([]);
     const [specials, setSpecials] = React.useState<DemoChefSpecial[]>([]);
     const [activeSection, setActiveSection] = React.useState<string>('specials');
     const [cart, setCart] = React.useState<CartItem[]>([]);
     const [showCheckout, setShowCheckout] = React.useState(false);
-    const [tableNum, setTableNum] = React.useState('');
+    const [tableNum, setTableNum] = React.useState(initialTableNumber ?? '');
     const [specialInstructions, setSpecialInstructions] = React.useState(autoNote);
+    // Pre-pay vs pay-at-table. Default to pre-pay when the venue allows it.
+    const [payNow, setPayNow] = React.useState<boolean>(true);
     const [orderPlaced, setOrderPlaced] = React.useState(false);
     const [placedOrder, setPlacedOrder] = React.useState<ReturnType<typeof db_addOrder> | null>(null);
     const [postOrderNote, setPostOrderNote] = React.useState('');
     const [savedNote, setSavedNote] = React.useState(false);
+    const [showDateNight, setShowDateNight] = React.useState(false);
+    const [showReviewModal, setShowReviewModal] = React.useState(false);
+    const [reviewsRefreshKey, setReviewsRefreshKey] = React.useState(0);
     const sectionRefs = React.useRef<Record<string, HTMLDivElement | null>>({});
 
     React.useEffect(() => {
@@ -268,6 +295,13 @@ function RestaurantPage({
             setSpecials(db_listChefSpecials(r.id).filter(s => s.isAvailable));
         }
     }, [r.id, r.isPartner]);
+
+    // Per-restaurant theme — picks up restaurant.menuMeta saved from the Design Studio
+    const demoR = React.useMemo(() => db_getRestaurantById(r.id), [r.id]);
+    const menuMeta = demoR?.menuMeta;
+    const menuTheme = React.useMemo(() => getMenuTheme(menuMeta), [menuMeta]);
+    const menuTitle = menuMeta?.title || `The ${r.name} Menu`;
+    const menuSubtitle = menuMeta?.subtitle;
 
     // Group menu items by first tag (category)
     const grouped: Record<string, DemoMenuItem[]> = {};
@@ -310,6 +344,8 @@ function RestaurantPage({
 
     const placeOrder = () => {
         if (!tableNum.trim() || cart.length === 0) return;
+        const prepayAllowed = demoR?.acceptsPrepay !== false; // default true when undefined
+        const willPrepay = prepayAllowed && payNow;
         const order = db_addOrder({
             restaurantId: r.id,
             customerName: customerName || 'Guest',
@@ -326,6 +362,9 @@ function RestaurantPage({
             createdAt: Date.now(),
             notes: specialInstructions.trim() || undefined,
             allergens: userProfile?.profile?.allergens && userProfile.profile.allergens.length > 0 ? userProfile.profile.allergens : undefined,
+            paymentMethod: willPrepay ? 'prepaid_card' : 'pay_later',
+            paymentStatus: willPrepay ? 'paid' : 'unpaid',
+            cardLast4: willPrepay ? '4242' : undefined,
         });
 
         const alertId = uid();
@@ -334,15 +373,34 @@ function RestaurantPage({
         if (allergensList) notificationMessage += ` | ⚠️ ALLERGY WARNING: ${allergensList}`;
 
         db_addTableAlert({
-            id: alertId,
             restaurantName: r.name,
             tableNumber: tableNum.trim(),
             action: 'New Order',
             message: notificationMessage,
-            status: 'active',
             orderId: order.id,
-            createdAt: Date.now()
-        });
+        } as any);
+
+        // Notify the restaurant owner portal feed.
+        import('../../../lib/restaurantNotifications').then(({ restoNotify }) => {
+            restoNotify({
+                restaurantId: r.id,
+                kind: 'order_placed',
+                title: `New order · Table ${tableNum.trim()}`,
+                body: `${cart.length} item${cart.length === 1 ? '' : 's'} · ${(cartTotal / 100).toFixed(2)}${allergensList ? ` · ⚠️ ${allergensList}` : ''}`,
+                meta: { orderId: order.id, tableNumber: tableNum.trim(), totalCents: cartTotal },
+            });
+        }).catch(() => {});
+        // Also fan-out to the super-admin activity log (parity with hotel bookings).
+        import('../../../lib/adminNotifications').then(({ adminNotify }) => {
+            adminNotify({
+                kind: 'order_placed',
+                venueId: r.id,
+                venueName: r.name,
+                venueType: 'restaurant',
+                amountCents: cartTotal,
+                meta: { orderId: order.id, tableNumber: tableNum.trim(), customerName: customerName || 'Guest', allergens: allergensList || undefined },
+            });
+        }).catch(() => {});
 
         // Background sync to Supabase
         const payload = {
@@ -356,7 +414,7 @@ function RestaurantPage({
             tableNumber: tableNum.trim(),
             action: 'New Order',
             message: notificationMessage,
-        }).catch(e => console.warn('Supabase alert sync failed:', e));
+        } as any).catch((e: any) => console.warn('Supabase alert sync failed:', e));
 
         setPlacedOrder(order);
         setOrderPlaced(true);
@@ -388,8 +446,8 @@ function RestaurantPage({
                         🍝
                     </div>
                     <h2 className="text-2xl font-bold text-white mb-2">Order Placed!</h2>
-                    <p className="text-white/50 text-sm mb-1">Table <span className="text-white font-semibold">{placedOrder.tableNumber}</span> · {r.name}</p>
-                    <p className="text-white/40 text-xs mb-6">The kitchen has been notified. We'll have it ready soon.</p>
+                    <p className="text-white/90 text-sm mb-1">Table <span className="text-white font-semibold">{placedOrder.tableNumber}</span> · {r.name}</p>
+                    <p className="text-white/85 text-xs mb-6">The kitchen has been notified. We'll have it ready soon.</p>
 
                     {/* Order summary */}
                     <div className="bg-[#1c1c1e] rounded-2xl p-4 text-left mb-6 space-y-2">
@@ -403,6 +461,23 @@ function RestaurantPage({
                             <span className="text-white">Total</span>
                             <span className="text-[#f5c842]">${(placedOrder.totalCents / 100).toFixed(2)}</span>
                         </div>
+                        {placedOrder.paymentMethod === 'prepaid_card' ? (
+                            <div className="mt-1 flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                                <span className="flex items-center gap-2 text-emerald-300 text-xs font-bold">
+                                    <Icon name="check_circle" className="w-4 h-4" />
+                                    Paid · VISA •••• {placedOrder.cardLast4 ?? '4242'}
+                                </span>
+                                <span className="text-emerald-300/80 text-[10px] font-semibold uppercase tracking-widest">No cheque</span>
+                            </div>
+                        ) : (
+                            <div className="mt-1 flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10">
+                                <span className="flex items-center gap-2 text-white/85 text-xs font-bold">
+                                    <Icon name="receipt" className="w-4 h-4" />
+                                    Pay at the table
+                                </span>
+                                <span className="text-white/60 text-[10px] font-semibold uppercase tracking-widest">Cheque on request</span>
+                            </div>
+                        )}
                     </div>
 
                     {/* Liora post-order dietary follow-up */}
@@ -425,16 +500,32 @@ function RestaurantPage({
                             </button>
                             <button
                                 onClick={() => setSavedNote(true)}
-                                className="w-full mt-2 py-2 rounded-xl text-white/40 text-xs hover:text-white/60 transition-colors"
+                                className="w-full mt-2 py-2 rounded-xl text-white/85 text-xs hover:text-white/90 transition-colors"
                             >
                                 Skip for now
                             </button>
                         </div>
                     ) : (
                         <div className="bg-[#1c1c1e] rounded-2xl p-4 text-center mb-5">
-                            <p className="text-white/50 text-sm">- Thanks for your feedback!</p>
+                            <p className="text-white/90 text-sm">- Thanks for your feedback!</p>
                         </div>
                     )}
+
+                    {/* Date-night upsell on the success screen — perfect timing
+                        right after the order lands and the evening is just getting started. */}
+                    <button
+                        onClick={() => setShowDateNight(true)}
+                        className="w-full mb-3 flex items-center justify-between gap-3 px-5 py-3.5 rounded-xl bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-600 hover:from-rose-600 hover:via-pink-600 hover:to-fuchsia-700 transition-all shadow-lg shadow-rose-500/25 text-white"
+                    >
+                        <div className="flex items-center gap-3">
+                            <span className="text-base">✨</span>
+                            <div className="text-left">
+                                <p className="font-bold text-sm leading-tight">Make it a date night</p>
+                                <p className="text-white/85 text-[10px] mt-0.5">Find a hotel close to {r.name}</p>
+                            </div>
+                        </div>
+                        <Icon name="chevron-right" className="w-4 h-4 text-white/80" />
+                    </button>
 
                     <button
                         onClick={onBack}
@@ -443,6 +534,17 @@ function RestaurantPage({
                         Back to Restaurants
                     </button>
                 </div>
+
+                {showDateNight && (
+                    <DateNightModal
+                        restaurantName={r.name}
+                        restaurantZip={r.zip}
+                        restaurantAddress={r.address}
+                        customerName={customerName}
+                        customerEmail={customerEmail}
+                        onClose={() => setShowDateNight(false)}
+                    />
+                )}
             </div>
         );
     }
@@ -462,7 +564,7 @@ function RestaurantPage({
                         </div>
                         <div className="min-w-0">
                             <h1 className="font-bold text-white text-sm leading-tight truncate">{r.name}</h1>
-                            <p className="text-white/40 text-[11px]">{r.cuisine}</p>
+                            <p className="text-white/85 text-[11px]">{r.cuisine}</p>
                         </div>
                     </div>
                     {r.isPartner && (
@@ -481,31 +583,46 @@ function RestaurantPage({
                     </div>
                     <div className="flex-1 min-w-0">
                         <h2 className="text-2xl font-bold text-white leading-tight mb-1">{r.name}</h2>
-                        <p className="text-white/50 text-sm">{r.cuisine}{r.address ? ` · ${r.address}` : r.zip ? ` · ${r.zip}` : ''}</p>
+                        <p className="text-white/90 text-sm">{r.cuisine}{r.address ? ` · ${r.address}` : r.zip ? ` · ${r.zip}` : ''}</p>
                         <div className="flex items-center gap-3 mt-2">
                             {r.rating > 0
                                 ? <StarRating rating={r.rating} />
                                 : <span className="text-[10px] font-bold text-[#f5c842] uppercase tracking-wider">... New on Liora</span>}
-                            {r.priceRange && <span className="text-xs font-bold text-white/30">{r.priceRange}</span>}
+                            {r.priceRange && <span className="text-xs font-bold text-white/80">{r.priceRange}</span>}
                         </div>
-                        {r.description && <p className="text-white/40 text-xs mt-2 leading-relaxed line-clamp-2">{r.description}</p>}
+                        {r.description && <p className="text-white/85 text-xs mt-2 leading-relaxed line-clamp-2">{r.description}</p>}
                     </div>
                 </div>
                 <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-5">
                     {r.phone && (
-                        <a href={`tel:${r.phone}`} className="flex items-center gap-1.5 text-white/40 hover:text-[#f5c842] text-xs transition-colors">
+                        <a href={`tel:${r.phone}`} className="flex items-center gap-1.5 text-white/85 hover:text-[#f5c842] text-xs transition-colors">
                             <Icon name="phone" className="w-3.5 h-3.5 text-[#f5c842]" /> {r.phone}
                         </a>
                     )}
                     {r.hours && (
-                        <span className="flex items-center gap-1.5 text-white/40 text-xs">
+                        <span className="flex items-center gap-1.5 text-white/85 text-xs">
                             <Icon name="clock" className="w-3.5 h-3.5 text-[#f5c842]" /> {r.hours}
                         </span>
                     )}
                     {r.features.filter(f => f !== 'Dine-in').slice(0, 3).map(f => (
-                        <span key={f} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/5 text-white/40 text-[10px] border border-white/8">{f}</span>
+                        <span key={f} className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/5 text-white/85 text-[10px] border border-white/8">{f}</span>
                     ))}
                 </div>
+
+                {/* Date Night CTA — flirty upsell that pairs dinner with a stay */}
+                <button
+                    onClick={() => setShowDateNight(true)}
+                    className="mt-5 w-full flex items-center justify-between gap-3 px-5 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-600 hover:from-rose-600 hover:via-pink-600 hover:to-fuchsia-700 active:scale-[0.98] transition-all shadow-lg shadow-rose-500/25 text-white"
+                >
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center text-base">✨</div>
+                        <div className="text-left">
+                            <p className="font-bold text-sm leading-tight">Make it a date night</p>
+                            <p className="text-white/85 text-[11px] mt-0.5">Pair dinner with a nearby hotel stay</p>
+                        </div>
+                    </div>
+                    <Icon name="chevron-right" className="w-5 h-5 text-white/80" />
+                </button>
 
                 {/* Prominent Dine-In CTA */}
                 {r.features.includes('Dine-in') && onDineIn && (
@@ -539,7 +656,7 @@ function RestaurantPage({
                                     className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all ${
                                         activeSection === sec
                                             ? 'bg-[#f5c842] text-black'
-                                            : 'bg-white/8 text-white/50 hover:text-white hover:bg-white/15'
+                                            : 'bg-white/8 text-white/90 hover:text-white hover:bg-white/15'
                                     }`}
                                 >
                                     {sec === 'specials' ? '... Specials' : sec}
@@ -550,15 +667,28 @@ function RestaurantPage({
                 </div>
             )}
 
-            {/* Menu content */}
-            <div className="px-4 py-6 space-y-10 pb-36 max-w-3xl mx-auto">
+            {/* Menu content — per-restaurant themed */}
+            <div className="px-4 py-6 space-y-10 pb-36 max-w-3xl mx-auto" style={r.isPartner ? menuTheme.css.page : undefined}>
+                {/* Menu header (restaurant-customizable) */}
+                {r.isPartner && (menuItems.length > 0 || specials.length > 0) && (
+                    <div className={`mb-2 ${menuTheme.headerAlign === 'center' ? 'text-center' : ''}`}>
+                        {menuMeta?.logoUrl && (
+                            <img src={menuMeta.logoUrl} alt=""
+                                className={`w-16 h-16 object-cover ${menuTheme.headerAlign === 'center' ? 'mx-auto' : ''}`}
+                                style={{ borderRadius: menuTheme.css.radius, border: `1px solid ${menuTheme.colors.border}` }} />
+                        )}
+                        <h2 className="mt-3" style={{ ...menuTheme.css.title, fontSize: 28, lineHeight: 1.1 }}>{menuTitle}</h2>
+                        {menuSubtitle && <p className="mt-2 text-sm" style={menuTheme.css.description}>{menuSubtitle}</p>}
+                        <div className="mt-3" style={{ color: menuTheme.colors.accent, opacity: 0.6, letterSpacing: '0.5em', fontSize: 12 }}>{dividerGlyph(menuTheme)}</div>
+                    </div>
+                )}
 
                 {/* No menu */}
                 {r.isPartner && menuItems.length === 0 && specials.length === 0 && (
                     <div className="text-center py-16">
                         <p className="text-4xl mb-3">🍽️</p>
-                        <p className="text-white/50 text-sm">Menu coming soon</p>
-                        <p className="text-white/30 text-xs mt-1">The restaurant hasn't published their menu yet.</p>
+                        <p className="text-white/90 text-sm">Menu coming soon</p>
+                        <p className="text-white/80 text-xs mt-1">The restaurant hasn't published their menu yet.</p>
                     </div>
                 )}
 
@@ -578,6 +708,7 @@ function RestaurantPage({
                                     qty={getQty(s.id)}
                                     onAdd={() => addToCart(s.id, s.name, s.priceCents, s.imageEmoji || '⭐')}
                                     onRemove={() => removeFromCart(s.id)}
+                                    theme={menuTheme}
                                 />
                             ))}
                         </div>
@@ -589,7 +720,7 @@ function RestaurantPage({
                     <div key={cat} ref={el => { sectionRefs.current[cat] = el; }}>
                         <div className="flex items-center gap-3 mb-5">
                             <div className="flex-1 h-px bg-white/8" />
-                            <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/50">{cat}</h3>
+                            <h3 className="text-[11px] font-bold uppercase tracking-[0.25em]" style={r.isPartner ? menuTheme.css.sectionLabel : { color: 'rgba(255,255,255,0.9)' }}>{cat}</h3>
                             <div className="flex-1 h-px bg-white/8" />
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -601,6 +732,7 @@ function RestaurantPage({
                                     onAdd={() => addToCart(item.id, item.name, item.priceCents,
                                         item.tags?.find(t => /^\p{Emoji}/u.test(t)) || '🍽️')}
                                     onRemove={() => removeFromCart(item.id)}
+                                    theme={menuTheme}
                                 />
                             ))}
                         </div>
@@ -609,6 +741,22 @@ function RestaurantPage({
 
                 {/* Non-partner: show info block */}
                 {!r.isPartner && <InfoBody r={r} />}
+
+                {/* Reviews — prominent across both partner & non-partner */}
+                <div className="pt-2">
+                    <div className="flex items-end justify-between mb-4">
+                        <div>
+                            <p className="text-[11px] font-bold text-[#f5c842] uppercase tracking-[0.25em]">★ Guest Reviews</p>
+                            <h3 className="text-2xl font-display font-bold text-white mt-1">What guests say</h3>
+                        </div>
+                    </div>
+                    <RestaurantReviewsBlock
+                        restaurantId={r.id}
+                        theme="dark"
+                        onLeaveReview={() => setShowReviewModal(true)}
+                        refreshKey={reviewsRefreshKey}
+                    />
+                </div>
             </div>
 
             {/* Floating cart bar */}
@@ -639,7 +787,7 @@ function RestaurantPage({
                         <div className="px-5 py-4 border-b border-white/8 flex items-center justify-between flex-shrink-0">
                             <div>
                                 <h3 className="text-white font-bold text-base">Your Order</h3>
-                                <p className="text-white/40 text-xs">{r.name}</p>
+                                <p className="text-white/85 text-xs">{r.name}</p>
                             </div>
                             <button onClick={() => setShowCheckout(false)} className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors">
                                 <Icon name="x" className="w-4 h-4" />
@@ -671,13 +819,13 @@ function RestaurantPage({
 
                             {/* Total */}
                             <div className="flex items-center justify-between py-3 border-t border-white/8">
-                                <span className="text-white/60 text-sm">Total</span>
+                                <span className="text-white/90 text-sm">Total</span>
                                 <span className="text-[#f5c842] font-bold text-lg">${(cartTotal / 100).toFixed(2)}</span>
                             </div>
 
                             {/* Table number */}
                             <div>
-                                <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1.5">
+                                <label className="block text-[10px] font-bold text-white/85 uppercase tracking-widest mb-1.5">
                                     Table Number <span className="text-red-400">*</span>
                                 </label>
                                 <input
@@ -689,9 +837,50 @@ function RestaurantPage({
                                 />
                             </div>
 
+                            {/* Payment method — pre-pay vs pay at table */}
+                            {demoR?.acceptsPrepay !== false && (
+                                <div>
+                                    <label className="block text-[10px] font-bold text-white/85 uppercase tracking-widest mb-2">Payment</label>
+                                    <div className="grid grid-cols-1 gap-2">
+                                        <button
+                                            type="button"
+                                            onClick={() => setPayNow(true)}
+                                            className={`text-left p-3.5 rounded-xl border-2 transition-all flex items-start gap-3 ${payNow ? 'border-[#f5c842] bg-[#f5c842]/10' : 'border-white/10 bg-[#111113] hover:border-white/20'}`}
+                                        >
+                                            <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex-shrink-0 flex items-center justify-center ${payNow ? 'border-[#f5c842] bg-[#f5c842]' : 'border-white/30'}`}>
+                                                {payNow && <Icon name="check" className="w-3 h-3 text-black" />}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center gap-2">
+                                                    <p className="text-white text-sm font-bold">Pre-pay now</p>
+                                                    <span className="text-[9px] font-bold text-black bg-[#f5c842] px-1.5 py-0.5 rounded uppercase tracking-wider">Recommended</span>
+                                                </div>
+                                                <p className="text-white/70 text-xs mt-0.5 leading-snug">
+                                                    Auto-charge VISA •••• 4242 — no cheque at the end of the meal. Funds go straight to {r.name}.
+                                                </p>
+                                            </div>
+                                            <span className="text-[#f5c842] text-sm font-bold flex-shrink-0">${(cartTotal / 100).toFixed(2)}</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => setPayNow(false)}
+                                            className={`text-left p-3.5 rounded-xl border-2 transition-all flex items-start gap-3 ${!payNow ? 'border-[#f5c842] bg-[#f5c842]/10' : 'border-white/10 bg-[#111113] hover:border-white/20'}`}
+                                        >
+                                            <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex-shrink-0 flex items-center justify-center ${!payNow ? 'border-[#f5c842] bg-[#f5c842]' : 'border-white/30'}`}>
+                                                {!payNow && <Icon name="check" className="w-3 h-3 text-black" />}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-white text-sm font-bold">Pay at the table</p>
+                                                <p className="text-white/70 text-xs mt-0.5 leading-snug">Receive a cheque at the end of your meal and settle with your server.</p>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Special instructions (auto-filled with allergens) */}
                             <div>
-                                <label className="block text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1.5">
+                                <label className="block text-[10px] font-bold text-white/85 uppercase tracking-widest mb-1.5">
                                     Special Instructions
                                     {autoNote && <span className="ml-1.5 text-[#f5c842]/70 normal-case font-normal">· From your Liora profile</span>}
                                 </label>
@@ -709,16 +898,40 @@ function RestaurantPage({
                             <button
                                 onClick={placeOrder}
                                 disabled={!tableNum.trim()}
-                                className={`w-full py-4 rounded-2xl text-sm font-bold transition-all ${tableNum.trim() ? 'bg-[#f5c842] text-black hover:bg-yellow-300 shadow-lg' : 'bg-white/10 text-white/30 cursor-not-allowed'}`}
+                                className={`w-full py-4 rounded-2xl text-sm font-bold transition-all ${tableNum.trim() ? 'bg-[#f5c842] text-black hover:bg-yellow-300 shadow-lg' : 'bg-white/10 text-white/80 cursor-not-allowed'}`}
                             >
-                                Place Order · ${(cartTotal / 100).toFixed(2)}
+                                {demoR?.acceptsPrepay !== false && payNow
+                                    ? `Pay & Place Order · $${(cartTotal / 100).toFixed(2)}`
+                                    : `Place Order · $${(cartTotal / 100).toFixed(2)}`}
                             </button>
                             {!tableNum.trim() && (
-                                <p className="text-white/30 text-xs text-center mt-2">Enter your table number to continue</p>
+                                <p className="text-white/80 text-xs text-center mt-2">Enter your table number to continue</p>
                             )}
                         </div>
                     </div>
                 </div>
+            )}
+
+            {showDateNight && (
+                <DateNightModal
+                    restaurantName={r.name}
+                    restaurantZip={r.zip}
+                    restaurantAddress={r.address}
+                    customerName={customerName}
+                    customerEmail={customerEmail}
+                    onClose={() => setShowDateNight(false)}
+                />
+            )}
+
+            {showReviewModal && (
+                <LeaveRestaurantReviewModal
+                    restaurantId={r.id}
+                    restaurantName={r.name}
+                    defaultName={customerName}
+                    theme="dark"
+                    onClose={() => setShowReviewModal(false)}
+                    onPosted={() => setReviewsRefreshKey(k => k + 1)}
+                />
             )}
         </div>
     );
@@ -729,16 +942,16 @@ function InfoBody({ r }: { r: Restaurant }) {
         <div className="space-y-5">
             {r.description && (
                 <div>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">About</p>
-                    <p className="text-sm text-white/60 leading-relaxed">{r.description}</p>
+                    <p className="text-[10px] font-bold text-white/80 uppercase tracking-widest mb-2">About</p>
+                    <p className="text-sm text-white/90 leading-relaxed">{r.description}</p>
                 </div>
             )}
             {r.features.length > 0 && (
                 <div>
-                    <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest mb-2">Features & Amenities</p>
+                    <p className="text-[10px] font-bold text-white/80 uppercase tracking-widest mb-2">Features & Amenities</p>
                     <div className="flex flex-wrap gap-2">
                         {r.features.map(f => (
-                            <span key={f} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/8 text-white/60 text-xs font-medium border border-white/10">
+                            <span key={f} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/8 text-white/90 text-xs font-medium border border-white/10">
                                 {f}
                             </span>
                         ))}
@@ -746,27 +959,27 @@ function InfoBody({ r }: { r: Restaurant }) {
                 </div>
             )}
             <div className="space-y-2.5">
-                <p className="text-[10px] font-bold text-white/30 uppercase tracking-widest">Contact & Hours</p>
+                <p className="text-[10px] font-bold text-white/80 uppercase tracking-widest">Contact & Hours</p>
                 {r.address && (
-                    <div className="flex items-start gap-2.5 text-sm text-white/50">
+                    <div className="flex items-start gap-2.5 text-sm text-white/90">
                         <Icon name="map-pin" className="w-4 h-4 text-[#f5c842] mt-0.5 flex-shrink-0" />
                         <span>{r.address}</span>
                     </div>
                 )}
                 {r.phone && (
-                    <div className="flex items-center gap-2.5 text-sm text-white/50">
+                    <div className="flex items-center gap-2.5 text-sm text-white/90">
                         <Icon name="phone" className="w-4 h-4 text-[#f5c842] flex-shrink-0" />
                         <a href={`tel:${r.phone}`} className="hover:text-[#f5c842] transition-colors">{r.phone}</a>
                     </div>
                 )}
                 {r.website && (
-                    <div className="flex items-center gap-2.5 text-sm text-white/50">
+                    <div className="flex items-center gap-2.5 text-sm text-white/90">
                         <Icon name="link" className="w-4 h-4 text-[#f5c842] flex-shrink-0" />
                         <span className="truncate">{r.website}</span>
                     </div>
                 )}
                 {r.hours && (
-                    <div className="flex items-center gap-2.5 text-sm text-white/50">
+                    <div className="flex items-center gap-2.5 text-sm text-white/90">
                         <Icon name="clock" className="w-4 h-4 text-[#f5c842] flex-shrink-0" />
                         <span>{r.hours}</span>
                     </div>
@@ -825,7 +1038,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
                 <div className="bg-forest-900 px-5 py-4 flex items-center justify-between flex-shrink-0">
                     <div>
                         <h2 className="text-base font-display font-semibold text-cream-50">Add Restaurant</h2>
-                        <p className="text-xs text-cream-300">Share a great place with the Liora community</p>
+                        <p className="text-xs text-cream-200">Share a great place with the Liora community</p>
                     </div>
                     <button onClick={onClose} className="p-2 rounded-xl hover:bg-white/10 text-cream-200">
                         <Icon name="x" className="w-5 h-5" />
@@ -836,7 +1049,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
                 <div className="overflow-y-auto flex-1 px-5 py-5 space-y-4">
                     {/* Emoji picker */}
                     <div>
-                        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">Choose an icon</p>
+                        <p className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-2">Choose an icon</p>
                         <div className="flex flex-wrap gap-2">
                             {EMOJIS.map(e => (
                                 <button
@@ -894,7 +1107,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
                                     <button
                                         key={p}
                                         onClick={() => setForm(f => ({ ...f, priceRange: p }))}
-                                        className={`flex-1 py-2 rounded-lg text-xs font-bold border transition-all ${form.priceRange === p ? 'bg-brand-400 text-white border-brand-400' : 'bg-white border-cream-200 text-stone-500 hover:border-brand-400/50'}`}
+                                        className={`flex-1 py-2 rounded-lg text-xs font-bold border transition-all ${form.priceRange === p ? 'bg-brand-400 text-white border-brand-400' : 'bg-white border-cream-200 text-stone-600 hover:border-brand-400/50'}`}
                                     >{p}</button>
                                 ))}
                             </div>
@@ -968,13 +1181,13 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
 
                     {/* Features */}
                     <div>
-                        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">Features & Amenities</p>
+                        <p className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-2">Features & Amenities</p>
                         <div className="flex flex-wrap gap-2">
                             {ALL_FEATURES.map(f => (
                                 <button
                                     key={f}
                                     onClick={() => toggleFeature(f)}
-                                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${form.features.includes(f) ? 'bg-forest-900 text-cream-50 border-forest-900' : 'bg-white text-stone-500 border-cream-200 hover:border-forest-900/40'}`}
+                                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${form.features.includes(f) ? 'bg-forest-900 text-cream-50 border-forest-900' : 'bg-white text-stone-600 border-cream-200 hover:border-forest-900/40'}`}
                                 >{f}</button>
                             ))}
                         </div>
@@ -983,7 +1196,7 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
 
                 {/* Footer */}
                 <div className="px-5 py-4 border-t border-cream-200 flex gap-3 bg-cream-50 flex-shrink-0">
-                    <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-cream-200 text-sm font-semibold text-stone-500 hover:bg-cream-100 transition-colors">
+                    <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-cream-200 text-sm font-semibold text-stone-600 hover:bg-cream-100 transition-colors">
                         Cancel
                     </button>
                     <button onClick={handleSubmit} className="flex-1 py-2.5 rounded-xl bg-brand-400 hover:bg-brand-500 text-white text-sm font-semibold transition-colors shadow-sm">
@@ -996,12 +1209,12 @@ function AddRestaurantModal({ onClose, onAdded }: { onClose: () => void; onAdded
 }
 
 // --- Restaurant Card ----------------------------------------------------------
-function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void }) {
+function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void; key?: React.Key }) {
     const topFeatures = r.features.slice(0, 4);
     return (
         <button
             onClick={onClick}
-            className="w-full text-left bg-white border border-cream-200 rounded-2xl p-4 hover:shadow-lg hover:-translate-y-0.5 hover:border-amber-300/60 transition-all duration-200 group"
+            className="w-full text-left bg-white border border-cream-200 rounded-2xl p-4 hover:shadow-md hover:border-brand-400/30 transition-all group"
         >
             <div className="flex items-start gap-3">
                 <span className="text-3xl flex-shrink-0 mt-0.5">{r.imageEmoji}</span>
@@ -1017,12 +1230,12 @@ function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void }) 
                         </div>
                         <span className="text-xs font-bold text-brand-400 flex-shrink-0">{r.priceRange}</span>
                     </div>
-                    <p className="text-xs text-stone-400 mt-0.5">{r.cuisine}{r.zip ? ` · ZIP ${r.zip}` : ''}</p>
+                    <p className="text-xs text-stone-600 mt-0.5">{r.cuisine}{r.zip ? ` · ZIP ${r.zip}` : ''}</p>
                     <div className="mt-1.5">
                         {r.rating > 0 ? <StarRating rating={r.rating} /> : <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">New on Liora</span>}
                     </div>
                     {r.description && (
-                        <p className="text-xs text-stone-500 mt-2 line-clamp-2 leading-relaxed">{r.description}</p>
+                        <p className="text-xs text-stone-600 mt-2 line-clamp-2 leading-relaxed">{r.description}</p>
                     )}
                     <div className="flex flex-wrap gap-1.5 mt-2.5">
                         {r.features.includes('Dine-in') && (
@@ -1031,14 +1244,14 @@ function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void }) 
                             </span>
                         )}
                         {topFeatures.filter(f => f !== 'Dine-in').map(f => (
-                            <span key={f} className="text-[10px] px-2 py-0.5 rounded-full bg-cream-100/60 text-stone-400 font-medium">{f}</span>
+                            <span key={f} className="text-[10px] px-2 py-0.5 rounded-full bg-cream-100/60 text-stone-600 font-medium">{f}</span>
                         ))}
                         {r.features.filter(f => f !== 'Dine-in').length > 3 && (
                             <span className="text-[10px] px-2 py-0.5 rounded-full bg-brand-400/10 text-brand-400 font-medium">+{r.features.filter(f => f !== 'Dine-in').length - 3} more</span>
                         )}
                     </div>
                 </div>
-                <Icon name="chevron-right" className="w-4 h-4 text-stone-300 group-hover:text-brand-400 transition-colors flex-shrink-0 mt-1" />
+                <Icon name="chevron-right" className="w-4 h-4 text-stone-600 group-hover:text-brand-400 transition-colors flex-shrink-0 mt-1" />
             </div>
         </button>
     );
@@ -1051,6 +1264,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
     const [cuisineFilter, setCuisineFilter] = useState('All');
     const [showAdd, setShowAdd] = useState(false);
     const [selected, setSelected] = useState<Restaurant | null>(null);
+    const [deepLinkTable, setDeepLinkTable] = useState<string | undefined>(undefined);
 
     const session = useSession();
     const { profile } = useUserProfile();
@@ -1081,6 +1295,24 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
             ...cleaned.filter(r => !portalRestaurants.some(p => p.id === r.id)),
         ];
         setAll(merged);
+
+        // ---- QR deep-link: ?r=<restaurantId>&t=<tableNumber> ----
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const rid = params.get('r');
+            const tnum = params.get('t');
+            if (rid) {
+                const target = merged.find(x => x.id === rid);
+                if (target) {
+                    setSelected(target);
+                    if (tnum) setDeepLinkTable(tnum);
+                }
+                // Clean the URL so refreshes don't keep re-triggering
+                params.delete('r'); params.delete('t');
+                const qs = params.toString();
+                window.history.replaceState({}, '', window.location.pathname + (qs ? `?${qs}` : ''));
+            }
+        } catch { /* noop */ }
     }, []);
 
     const handleAdded = useCallback((r: Restaurant) => {
@@ -1094,12 +1326,13 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
         return (
             <RestaurantPage
                 r={selected}
-                onBack={() => setSelected(null)}
+                onBack={() => { setSelected(null); setDeepLinkTable(undefined); }}
                 autoNote={autoNote}
                 userProfile={profile}
                 customerName={session?.user?.name ?? session?.user?.email ?? 'Guest'}
                 customerEmail={session?.user?.email}
                 onDineIn={setView ? () => setView('ai_waiter') : undefined}
+                initialTableNumber={deepLinkTable}
             />
         );
     }
@@ -1115,9 +1348,9 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
     return (
         <div className="max-w-2xl mx-auto">
             {/* Page Header */}
-            <div className="mb-6 animate-slide-up stagger-1">
+            <div className="mb-6">
                 <h1 className="font-display text-2xl font-semibold text-stone-800">Restaurants</h1>
-                <p className="text-sm text-stone-500 mt-1">
+                <p className="text-sm text-stone-600 mt-1">
                     {all.length} place{all.length !== 1 ? 's' : ''} in the Liora directory
                 </p>
             </div>
@@ -1126,7 +1359,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
             <div className="flex gap-3 mb-5">
                 <div className="relative flex-1">
                     <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                        <Icon name="map-pin" className="w-4 h-4 text-stone-400" />
+                        <Icon name="map-pin" className="w-4 h-4 text-stone-600" />
                     </div>
                     <input
                         type="text"
@@ -1136,7 +1369,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
                         className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-cream-200 bg-white text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-400/30 focus:border-brand-400/50"
                     />
                     {zipQuery && (
-                        <button onClick={() => setZipQuery('')} className="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-400 hover:text-stone-600">
+                        <button onClick={() => setZipQuery('')} className="absolute inset-y-0 right-0 pr-3 flex items-center text-stone-600 hover:text-stone-600">
                             <Icon name="x" className="w-4 h-4" />
                         </button>
                     )}
@@ -1145,16 +1378,12 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
             </div>
 
             {/* Cuisine filter chips */}
-            <div className="flex gap-2 overflow-x-auto pb-2 mb-5 scrollbar-hide -mx-1 px-1 animate-slide-up stagger-2">
+            <div className="flex gap-2 overflow-x-auto pb-2 mb-5 scrollbar-hide -mx-1 px-1">
                 {availableCuisines.map(c => (
                     <button
                         key={c}
                         onClick={() => setCuisineFilter(c)}
-                        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                            cuisineFilter === c
-                                ? 'bg-forest-900 text-cream-50 shadow-sm scale-105'
-                                : 'bg-white border border-cream-200 text-stone-500 hover:border-amber-400/50 hover:text-amber-700 hover:bg-amber-50/50'
-                        }`}
+                        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${cuisineFilter === c ? 'bg-forest-900 text-cream-50' : 'bg-white border border-cream-200 text-stone-600 hover:border-forest-900/40'}`}
                     >{c}</button>
                 ))}
             </div>
@@ -1166,14 +1395,14 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
                     <p className="font-semibold text-stone-700">
                         {zipQuery ? `No restaurants found for ZIP ${zipQuery}` : 'No restaurants yet'}
                     </p>
-                    <p className="text-sm text-stone-400 mt-1 mb-6">
+                    <p className="text-sm text-stone-600 mt-1 mb-6">
                         {zipQuery ? 'Try a different ZIP code' : 'No restaurants listed yet — check back soon!'}
                     </p>
                 </div>
             ) : (
                 <div className="space-y-3">
                     {zipQuery && (
-                        <p className="text-xs text-stone-500 font-medium">
+                        <p className="text-xs text-stone-600 font-medium">
                             {filtered.length} result{filtered.length !== 1 ? 's' : ''} for ZIP {zipQuery}
                         </p>
                     )}

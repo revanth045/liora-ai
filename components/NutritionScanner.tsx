@@ -88,7 +88,7 @@ export const NutritionScanner = ({ onLog }: { onLog: (item: { line: string; calo
       </div>
       
       {loading && (
-          <div className="flex items-center justify-center gap-3 py-4 text-stone-400">
+          <div className="flex items-center justify-center gap-3 py-4 text-stone-600">
               <Spinner />
               <p className="italic">Searching database...</p>
           </div>
@@ -100,7 +100,7 @@ export const NutritionScanner = ({ onLog }: { onLog: (item: { line: string; calo
             <img src={scannedItem.image_url} className="w-20 h-20 rounded-xl object-cover shadow-sm bg-cream-100/80" alt="food" />
             <div>
               <h3 className="font-lora text-xl font-bold text-stone-800">{scannedItem.product_name}</h3>
-              <p className="text-sm text-stone-400">{scannedItem.brands}</p>
+              <p className="text-sm text-stone-600">{scannedItem.brands}</p>
             </div>
           </div>
           

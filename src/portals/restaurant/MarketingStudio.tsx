@@ -91,7 +91,7 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-cream-200">
         <div className="mb-6">
           <h3 className="font-lora text-2xl text-stone-800 mb-2 font-bold">1. Campaign Idea</h3>
-          <p className="text-sm text-stone-400">Describe your promotion. Be specific for best results (e.g., mention the dish, price, location, or target audience).</p>
+          <p className="text-sm text-stone-600">Describe your promotion. Be specific for best results (e.g., mention the dish, price, location, or target audience).</p>
         </div>
         <textarea 
           value={idea}
@@ -128,7 +128,7 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
               {copy}
             </div>
           ) : (
-             <div className="flex-1 flex flex-col items-center justify-center text-stone-400 italic border-2 border-dashed border-cream-200 rounded-xl text-center p-6">
+             <div className="flex-1 flex flex-col items-center justify-center text-stone-600 italic border-2 border-dashed border-cream-200 rounded-xl text-center p-6">
                {isCopyLoading ? <Spinner /> : <><Icon name="chat_bubble_outline" className="mb-2 opacity-30" /> Your generated ad copy will appear here.</>}
              </div>
           )}
@@ -146,7 +146,7 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
                </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-stone-400 italic border-2 border-dashed border-cream-200 rounded-xl text-center p-6">
+            <div className="flex-1 flex flex-col items-center justify-center text-stone-600 italic border-2 border-dashed border-cream-200 rounded-xl text-center p-6">
                {isImgLoading ? <Spinner /> : <><Icon name="image" className="mb-2 opacity-30" /> Your generated image will appear here.</>}
              </div>
           )}
@@ -156,7 +156,7 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
       {/* Section 4: Connect */}
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-cream-200">
         <h3 className="font-lora text-2xl text-stone-800 mb-2 font-bold">4. Connect Accounts & Publish</h3>
-        <p className="text-sm text-stone-400 mb-6">Connect your social media accounts to post your campaign. This is a simulation and won't post real content.</p>
+        <p className="text-sm text-stone-600 mb-6">Connect your social media accounts to post your campaign. This is a simulation and won't post real content.</p>
         
         <div className="grid sm:grid-cols-3 gap-4">
           {SOCIAL_PLATFORMS.map(platform => {
@@ -167,7 +167,7 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
                   <Icon name={platform.icon} size={24} />
                 </div>
                 <div className="font-bold text-stone-800 text-sm mb-1">{platform.name}</div>
-                <div className={`text-[10px] uppercase font-bold tracking-widest mb-4 ${isConnected ? 'text-green-600' : 'text-stone-400'}`}>
+                <div className={`text-[10px] uppercase font-bold tracking-widest mb-4 ${isConnected ? 'text-green-600' : 'text-stone-600'}`}>
                     {isConnected ? 'Connected' : 'Not Linked'}
                 </div>
                 <button 
@@ -186,12 +186,12 @@ export default function RestoMarketingStudio({ restaurant }: { restaurant: DemoR
         </div>
         
         <div className="mt-8 pt-8 border-t border-cream-200 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-xs font-bold text-stone-400 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-xs font-bold text-stone-600 uppercase tracking-widest">
             <Icon name="verified" className="w-4 h-4 text-green-500" />
             AI Compliance Checked
           </div>
           <div className="flex gap-3 w-full sm:w-auto">
-            <button className="flex-1 sm:flex-none px-6 py-3 text-stone-400 font-bold hover:text-stone-800 transition-colors">Save Draft</button>
+            <button className="flex-1 sm:flex-none px-6 py-3 text-stone-600 font-bold hover:text-stone-800 transition-colors">Save Draft</button>
             <button 
                 onClick={handlePost}
                 className="flex-1 sm:flex-none px-8 py-3 bg-brand-400 text-white rounded-xl font-bold shadow-lg hover:bg-cream-200 flex items-center justify-center gap-2 transform active:scale-95 transition-all"

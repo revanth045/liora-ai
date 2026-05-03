@@ -49,14 +49,14 @@ function renderStars(rating: number) {
     return (
         <div className="flex items-center gap-0.5">
             {[1, 2, 3, 4, 5].map(i => (
-                <Icon key={i} name={i <= Math.round(rating) ? 'star-solid' : 'star'} className={`w-3 h-3 ${i <= Math.round(rating) ? 'text-brand-400' : 'text-stone-300'}`} />
+                <Icon key={i} name={i <= Math.round(rating) ? 'star-solid' : 'star'} className={`w-3 h-3 ${i <= Math.round(rating) ? 'text-brand-400' : 'text-stone-600'}`} />
             ))}
-            <span className="text-xs text-stone-400 ml-1">{rating.toFixed(1)}</span>
+            <span className="text-xs text-stone-600 ml-1">{rating.toFixed(1)}</span>
         </div>
     );
 }
 
-function RestaurantCard({ r, onSave }: { r: RestaurantInfo; onSave: () => void }) {
+function RestaurantCard({ r, onSave }: { r: RestaurantInfo; onSave: () => void; key?: React.Key }) {
     return (
         <div className="bg-cream-50 border border-cream-200 rounded-xl overflow-hidden mt-3 border border-cream-200">
             {r.imageUrl && (
@@ -72,9 +72,9 @@ function RestaurantCard({ r, onSave }: { r: RestaurantInfo; onSave: () => void }
                     </div>
                 </div>
                 {r.signature_dish_guess && (
-                    <p className="text-xs text-stone-400"><span className="text-brand-400">Signature:</span> {r.signature_dish_guess}</p>
+                    <p className="text-xs text-stone-600"><span className="text-brand-400">Signature:</span> {r.signature_dish_guess}</p>
                 )}
-                {r.address && <p className="text-xs text-stone-400">{r.address}</p>}
+                {r.address && <p className="text-xs text-stone-600">{r.address}</p>}
                 <div className="flex gap-2 pt-1">
                     {r.place_id && (
                         <a
@@ -231,7 +231,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                             <h1 className="text-2xl md:text-3xl font-lora font-bold text-stone-800 mb-1">
                                 {DASHBOARD.hero.greeting()}
                             </h1>
-                            <p className="text-stone-400 text-sm mb-4">{DASHBOARD.hero.tagline}</p>
+                            <p className="text-stone-600 text-sm mb-4">{DASHBOARD.hero.tagline}</p>
                             <div className="flex flex-wrap gap-2">
                                 {DASHBOARD.quickActions.map((a, i) => (
                                     <button
@@ -257,9 +257,9 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                             >
                                 <Icon name={card.icon} className={`w-6 h-6 mb-2 ${card.iconColor}`} />
                                 <h3 className="font-semibold text-stone-800 text-sm">{card.title}</h3>
-                                <p className="text-xs text-stone-400 mt-0.5">{card.subtitle}</p>
+                                <p className="text-xs text-stone-600 mt-0.5">{card.subtitle}</p>
                                 {card.comingSoon && (
-                                    <span className="absolute top-2 right-2 text-[9px] font-bold uppercase tracking-widest bg-white/70 text-stone-400 px-1.5 py-0.5 rounded-full border border-stone-200/60">Soon</span>
+                                    <span className="absolute top-2 right-2 text-[9px] font-bold uppercase tracking-widest bg-white/70 text-stone-600 px-1.5 py-0.5 rounded-full border border-stone-200/60">Soon</span>
                                 )}
                             </button>
                         ))}
@@ -271,7 +271,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                             <span className="text-xl">✨</span>
                             <div>
                                 <p className="font-semibold text-sm">Something exciting is coming!</p>
-                                <p className="text-xs text-cream-300 mt-0.5">We're putting the finishing touches on this — stay tuned 🏃‍♂️</p>
+                                <p className="text-xs text-cream-200 mt-0.5">We're putting the finishing touches on this — stay tuned 🏃‍♂️</p>
                             </div>
                         </div>
                     </div>
@@ -288,15 +288,15 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                             </div>
                             <div>
                                 <h3 className="font-semibold text-stone-800 text-sm">{DASHBOARD.spotlight.title}</h3>
-                                <p className="text-xs text-stone-400">{DASHBOARD.spotlight.subtitle}</p>
+                                <p className="text-xs text-stone-600">{DASHBOARD.spotlight.subtitle}</p>
                             </div>
-                            <Icon name="arrow_forward" className="w-4 h-4 text-stone-400 ml-auto group-hover:text-brand-400 transition-colors" />
+                            <Icon name="arrow_forward" className="w-4 h-4 text-stone-600 ml-auto group-hover:text-brand-400 transition-colors" />
                         </div>
                     </button>
 
                     {/* Services */}
                     <div className="mb-6">
-                        <h2 className="text-xs font-bold text-stone-400 uppercase tracking-wider mb-3">Concierge Services</h2>
+                        <h2 className="text-xs font-bold text-stone-600 uppercase tracking-wider mb-3">Concierge Services</h2>
                         <div className="grid grid-cols-2 gap-3">
                             {DASHBOARD.services.map((s, i) => (
                                 <button
@@ -306,7 +306,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                                 >
                                     <Icon name={s.icon} className="w-5 h-5 text-brand-400 mb-1.5" />
                                     <h3 className="text-sm font-semibold text-stone-700">{s.title}</h3>
-                                    <p className="text-xs text-stone-400">{s.desc}</p>
+                                    <p className="text-xs text-stone-600">{s.desc}</p>
                                 </button>
                             ))}
                         </div>
@@ -329,7 +329,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                         className={`p-2.5 rounded-xl flex-shrink-0 transition-all ${
                             isListening
                                 ? 'bg-red-500/20 text-red-400 animate-pulse'
-                                : 'text-stone-400 hover:text-stone-700 hover:bg-cream-200/60'
+                                : 'text-stone-600 hover:text-stone-700 hover:bg-cream-200/60'
                         }`}
                         title={isListening ? 'Stop listening' : 'Voice input'}
                     >
@@ -415,7 +415,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                                                     href={source.uri}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-cream-50 border border-cream-200-light text-[10px] text-stone-400 hover:text-brand-400 transition-colors truncate max-w-[200px]"
+                                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-cream-50 border border-cream-200-light text-[10px] text-stone-600 hover:text-brand-400 transition-colors truncate max-w-[200px]"
                                                 >
                                                     <Icon name={chunk.maps ? 'map-pin' : 'link'} className="w-2.5 h-2.5 flex-shrink-0" />
                                                     <span className="truncate">{source.title}</span>
@@ -428,7 +428,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                                 <div className="flex items-center gap-2 mt-1.5">
                                     <button
                                         onClick={() => isFavorite(msg.id) ? removeFavorite(msg.id) : addFavorite(msg)}
-                                        className={`p-1 rounded transition-colors ${isFavorite(msg.id) ? 'text-red-400' : 'text-stone-300 hover:text-stone-400'}`}
+                                        className={`p-1 rounded transition-colors ${isFavorite(msg.id) ? 'text-red-400' : 'text-stone-600 hover:text-stone-600'}`}
                                     >
                                         <Icon name={isFavorite(msg.id) ? 'heart-solid' : 'heart'} className="w-3.5 h-3.5" />
                                     </button>
@@ -451,7 +451,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({ favorites, addFavo
                                     <div className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-bounce" style={{ animationDelay: '0.15s' }} />
                                     <div className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-bounce" style={{ animationDelay: '0.3s' }} />
                                 </div>
-                                <span className="text-xs text-stone-400">{loadingMessage}</span>
+                                <span className="text-xs text-stone-600">{loadingMessage}</span>
                             </div>
                         </div>
                     </div>

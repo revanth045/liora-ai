@@ -43,23 +43,23 @@ export const ChefDashboard: React.FC = () => {
     return (
         <div className="w-full bg-cream-50 border border-cream-200 rounded-2xl shadow-md p-4 md:p-6 flex flex-col gap-4">
             <h2 className="text-2xl font-lora text-stone-800">Chef Dashboard</h2>
-            <p className="text-stone-400">Generate compelling menu descriptions and marketing snippets for your dishes.</p>
+            <p className="text-stone-600">Generate compelling menu descriptions and marketing snippets for your dishes.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-stone-400">Dish Name</label>
+                    <label className="block text-sm font-medium text-stone-600">Dish Name</label>
                     <input type="text" name="name" value={inputs.name} onChange={handleChange} className="mt-1 block w-full p-2 border border-cream-200 rounded-md shadow-sm focus:ring-brand-400/30 focus:border-brand-400 bg-white text-stone-800"/>
                 </div>
                  <div>
-                    <label className="block text-sm font-medium text-stone-400">Core Ingredients</label>
+                    <label className="block text-sm font-medium text-stone-600">Core Ingredients</label>
                     <input type="text" name="core" value={inputs.core} onChange={handleChange} className="mt-1 block w-full p-2 border border-cream-200 rounded-md shadow-sm focus:ring-brand-400/30 focus:border-brand-400 bg-white text-stone-800"/>
                 </div>
                  <div>
-                    <label className="block text-sm font-medium text-stone-400">Target Audience</label>
+                    <label className="block text-sm font-medium text-stone-600">Target Audience</label>
                     <input type="text" name="audience" value={inputs.audience} onChange={handleChange} className="mt-1 block w-full p-2 border border-cream-200 rounded-md shadow-sm focus:ring-brand-400/30 focus:border-brand-400 bg-white text-stone-800"/>
                 </div>
                  <div>
-                    <label className="block text-sm font-medium text-stone-400">Desired Tone</label>
+                    <label className="block text-sm font-medium text-stone-600">Desired Tone</label>
                     <input type="text" name="tone" value={inputs.tone} onChange={handleChange} className="mt-1 block w-full p-2 border border-cream-200 rounded-md shadow-sm focus:ring-brand-400/30 focus:border-brand-400 bg-white text-stone-800"/>
                 </div>
             </div>
@@ -89,7 +89,7 @@ export const ChefDashboard: React.FC = () => {
                             {result.variants.map((variant, index) => (
                                 <div key={index} className="bg-cream-50 border border-cream-200 p-4 rounded-lg shadow flex flex-col">
                                     <p className="font-bold text-stone-800">{variant.title}</p>
-                                    <p className="text-sm text-stone-400 mt-1 flex-grow">"{variant.snippet}"</p>
+                                    <p className="text-sm text-stone-600 mt-1 flex-grow">"{variant.snippet}"</p>
                                 </div>
                             ))}
                         </div>

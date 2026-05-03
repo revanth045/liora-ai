@@ -130,10 +130,10 @@ export const DedicatedAiChat: React.FC = () => {
                                 Testing Phase — In Active Development
                             </div>
                             <h3 className="font-lora text-xl font-bold text-stone-800 mb-2">Ask me anything...</h3>
-                            <p className="text-sm text-stone-400 mb-1 leading-relaxed">
+                            <p className="text-sm text-stone-600 mb-1 leading-relaxed">
                                 Discuss restaurant picks, plan your weekend, or dive into nutrition science with me in real-time.
                             </p>
-                            <p className="text-xs text-stone-400 mb-5 leading-relaxed">
+                            <p className="text-xs text-stone-600 mb-5 leading-relaxed">
                                 We're continuously improving — if something feels off or you have ideas, tap <strong className="text-amber-600">Suggest</strong> above and tell us!
                             </p>
                             <div className="grid grid-cols-1 gap-2">
@@ -150,7 +150,7 @@ export const DedicatedAiChat: React.FC = () => {
                                         className={`text-left p-3 text-xs border rounded-xl transition-colors ${
                                             q.startsWith('🟡')
                                                 ? 'bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-700 font-medium'
-                                                : 'bg-cream-100/80 hover:bg-cream-50 border-cream-200/60 text-stone-400'
+                                                : 'bg-cream-100/80 hover:bg-cream-50 border-cream-200/60 text-stone-600'
                                         }`}
                                     >
                                         "{q}"
@@ -181,7 +181,7 @@ export const DedicatedAiChat: React.FC = () => {
                          <div className="w-8 h-8 rounded-full bg-brand-400 flex-shrink-0 flex items-center justify-center text-white font-bold text-[10px] shadow-sm">L</div>
                         <div className="bg-white p-4 rounded-2xl rounded-bl-none border border-cream-200/60 shadow-sm flex items-center gap-2">
                             <Spinner />
-                            <span className="text-xs text-stone-400 font-medium">Liora is processing...</span>
+                            <span className="text-xs text-stone-600 font-medium">Liora is processing...</span>
                         </div>
                     </div>
                 )}
@@ -214,7 +214,7 @@ export const DedicatedAiChat: React.FC = () => {
                             disabled={messages.length <= 1 || saveStatus !== 'idle'}
                             title="Save chat"
                             className={`p-2.5 rounded-full transition-all flex-shrink-0 ${
-                                saveStatus === 'success' ? 'bg-green-100 text-green-600' : 'bg-cream-50 text-stone-400 hover:bg-cream-100 hover:text-brand-400 disabled:opacity-40'
+                                saveStatus === 'success' ? 'bg-green-100 text-green-600' : 'bg-cream-50 text-stone-600 hover:bg-cream-100 hover:text-brand-400 disabled:opacity-40'
                             }`}
                         >
                             <Icon name={saveStatus === 'success' ? 'sparkles' : 'bookmark'} className="w-4 h-4" />
@@ -222,13 +222,13 @@ export const DedicatedAiChat: React.FC = () => {
                         <button 
                             onClick={() => handleSendMessage()}
                             disabled={!input.trim() || isLoading || isListening}
-                            className="p-3 bg-brand-400 text-white rounded-full hover:bg-cream-200 disabled:bg-cream-200/60 disabled:text-stone-400 transition-all flex-shrink-0 shadow-md"
+                            className="p-3 bg-brand-400 text-white rounded-full hover:bg-cream-200 disabled:bg-cream-200/60 disabled:text-stone-600 transition-all flex-shrink-0 shadow-md"
                         >
                             <Icon name="send" className="w-5 h-5" />
                         </button>
                     </div>
                 </div>
-                <p className="text-[9px] text-center text-stone-400 mt-3 font-bold uppercase tracking-tighter">Powered by Liora Real-Time Voice Intelligence</p>
+                <p className="text-[9px] text-center text-stone-600 mt-3 font-bold uppercase tracking-tighter">Powered by Liora Real-Time Voice Intelligence</p>
             </div>
         </div>
     );

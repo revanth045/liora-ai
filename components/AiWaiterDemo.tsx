@@ -110,7 +110,7 @@ export const AiWaiterDemo = () => {
                   className="w-full rounded-lg mb-2"
                 />
                 <p className="font-bold text-stone-800">Table {table.tableNumber}</p>
-                <p className="text-xs text-stone-400">Click to connect</p>
+                <p className="text-xs text-stone-600">Click to connect</p>
               </div>
             ))}
           </div>

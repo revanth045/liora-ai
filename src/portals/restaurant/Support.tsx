@@ -1,281 +1,226 @@
-import React, { useState } from 'react';
-import { classifyRestaurantSupportRequest } from '../../../services/geminiService';
-import { RestaurantSupportRequestResult } from '../../../types';
-import { Spinner } from '../../../components/Spinner';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSession } from '../../auth/useSession';
 import type { DemoRestaurant } from '../../demoDb';
-import { useDynamicLoadingMessage } from '../../hooks/useDynamicLoadingMessage';
-import { Icon } from '../../../components/Icon';
+import {
+  ticketsCreate, ticketsList, ticketCategoryLabel, priorityTone, statusTone,
+  type Ticket, type TicketCategory, type TicketPriority,
+} from '../../lib/tickets';
 
-const supportLoadingMessages = [
-  "Analyzing your request...",
-  "Understanding the issue...",
-  "Routing to the right department...",
-  "Preparing a response...",
+const VENUE_CATEGORIES: TicketCategory[] = [
+  'banking_payouts', 'billing', 'technical', 'feature_request', 'account', 'other',
 ];
 
-const FAQ_ITEMS = [
-  { q: "How do I update my menu?",             a: "Navigate to the 'Menu Studio' tab. From there, you can add new items using the form, or edit, disable, or delete existing items from your current menu list." },
-  { q: "How does the AI Marketing Studio work?", a: "In the 'Marketing Studio', you can describe a promotion or dish. Our AI will generate professional ad copy and social media posts. You can also generate a placeholder image to go with your campaign." },
-  { q: "Where can I see my analytics?",        a: "The 'KPIs & Analytics' tab shows you key metrics like how many users have viewed your restaurant, opened your menu, or saved you as a favorite within the Liora app." },
-  { q: "How do I update my billing information?", a: "Currently, billing is managed through your account settings. For specific invoice questions, please submit a support ticket with the 'Billing Inquiry' category." },
-  { q: "Can I add multiple staff members?",    a: "Yes! Head to 'Staff & Scheduling' to add team members, set their roles, and manage shift coverage. Each staff member gets a unique PIN for order management." },
-  { q: "How do QR codes work?",               a: "The QR Codes section lets you generate custom QR codes for each table. Customers scan the code and get a digital menu where they can place orders directly." },
+const FAQS: Array<{ q: string; a: string }> = [
+  { q: "How do I add or update my banking details for payouts?", a: "Once Liora's super-admin has activated your venue, your payout details are managed by Liora. Raise a ticket under 'Banking & payouts' with your bank name, account holder, account number and routing/IBAN — we'll update it within one business day." },
+  { q: "When do I receive my money?", a: "Captured payments are batched and released to your account on the platform's payout schedule (default every 3 business days). You'll be notified by email after each payout." },
+  { q: "How do I update my menu?", a: "Open Menu Studio. You can add, edit, disable or remove items. Changes are live to customers within seconds." },
+  { q: "How do I onboard staff?", a: "In Venue Settings → Staff access, copy your staff code and share it with your team. They sign up at the staff login screen using that code." },
+  { q: "Where do I see analytics?", a: "Open KPIs & Analytics for views, opens, favourites and orders broken down by day and time." },
+  { q: "Customer disputes a charge — what now?", a: "Liora handles disputes. Raise a ticket with the order ID and a brief note — we'll mediate and notify you of the outcome." },
 ];
-
-const SUPPORT_CATEGORIES = [
-  { id: 'billing',   label: 'Billing',         icon: 'attach_money',    idle: 'bg-green-50 text-green-700 border-green-100',     active: 'bg-green-600 text-white border-green-600'   },
-  { id: 'technical', label: 'Technical',       icon: 'build',           idle: 'bg-blue-50 text-blue-700 border-blue-100',       active: 'bg-blue-600 text-white border-blue-600'     },
-  { id: 'feature',   label: 'Feature Request', icon: 'lightbulb',       idle: 'bg-amber-50 text-amber-700 border-amber-100',    active: 'bg-amber-600 text-white border-amber-600'   },
-  { id: 'account',   label: 'Account',         icon: 'manage_accounts', idle: 'bg-purple-50 text-purple-700 border-purple-100', active: 'bg-purple-600 text-white border-purple-600' },
-];
-
-const FAQItem = ({ q, a }: { q: string; a: string }) => {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className={`border rounded-2xl overflow-hidden transition-all duration-200 ${open ? 'border-amber-200 shadow-md bg-amber-50/30' : 'border-cream-200 hover:border-stone-200 hover:shadow-sm bg-white'}`}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex justify-between items-center px-6 py-4 text-left"
-      >
-        <span className="font-semibold text-stone-800 text-sm pr-4">{q}</span>
-        <span className={`flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full transition-all duration-200 ${open ? 'bg-amber-500 text-white rotate-45' : 'bg-stone-100 text-stone-500'}`}>
-          <Icon name="add" size={14} />
-        </span>
-      </button>
-      {open && (
-        <div className="px-6 pb-5 animate-fade-in">
-          <p className="text-stone-500 text-sm leading-relaxed border-t border-amber-100 pt-4">{a}</p>
-        </div>
-      )}
-    </div>
-  );
-};
 
 export default function RestoSupport({ restaurant }: { restaurant: DemoRestaurant }) {
-  const [request, setRequest] = useState('');
-  const [category, setCategory] = useState<string | null>(null);
-  const [result, setResult] = useState<RestaurantSupportRequestResult | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const session = useSession();
+  const user = session?.user;
+  const [tab, setTab] = useState<'help' | 'new' | 'mine'>('help');
+  const [tick, setTick] = useState(0);
 
-  const loadingMessage = useDynamicLoadingMessage(isLoading, supportLoadingMessages);
+  // Form state
+  const [subject, setSubject] = useState('');
+  const [body, setBody] = useState('');
+  const [category, setCategory] = useState<TicketCategory>('banking_payouts');
+  const [priority, setPriority] = useState<TicketPriority>('normal');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState<Ticket | null>(null);
 
-  const handleSubmit = async () => {
-    if (!request.trim()) return;
-    setIsLoading(true);
-    setError(null);
-    setResult(null);
+  const myTickets = useMemo(() => ticketsList({ scope: 'restaurant', venueId: restaurant.id }), [restaurant.id, tick]);
+
+  useEffect(() => {
+    const onTick = () => setTick(t => t + 1);
+    window.addEventListener('liora:tickets-changed', onTick);
+    return () => window.removeEventListener('liora:tickets-changed', onTick);
+  }, []);
+
+  const status = restaurant.status ?? 'active';
+  const hasBanking = !!(restaurant.bankingDetails?.accountNumber || restaurant.bankingDetails?.iban);
+
+  const submit = () => {
+    if (!subject.trim() || !body.trim()) return;
+    setSubmitting(true);
     try {
-      const parsedResult = await classifyRestaurantSupportRequest(request);
-      setResult(parsedResult);
-    } catch (err) {
-      let message = 'An unexpected error occurred. Please check your connection and try again.';
-      if (err instanceof Error && err.message === 'Invalid JSON from model') {
-        message = "I'm having trouble categorizing that. Could you be more specific? For example: 'I need to update my bank details for payouts' or 'The video generator in the Menu Studio is not working'.";
-      }
-      setError(message);
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
+      const t = ticketsCreate({
+        scope: 'restaurant',
+        category,
+        priority,
+        subject: subject.trim(),
+        body: body.trim(),
+        fromUserId: user?.id,
+        fromEmail: user?.email,
+        fromName: user?.name,
+        fromRole: 'restaurant_owner',
+        venueId: restaurant.id,
+        venueName: restaurant.name,
+      });
+      setSubmitted(t);
+      setSubject(''); setBody('');
+    } finally { setSubmitting(false); }
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 animate-page-slide pb-20">
-
-      {/* Status Banner */}
-      <div className="bg-gradient-to-r from-emerald-50 to-green-50 border border-emerald-100 rounded-[2rem] p-6 flex items-center gap-5 card-lift animate-slide-up stagger-1">
-        <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 flex-shrink-0">
-          <Icon name="check_circle" size={24} />
-        </div>
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-bold text-stone-800 text-sm">All Systems Operational</h3>
-            <span className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Live
-            </span>
-          </div>
-          <p className="text-stone-400 text-xs">Orders, Menu Studio, Analytics, and AI services are running normally. Avg response time: <strong className="text-stone-600">1.2s</strong></p>
-        </div>
-        <a href="#" className="flex-shrink-0 text-xs font-bold text-stone-400 hover:text-stone-700 underline underline-offset-2 transition-colors hidden sm:block">
-          Status page →
-        </a>
-      </div>
-
-      {/* Two-column layout */}
-      <div className="grid lg:grid-cols-5 gap-8">
-
-        {/* Ticket Form */}
-        <div className="lg:col-span-3 space-y-6">
-          <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm p-8 animate-slide-up stagger-2">
-
-            <div className="flex items-center gap-3 mb-7">
-              <div className="w-11 h-11 bg-stone-900 rounded-2xl flex items-center justify-center text-white flex-shrink-0">
-                <Icon name="support_agent" size={20} />
-              </div>
-              <div>
-                <h3 className="font-lora text-xl font-bold text-stone-800">Submit a Ticket</h3>
-                <p className="text-stone-400 text-xs mt-0.5">AI-powered routing · Usually responds in seconds</p>
-              </div>
-            </div>
-
-            {/* Category Pills */}
-            <div className="mb-6">
-              <p className="text-[11px] font-bold text-stone-400 uppercase tracking-widest mb-3">Category</p>
-              <div className="flex flex-wrap gap-2">
-                {SUPPORT_CATEGORIES.map(c => (
-                  <button
-                    key={c.id}
-                    onClick={() => setCategory(prev => prev === c.id ? null : c.id)}
-                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full border text-xs font-bold transition-all duration-150 active:scale-95 ${
-                      category === c.id ? c.active : c.idle + ' hover:shadow-sm hover:scale-[1.02]'
-                    }`}
-                  >
-                    <Icon name={c.icon} size={12} />
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="space-y-5">
-              <div>
-                <p className="text-[11px] font-bold text-stone-400 uppercase tracking-widest mb-2">Describe Your Issue</p>
-                <textarea
-                  value={request}
-                  onChange={(e) => setRequest(e.target.value)}
-                  placeholder="e.g., 'I have a question about my last invoice.' or 'I'm having trouble uploading a new menu photo.'"
-                  className="w-full h-28 px-4 py-3 border border-cream-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-amber-300/40 focus:border-amber-300 transition-all duration-200 resize-none bg-cream-50/50 hover:bg-white text-stone-800 text-sm placeholder-stone-300"
-                  disabled={isLoading}
-                />
-              </div>
-
-              <button
-                onClick={handleSubmit}
-                disabled={isLoading || !request.trim()}
-                className="w-full flex justify-center items-center gap-2.5 bg-stone-900 text-white font-bold py-3.5 px-6 rounded-2xl hover:bg-stone-800 transition-all duration-200 disabled:bg-stone-200 disabled:text-stone-400 disabled:cursor-not-allowed shadow-md hover:shadow-lg active:scale-[0.99] text-sm"
-              >
-                {isLoading
-                  ? <><Spinner /><span className="ml-2">{loadingMessage}</span></>
-                  : <><Icon name="send" size={16} /><span>Submit Request</span></>
-                }
-              </button>
-            </div>
-
-            {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-100 rounded-2xl animate-fade-in">
-                <p className="text-red-600 text-sm">{error}</p>
-              </div>
-            )}
-
-            {result && (
-              <div className="mt-6 pt-6 border-t border-dashed border-cream-200 space-y-4 animate-fade-in">
-                <div className="p-5 bg-cream-50 border border-cream-200 rounded-2xl">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-7 h-7 bg-amber-100 rounded-xl flex items-center justify-center text-amber-600">
-                      <Icon name="smart_toy" size={15} />
-                    </div>
-                    <h4 className="font-bold text-stone-800 text-sm">Liora's Response</h4>
-                  </div>
-                  <p className="text-stone-600 text-sm leading-relaxed">{result.response_text}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">Ticket Summary (for our team)</p>
-                  <pre className="p-4 bg-stone-900 text-green-400 rounded-2xl text-xs overflow-x-auto leading-relaxed">
-                    {JSON.stringify(result.action_json, null, 2)}
-                  </pre>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Right Panel */}
-        <div className="lg:col-span-2 space-y-5">
-
-          {/* Contact Options */}
-          <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm p-6 animate-slide-up stagger-3">
-            <h4 className="font-lora text-base font-bold text-stone-800 mb-4">Contact Us</h4>
-            <div className="space-y-2">
-              {[
-                { icon: 'mail',  label: 'Email Support', sub: 'hello@liora.app',   color: 'bg-blue-50 text-blue-600'   },
-                { icon: 'phone', label: 'Phone Line',    sub: '+1 (888) 547-6720', color: 'bg-green-50 text-green-600' },
-                { icon: 'chat',  label: 'Live Chat',     sub: 'Mon–Fri, 9am–6pm',  color: 'bg-purple-50 text-purple-600'},
-              ].map((c, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 p-3 rounded-2xl hover:bg-cream-50 transition-all duration-150 cursor-pointer group border border-transparent hover:border-cream-200 hover:shadow-sm"
-                >
-                  <div className={`p-2.5 rounded-xl ${c.color} flex-shrink-0 group-hover:scale-110 transition-transform duration-150`}>
-                    <Icon name={c.icon} size={16} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-stone-800">{c.label}</p>
-                    <p className="text-xs text-stone-400">{c.sub}</p>
-                  </div>
-                  <Icon name="chevron_right" size={16} className="text-stone-300 ml-auto group-hover:text-stone-500 group-hover:translate-x-0.5 transition-all" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Resolution Stats */}
-          <div className="bg-stone-900 rounded-[2rem] p-6 text-white relative overflow-hidden group card-lift animate-slide-up stagger-4">
-            <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest mb-1">Avg Resolution Time</p>
-            <p className="text-4xl font-lora font-bold mb-1">4.2h</p>
-            <p className="text-white/40 text-xs mb-5">Top 5% of all platforms</p>
-            <div className="flex gap-2">
-              {[['P1', '1h', 'bg-red-400/30'], ['P2', '4h', 'bg-amber-400/30'], ['P3', '24h', 'bg-stone-600']].map(([p, t, bg], i) => (
-                <div key={i} className={`flex-1 ${bg} rounded-xl p-2.5 text-center hover:brightness-110 transition-all`}>
-                  <p className="text-[9px] text-white/50 font-bold uppercase">{p}</p>
-                  <p className="text-sm font-bold">{t}</p>
-                </div>
-              ))}
-            </div>
-            <div className="absolute -bottom-4 -right-4 text-white/5 group-hover:text-white/8 transition-colors pointer-events-none">
-              <Icon name="support_agent" size={100} />
-            </div>
-          </div>
-
-          {/* Quick links */}
-          <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm p-5 animate-slide-up stagger-5">
-            <h4 className="font-bold text-stone-500 text-[10px] uppercase tracking-widest mb-3">Quick Links</h4>
-            <div className="space-y-1">
-              {[
-                { label: 'Getting Started Guide', icon: 'rocket_launch' },
-                { label: 'Video Tutorials',       icon: 'play_circle'   },
-                { label: 'API Documentation',     icon: 'code'          },
-                { label: 'Community Forum',       icon: 'forum'         },
-              ].map((l, i) => (
-                <button key={i} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-cream-50 transition-colors group text-left">
-                  <Icon name={l.icon} size={15} className="text-stone-400 group-hover:text-amber-600 transition-colors" />
-                  <span className="text-sm font-medium text-stone-600 group-hover:text-stone-900 transition-colors">{l.label}</span>
-                  <Icon name="arrow_forward" size={13} className="text-stone-200 group-hover:text-stone-400 ml-auto transition-colors" />
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* FAQ Section */}
-      <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm p-8 animate-slide-up stagger-5">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-11 h-11 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 flex-shrink-0">
-            <Icon name="help" size={20} />
-          </div>
+    <div className="space-y-6">
+      {/* Hero with venue context */}
+      <div className="rounded-2xl bg-gradient-to-br from-stone-900 to-brand-900 text-white p-6 md:p-7 relative overflow-hidden">
+        <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-brand-500/20 blur-3xl" />
+        <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h3 className="font-lora text-xl font-bold text-stone-800">Frequently Asked Questions</h3>
-            <p className="text-stone-400 text-xs mt-0.5">{FAQ_ITEMS.length} articles available</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-amber-300 mb-2">Venue support</p>
+            <h2 className="font-display text-2xl md:text-3xl font-light">{restaurant.name}</h2>
+            <div className="flex items-center gap-2 mt-2 flex-wrap">
+              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${
+                status === 'active' ? 'bg-emerald-500/20 text-emerald-200 ring-1 ring-emerald-300/30'
+                : status === 'pending' ? 'bg-amber-500/20 text-amber-200 ring-1 ring-amber-300/30'
+                : 'bg-rose-500/20 text-rose-200 ring-1 ring-rose-300/30'
+              }`}>{status}</span>
+              <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${hasBanking ? 'bg-emerald-500/20 text-emerald-200' : 'bg-amber-500/20 text-amber-200'}`}>
+                Banking {hasBanking ? '✓ on file' : '⚠ missing'}
+              </span>
+            </div>
+          </div>
+          <div className="text-sm text-cream-100/85 leading-relaxed max-w-sm">
+            Average reply time today: <strong className="text-amber-300">~2 hours</strong>. Urgent payout issues are escalated immediately.
           </div>
         </div>
-        <div className="space-y-3">
-          {FAQ_ITEMS.map((item, i) => (
-            <FAQItem key={i} q={item.q} a={item.a} />
-          ))}
-        </div>
+        {status === 'pending' && (
+          <p className="relative mt-4 text-xs text-amber-200">Your venue is awaiting admin approval. You won't appear to customers until it's approved — we'll email you the moment it is.</p>
+        )}
+        {status === 'blocked' && (
+          <p className="relative mt-4 text-xs text-rose-200">Your venue is currently <strong>blocked</strong>{restaurant.blockedReason ? `: ${restaurant.blockedReason}` : ''}. Raise a ticket to discuss.</p>
+        )}
       </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 bg-white border border-stone-200 rounded-2xl p-1 max-w-md">
+        {([
+          { id: 'help', label: 'Help' },
+          { id: 'new', label: 'New ticket' },
+          { id: 'mine', label: `My tickets${myTickets.length ? ` (${myTickets.length})` : ''}` },
+        ] as const).map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)} className={`flex-1 px-3 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all ${tab === t.id ? 'bg-stone-900 text-white' : 'text-stone-600 hover:bg-stone-50'}`}>{t.label}</button>
+        ))}
+      </div>
+
+      {submitted && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 flex items-center gap-4">
+          <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-xl">✓</div>
+          <div className="flex-1">
+            <p className="font-semibold text-emerald-900">Ticket #{submitted.id.slice(-6)} submitted.</p>
+            <p className="text-xs text-emerald-700">Our partnerships team will reply shortly.</p>
+          </div>
+          <button onClick={() => { setSubmitted(null); setTab('mine'); }} className="px-4 py-2 rounded-lg text-xs font-semibold text-emerald-800 border border-emerald-300 hover:bg-emerald-100">View</button>
+        </div>
+      )}
+
+      {tab === 'help' && (
+        <div className="bg-white border border-stone-200 rounded-2xl divide-y divide-stone-100">
+          {FAQS.map((f, i) => (
+            <details key={i} className="group">
+              <summary className="px-5 py-4 cursor-pointer flex items-center justify-between gap-3 text-sm font-semibold text-stone-900 hover:bg-stone-50">
+                {f.q}
+                <span className="text-xl text-brand-500 group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <p className="px-5 pb-4 text-sm text-stone-600 leading-relaxed">{f.a}</p>
+            </details>
+          ))}
+          <div className="px-5 py-4 bg-stone-50 flex items-center justify-between gap-3 flex-wrap">
+            <p className="text-sm text-stone-700">Need to talk to a human?</p>
+            <button onClick={() => setTab('new')} className="px-4 py-2 rounded-lg text-xs font-bold text-white bg-stone-900 hover:bg-stone-800">Raise a ticket →</button>
+          </div>
+        </div>
+      )}
+
+      {tab === 'new' && (
+        <div className="bg-white border border-stone-200 rounded-2xl p-6 space-y-5 max-w-2xl">
+          <div>
+            <h3 className="font-display text-2xl text-stone-900">Raise a partner ticket</h3>
+            <p className="text-sm text-stone-600 mt-1">Routed directly to Liora's partnerships and finance teams.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <label className="block">
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1.5">Category</span>
+              <select value={category} onChange={e => setCategory(e.target.value as TicketCategory)} className="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white text-sm">
+                {VENUE_CATEGORIES.map(c => <option key={c} value={c}>{ticketCategoryLabel(c)}</option>)}
+              </select>
+            </label>
+            <label className="block">
+              <span className="block text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1.5">Priority</span>
+              <select value={priority} onChange={e => setPriority(e.target.value as TicketPriority)} className="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white text-sm">
+                <option value="low">Low</option>
+                <option value="normal">Normal</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent — payouts/disputes</option>
+              </select>
+            </label>
+          </div>
+
+          <label className="block">
+            <span className="block text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1.5">Subject</span>
+            <input value={subject} onChange={e => setSubject(e.target.value)} placeholder="e.g. Update banking details for Friday's payout" className="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-300" />
+          </label>
+
+          <label className="block">
+            <span className="block text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1.5">Details</span>
+            <textarea value={body} onChange={e => setBody(e.target.value)} placeholder="Include the relevant order/booking IDs, dates, screenshots and any error messages. For banking changes, include the account holder name and the new IBAN/account number." rows={6} className="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white text-sm resize-none focus:outline-none focus:ring-2 focus:ring-brand-300" />
+          </label>
+
+          <div className="flex justify-end gap-3 pt-3">
+            <button onClick={submit} disabled={submitting || !subject.trim() || !body.trim()} className="px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-stone-900 hover:bg-stone-800 disabled:opacity-50 disabled:cursor-not-allowed">
+              {submitting ? 'Sending…' : 'Submit ticket'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {tab === 'mine' && (
+        <div className="space-y-3">
+          {myTickets.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-dashed border-stone-300 p-10 text-center">
+              <p className="font-display text-xl text-stone-700">No tickets yet</p>
+              <p className="text-sm text-stone-500 mt-2">All your support requests will appear here with replies from our team.</p>
+            </div>
+          ) : (
+            myTickets.map(t => (
+              <details key={t.id} className="bg-white border border-stone-200 rounded-2xl overflow-hidden">
+                <summary className="px-5 py-4 cursor-pointer flex items-center gap-3 hover:bg-stone-50">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${statusTone(t.status)}`}>{t.status.replace('_', ' ')}</span>
+                      <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${priorityTone(t.priority)}`}>{t.priority}</span>
+                      <span className="text-[11px] text-stone-400">#{t.id.slice(-6)}</span>
+                    </div>
+                    <p className="font-semibold text-stone-900 truncate">{t.subject}</p>
+                    <p className="text-xs text-stone-500">{ticketCategoryLabel(t.category)} · {new Date(t.updatedAt).toLocaleString()}{t.replies.length ? ` · ${t.replies.length} reply` : ''}</p>
+                  </div>
+                </summary>
+                <div className="px-5 pb-5 space-y-3 border-t border-stone-100 pt-4">
+                  <div className="bg-stone-50 rounded-xl p-3">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1">You</p>
+                    <p className="text-sm text-stone-800 whitespace-pre-wrap">{t.body}</p>
+                  </div>
+                  {t.replies.map(r => (
+                    <div key={r.id} className={`rounded-xl p-3 ${r.authorRole === 'admin' ? 'bg-rose-50 border border-rose-100' : 'bg-stone-50'}`}>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1">
+                        {r.authorRole === 'admin' ? 'Liora Partner Support' : r.authorName || r.authorRole}
+                      </p>
+                      <p className="text-sm text-stone-800 whitespace-pre-wrap">{r.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            ))
+          )}
+        </div>
+      )}
     </div>
   );
 }

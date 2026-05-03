@@ -68,11 +68,11 @@ const initialAnswers: OnboardingAnswers = {
   discountClaimed: false,
 };
 
-function CheckChip({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
+function CheckChip({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string; key?: React.Key }) {
   return (
     <button type="button" onClick={() => onChange(!checked)}
       className={`flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm font-medium transition-all select-none ${
-        checked ? 'bg-forest-800 text-cream-50 border-forest-800 shadow-sm' : 'bg-white text-stone-600 border-stone-200 hover:border-forest-700 hover:text-forest-800'
+        checked ? 'bg-forest-800 text-cream-50 border-forest-800 shadow-sm' : 'bg-white text-stone-800 border-stone-200 hover:border-forest-700 hover:text-forest-800'
       }`}>
       {checked && <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
       {label}
@@ -87,7 +87,7 @@ function SectionCard({ step, title, subtitle, children }: { step: number; title:
         <div className="w-7 h-7 rounded-full bg-forest-800 text-cream-50 text-xs font-bold flex items-center justify-center flex-shrink-0">{step}</div>
         <div>
           <h2 className="font-semibold text-stone-800 text-base leading-tight">{title}</h2>
-          <p className="text-xs text-stone-400 mt-0.5">{subtitle}</p>
+          <p className="text-xs text-stone-800 mt-0.5 font-medium">{subtitle}</p>
         </div>
       </div>
       <div className="p-6">{children}</div>
@@ -190,7 +190,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
       <Spinner />
       <div className="text-center">
         <p className="font-semibold text-stone-800">{loadingMessage}</p>
-        <p className="text-sm text-stone-400 mt-1">Just a moment...</p>
+        <p className="text-sm text-stone-800 mt-1 font-medium">Just a moment...</p>
       </div>
     </div>
   );
@@ -207,25 +207,31 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
   if (profile && !isLoading && !needsOnboarding) return (
     <div className="w-full bg-white border border-cream-200 rounded-2xl shadow-sm p-6 md:p-8 flex flex-col gap-6">
       {showDiscount && (
-        <div className="bg-brand-400/10 border border-brand-400/30 rounded-2xl p-4">
-          <p className="font-semibold text-stone-800 text-sm">Save $5 as promised for completing your profile</p>
-          <p className="text-xs text-stone-500 mt-1">T&amp;C: order value must be above $50 to complete this</p>
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50 border border-amber-300 p-4 shadow-sm">
+          <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-amber-300/25" />
+          <div className="relative flex items-start gap-3">
+            <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center shadow text-lg">🎁</span>
+            <div className="min-w-0">
+              <p className="font-bold text-stone-900 text-sm leading-snug">Save <span className="text-amber-700 text-base">$5</span> — your reward for completing your profile</p>
+              <p className="text-xs text-stone-700 mt-1 font-medium">T&amp;Cs · minimum order value $50</p>
+            </div>
+          </div>
         </div>
       )}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+        <div className="w-11 h-11 rounded-full bg-emerald-100 flex items-center justify-center shadow-sm">
+          <svg className="w-5 h-5 text-emerald-700" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
         </div>
         <div>
-          <h3 className="text-xl font-display text-stone-800">Your Liora Profile is Ready</h3>
-          <p className="text-sm text-stone-400">Personalised dining recommendations await you.</p>
+          <h3 className="text-xl font-display font-light text-stone-900 tracking-tight">Your Liora profile is <em className="italic text-brand-600">ready.</em></h3>
+          <p className="text-sm text-stone-800 font-medium mt-0.5">Personalised dining recommendations await you.</p>
         </div>
       </div>
       <div className="bg-cream-50 border border-cream-200 rounded-xl p-4 text-sm text-stone-700 leading-relaxed">{profile.summary}</div>
       <div className="flex flex-wrap gap-3">
-        <button onClick={handleStartOver} className="px-5 py-2.5 bg-cream-100 text-stone-700 rounded-xl text-sm font-semibold border border-stone-200 hover:bg-cream-200 transition-colors">Edit Profile</button>
-        <button onClick={onProfileCreated} className="px-5 py-2.5 bg-forest-800 text-cream-50 rounded-xl text-sm font-semibold hover:bg-forest-700 transition-colors flex items-center justify-center gap-2">
-          Start Exploring <Icon name="arrow_forward" size={16} />
+        <button onClick={handleStartOver} className="px-5 py-2.5 bg-white text-stone-800 rounded-xl text-sm font-bold border border-stone-300 hover:bg-cream-100 hover:border-stone-400 transition-colors">Edit Profile</button>
+        <button onClick={onProfileCreated} className="btn-primary !text-sm">
+          Start exploring <Icon name="arrow_forward" size={16} />
         </button>
       </div>
     </div>
@@ -244,7 +250,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
           <div className="flex-1 min-w-0">
             <span className="text-xs font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">Welcome Offer</span>
             <p className="font-bold text-stone-800 text-base mt-1 leading-snug">Save <span className="text-amber-600 text-xl">$5</span> on your first order — just complete your profile!</p>
-            <p className="text-xs text-stone-500 mt-1 leading-relaxed">Scroll through and fill in the sections below. <span className="text-stone-400">Min. order $50 · T&amp;Cs apply</span></p>
+            <p className="text-xs text-stone-700 mt-1 leading-relaxed font-medium">Scroll through and fill in the sections below. <span className="text-stone-800">Min. order $50 · T&amp;Cs apply</span></p>
           </div>
         </div>
       </div>
@@ -262,7 +268,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
             <div className={`mt-0.5 w-5 h-5 rounded border flex-shrink-0 flex items-center justify-center transition-all ${answers.severeAllergy ? 'bg-red-500 border-red-500' : 'border-stone-300'}`}>
               {answers.severeAllergy && <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>}
             </div>
-            <span className="text-sm text-stone-600 leading-snug">I have a <strong className="text-red-600">severe / life-threatening allergy</strong> — flag this on all recommendations.</span>
+            <span className="text-sm text-stone-800 leading-snug">I have a <strong className="text-red-600">severe / life-threatening allergy</strong> — flag this on all recommendations.</span>
           </label>
         </div>
       </SectionCard>
@@ -289,7 +295,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
             ))}
           </div>
           <div>
-            <label className="text-sm font-medium text-stone-600 block mb-1.5">Any other cultural or religious requirements?</label>
+            <label className="text-sm font-medium text-stone-800 block mb-1.5">Any other cultural or religious requirements?</label>
             <input type="text" value={answers.customReligious ?? ''} onChange={e => set({ customReligious: e.target.value })} placeholder="e.g., Jain vegetarian, no cross-contamination..." className="w-full px-4 py-3 rounded-xl border border-stone-200 text-sm text-stone-700 bg-white focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-400/10" />
           </div>
         </div>
@@ -309,7 +315,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
       <SectionCard step={5} title="Cuisine & Preferences" subtitle="Help Liora personalise every recommendation.">
         <div className="space-y-5">
           <div>
-            <p className="text-sm font-medium text-stone-600 mb-2">Favourite cuisines</p>
+            <p className="text-sm font-medium text-stone-800 mb-2">Favourite cuisines</p>
             <div className="flex flex-wrap gap-2">
               {POPULAR_CUISINES.map(c => (
                 <CheckChip key={c} label={c} checked={answers.cuisines.includes(c)} onChange={() => set({ cuisines: toggleArr(answers.cuisines, c) })} />
@@ -324,24 +330,24 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
                 placeholder="Add another..."
                 className="flex-1 px-3 py-2 rounded-lg border border-stone-200 text-sm focus:outline-none focus:border-brand-400"
               />
-              <button onClick={() => { if (customCuisine.trim()) { set({ cuisines: toggleArr(answers.cuisines, customCuisine.trim()) }); setCustomCuisine(''); } }} className="px-4 py-2 bg-cream-100 text-stone-600 text-sm rounded-lg hover:bg-cream-200 border border-stone-200">Add</button>
+              <button onClick={() => { if (customCuisine.trim()) { set({ cuisines: toggleArr(answers.cuisines, customCuisine.trim()) }); setCustomCuisine(''); } }} className="px-4 py-2 bg-cream-100 text-stone-800 text-sm rounded-lg hover:bg-cream-200 border border-stone-200">Add</button>
             </div>
           </div>
           <div>
-            <p className="text-sm font-medium text-stone-600 mb-2">Typical dining budget</p>
+            <p className="text-sm font-medium text-stone-800 mb-2">Typical dining budget</p>
             <div className="flex gap-3">
               {['$', '$$', '$$$'].map(b => (
-                <button key={b} type="button" onClick={() => set({ budget: b })} className={`flex-1 py-3 rounded-xl border text-sm font-semibold transition-all ${answers.budget === b ? 'bg-forest-800 text-cream-50 border-forest-800' : 'bg-white text-stone-600 border-stone-200 hover:border-forest-700'}`}>
+                <button key={b} type="button" onClick={() => set({ budget: b })} className={`flex-1 py-3 rounded-xl border text-sm font-semibold transition-all ${answers.budget === b ? 'bg-forest-800 text-cream-50 border-forest-800' : 'bg-white text-stone-800 border-stone-200 hover:border-forest-700'}`}>
                   <div>{b}</div>
-                  <div className={`text-xs font-normal mt-0.5 ${answers.budget === b ? 'text-cream-200' : 'text-stone-400'}`}>{BUDGET_LABELS[b]}</div>
+                  <div className={`text-xs font-medium mt-0.5 ${answers.budget === b ? 'text-cream-200' : 'text-stone-800'}`}>{BUDGET_LABELS[b]}</div>
                 </button>
               ))}
             </div>
           </div>
           <div>
-            <p className="text-sm font-medium text-stone-600 mb-2">Spice tolerance — <span className="text-brand-400 font-semibold">{SPICE_LABELS[answers.spice]}</span></p>
+            <p className="text-sm font-medium text-stone-800 mb-2">Spice tolerance — <span className="text-brand-400 font-semibold">{SPICE_LABELS[answers.spice]}</span></p>
             <input type="range" min={1} max={5} value={answers.spice} onChange={e => set({ spice: Number(e.target.value) })} className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-amber-500 bg-stone-200" />
-            <div className="flex justify-between text-xs text-stone-400 mt-1"><span>Mild</span><span>ð  ¥ Blazing</span></div>
+            <div className="flex justify-between text-xs text-stone-800 mt-1 font-medium"><span>Mild</span><span>🔥 Blazing</span></div>
           </div>
         </div>
       </SectionCard>
@@ -358,9 +364,15 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onProfileCreated }) => {
       </SectionCard>
 
       {/* Submit */}
-      <div className="bg-brand-400/10 border border-brand-400/30 rounded-2xl p-4">
-        <p className="font-semibold text-stone-800 text-sm">Save $5 as promised for completing your profile</p>
-        <p className="text-xs text-stone-500 mt-1">T&amp;C: order value must be above $50 to complete this</p>
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50 border border-amber-300 p-4 shadow-sm">
+        <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full bg-amber-300/25" />
+        <div className="relative flex items-start gap-3">
+          <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center shadow text-lg">🎁</span>
+          <div className="min-w-0">
+            <p className="font-bold text-stone-900 text-sm leading-snug">Save <span className="text-amber-700 text-base">$5</span> — your reward for completing your profile</p>
+            <p className="text-xs text-stone-700 mt-1 font-medium">T&amp;Cs · minimum order value $50</p>
+          </div>
+        </div>
       </div>
       <button
         onClick={handleSubmit}

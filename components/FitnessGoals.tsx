@@ -19,12 +19,12 @@ export const FitnessGoals: React.FC<FitnessGoalsProps> = ({ goals, onUpdate }) =
     <div className="p-6 bg-white rounded-2xl shadow-sm border border-cream-200 space-y-8 animate-fade-in">
       <div>
           <h2 className="font-lora text-2xl font-bold text-stone-800">Set Your Targets</h2>
-          <p className="text-sm text-stone-400">Customize your daily intake goals.</p>
+          <p className="text-sm text-stone-600">Customize your daily intake goals.</p>
       </div>
       
       <div className="space-y-6">
         <div className="bg-white p-4 rounded-xl border border-cream-200">
-          <label className="block text-xs font-bold text-stone-400 uppercase tracking-widest mb-2">Daily Calorie Goal</label>
+          <label className="block text-xs font-bold text-stone-600 uppercase tracking-widest mb-2">Daily Calorie Goal</label>
           <div className="flex items-center gap-3">
               <input 
                 type="number" 
@@ -32,7 +32,7 @@ export const FitnessGoals: React.FC<FitnessGoalsProps> = ({ goals, onUpdate }) =
                 onChange={(e) => setLocalGoals({...localGoals, calories: Number(e.target.value)})}
                 className="w-full text-3xl font-bold bg-transparent border-none focus:ring-0 text-stone-800"
               />
-              <span className="text-lg font-semibold text-stone-400">kcal</span>
+              <span className="text-lg font-semibold text-stone-600">kcal</span>
           </div>
         </div>
         
@@ -51,7 +51,7 @@ export const FitnessGoals: React.FC<FitnessGoalsProps> = ({ goals, onUpdate }) =
                     onChange={(e) => setLocalGoals({...localGoals, [macro.key]: Number(e.target.value)})}
                     className="w-full text-lg font-bold bg-transparent border-none focus:ring-0 p-0 text-stone-800" 
                   />
-                  <span className="text-xs font-medium text-stone-400">{macro.unit}</span>
+                  <span className="text-xs font-medium text-stone-600">{macro.unit}</span>
               </div>
             </div>
           ))}
@@ -68,7 +68,7 @@ export const FitnessGoals: React.FC<FitnessGoalsProps> = ({ goals, onUpdate }) =
 
       <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 flex gap-3">
           <Icon name="support" className="w-5 h-5 text-blue-500 flex-shrink-0" />
-          <p className="text-xs text-stone-400 leading-relaxed">
+          <p className="text-xs text-stone-600 leading-relaxed">
               <strong>Tip:</strong> Balanced macros help maintain steady energy levels throughout the day. Need help calculating? Ask Liora in the AI Concierge!
           </p>
       </div>

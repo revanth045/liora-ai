@@ -1,8 +1,10 @@
+import { userScopedKey, onSessionChange } from '../lib/perUserStorage';
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, ReactNode } from 'react';
 import { SubscriptionStatus, PlanInterval } from '../../types';
 
-const STORAGE_KEY = 'liora-subscription';
+const BASE_KEY = 'liora-subscription';
+const STORAGE_KEY_FN = () => userScopedKey(BASE_KEY);
 
 const DEFAULT_STATUS: SubscriptionStatus = {
     isPremium: false,
@@ -32,19 +34,22 @@ export const SubscriptionProvider: React.FC<{ children: ReactNode }> = ({ childr
     const [modalInitialStep, setModalInitialStep] = useState<'benefits' | 'pricing'>('benefits');
 
     useEffect(() => {
-        try {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                setStatus(JSON.parse(stored));
+        const reload = () => {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY_FN());
+                setStatus(stored ? JSON.parse(stored) : DEFAULT_STATUS);
+            } catch (e) {
+                console.error("Failed to parse subscription", e);
+                setStatus(DEFAULT_STATUS);
             }
-        } catch (e) {
-            console.error("Failed to parse subscription", e);
-        }
+        };
+        reload();
+        return onSessionChange(reload);
     }, []);
 
     const saveStatus = (newStatus: SubscriptionStatus) => {
         setStatus(newStatus);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(newStatus));
+        localStorage.setItem(STORAGE_KEY_FN(), JSON.stringify(newStatus));
     };
 
     const daysLeftInTrial = useMemo(() => {

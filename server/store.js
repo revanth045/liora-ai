@@ -1,32 +1,17 @@
-/**
- * In-memory data store â ” drop-in replacement with any DB later.
- * All IDs are nanoid-style strings for easy Supabase migration.
- */
+// Compatibility shim — legacy in-memory maps used by aiWaiter route.
+// All other modules now use the Postgres-backed db module directly.
 import { randomUUID } from 'crypto';
 
-const uid = () => randomUUID();
-const now = () => Date.now();
+export const uid = () => randomUUID();
+export const now = () => Date.now();
+export const STATUS_FLOW = ['pending', 'preparing', 'ready', 'delivered'];
 
-// â €â €â € ORDERS â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-const STATUS_FLOW = ['pending', 'preparing', 'ready', 'delivered'];
+export const tableSessions = new Map();
+export const assistanceRequests = new Map();
 
-const orders = new Map();
-
-// â €â €â € MENU â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-const menuItems = new Map();
-
-// â €â €â € PROMOTIONS â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-const promotions = new Map();
-
-// â €â €â € REVIEWS â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-const reviews = new Map();
-
-// â €â €â € ANALYTICS â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-const analytics = {};
-
-// â €â €â € AI WAITER TABLE SESSIONS & ASSISTANCE â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-const tableSessions = new Map(); // sessionId -> { sessionId, tableNumber, restaurantName, createdAt, status }
-const assistanceRequests = new Map(); // requestId -> { requestId, sessionId, type, status, createdAt }
-
-// â €â €â € EXPORTS â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
-export { orders, menuItems, promotions, reviews, analytics, uid, now, STATUS_FLOW, tableSessions, assistanceRequests };
+// Stubs kept so any older import path doesn't crash; real data is in PG.
+export const orders = new Map();
+export const menuItems = new Map();
+export const promotions = new Map();
+export const reviews = new Map();
+export const analytics = {};

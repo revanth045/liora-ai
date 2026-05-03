@@ -45,7 +45,7 @@ const EMPTY_FORM: ItemForm = {
 // --- Input helpers ------------------------------------------------------------
 const FieldWrap = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="space-y-1.5">
-    <label className="text-[11px] font-bold text-stone-400 uppercase tracking-widest">{label}</label>
+    <label className="text-[11px] font-bold text-stone-600 uppercase tracking-widest">{label}</label>
     {children}
   </div>
 );
@@ -67,7 +67,7 @@ function ItemModal({ title, form, onChange, onSave, onClose, saving }: {
       <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-5 border-b border-cream-200">
           <h2 className="font-lora text-lg font-bold text-stone-800">{title}</h2>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-cream-50 transition-colors">
+          <button onClick={onClose} className="text-stone-600 hover:text-stone-700 p-1 rounded-lg hover:bg-cream-50 transition-colors">
             <Icon name="close" size={20} />
           </button>
         </div>
@@ -135,7 +135,7 @@ function DeleteConfirm({ name, onConfirm, onClose }: { name: string; onConfirm: 
           <Icon name="delete" size={28} className="text-red-500" />
         </div>
         <h3 className="font-lora text-lg font-bold text-stone-800">Remove Item?</h3>
-        <p className="text-sm text-stone-400">
+        <p className="text-sm text-stone-600">
           "<span className="font-semibold text-stone-700">{name}</span>" will be permanently deleted from your inventory.
         </p>
         <div className="flex gap-3 pt-2">
@@ -315,17 +315,17 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 bg-white rounded-xl border border-cream-200 shadow-sm">
-          <div className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Total Items</div>
+          <div className="text-[10px] text-stone-600 font-bold uppercase tracking-wider mb-1">Total Items</div>
           <div className="text-2xl font-lora font-bold text-stone-800">{items.length}</div>
         </div>
         <div className={`p-4 rounded-xl border shadow-sm ${alerts > 0 ? 'bg-red-50 border-red-100' : 'bg-white border-cream-200'}`}>
-          <div className={`text-[10px] font-bold uppercase flex items-center gap-1.5 tracking-wider mb-1 ${alerts > 0 ? 'text-red-500' : 'text-stone-400'}`}>
+          <div className={`text-[10px] font-bold uppercase flex items-center gap-1.5 tracking-wider mb-1 ${alerts > 0 ? 'text-red-500' : 'text-stone-600'}`}>
             <Icon name="warning" size={12} /> Alerts
           </div>
           <div className={`text-2xl font-lora font-bold ${alerts > 0 ? 'text-red-700' : 'text-stone-800'}`}>{alerts}</div>
         </div>
         <div className="p-4 bg-white rounded-xl border border-cream-200 shadow-sm">
-          <div className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1">Est. Value</div>
+          <div className="text-[10px] text-stone-600 font-bold uppercase tracking-wider mb-1">Est. Value</div>
           <div className="text-2xl font-lora font-bold text-stone-800">
             {estValue > 0 ? `$${estValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '—'}
           </div>
@@ -339,7 +339,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
           </div>
           <div className="text-left">
             <div className="text-xs font-bold leading-tight">Add Item</div>
-            <div className="text-[10px] text-white/60 leading-tight">Track new stock</div>
+            <div className="text-[10px] text-white/90 leading-tight">Track new stock</div>
           </div>
         </button>
       </div>
@@ -363,14 +363,14 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
           <>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-5 bg-white rounded-2xl border border-cream-200 shadow-sm">
-                <div className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Total Items</div>
+                <div className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-1">Total Items</div>
                 <div className="text-3xl font-lora font-bold text-stone-800">{total}</div>
-                <div className="text-xs text-stone-400 mt-1">across {catBreakdown.length} categories</div>
+                <div className="text-xs text-stone-600 mt-1">across {catBreakdown.length} categories</div>
               </div>
               <div className="p-5 bg-white rounded-2xl border border-cream-200 shadow-sm">
-                <div className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">Inventory Value</div>
+                <div className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-1">Inventory Value</div>
                 <div className="text-3xl font-lora font-bold text-stone-800">${totalValue.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}</div>
-                <div className="text-xs text-stone-400 mt-1">estimated cost value</div>
+                <div className="text-xs text-stone-600 mt-1">estimated cost value</div>
               </div>
               <div className="p-5 bg-white rounded-2xl border border-amber-100 shadow-sm" style={{borderLeftWidth:'4px', borderLeftColor:'rgb(251 191 36)'}}>
                 <div className="text-[10px] font-bold text-amber-500 uppercase tracking-widest mb-1">Low / Critical</div>
@@ -387,7 +387,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
               <div className="bg-white rounded-2xl border border-cream-200 shadow-sm p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-bold text-stone-700">Stock by Category</h3>
-                  <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">{total} total items</span>
+                  <span className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">{total} total items</span>
                 </div>
                 <div className="space-y-2.5">
                   {catBreakdown.sort((a,b) => b.count - a.count).map(({cat, count, value}) => {
@@ -402,7 +402,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
                         </div>
                         <div className="text-xs font-bold text-stone-700 w-8 text-right">{count}</div>
                         {atRisk > 0 && <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700">{atRisk} at risk</span>}
-                        {value > 0 && <span className="text-[9px] font-bold text-stone-400">${value.toFixed(0)}</span>}
+                        {value > 0 && <span className="text-[9px] font-bold text-stone-600">${value.toFixed(0)}</span>}
                       </div>
                     );
                   })}
@@ -419,7 +419,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
           <div className="flex bg-cream-50/50 p-1 rounded-lg border border-cream-200 flex-shrink-0">
             {(['all', 'low', 'critical', 'out'] as const).map(f => (
               <button key={f} onClick={() => setFilterStatus(f)}
-                className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${filterStatus === f ? 'bg-forest-900 text-white shadow-sm' : 'text-stone-400 hover:text-stone-700'}`}>
+                className={`px-3 py-1.5 rounded-md text-[10px] font-bold uppercase transition-all ${filterStatus === f ? 'bg-forest-900 text-white shadow-sm' : 'text-stone-600 hover:text-stone-700'}`}>
                 {f}
               </button>
             ))}
@@ -437,7 +437,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
               <input type="text" value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Search items..."
                 className="w-full pl-8 pr-4 py-2 bg-white border border-cream-200 rounded-xl text-xs outline-none focus:ring-1 focus:ring-forest-900/20 shadow-sm" />
-              <Icon name="search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
+              <Icon name="search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-600" />
             </div>
           </div>
         </div>
@@ -446,7 +446,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
         <div className="overflow-x-auto">
           <div className="min-w-[780px]">
             {/* Header */}
-            <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-cream-100/80 text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-cream-200">
+            <div className="grid grid-cols-12 gap-3 px-4 py-3 bg-cream-100/80 text-[10px] font-bold text-stone-600 uppercase tracking-widest border-b border-cream-200">
               <div className="col-span-3">Item</div>
               <div className="col-span-2">Category</div>
               <div className="col-span-3">Quantity</div>
@@ -458,8 +458,8 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
             <div className="divide-y divide-cream-200/70">
               {visible.length === 0 ? (
                 <div className="py-16 text-center">
-                  <Icon name="inventory_2" size={40} className="text-stone-300 mx-auto mb-3" />
-                  <p className="text-stone-400 text-sm font-medium">
+                  <Icon name="inventory_2" size={40} className="text-stone-600 mx-auto mb-3" />
+                  <p className="text-stone-600 text-sm font-medium">
                     {items.length === 0 ? 'No inventory items yet.' : 'No items match your filters.'}
                   </p>
                   {items.length === 0 && (
@@ -477,15 +477,15 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
                         <div className={`w-2 h-2 rounded-full flex-shrink-0 ${status === 'good' ? 'bg-green-500' : status === 'low' ? 'bg-orange-400' : 'bg-red-500 animate-pulse'}`} />
                         <div>
                           <div className="font-semibold text-stone-800 text-sm leading-tight">{item.name}</div>
-                          {item.supplier && <div className="text-[10px] text-stone-400 leading-tight">{item.supplier}</div>}
+                          {item.supplier && <div className="text-[10px] text-stone-600 leading-tight">{item.supplier}</div>}
                         </div>
                       </div>
-                      <div className="col-span-2 text-xs font-medium text-stone-500">{item.category}</div>
+                      <div className="col-span-2 text-xs font-medium text-stone-600">{item.category}</div>
                       <div className="col-span-3">
                         <div className="flex items-center gap-2">
                           {/* Quick adjust */}
                           <button onClick={() => adjustQty(item, -1)}
-                            className="w-6 h-6 rounded-full border border-cream-200 flex items-center justify-center text-stone-400 hover:text-stone-700 hover:border-stone-300 transition-colors text-sm font-bold flex-shrink-0">
+                            className="w-6 h-6 rounded-full border border-cream-200 flex items-center justify-center text-stone-600 hover:text-stone-700 hover:border-stone-300 transition-colors text-sm font-bold flex-shrink-0">
                             →
                           </button>
                           <div className="flex flex-col gap-1 min-w-0">
@@ -493,7 +493,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
                             {progressBar(item.quantity, item.reorderPoint, status)}
                           </div>
                           <button onClick={() => adjustQty(item, 1)}
-                            className="w-6 h-6 rounded-full border border-cream-200 flex items-center justify-center text-stone-400 hover:text-stone-700 hover:border-stone-300 transition-colors text-sm font-bold flex-shrink-0">
+                            className="w-6 h-6 rounded-full border border-cream-200 flex items-center justify-center text-stone-600 hover:text-stone-700 hover:border-stone-300 transition-colors text-sm font-bold flex-shrink-0">
                             +
                           </button>
                         </div>
@@ -501,11 +501,11 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
                       <div className="col-span-2">{statusBadge(status)}</div>
                       <div className="col-span-2 flex items-center justify-end gap-1">
                         <button onClick={() => openEdit(item)}
-                          className="p-1.5 rounded-lg text-stone-400 hover:text-forest-900 hover:bg-forest-900/5 transition-colors opacity-0 group-hover:opacity-100">
+                          className="p-1.5 rounded-lg text-stone-600 hover:text-forest-900 hover:bg-forest-900/5 transition-colors opacity-0 group-hover:opacity-100">
                           <Icon name="edit" size={15} />
                         </button>
                         <button onClick={() => setDeleteTarget(item)}
-                          className="p-1.5 rounded-lg text-stone-400 hover:text-red-600 hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100">
+                          className="p-1.5 rounded-lg text-stone-600 hover:text-red-600 hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100">
                           <Icon name="delete" size={15} />
                         </button>
                       </div>
@@ -519,7 +519,7 @@ export default function RestoInventory({ restaurant }: { restaurant: DemoRestaur
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="px-4 py-3 bg-cream-100/50 border-t border-cream-200 flex items-center justify-between text-xs text-stone-400">
+          <div className="px-4 py-3 bg-cream-100/50 border-t border-cream-200 flex items-center justify-between text-xs text-stone-600">
             <span>{visible.length} of {items.length} items shown</span>
             <button onClick={openAdd} className="flex items-center gap-1.5 text-forest-900 font-bold hover:underline">
               <Icon name="add" size={13} /> Add Item

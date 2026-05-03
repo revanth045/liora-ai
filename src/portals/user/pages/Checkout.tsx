@@ -38,13 +38,13 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
           <Icon name="check" size={48} />
         </div>
         <h1 className="font-lora text-4xl text-stone-800 mb-2 font-bold">You're All Set!</h1>
-        <p className="text-stone-400 mb-8 font-medium">Booking #84920 confirmed. A receipt has been sent to your email.</p>
+        <p className="text-stone-600 mb-8 font-medium">Booking #84920 confirmed. A receipt has been sent to your email.</p>
         
         {/* Digital Ticket */}
         <div className="bg-white p-0 rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden border border-cream-200 mb-12 transform hover:scale-[1.02] transition-transform duration-500">
           <div className="h-32 bg-cream-100 relative flex items-center justify-center">
             <div className="text-center z-10">
-               <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-1">Liora Experience Pass</p>
+               <p className="text-white/85 text-[10px] font-bold uppercase tracking-[0.3em] mb-1">Liora Experience Pass</p>
                <h3 className="font-lora text-2xl text-white font-bold tracking-tight">The Liora Grand</h3>
             </div>
             {/* Cutout circles */}
@@ -54,14 +54,14 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
           <div className="p-8 border-b border-dashed border-cream-200 relative bg-white">
             <div className="flex justify-between mb-8">
               <div className="text-left">
-                <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Check In</p>
+                <p className="text-[10px] text-stone-600 font-bold uppercase tracking-widest mb-1">Check In</p>
                 <p className="font-bold text-stone-800 text-lg">Feb 14</p>
-                <p className="text-xs text-stone-400 font-medium">3:00 PM</p>
+                <p className="text-xs text-stone-600 font-medium">3:00 PM</p>
               </div>
               <div className="text-right">
-                <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest mb-1">Check Out</p>
+                <p className="text-[10px] text-stone-600 font-bold uppercase tracking-widest mb-1">Check Out</p>
                 <p className="font-bold text-stone-800 text-lg">Feb 16</p>
-                <p className="text-xs text-stone-400 font-medium">11:00 AM</p>
+                <p className="text-xs text-stone-600 font-medium">11:00 AM</p>
               </div>
             </div>
             <div className="flex justify-center mb-6">
@@ -70,7 +70,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
               </div>
             </div>
           </div>
-          <div className="p-5 bg-cream-100/80 text-[10px] text-stone-400 font-bold uppercase tracking-[0.2em] text-center border-t border-cream-200/60">
+          <div className="p-5 bg-cream-100/80 text-[10px] text-stone-600 font-bold uppercase tracking-[0.2em] text-center border-t border-cream-200/60">
             Show this at the front desk or host stand
           </div>
         </div>
@@ -91,7 +91,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
         
         {/* Left Column: Form */}
         <div className="space-y-6">
-          <button onClick={() => onNavigate('hotels')} className="flex items-center gap-2 text-xs font-bold text-stone-400 hover:text-stone-800 uppercase tracking-widest transition-colors">
+          <button onClick={() => onNavigate('hotels')} className="flex items-center gap-2 text-xs font-bold text-stone-600 hover:text-stone-800 uppercase tracking-widest transition-colors">
             <Icon name="arrow_back" size={14} /> Back to Discover
           </button>
           
@@ -105,15 +105,15 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest ml-1">First Name</label>
+                <label className="text-[10px] font-bold text-stone-600 uppercase tracking-widest ml-1">First Name</label>
                 <input type="text" className="w-full p-4 bg-cream-50/50 rounded-2xl outline-none text-stone-800 font-bold border border-transparent focus:border-cream-200/20 focus:bg-white transition-all shadow-inner" defaultValue="Alex" />
               </div>
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest ml-1">Last Name</label>
+                <label className="text-[10px] font-bold text-stone-600 uppercase tracking-widest ml-1">Last Name</label>
                 <input type="text" className="w-full p-4 bg-cream-50/50 rounded-2xl outline-none text-stone-800 font-bold border border-transparent focus:border-cream-200/20 focus:bg-white transition-all shadow-inner" defaultValue="Rivera" />
               </div>
               <div className="col-span-2 space-y-1.5">
-                <label className="text-[10px] font-bold text-stone-400 uppercase tracking-widest ml-1">Email</label>
+                <label className="text-[10px] font-bold text-stone-600 uppercase tracking-widest ml-1">Email</label>
                 <input type="email" className="w-full p-4 bg-cream-50/50 rounded-2xl outline-none text-stone-800 font-bold border border-transparent focus:border-cream-200/20 focus:bg-white transition-all shadow-inner" defaultValue="alex@example.com" />
               </div>
             </div>
@@ -130,7 +130,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
               <button className="flex-1 py-4 border-2 border-cream-200 bg-cream-50 text-stone-800 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-white transition-all active:scale-95">
                 <Icon name="apple" size={20} /> Pay
               </button>
-              <button className="flex-1 py-4 border border-cream-200 text-stone-400 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-cream-50 transition-all active:scale-95">
+              <button className="flex-1 py-4 border border-cream-200 text-stone-600 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-cream-50 transition-all active:scale-95">
                 Credit Card
               </button>
             </div>
@@ -140,7 +140,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
                  <div className="w-12 h-8 bg-cream-100 rounded-lg text-white text-[10px] flex items-center justify-center font-bold tracking-[0.2em] shadow-md">VISA</div>
                  <div>
                    <p className="text-sm font-bold text-stone-800">•••• 4242</p>
-                   <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest mt-0.5">Expires 12/28</p>
+                   <p className="text-[10px] text-stone-600 font-bold uppercase tracking-widest mt-0.5">Expires 12/28</p>
                  </div>
                </div>
                <button className="text-xs font-bold text-brand-400 hover:underline uppercase tracking-widest">Change</button>
@@ -159,17 +159,17 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
               </div>
               <div className="overflow-hidden">
                 <h4 className="font-bold text-stone-800 truncate">{ORDER_DETAILS.item}</h4>
-                <p className="text-xs text-stone-400 font-medium mt-0.5">{ORDER_DETAILS.type}</p>
+                <p className="text-xs text-stone-600 font-medium mt-0.5">{ORDER_DETAILS.type}</p>
                 <p className="text-[10px] font-bold text-brand-400 uppercase tracking-widest mt-2 bg-yellow-50 inline-block px-2 py-0.5 rounded">{ORDER_DETAILS.dates}</p>
               </div>
             </div>
 
             <div className="space-y-4 text-sm mb-8">
-              <div className="flex justify-between text-stone-400 font-medium">
+              <div className="flex justify-between text-stone-600 font-medium">
                 <span>Room Rate (2 nights)</span>
                 <span className="text-stone-800 font-bold">${ORDER_DETAILS.price}</span>
               </div>
-              <div className="flex justify-between text-stone-400 font-medium">
+              <div className="flex justify-between text-stone-600 font-medium">
                 <span>Taxes & Fees</span>
                 <span className="text-stone-800 font-bold">${ORDER_DETAILS.taxes + ORDER_DETAILS.fees}</span>
               </div>
@@ -182,7 +182,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
             </div>
 
             <div className="flex justify-between items-end pt-6 border-t border-cream-200 mb-8">
-               <span className="text-xs font-bold text-stone-400 uppercase tracking-[0.2em] mb-1">Total Due</span>
+               <span className="text-xs font-bold text-stone-600 uppercase tracking-[0.2em] mb-1">Total Due</span>
                <span className="text-4xl font-lora text-stone-800 font-bold">${total}</span>
             </div>
 
@@ -203,7 +203,7 @@ export const Checkout = ({ onNavigate }: { onNavigate: (tab: View) => void }) =>
             </button>
             <div className="mt-4 flex items-center justify-center gap-2">
               <Icon name="verified_user" size={14} className="text-green-600" />
-              <p className="text-[10px] text-stone-400 font-bold uppercase tracking-widest">Secure SSL Encryption</p>
+              <p className="text-[10px] text-stone-600 font-bold uppercase tracking-widest">Secure SSL Encryption</p>
             </div>
           </div>
 

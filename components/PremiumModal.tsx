@@ -13,7 +13,7 @@ const FeatureItem = ({ icon, title, desc }: { icon: string, title: string, desc:
         </div>
         <div>
             <h4 className="font-bold text-stone-800 text-sm">{title}</h4>
-            <p className="text-xs text-stone-400 leading-relaxed">{desc}</p>
+            <p className="text-xs text-stone-600 leading-relaxed">{desc}</p>
         </div>
     </div>
 );
@@ -50,7 +50,7 @@ const PricingCard = ({
         )}
         <div className="flex justify-between items-center">
             <div>
-                <p className="font-bold text-stone-800 text-lg">{price} <span className="text-sm font-normal text-stone-400">{period}</span></p>
+                <p className="font-bold text-stone-800 text-lg">{price} <span className="text-sm font-normal text-stone-600">{period}</span></p>
                 {savings && <p className="text-xs text-brand-400 font-bold mt-0.5">{savings}</p>}
             </div>
             <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selected ? 'border-brand-400' : 'border-cream-200'}`}>
@@ -135,7 +135,7 @@ export const PremiumModal: React.FC = () => {
                     {/* Value Proposition */}
                     <div className="px-6 mb-6">
                         <h3 className="text-center font-lora text-xl font-bold text-stone-800 mb-2">Why Premium?</h3>
-                        <p className="text-center text-sm text-stone-400 mb-6">Everything you need to eat better and stress less.</p>
+                        <p className="text-center text-sm text-stone-600 mb-6">Everything you need to eat better and stress less.</p>
                         
                         <FeatureItem 
                             icon="clipboard-list" 
@@ -205,7 +205,7 @@ export const PremiumModal: React.FC = () => {
                     </div>
                     
                     {/* Terms */}
-                     <div className="px-6 pb-8 text-[10px] text-stone-400 text-center leading-tight">
+                     <div className="px-6 pb-8 text-[10px] text-stone-600 text-center leading-tight">
                         <p>Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period. You can manage your subscription in Account Settings.</p>
                     </div>
                 </div>
@@ -219,13 +219,13 @@ export const PremiumModal: React.FC = () => {
                     >
                         {isProcessing ? <Spinner /> : (selectedPlan === 'lifetime' ? 'Get Lifetime Access' : 'Start Free Trial')}
                     </button>
-                    <p className="text-center text-[11px] text-stone-400 mt-2 font-medium">
+                    <p className="text-center text-[11px] text-stone-600 mt-2 font-medium">
                         {selectedPlan === 'lifetime' ? 'Unlock everything instantly. No recurring fees.' : 'Unlock everything instantly. No commitment.'}
                     </p>
-                    <div className="flex justify-center gap-4 mt-3 text-[10px] text-stone-400">
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-stone-400 transition-colors">Terms & Conditions</a>
-                        <span className="text-stone-400">|</span>
-                        <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-stone-400 transition-colors">Privacy Policy</a>
+                    <div className="flex justify-center gap-4 mt-3 text-[10px] text-stone-600">
+                        <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-stone-600 transition-colors">Terms & Conditions</a>
+                        <span className="text-stone-600">|</span>
+                        <a href="#" target="_blank" rel="noopener noreferrer" className="hover:text-stone-600 transition-colors">Privacy Policy</a>
                     </div>
                 </div>
             </div>

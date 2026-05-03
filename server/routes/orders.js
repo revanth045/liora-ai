@@ -1,70 +1,96 @@
 import { Router } from 'express';
-import { orders, menuItems, reviews, analytics, uid, now, STATUS_FLOW } from '../store.js';
+import { q, q1 } from '../db.js';
+import { randomUUID } from 'crypto';
 
-const router = Router();
+const r = Router();
+const now = () => Date.now();
 
-// GET /api/orders?restaurantId=demo&status=pending
-router.get('/', (req, res) => {
-  const { restaurantId = 'demo', status } = req.query;
-  let result = [...orders.values()].filter(o => o.restaurantId === restaurantId);
-  if (status && status !== 'all') result = result.filter(o => o.status === status);
-  result.sort((a, b) => b.createdAt - a.createdAt);
-  res.json(result);
+const rowToOrder = (o) => o && ({
+  id: o.id, restaurantId: o.restaurant_id, customerName: o.customer_name,
+  customerEmail: o.customer_email, tableNumber: o.table_number,
+  items: o.items, status: o.status, totalCents: o.total_cents,
+  notes: o.notes, allergens: o.allergens, paymentMethod: o.payment_method,
+  paymentStatus: o.payment_status, cardLast4: o.card_last4,
+  createdAt: Number(o.created_at), updatedAt: Number(o.updated_at),
 });
 
-// GET /api/orders/:id
-router.get('/:id', (req, res) => {
-  const order = orders.get(req.params.id);
-  if (!order) return res.status(404).json({ error: 'Order not found' });
-  res.json(order);
+r.get('/', async (req, res, next) => {
+  try {
+    const { restaurantId, status } = req.query;
+    let sql = 'SELECT * FROM orders WHERE 1=1';
+    const params = [];
+    if (restaurantId) { params.push(restaurantId); sql += ` AND restaurant_id = $${params.length}`; }
+    if (status && status !== 'all') { params.push(status); sql += ` AND status = $${params.length}`; }
+    sql += ' ORDER BY created_at DESC';
+    res.json((await q(sql, params)).map(rowToOrder));
+  } catch (e) { next(e); }
 });
 
-// POST /api/orders  (customer placing order)
-router.post('/', (req, res) => {
-  const { restaurantId = 'demo', customerName, tableOrDelivery, items } = req.body;
-  if (!customerName || !items?.length) return res.status(400).json({ error: 'Missing required fields' });
-  const totalCents = items.reduce((s, i) => s + (i.priceCents * i.qty), 0);
-  const order = { id: uid(), restaurantId, customerName, tableOrDelivery, items, totalCents, status: 'pending', createdAt: now() };
-  orders.set(order.id, order);
-  res.status(201).json(order);
+r.get('/all', async (_req, res, next) => {
+  try { res.json((await q('SELECT * FROM orders ORDER BY created_at DESC LIMIT 500')).map(rowToOrder)); }
+  catch (e) { next(e); }
 });
 
-// PATCH /api/orders/:id/status  (restaurant advancing status)
-router.patch('/:id/status', (req, res) => {
-  const order = orders.get(req.params.id);
-  if (!order) return res.status(404).json({ error: 'Order not found' });
-  const { status } = req.body;
-  const valid = ['pending', 'preparing', 'ready', 'delivered', 'rejected'];
-  if (!valid.includes(status)) return res.status(400).json({ error: 'Invalid status' });
-  order.status = status;
-  order.updatedAt = now();
-  orders.set(order.id, order);
-  res.json(order);
+r.get('/:id', async (req, res, next) => {
+  try {
+    const row = await q1('SELECT * FROM orders WHERE id = $1', [req.params.id]);
+    if (!row) return res.status(404).json({ error: 'Order not found' });
+    res.json(rowToOrder(row));
+  } catch (e) { next(e); }
 });
 
-// DELETE /api/orders/:id  (admin only)
-router.delete('/:id', (req, res) => {
-  if (!orders.has(req.params.id)) return res.status(404).json({ error: 'Not found' });
-  orders.delete(req.params.id);
-  res.status(204).end();
+r.post('/', async (req, res, next) => {
+  try {
+    const o = req.body || {};
+    const id = o.id || randomUUID();
+    const ts = o.createdAt || now();
+    const totalCents = o.totalCents ?? (o.items || []).reduce((s, i) => s + (i.priceCents || 0) * (i.qty || 1), 0);
+    const row = await q1(`
+      INSERT INTO orders (id, restaurant_id, customer_name, customer_email, table_number,
+                          items, status, total_cents, notes, allergens,
+                          payment_method, payment_status, card_last4, created_at, updated_at)
+      VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,$8,$9,$10::jsonb,$11,$12,$13,$14,$15)
+      ON CONFLICT (id) DO UPDATE SET status = EXCLUDED.status, updated_at = EXCLUDED.updated_at
+      RETURNING *`,
+      [id, o.restaurantId || 'demo', o.customerName || 'Guest', o.customerEmail || null,
+       o.tableNumber || null, JSON.stringify(o.items || []), o.status || 'pending',
+       totalCents, o.notes || null, JSON.stringify(o.allergens || []),
+       o.paymentMethod || null, o.paymentStatus || null, o.cardLast4 || null, ts, ts]);
+    res.status(201).json(rowToOrder(row));
+  } catch (e) { next(e); }
 });
 
-// GET /api/orders/analytics/summary?restaurantId=demo
-router.get('/analytics/summary', (req, res) => {
-  const { restaurantId = 'demo' } = req.query;
-  const now_ = now();
-  const dayMs = 86400000;
-  const restaurantOrders = [...orders.values()].filter(o => o.restaurantId === restaurantId);
-  const todayOrders = restaurantOrders.filter(o => o.createdAt > now_ - dayMs);
-  const todaySales = todayOrders.reduce((s, o) => s + o.totalCents, 0);
-  const pending = restaurantOrders.filter(o => o.status === 'pending').length;
-  const preparing = restaurantOrders.filter(o => o.status === 'preparing').length;
-  const popularItems = {};
-  restaurantOrders.forEach(o => o.items?.forEach(i => {
-    popularItems[i.name] = (popularItems[i.name] || 0) + i.qty;
-  }));
-  const topItems = Object.entries(popularItems).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count }));
-  res.json({ todaySales, todayOrderCount: todayOrders.length, pending, preparing, topItems });
+r.patch('/:id/status', async (req, res, next) => {
+  try {
+    const valid = ['pending', 'preparing', 'ready', 'delivered', 'rejected'];
+    if (!valid.includes(req.body.status)) return res.status(400).json({ error: 'Invalid status' });
+    const row = await q1('UPDATE orders SET status=$2, updated_at=$3 WHERE id=$1 RETURNING *',
+      [req.params.id, req.body.status, now()]);
+    if (!row) return res.status(404).json({ error: 'Not found' });
+    res.json(rowToOrder(row));
+  } catch (e) { next(e); }
 });
 
-export default router;
+r.delete('/:id', async (req, res, next) => {
+  try { await q('DELETE FROM orders WHERE id=$1', [req.params.id]); res.status(204).end(); }
+  catch (e) { next(e); }
+});
+
+r.get('/analytics/summary', async (req, res, next) => {
+  try {
+    const { restaurantId = 'demo' } = req.query;
+    const dayMs = 86400000;
+    const cutoff = Date.now() - dayMs;
+    const rows = await q('SELECT * FROM orders WHERE restaurant_id = $1', [restaurantId]);
+    const today = rows.filter(o => Number(o.created_at) > cutoff);
+    const todaySales = today.reduce((s, o) => s + o.total_cents, 0);
+    const pending = rows.filter(o => o.status === 'pending').length;
+    const preparing = rows.filter(o => o.status === 'preparing').length;
+    const items = {};
+    rows.forEach(o => (o.items || []).forEach(i => { items[i.name] = (items[i.name] || 0) + (i.qty || 1); }));
+    const topItems = Object.entries(items).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count }));
+    res.json({ todaySales, todayOrderCount: today.length, pending, preparing, topItems });
+  } catch (e) { next(e); }
+});
+
+export default r;

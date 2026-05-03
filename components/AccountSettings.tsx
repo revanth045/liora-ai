@@ -27,7 +27,7 @@ const dietOptions = ['None', 'Vegetarian', 'Vegan', 'Pescatarian', 'Halal', 'Kos
 const vibeOptions = ['Casual', 'Romantic', 'Family-friendly', 'Luxury', 'Nightlife'];
 
 const inputStyles = "mt-1 block w-full p-2 border border-cream-200 rounded-md shadow-sm focus:ring-brand-400/30 focus:border-brand-400 bg-white text-stone-800";
-const labelStyles = "block text-sm font-medium text-stone-400";
+const labelStyles = "block text-sm font-medium text-stone-600";
 
 export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => {
     const session = useSession();
@@ -178,9 +178,9 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
     const renderCreateProfileForm = () => (
         <div className="max-w-2xl mx-auto text-left animate-fade-in">
              <div className="text-center mb-6">
-                <Icon name="user-circle" className="w-16 h-16 mx-auto text-stone-400 mb-2" />
+                <Icon name="user-circle" className="w-16 h-16 mx-auto text-stone-600 mb-2" />
                 <h3 className="font-semibold text-lg text-stone-800">Create Your Taste Profile</h3>
-                <p className="text-sm text-stone-400">Help Liora give you the best recommendations.</p>
+                <p className="text-sm text-stone-600">Help Liora give you the best recommendations.</p>
             </div>
             <form onSubmit={handleCreateProfile} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -254,12 +254,12 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
             )}
             <div className="p-4 bg-cream-50 border border-cream-200 rounded-lg shadow-sm">
                 {!profile ? (
-                    <div className="text-center text-stone-400 py-8"><Spinner /></div>
+                    <div className="text-center text-stone-600 py-8"><Spinner /></div>
                 ) : (
                     <div className="flex flex-col md:flex-row justify-between items-start gap-4">
                         <div className="flex-grow">
                             <h3 className="font-semibold text-lg text-stone-800">Your AI-Generated Profile</h3>
-                            <p className="text-sm text-stone-400 italic mt-1 max-w-prose">
+                            <p className="text-sm text-stone-600 italic mt-1 max-w-prose">
                                 "{typeof profile.summary === 'string' ? profile.summary : String(profile.summary ?? '')}"
                             </p>
                             <div className="mt-4 flex flex-wrap gap-2">
@@ -296,8 +296,8 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
     const renderFavoritesTab = () => (
         <div className="space-y-4 animate-fade-in">
             {favorites.length === 0 ? (
-                 <div className="text-center text-stone-400 py-8">
-                    <Icon name="bookmark" className="w-12 h-12 mx-auto text-stone-400 mb-2" />
+                 <div className="text-center text-stone-600 py-8">
+                    <Icon name="bookmark" className="w-12 h-12 mx-auto text-stone-600 mb-2" />
                     <p>No favorites saved yet.</p>
                 </div>
             ) : favorites.map((fav: ChatMessage) => (
@@ -308,7 +308,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                         className="absolute top-2 right-2 bg-white p-1.5 rounded-full shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
                         aria-label="Remove from favorites"
                     >
-                        <Icon name="trash" className="w-5 h-5 text-stone-400 hover:text-red-500" />
+                        <Icon name="trash" className="w-5 h-5 text-stone-600 hover:text-red-500" />
                     </button>
                 </div>
             ))}
@@ -318,8 +318,8 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
     const renderOrdersTab = () => (
         <div className="space-y-4 animate-fade-in">
              {pastOrders.length === 0 ? (
-                 <div className="text-center text-stone-400 py-8">
-                    <Icon name="receipt" className="w-12 h-12 mx-auto text-stone-400 mb-2" />
+                 <div className="text-center text-stone-600 py-8">
+                    <Icon name="receipt" className="w-12 h-12 mx-auto text-stone-600 mb-2" />
                     <p>No past orders found.</p>
                     <p className="text-sm">Use the "Mock Order" button on restaurants to add to your history.</p>
                 </div>
@@ -328,13 +328,13 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                     <div className="flex justify-between items-start">
                         <div>
                             <h4 className="font-semibold text-md text-stone-800">{order.restaurantName}</h4>
-                            <p className="text-xs text-stone-400">{new Date(order.date).toLocaleString()}</p>
+                            <p className="text-xs text-stone-600">{new Date(order.date).toLocaleString()}</p>
                         </div>
                         <p className="font-bold text-lg text-stone-800">{order.total}</p>
                     </div>
                     <ul className="mt-2 pt-2 border-t border-dashed border-cream-200 text-sm space-y-1">
                        {order.items.map((item, index) => (
-                            <li key={index} className="flex justify-between text-stone-400">
+                            <li key={index} className="flex justify-between text-stone-600">
                                <span>- {item.name}</span>
                                <span>{item.price}</span>
                             </li>
@@ -349,9 +349,9 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
         return (
             <div className="space-y-6 animate-fade-in">
                 <div className="p-6 bg-cream-50 border border-cream-200 rounded-lg shadow-sm text-center">
-                    <Icon name="sparkles" className={`w-16 h-16 mx-auto mb-4 ${isPremium ? 'text-brand-400' : 'text-stone-400'}`} />
+                    <Icon name="sparkles" className={`w-16 h-16 mx-auto mb-4 ${isPremium ? 'text-brand-400' : 'text-stone-600'}`} />
                     <h3 className="text-2xl font-lora font-bold text-stone-800">{isPremium ? 'Premium Member' : 'Free Plan'}</h3>
-                    <p className="text-stone-400 mt-1">
+                    <p className="text-stone-600 mt-1">
                         {isPremium 
                             ? canceled 
                                 ? `Your ${plan} subscription is set to cancel on ${new Date(renewalDate!).toLocaleDateString()}.`
@@ -411,7 +411,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                                 {['direct', 'friendly', 'playful'].map(tone => (
                                     <label key={tone} className="w-full text-center">
                                         <input type="radio" name="ai.tone" value={tone} checked={currentPrefs.tone === tone} onChange={handlePrefChange} className="sr-only" />
-                                        <span className={`capitalize block w-full py-1.5 rounded-full cursor-pointer text-sm font-semibold transition-colors ${currentPrefs.tone === tone ? 'bg-white shadow text-stone-800' : 'text-stone-400'}`}>{tone}</span>
+                                        <span className={`capitalize block w-full py-1.5 rounded-full cursor-pointer text-sm font-semibold transition-colors ${currentPrefs.tone === tone ? 'bg-white shadow text-stone-800' : 'text-stone-600'}`}>{tone}</span>
                                     </label>
                                 ))}
                             </div>
@@ -422,7 +422,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                                 {['classic', 'adventurous', 'healthy'].map(style => (
                                     <label key={style} className="w-full text-center">
                                         <input type="radio" name="ai.style" value={style} checked={currentPrefs.style === style} onChange={handlePrefChange} className="sr-only" />
-                                        <span className={`capitalize block w-full py-1.5 rounded-full cursor-pointer text-sm font-semibold transition-colors ${currentPrefs.style === style ? 'bg-white shadow text-stone-800' : 'text-stone-400'}`}>{style}</span>
+                                        <span className={`capitalize block w-full py-1.5 rounded-full cursor-pointer text-sm font-semibold transition-colors ${currentPrefs.style === style ? 'bg-white shadow text-stone-800' : 'text-stone-600'}`}>{style}</span>
                                     </label>
                                 ))}
                             </div>
@@ -444,9 +444,9 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                             </label>
                             {reminderForm.mealLogging.enabled && (
                                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
-                                    <div><label className="text-xs text-stone-400">Breakfast</label><input type="time" name="mealLogging.breakfast" value={reminderForm.mealLogging.breakfast} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
-                                    <div><label className="text-xs text-stone-400">Lunch</label><input type="time" name="mealLogging.lunch" value={reminderForm.mealLogging.lunch} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
-                                    <div><label className="text-xs text-stone-400">Dinner</label><input type="time" name="mealLogging.dinner" value={reminderForm.mealLogging.dinner} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
+                                    <div><label className="text-xs text-stone-600">Breakfast</label><input type="time" name="mealLogging.breakfast" value={reminderForm.mealLogging.breakfast} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
+                                    <div><label className="text-xs text-stone-600">Lunch</label><input type="time" name="mealLogging.lunch" value={reminderForm.mealLogging.lunch} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
+                                    <div><label className="text-xs text-stone-600">Dinner</label><input type="time" name="mealLogging.dinner" value={reminderForm.mealLogging.dinner} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
                                 </div>
                             )}
                         </div>
@@ -457,9 +457,9 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                             </label>
                             {reminderForm.drinkWater.enabled && (
                                 <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 items-end">
-                                    <div><label className="text-xs text-stone-400">Interval (min)</label><input type="number" name="drinkWater.interval" value={reminderForm.drinkWater.interval} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
-                                    <div><label className="text-xs text-stone-400">Start</label><input type="time" name="drinkWater.startTime" value={reminderForm.drinkWater.startTime} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
-                                    <div><label className="text-xs text-stone-400">End</label><input type="time" name="drinkWater.endTime" value={reminderForm.drinkWater.endTime} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
+                                    <div><label className="text-xs text-stone-600">Interval (min)</label><input type="number" name="drinkWater.interval" value={reminderForm.drinkWater.interval} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
+                                    <div><label className="text-xs text-stone-600">Start</label><input type="time" name="drinkWater.startTime" value={reminderForm.drinkWater.startTime} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
+                                    <div><label className="text-xs text-stone-600">End</label><input type="time" name="drinkWater.endTime" value={reminderForm.drinkWater.endTime} onChange={handleReminderFormChange} className="mt-1 w-full p-1 border border-cream-200 rounded-md text-sm bg-white"/></div>
                                 </div>
                             )}
                         </div>
@@ -492,11 +492,11 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
             <div className="flex justify-between items-center">
                 <div>
                     <h2 className="text-2xl font-lora text-stone-800">My Profile</h2>
-                    <p className="text-stone-400">Manage your preferences, view favorites, and see your order history.</p>
+                    <p className="text-stone-600">Manage your preferences, view favorites, and see your order history.</p>
                 </div>
                 <button 
                     onClick={handleLogout}
-                    className="border border-gray-500 text-stone-400 font-bold py-2 px-4 rounded-lg hover:bg-cream-100/800/10 transition-colors text-sm"
+                    className="border border-gray-500 text-stone-600 font-bold py-2 px-4 rounded-lg hover:bg-cream-100/800/10 transition-colors text-sm"
                 >
                     Logout
                 </button>
@@ -512,7 +512,7 @@ export const AccountSettings: React.FC<AccountSettingsProps> = ({ setView }) => 
                                 className={`whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
                                     activeTab === tab.key
                                     ? 'border-brand-400 text-stone-800'
-                                    : 'border-transparent text-stone-400 hover:text-stone-600 hover:border-cream-200'
+                                    : 'border-transparent text-stone-600 hover:text-stone-600 hover:border-cream-200'
                                 }`}
                             >
                                 <Icon name={tab.icon} className="w-5 h-5" />

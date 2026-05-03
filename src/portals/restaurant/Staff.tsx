@@ -78,7 +78,7 @@ const SHIFT_COLORS = [
 const inputCls = 'w-full px-4 py-2.5 rounded-xl border border-cream-200 bg-cream-50 text-stone-800 text-sm focus:outline-none focus:border-forest-900/30 focus:bg-white transition-colors';
 const FieldWrap = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <div className="space-y-1.5">
-    <label className="text-[11px] font-bold text-stone-400 uppercase tracking-widest">{label}</label>
+    <label className="text-[11px] font-bold text-stone-600 uppercase tracking-widest">{label}</label>
     {children}
   </div>
 );
@@ -105,7 +105,7 @@ function StaffModal({ title, form, onChange, onSave, onClose, saving }: {
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-5 border-b border-cream-200">
           <h2 className="font-lora text-lg font-bold text-stone-800">{title}</h2>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-cream-50 transition-colors">
+          <button onClick={onClose} className="text-stone-600 hover:text-stone-700 p-1 rounded-lg hover:bg-cream-50 transition-colors">
             <Icon name="close" size={20} />
           </button>
         </div>
@@ -168,7 +168,7 @@ function ShiftModal({ form, onChange, staff, onSave, onClose, saving, editId }: 
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
         <div className="flex items-center justify-between p-5 border-b border-cream-200">
           <h2 className="font-lora text-lg font-bold text-stone-800">{editId ? 'Edit Shift' : 'Add Shift'}</h2>
-          <button onClick={onClose} className="text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-cream-50 transition-colors">
+          <button onClick={onClose} className="text-stone-600 hover:text-stone-700 p-1 rounded-lg hover:bg-cream-50 transition-colors">
             <Icon name="close" size={20} />
           </button>
         </div>
@@ -219,7 +219,7 @@ function DeleteConfirm({ label, onConfirm, onClose }: { label: string; onConfirm
           <Icon name="delete" size={28} className="text-red-500" />
         </div>
         <h3 className="font-lora text-lg font-bold text-stone-800">Remove?</h3>
-        <p className="text-sm text-stone-400">
+        <p className="text-sm text-stone-600">
           "<span className="font-semibold text-stone-700">{label}</span>" will be permanently deleted.
         </p>
         <div className="flex gap-3 pt-2">
@@ -233,6 +233,12 @@ function DeleteConfirm({ label, onConfirm, onClose }: { label: string; onConfirm
 
 // --- Main Component ------------------------------------------------------------
 export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant }) {
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
   const [view, setView] = useState<'roster' | 'schedule' | 'attendance'>('roster');
   const [staff, setStaff] = useState<DemoStaffMember[]>([]);
   const [shifts, setShifts] = useState<DemoShift[]>([]);
@@ -374,6 +380,79 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
     staff.map((s, i) => [s.id, SHIFT_COLORS[i % SHIFT_COLORS.length]])
   );
 
+  // --- Mobile clock-in/out view ----------------------------------------------
+  if (isMobile) {
+    const today = new Date().toISOString().slice(0, 10);
+    const todayRecords = attendance.filter(a => a.date === today);
+    const recordFor = (staffId: string) => todayRecords.find(r => r.staffId === staffId);
+    const nowHHMM = () => { const d = new Date(); return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
+    const clockIn = (m: DemoStaffMember) => {
+      const existing = recordFor(m.id);
+      db_upsertAttendance({
+        ...(existing || {}),
+        staffId: m.id, restaurantId: restaurant.id, date: today,
+        clockIn: nowHHMM(), clockOut: existing?.clockOut || '',
+        status: existing?.status || 'present', notes: existing?.notes || '',
+      } as any);
+      loadAttendance();
+    };
+    const clockOut = (m: DemoStaffMember) => {
+      const existing = recordFor(m.id);
+      db_upsertAttendance({
+        ...(existing || {}),
+        staffId: m.id, restaurantId: restaurant.id, date: today,
+        clockIn: existing?.clockIn || nowHHMM(), clockOut: nowHHMM(),
+        status: existing?.status || 'present', notes: existing?.notes || '',
+      } as any);
+      loadAttendance();
+    };
+
+    return (
+      <div className="max-w-md mx-auto px-4 pt-4 pb-24 space-y-4">
+        <div className="bg-gradient-to-br from-forest-900 to-forest-800 text-cream-50 rounded-3xl p-5 shadow-lg">
+          <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">Today · {today}</p>
+          <p className="font-lora text-2xl mt-1">{restaurant.name}</p>
+          <p className="text-sm opacity-90 mt-2">{todayRecords.filter(r => r.clockIn && !r.clockOut).length} on shift · {todayRecords.filter(r => r.clockIn && r.clockOut).length} clocked out</p>
+        </div>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-stone-600 px-1">Clock in / out</p>
+        {staff.length === 0 && <p className="text-sm text-stone-600 text-center py-6">No staff yet — add from desktop.</p>}
+        <div className="space-y-2">
+          {staff.filter(s => s.status === 'active').map(m => {
+            const r = recordFor(m.id);
+            const isIn = !!r?.clockIn && !r?.clockOut;
+            const isDone = !!r?.clockIn && !!r?.clockOut;
+            return (
+              <div key={m.id} className="bg-white border border-cream-200 rounded-2xl p-4 shadow-sm">
+                <div className="flex items-center justify-between">
+                  <div className="min-w-0">
+                    <p className="font-bold text-stone-800 truncate">{m.name}</p>
+                    <p className="text-[11px] uppercase tracking-widest text-stone-600 font-bold">{m.role}</p>
+                  </div>
+                  <div className="text-right">
+                    {isDone ? (
+                      <span className="text-[11px] font-bold text-emerald-700">✓ {r!.clockIn}–{r!.clockOut}</span>
+                    ) : isIn ? (
+                      <span className="text-[11px] font-bold text-sky-700">In since {r!.clockIn}</span>
+                    ) : (
+                      <span className="text-[11px] font-bold text-stone-500">—</span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-2 mt-3">
+                  <button disabled={isIn || isDone} onClick={() => clockIn(m)}
+                    className="flex-1 py-2.5 rounded-xl bg-forest-900 text-cream-50 font-bold text-sm disabled:opacity-40">Clock in</button>
+                  <button disabled={!isIn} onClick={() => clockOut(m)}
+                    className="flex-1 py-2.5 rounded-xl bg-amber-600 text-white font-bold text-sm disabled:opacity-40">Clock out</button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <p className="text-[11px] text-center text-stone-500 mt-4">Open on desktop for full roster, schedule and reports.</p>
+      </div>
+    );
+  }
+
   // --- Render ------------------------------------------------------------------
   return (
     <div className="max-w-6xl mx-auto space-y-6 animate-page-slide pb-20">
@@ -387,17 +466,17 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
       {/* Stats Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 bg-white rounded-2xl border border-cream-200 shadow-sm">
-          <div className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5"><Icon name="group" size={12} /> Total Staff</div>
+          <div className="text-[10px] text-stone-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5"><Icon name="group" size={12} /> Total Staff</div>
           <div className="text-2xl font-lora font-bold text-stone-800">{staff.length}</div>
-          <div className="text-xs text-stone-400 mt-0.5">{activeCount} active</div>
+          <div className="text-xs text-stone-600 mt-0.5">{activeCount} active</div>
         </div>
         <div className="p-5 bg-white rounded-2xl border border-cream-200 shadow-sm">
-          <div className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5"><Icon name="calendar_month" size={12} /> Shifts This Week</div>
+          <div className="text-[10px] text-stone-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5"><Icon name="calendar_month" size={12} /> Shifts This Week</div>
           <div className="text-2xl font-lora font-bold text-stone-800">{shifts.length}</div>
-          <div className="text-xs text-stone-400 mt-0.5">{totalWeekHours.toFixed(1)} hrs scheduled</div>
+          <div className="text-xs text-stone-600 mt-0.5">{totalWeekHours.toFixed(1)} hrs scheduled</div>
         </div>
         <div className="p-5 bg-white rounded-2xl border border-cream-200 shadow-sm">
-          <div className="text-[10px] text-stone-400 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5"><Icon name="attach_money" size={12} /> Est. Labour Cost</div>
+          <div className="text-[10px] text-stone-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1.5"><Icon name="attach_money" size={12} /> Est. Labour Cost</div>
           <div className="text-2xl font-lora font-bold text-stone-800">
             {(() => {
               let cost = 0;
@@ -412,7 +491,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
               return cost > 0 ? `$${cost.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}` : '�';
             })()}
           </div>
-          <div className="text-xs text-stone-400 mt-0.5">for this week</div>
+          <div className="text-xs text-stone-600 mt-0.5">for this week</div>
         </div>
         <button onClick={openAddStaff}
           className="p-5 bg-forest-900 rounded-2xl shadow-sm text-white flex items-center gap-3 hover:bg-forest-900/90 transition-colors active:scale-95 group">
@@ -421,7 +500,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
           </div>
           <div className="text-left">
             <div className="text-xs font-bold leading-tight">Add Staff</div>
-            <div className="text-[10px] text-white/60 leading-tight">Add team member</div>
+            <div className="text-[10px] text-white/90 leading-tight">Add team member</div>
           </div>
         </button>
       </div>
@@ -433,7 +512,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
           <div className="flex bg-white p-1 rounded-xl border border-cream-200 shadow-sm">
             {[{ id: 'roster', label: 'Team Roster', icon: 'group' }, { id: 'schedule', label: 'Weekly Schedule', icon: 'calendar_month' }, { id: 'attendance', label: 'Attendance', icon: 'event_available' }].map(t => (
               <button key={t.id} onClick={() => setView(t.id as any)}
-                className={`flex items-center gap-2 px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${view === t.id ? 'bg-forest-900 text-white shadow-md' : 'text-stone-400 hover:text-stone-700'}`}>
+                className={`flex items-center gap-2 px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest transition-all ${view === t.id ? 'bg-forest-900 text-white shadow-md' : 'text-stone-600 hover:text-stone-700'}`}>
                 <Icon name={t.icon} size={14} /> {t.label}
               </button>
             ))}
@@ -448,7 +527,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
               <div className="relative flex-1">
                 <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search name or role�"
                   className="w-full pl-8 pr-4 py-2 bg-white border border-cream-200 rounded-xl text-xs outline-none shadow-sm" />
-                <Icon name="search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                <Icon name="search" size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-stone-600" />
               </div>
             </div>
           )}
@@ -465,7 +544,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
           <div className="overflow-x-auto">
             <div className="min-w-[680px]">
               {/* Header */}
-              <div className="grid grid-cols-12 gap-3 px-5 py-3 bg-cream-100/80 text-[10px] font-bold text-stone-400 uppercase tracking-widest border-b border-cream-200">
+              <div className="grid grid-cols-12 gap-3 px-5 py-3 bg-cream-100/80 text-[10px] font-bold text-stone-600 uppercase tracking-widest border-b border-cream-200">
                 <div className="col-span-4">Name</div>
                 <div className="col-span-3">Role</div>
                 <div className="col-span-2">Status</div>
@@ -475,8 +554,8 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
               <div className="divide-y divide-cream-200/70">
                 {visibleStaff.length === 0 ? (
                   <div className="py-16 text-center">
-                    <Icon name="group" size={40} className="text-stone-300 mx-auto mb-3" />
-                    <p className="text-stone-400 text-sm font-medium">
+                    <Icon name="group" size={40} className="text-stone-600 mx-auto mb-3" />
+                    <p className="text-stone-600 text-sm font-medium">
                       {staff.length === 0 ? 'No staff members yet.' : 'No results for your search.'}
                     </p>
                     {staff.length === 0 && (
@@ -488,30 +567,30 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                 ) : visibleStaff.map(member => (
                   <div key={member.id} className="grid grid-cols-12 gap-3 px-5 py-3.5 items-center hover:bg-cream-50/30 transition-colors group">
                     <div className="col-span-4 flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${member.status === 'active' ? 'bg-forest-900/10 text-forest-900' : 'bg-stone-100 text-stone-400'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${member.status === 'active' ? 'bg-forest-900/10 text-forest-900' : 'bg-stone-100 text-stone-600'}`}>
                         {member.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0">
                         <div className="font-semibold text-stone-800 text-sm leading-tight truncate">{member.name}</div>
-                        {member.phone && <div className="text-[10px] text-stone-400 leading-tight">{member.phone}</div>}
+                        {member.phone && <div className="text-[10px] text-stone-600 leading-tight">{member.phone}</div>}
                       </div>
                     </div>
-                    <div className="col-span-3 text-xs font-medium text-stone-500">{member.role}</div>
+                    <div className="col-span-3 text-xs font-medium text-stone-600">{member.role}</div>
                     <div className="col-span-2">
-                      <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase border ${member.status === 'active' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-stone-50 text-stone-400 border-stone-200'}`}>
+                      <span className={`px-2 py-0.5 rounded-md text-[9px] font-bold uppercase border ${member.status === 'active' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-stone-50 text-stone-600 border-stone-200'}`}>
                         {member.status}
                       </span>
                     </div>
                     <div className="col-span-2 text-xs font-mono text-stone-700">
-                      {member.hourlyRate != null ? `$${member.hourlyRate.toFixed(2)}/hr` : <span className="text-stone-300">�</span>}
+                      {member.hourlyRate != null ? `$${member.hourlyRate.toFixed(2)}/hr` : <span className="text-stone-600">�</span>}
                     </div>
                     <div className="col-span-1 flex items-center justify-end gap-0.5">
                       <button onClick={() => openEditStaff(member)}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-forest-900 hover:bg-forest-900/5 transition-colors opacity-0 group-hover:opacity-100">
+                        className="p-1.5 rounded-lg text-stone-600 hover:text-forest-900 hover:bg-forest-900/5 transition-colors opacity-0 group-hover:opacity-100">
                         <Icon name="edit" size={14} />
                       </button>
                       <button onClick={() => setDeleteStaff(member)}
-                        className="p-1.5 rounded-lg text-stone-400 hover:text-red-600 hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100">
+                        className="p-1.5 rounded-lg text-stone-600 hover:text-red-600 hover:bg-red-50 transition-colors opacity-0 group-hover:opacity-100">
                         <Icon name="delete" size={14} />
                       </button>
                     </div>
@@ -521,7 +600,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
             </div>
             {staff.length > 0 && (
               <div className="px-5 py-3 bg-cream-100/50 border-t border-cream-200 flex justify-between items-center">
-                <span className="text-xs text-stone-400">{visibleStaff.length} of {staff.length} members</span>
+                <span className="text-xs text-stone-600">{visibleStaff.length} of {staff.length} members</span>
                 <button onClick={openAddStaff} className="flex items-center gap-1.5 text-forest-900 text-xs font-bold hover:underline">
                   <Icon name="add" size={13} /> Add Member
                 </button>
@@ -554,8 +633,8 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
 
             {/* Empty state for no staff */}
             {staff.filter(s => s.status === 'active').length === 0 ? (
-              <div className="py-16 text-center text-stone-400">
-                <Icon name="calendar_month" size={40} className="text-stone-300 mx-auto mb-3" />
+              <div className="py-16 text-center text-stone-600">
+                <Icon name="calendar_month" size={40} className="text-stone-600 mx-auto mb-3" />
                 <p className="text-sm font-medium">Add active staff members first to schedule shifts.</p>
                 <button onClick={openAddStaff} className="mt-3 text-forest-900 text-xs font-bold hover:underline flex items-center gap-1 mx-auto">
                   <Icon name="add" size={14} /> Add Staff Member
@@ -570,7 +649,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                     {DAYS.map((day, i) => {
                       const isToday = getDayDate(weekStart, i) === new Date().getDate().toString() && weekStart === getWeekStart(new Date());
                       return (
-                        <div key={day} className={`col-span-1 text-center py-2.5 rounded-xl text-xs font-bold ${isToday ? 'bg-forest-900 text-white' : 'bg-cream-100/60 text-stone-500'}`}>
+                        <div key={day} className={`col-span-1 text-center py-2.5 rounded-xl text-xs font-bold ${isToday ? 'bg-forest-900 text-white' : 'bg-cream-100/60 text-stone-600'}`}>
                           <div className="uppercase tracking-wider text-[10px]">{day}</div>
                           <div className={`text-base font-lora font-bold ${isToday ? 'text-white' : 'text-stone-800'}`}>{getDayDate(weekStart, i)}</div>
                         </div>
@@ -590,7 +669,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                           </div>
                           <div className="min-w-0">
                             <div className="text-xs font-semibold text-stone-700 truncate">{member.name.split(' ')[0]}</div>
-                            <div className="text-[9px] text-stone-400 truncate">{member.role}</div>
+                            <div className="text-[9px] text-stone-600 truncate">{member.role}</div>
                           </div>
                         </div>
                         {/* Day cells */}
@@ -618,7 +697,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                               ))}
                               {/* Add shift to this cell */}
                               <button onClick={() => openAddShift(day, member.id)}
-                                className="w-full py-1 rounded-lg border border-dashed border-stone-200 text-[9px] text-stone-400 font-bold hover:bg-white hover:text-stone-700 hover:border-stone-300 transition-all opacity-0 group-hover/cell:opacity-100">
+                                className="w-full py-1 rounded-lg border border-dashed border-stone-200 text-[9px] text-stone-600 font-bold hover:bg-white hover:text-stone-700 hover:border-stone-300 transition-all opacity-0 group-hover/cell:opacity-100">
                                 + shift
                               </button>
                             </div>
@@ -630,7 +709,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
 
                   {/* Weekly totals row */}
                   <div className="grid grid-cols-8 gap-2 mt-3 pt-3 border-t border-cream-200">
-                    <div className="col-span-1 text-[10px] font-bold text-stone-400 uppercase tracking-wider py-1">Totals</div>
+                    <div className="col-span-1 text-[10px] font-bold text-stone-600 uppercase tracking-wider py-1">Totals</div>
                     {DAYS.map(day => {
                       const dayHrs = shifts
                         .filter(s => s.day === day)
@@ -642,7 +721,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                         }, 0);
                       return (
                         <div key={day} className="col-span-1 py-1.5 rounded-lg bg-cream-100/60 text-center text-[10px] font-bold text-stone-600">
-                          {dayHrs > 0 ? `${dayHrs.toFixed(1)}h` : <span className="text-stone-300">�</span>}
+                          {dayHrs > 0 ? `${dayHrs.toFixed(1)}h` : <span className="text-stone-600">�</span>}
                         </div>
                       );
                     })}
@@ -658,7 +737,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
             {/* Date selector + summary */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="flex items-center gap-3">
-                <label className="text-xs font-bold text-stone-500 uppercase tracking-widest">Date</label>
+                <label className="text-xs font-bold text-stone-600 uppercase tracking-widest">Date</label>
                 <input
                   type="date"
                   value={attendanceDate}
@@ -687,13 +766,13 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
 
             {/* Attendance table */}
             {staff.filter(m => m.status === 'active').length === 0 ? (
-              <div className="text-center py-16 text-stone-400">
+              <div className="text-center py-16 text-stone-600">
                 <Icon name="event_available" size={40} className="mx-auto mb-3 opacity-30" />
                 <p className="text-sm font-medium">Add active staff members to track attendance.</p>
               </div>
             ) : (
               <div className="bg-white rounded-2xl border border-cream-200 shadow-sm overflow-hidden">
-                <div className="grid grid-cols-12 gap-2 px-5 py-3 bg-cream-50/80 border-b border-cream-200 text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                <div className="grid grid-cols-12 gap-2 px-5 py-3 bg-cream-50/80 border-b border-cream-200 text-[10px] font-bold text-stone-600 uppercase tracking-widest">
                   <div className="col-span-3">Name</div>
                   <div className="col-span-2">Role</div>
                   <div className="col-span-2">Clock In</div>
@@ -743,7 +822,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                         </div>
                         <span className="text-sm font-bold text-stone-800 truncate">{member.name}</span>
                       </div>
-                      <div className="col-span-2 text-xs text-stone-500 font-medium truncate">{member.role}</div>
+                      <div className="col-span-2 text-xs text-stone-600 font-medium truncate">{member.role}</div>
                       <div className="col-span-2">
                         <input
                           type="time"
@@ -771,7 +850,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                           ))}
                         </select>
                       </div>
-                      <div className="col-span-1 text-xs text-stone-500 font-bold text-right">
+                      <div className="col-span-1 text-xs text-stone-600 font-bold text-right">
                         {workedHours()}
                       </div>
                     </div>
@@ -787,7 +866,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">
+                      <tr className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">
                         <th className="text-left pb-3 pr-4 min-w-[120px]">Staff Member</th>
                         {Array.from({length:7},(_,i)=>{
                           const d = new Date();
@@ -795,7 +874,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                           return (
                             <th key={i} className="text-center pb-3 px-2 w-14">
                               <div>{d.toLocaleDateString('en-US',{weekday:'short'})}</div>
-                              <div className="font-medium normal-case text-stone-500">{d.getDate()}</div>
+                              <div className="font-medium normal-case text-stone-600">{d.getDate()}</div>
                             </th>
                           );
                         })}
@@ -833,7 +912,7 @@ export default function RestoStaff({ restaurant }: { restaurant: DemoRestaurant 
                       })}
                     </tbody>
                   </table>
-                  <div className="flex gap-4 mt-4 text-[10px] text-stone-400 font-medium">
+                  <div className="flex gap-4 mt-4 text-[10px] text-stone-600 font-medium">
                     <span>🥩 Present</span><span>🟡 Late</span><span>🟠 Half Day</span><span>🔴 Absent</span><span>⬜ No Record</span>
                   </div>
                 </div>

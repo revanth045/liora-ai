@@ -47,7 +47,7 @@ export const DatingHub = () => {
         <p className="text-stone-600 text-base leading-relaxed mb-4">
           Good food brings people together... what if it also sparks something more?&nbsp;🍝
         </p>
-        <p className="text-stone-400 text-sm leading-relaxed mb-8">
+        <p className="text-stone-600 text-sm leading-relaxed mb-8">
           We&apos;re going live soon — get ready to discover delicious moments and maybe even a little romance.
         </p>
 
@@ -58,7 +58,7 @@ export const DatingHub = () => {
         </div>
 
         {/* Subtle footer note */}
-        <p className="mt-6 text-xs text-stone-300">Stay tuned — something delicious is cooking 🍽️</p>
+        <p className="mt-6 text-xs text-stone-600">Stay tuned — something delicious is cooking 🍽️</p>
       </div>
     </div>
   );

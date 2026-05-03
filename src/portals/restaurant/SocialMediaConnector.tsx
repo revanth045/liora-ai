@@ -23,7 +23,7 @@ export const SocialMediaConnector: React.FC = () => {
                             </div>
                             <div>
                                 <p className="font-semibold text-stone-700">{platform.name}</p>
-                                <p className={`text-xs font-medium ${isConnected ? 'text-green-600' : 'text-stone-400'}`}>
+                                <p className={`text-xs font-medium ${isConnected ? 'text-green-600' : 'text-stone-600'}`}>
                                     {isConnected ? 'Connected' : 'Not Connected'}
                                 </p>
                             </div>

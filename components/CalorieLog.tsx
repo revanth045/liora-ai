@@ -164,7 +164,7 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
                                 <li key={index} className="bg-cream-50 border border-cream-200 p-4 rounded-lg shadow-sm flex justify-between items-start">
                                     <div className="flex-grow">
                                         <p className="font-bold text-stone-800">{item.line}</p>
-                                        <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-stone-400">
+                                        <div className="mt-2 grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-stone-600">
                                             <span><strong>Cals:</strong> {item.calories}</span>
                                             <span><strong>P:</strong> {item.protein_g.toFixed(1)}g</span>
                                             <span><strong>F:</strong> {item.fat_g.toFixed(1)}g</span>
@@ -197,7 +197,7 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
                 {/* Column 1: Log Input */}
                 <div className="flex flex-col gap-4">
-                    <p className="text-stone-400 text-sm">Describe your meals, or upload a photo, and Liora will estimate the nutritional breakdown.</p>
+                    <p className="text-stone-600 text-sm">Describe your meals, or upload a photo, and Liora will estimate the nutritional breakdown.</p>
                     <textarea
                         value={logText}
                         onChange={(e) => setLogText(e.target.value)}
@@ -218,12 +218,12 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
                             {isLoading ? <><Spinner /> <span className="ml-2">Analyzing...</span></> : existingLog ? 'Update Analysis' : 'Analyze & Save'}
                         </button>
                         <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
-                        <button onClick={() => fileInputRef.current?.click()} disabled={isLoading} className="flex items-center gap-2 bg-white text-stone-400 font-bold py-3 px-4 rounded-lg hover:bg-black/5 border border-cream-200 shadow-md disabled:opacity-50">
+                        <button onClick={() => fileInputRef.current?.click()} disabled={isLoading} className="flex items-center gap-2 bg-white text-stone-600 font-bold py-3 px-4 rounded-lg hover:bg-black/5 border border-cream-200 shadow-md disabled:opacity-50">
                             <Icon name="camera" className="w-5 h-5" />
                         </button>
                     </div>
                     {existingLog && (
-                        <button onClick={() => setIsEditing(false)} className="mt-2 text-sm text-center text-stone-400 hover:underline w-full">Cancel Edit</button>
+                        <button onClick={() => setIsEditing(false)} className="mt-2 text-sm text-center text-stone-600 hover:underline w-full">Cancel Edit</button>
                     )}
                 </div>
                 {/* Column 2: Favorite Foods */}
@@ -231,7 +231,7 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
                     <h3 className="font-lora text-lg text-stone-800 mb-3">Add from Favorites</h3>
                     <div className="relative mb-3">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Icon name="search" className="w-4 h-4 text-stone-400" />
+                            <Icon name="search" className="w-4 h-4 text-stone-600" />
                         </div>
                         <input
                             type="text"
@@ -243,12 +243,12 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
                     </div>
                     <div className="flex-grow overflow-y-auto pr-2 -mr-2">
                         {favoriteFoods.length === 0 ? (
-                            <div className="text-center text-sm text-stone-400 py-8">
+                            <div className="text-center text-sm text-stone-600 py-8">
                                 <p>No favorite foods saved yet.</p>
                                 <p className="text-xs mt-1">Save items from your analyzed logs to add them here.</p>
                             </div>
                         ) : filteredFoods.length === 0 ? (
-                            <div className="text-center text-sm text-stone-400 py-8">
+                            <div className="text-center text-sm text-stone-600 py-8">
                                 <p>No matches for "{searchTerm}".</p>
                             </div>
                         ) : (
@@ -257,7 +257,7 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
                                     <li key={food.id} className="bg-cream-50 border border-cream-200 p-2 rounded-md flex items-center justify-between group">
                                         <div className="flex-grow overflow-hidden mr-2">
                                             <p className="font-semibold text-sm text-stone-800 truncate">{food.line}</p>
-                                            <p className="text-xs text-stone-400 truncate">
+                                            <p className="text-xs text-stone-600 truncate">
                                                 {food.calories}kcal &bull; P:{food.protein_g.toFixed(0)}g &bull; F:{food.fat_g.toFixed(0)}g &bull; C:{food.carbs_g.toFixed(0)}g
                                             </p>
                                         </div>
@@ -285,7 +285,7 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
             {error && <p className="text-red-500 text-center">{error}</p>}
             
             {isLoading && (
-                 <div className="flex flex-col flex-grow items-center justify-center text-center text-stone-400">
+                 <div className="flex flex-col flex-grow items-center justify-center text-center text-stone-600">
                     <Spinner />
                     <p className="mt-2">Calculating your nutrition...</p>
                 </div>
@@ -294,8 +294,8 @@ export const CalorieLog: React.FC<CalorieLogProps> = ({ date, existingLog, onSav
             {!isLoading && (isEditing ? renderEditView() : renderDisplayView())}
 
             {!isLoading && !isEditing && !existingLog && (
-                <div className="flex flex-col items-center justify-center text-center text-stone-400 p-6 bg-cream-100/50 rounded-lg min-h-[300px] flex-grow">
-                    <Icon name="scale" className="w-12 h-12 text-stone-400 mb-2" />
+                <div className="flex flex-col items-center justify-center text-center text-stone-600 p-6 bg-cream-100/50 rounded-lg min-h-[300px] flex-grow">
+                    <Icon name="scale" className="w-12 h-12 text-stone-600 mb-2" />
                     <p>No log for this day.</p>
                     <button onClick={() => setIsEditing(true)} className="mt-4 bg-brand-400 text-white font-bold py-2 px-4 rounded-lg hover:bg-opacity-90">Add Log</button>
                 </div>

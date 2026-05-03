@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Icon } from '../../components/Icon';
+import { toast } from '../lib/toast';
 
 export default function DevDataBackup() {
     const [status, setStatus] = useState<'idle' | 'exported' | 'imported'>('idle');
@@ -30,7 +31,7 @@ export default function DevDataBackup() {
                 setStatus('imported');
                 setTimeout(() => window.location.reload(), 1000);
             } catch {
-                alert('Invalid backup file');
+                toast.error('Invalid backup file');
             }
         };
         reader.readAsText(file);

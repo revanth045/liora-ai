@@ -88,7 +88,7 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
         </div>
         <div>
           <h2 className="font-lora text-2xl font-bold text-stone-800">Chef GPT</h2>
-          <p className="text-sm text-stone-400 font-medium">Your AI culinary assistant — recipes, techniques & more</p>
+          <p className="text-sm text-stone-600 font-medium">Your AI culinary assistant — recipes, techniques & more</p>
         </div>
         <div className="ml-auto flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-200 rounded-full">
           <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
@@ -121,7 +121,7 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
           {isTyping && (
             <div className="flex gap-3 animate-pulse">
               <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-lg shadow-sm">👨‍🍳</div>
-              <div className="bg-white border border-cream-200 px-5 py-4 rounded-3xl rounded-tl-none text-xs text-stone-400 italic shadow-sm flex items-center gap-2">
+              <div className="bg-white border border-cream-200 px-5 py-4 rounded-3xl rounded-tl-none text-xs text-stone-600 italic shadow-sm flex items-center gap-2">
                 <span className="inline-flex gap-1">
                   <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
                   <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
@@ -166,7 +166,7 @@ export default function ChefGPT({ restaurant }: { restaurant: DemoRestaurant }) 
               <Icon name="send" size={18} />
             </button>
           </div>
-          <p className="text-[10px] text-center text-stone-400 mt-3 font-bold uppercase tracking-widest opacity-50">
+          <p className="text-[10px] text-center text-stone-600 mt-3 font-bold uppercase tracking-widest opacity-50">
             Chef GPT — Culinary Intelligence for {restaurant.name}
           </p>
         </div>

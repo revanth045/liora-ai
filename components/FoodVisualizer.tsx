@@ -78,7 +78,7 @@ export const FoodVisualizer: React.FC = () => {
         <div className="w-full bg-cream-50 border border-cream-200 rounded-2xl shadow-md p-4 md:p-6 flex flex-col gap-4">
             <div>
                 <h2 className="text-2xl font-lora text-stone-800">Food Visualizer</h2>
-                <p className="text-stone-400">Create photorealistic images of any dish.</p>
+                <p className="text-stone-600">Create photorealistic images of any dish.</p>
             </div>
             
             {/* Configuration Controls */}
@@ -89,13 +89,13 @@ export const FoodVisualizer: React.FC = () => {
                         <div className="flex bg-cream-200/60 rounded-lg p-0.5">
                             <button 
                                 onClick={() => setModelType('standard')}
-                                className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${modelType === 'standard' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-400 hover:text-stone-600'}`}
+                                className={`px-3 py-1 rounded-md text-xs font-medium transition-all ${modelType === 'standard' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-600 hover:text-stone-600'}`}
                             >
                                 Standard
                             </button>
                             <button 
                                 onClick={() => setModelType('pro')}
-                                className={`px-3 py-1 rounded-md text-xs font-medium transition-all flex items-center gap-1 ${modelType === 'pro' ? 'bg-brand-400 text-white shadow-sm' : 'text-stone-400 hover:text-stone-600'}`}
+                                className={`px-3 py-1 rounded-md text-xs font-medium transition-all flex items-center gap-1 ${modelType === 'pro' ? 'bg-brand-400 text-white shadow-sm' : 'text-stone-600 hover:text-stone-600'}`}
                             >
                                 <Icon name="sparkles" className="w-3 h-3" /> Pro
                             </button>
@@ -151,7 +151,7 @@ export const FoodVisualizer: React.FC = () => {
 
             <div className="mt-4 flex-grow flex items-center justify-center bg-cream-100/50 rounded-lg min-h-[300px] md:min-h-[400px] relative overflow-hidden border border-cream-200">
                 {isLoading && (
-                    <div className="text-center text-stone-400">
+                    <div className="text-center text-stone-600">
                         <Spinner />
                         <p className="mt-2">{modelType === 'pro' ? `Rendering ${imageSize} Image...` : 'Generating Image...'}</p>
                     </div>
@@ -160,8 +160,8 @@ export const FoodVisualizer: React.FC = () => {
                     <img src={imageUrl} alt={dish} className="max-w-full max-h-full object-contain rounded-lg shadow-lg animate-fade-in" />
                 )}
                 {!isLoading && !imageUrl && (
-                    <div className="text-center text-stone-400">
-                        <Icon name="camera" className="w-16 h-16 text-stone-400 mx-auto mb-4" />
+                    <div className="text-center text-stone-600">
+                        <Icon name="camera" className="w-16 h-16 text-stone-600 mx-auto mb-4" />
                         <p>Your generated food image will appear here.</p>
                     </div>
                 )}
@@ -181,7 +181,7 @@ export const FoodVisualizer: React.FC = () => {
                         </div>
                         <div className="flex-1">
                             <p className="text-sm font-bold text-cream-50">Chef Marco's Preparation Guide</p>
-                            <p className="text-xs text-cream-300">How to recreate this dish at home</p>
+                            <p className="text-xs text-cream-200">How to recreate this dish at home</p>
                         </div>
                         {analysis && (
                             <div className="flex gap-2 flex-shrink-0">
@@ -194,7 +194,7 @@ export const FoodVisualizer: React.FC = () => {
                     </div>
 
                     {loadingAnalysis && !analysis ? (
-                        <div className="flex items-center justify-center gap-3 py-8 text-stone-400">
+                        <div className="flex items-center justify-center gap-3 py-8 text-stone-600">
                             <Spinner />
                             <p className="text-sm animate-pulse">Chef Marco is preparing your guide...</p>
                         </div>
@@ -207,7 +207,7 @@ export const FoodVisualizer: React.FC = () => {
 
                             {analysis.keyTechniques?.length > 0 && (
                                 <div>
-                                    <p className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Key Techniques</p>
+                                    <p className="text-xs font-bold uppercase tracking-widest text-stone-600 mb-2">Key Techniques</p>
                                     <div className="flex flex-wrap gap-2">
                                         {analysis.keyTechniques.map((t: string, i: number) => (
                                             <span key={i} className="px-3 py-1 bg-forest-900/8 border border-forest-900/15 text-forest-900 rounded-full text-xs font-semibold">{t}</span>
@@ -218,7 +218,7 @@ export const FoodVisualizer: React.FC = () => {
 
                             {analysis.preparationSteps?.length > 0 && (
                                 <div>
-                                    <p className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">How to Prepare</p>
+                                    <p className="text-xs font-bold uppercase tracking-widest text-stone-600 mb-2">How to Prepare</p>
                                     <ol className="space-y-2">
                                         {analysis.preparationSteps.map((step: string, i: number) => (
                                             <li key={i} className="flex gap-3 items-start">

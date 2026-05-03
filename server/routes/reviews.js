@@ -1,45 +1,50 @@
 import { Router } from 'express';
-import { reviews, uid, now } from '../store.js';
+import { q, q1 } from '../db.js';
+import { randomUUID } from 'crypto';
 
-const router = Router();
-
-// GET /api/reviews?restaurantId=demo
-router.get('/', (req, res) => {
-  const { restaurantId = 'demo' } = req.query;
-  const result = [...reviews.values()].filter(r => r.restaurantId === restaurantId).sort((a, b) => b.createdAt - a.createdAt);
-  const avgRating = result.length ? (result.reduce((s, r) => s + r.rating, 0) / result.length).toFixed(1) : '0.0';
-  const distribution = [5, 4, 3, 2, 1].map(star => ({ star, count: result.filter(r => r.rating === star).length }));
-  res.json({ reviews: result, avgRating: Number(avgRating), totalCount: result.length, distribution });
+const r = Router();
+const toR = (x) => x && ({
+  id: x.id, restaurantId: x.restaurant_id, customerName: x.customer_name,
+  rating: x.rating, text: x.text, reply: x.reply, replied: x.replied,
+  repliedAt: x.replied_at && Number(x.replied_at), createdAt: Number(x.created_at),
 });
 
-// POST /api/reviews  (customer submitting review)
-router.post('/', (req, res) => {
-  const { restaurantId = 'demo', customerName, rating, text } = req.body;
-  if (!customerName || !rating || !text) return res.status(400).json({ error: 'Missing required fields' });
-  if (rating < 1 || rating > 5) return res.status(400).json({ error: 'Rating must be 1â “5' });
-  const review = { id: uid(), restaurantId, customerName, rating: Number(rating), text, createdAt: now(), replied: false, reply: '' };
-  reviews.set(review.id, review);
-  res.status(201).json(review);
+r.get('/', async (req, res, next) => {
+  try {
+    const { restaurantId = 'demo' } = req.query;
+    const rows = (await q('SELECT * FROM reviews WHERE restaurant_id=$1 ORDER BY created_at DESC', [restaurantId])).map(toR);
+    const avgRating = rows.length ? Number((rows.reduce((s, r) => s + r.rating, 0) / rows.length).toFixed(1)) : 0;
+    const distribution = [5,4,3,2,1].map(star => ({ star, count: rows.filter(r => r.rating === star).length }));
+    res.json({ reviews: rows, avgRating, totalCount: rows.length, distribution });
+  } catch (e) { next(e); }
 });
 
-// PATCH /api/reviews/:id/reply  (restaurant replying)
-router.patch('/:id/reply', (req, res) => {
-  const review = reviews.get(req.params.id);
-  if (!review) return res.status(404).json({ error: 'Review not found' });
-  const { reply } = req.body;
-  if (!reply?.trim()) return res.status(400).json({ error: 'Reply text required' });
-  review.reply = reply;
-  review.replied = true;
-  review.repliedAt = now();
-  reviews.set(review.id, review);
-  res.json(review);
+r.post('/', async (req, res, next) => {
+  try {
+    const { restaurantId = 'demo', customerName, rating, text } = req.body;
+    if (!customerName || !rating || !text) return res.status(400).json({ error: 'Missing required fields' });
+    if (rating < 1 || rating > 5) return res.status(400).json({ error: 'Rating must be 1–5' });
+    const row = await q1(`INSERT INTO reviews (id, restaurant_id, customer_name, rating, text)
+      VALUES ($1,$2,$3,$4,$5) RETURNING *`,
+      [randomUUID(), restaurantId, customerName, Number(rating), text]);
+    res.status(201).json(toR(row));
+  } catch (e) { next(e); }
 });
 
-// DELETE /api/reviews/:id  (admin moderation)
-router.delete('/:id', (req, res) => {
-  if (!reviews.has(req.params.id)) return res.status(404).json({ error: 'Not found' });
-  reviews.delete(req.params.id);
-  res.status(204).end();
+r.patch('/:id/reply', async (req, res, next) => {
+  try {
+    const { reply } = req.body;
+    if (!reply?.trim()) return res.status(400).json({ error: 'Reply required' });
+    const row = await q1('UPDATE reviews SET reply=$2, replied=true, replied_at=$3 WHERE id=$1 RETURNING *',
+      [req.params.id, reply, Date.now()]);
+    if (!row) return res.status(404).json({ error: 'Not found' });
+    res.json(toR(row));
+  } catch (e) { next(e); }
 });
 
-export default router;
+r.delete('/:id', async (req, res, next) => {
+  try { await q('DELETE FROM reviews WHERE id=$1', [req.params.id]); res.status(204).end(); }
+  catch (e) { next(e); }
+});
+
+export default r;

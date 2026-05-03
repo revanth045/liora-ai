@@ -79,7 +79,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
         ].map((m, i) => (
           <div key={i} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between">
             <div>
-              <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">{m.label}</p>
+              <p className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-1">{m.label}</p>
               <h3 className="text-2xl font-lora font-bold text-stone-800">{m.value}</h3>
             </div>
             <div className={`p-3 rounded-2xl ${m.color}`}><Icon name={m.icon} size={20} /></div>
@@ -93,21 +93,21 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
         <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-cream-200 bg-cream-50/50 flex items-center justify-between">
             <h3 className="font-lora text-xl font-bold text-stone-800">Top Customers</h3>
-            <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">By spend</span>
+            <span className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">By spend</span>
           </div>
           <div className="divide-y divide-cream-100">
             {profiles.slice(0, 6).map((p, i) => (
               <div key={p.name} className="flex items-center gap-4 px-6 py-4 hover:bg-cream-50/30 transition-colors">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${i === 0 ? 'bg-amber-100 text-amber-600' : i === 1 ? 'bg-stone-200 text-stone-600' : i === 2 ? 'bg-orange-100 text-orange-600' : 'bg-cream-100 text-stone-500'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${i === 0 ? 'bg-amber-100 text-amber-600' : i === 1 ? 'bg-stone-200 text-stone-600' : i === 2 ? 'bg-orange-100 text-orange-600' : 'bg-cream-100 text-stone-600'}`}>
                   {i < 3 ? ['🥗','🥗','🥗'][i] : i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-stone-800 text-sm truncate">{p.name}</p>
-                  <p className="text-xs text-stone-400 truncate">Fav: {p.favoriteItem}</p>
+                  <p className="text-xs text-stone-600 truncate">Fav: {p.favoriteItem}</p>
                 </div>
                 <div className="text-right flex-shrink-0">
                   <p className="font-bold text-stone-800 text-sm">{fmt(p.totalSpent)}</p>
-                  <p className="text-[10px] text-stone-400">{p.orderCount} orders · {p.lastVisit}</p>
+                  <p className="text-[10px] text-stone-600">{p.orderCount} orders · {p.lastVisit}</p>
                 </div>
                 {p.orderCount >= 2 && (
                   <span className="ml-2 text-[9px] font-bold bg-amber-100 text-amber-600 px-2 py-1 rounded-full uppercase tracking-wider flex-shrink-0">VIP</span>
@@ -115,7 +115,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
               </div>
             ))}
             {profiles.length === 0 && (
-              <div className="py-12 text-center text-stone-400">
+              <div className="py-12 text-center text-stone-600">
                 <p className="text-sm">No customer data yet.</p>
               </div>
             )}
@@ -126,7 +126,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
         <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-cream-200 bg-cream-50/50">
             <h3 className="font-lora text-xl font-bold text-stone-800">Peak Hours</h3>
-            <p className="text-xs text-stone-400 mt-0.5">When your restaurant is busiest</p>
+            <p className="text-xs text-stone-600 mt-0.5">When your restaurant is busiest</p>
           </div>
           <div className="p-6">
             <div className="flex items-end gap-1 h-28">
@@ -138,7 +138,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
                     title={`${hour}:00 — ${count} orders`}
                   />
                   {(hour === 12 || hour === 18 || hour === 21 || hour === 14) && (
-                    <span className="text-[9px] text-stone-400 font-bold">{hour < 12 ? `${hour}a` : hour === 12 ? '12p' : `${hour - 12}p`}</span>
+                    <span className="text-[9px] text-stone-600 font-bold">{hour < 12 ? `${hour}a` : hour === 12 ? '12p' : `${hour - 12}p`}</span>
                   )}
                 </div>
               ))}
@@ -148,7 +148,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
                 const info = peakHours[h];
                 return (
                   <div key={h} className="flex-1 bg-cream-50 rounded-2xl p-3 text-center border border-cream-200">
-                    <p className="text-[10px] font-bold text-stone-400 uppercase">{h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h-12}pm`}</p>
+                    <p className="text-[10px] font-bold text-stone-600 uppercase">{h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h-12}pm`}</p>
                     <p className="font-bold text-stone-800 text-sm mt-0.5">{info.count} orders</p>
                   </div>
                 );
@@ -162,19 +162,19 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
       <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-cream-200 bg-cream-50/50 flex items-center justify-between">
           <h3 className="font-lora text-xl font-bold text-stone-800">Most Ordered Dishes</h3>
-          <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">All time</span>
+          <span className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">All time</span>
         </div>
         <div className="p-6 space-y-4">
           {topDishes.length === 0 && (
-            <p className="text-sm text-stone-400 text-center py-8">No dish data yet.</p>
+            <p className="text-sm text-stone-600 text-center py-8">No dish data yet.</p>
           )}
           {topDishes.map((d, i) => (
             <div key={d.name} className="flex items-center gap-4">
-              <span className="text-sm font-bold text-stone-400 w-5 text-center">{i + 1}</span>
+              <span className="text-sm font-bold text-stone-600 w-5 text-center">{i + 1}</span>
               <div className="flex-1">
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="text-sm font-bold text-stone-800">{d.name}</span>
-                  <span className="text-sm font-bold text-stone-500">{d.count}x ordered</span>
+                  <span className="text-sm font-bold text-stone-600">{d.count}x ordered</span>
                 </div>
                 <div className="h-2 bg-cream-100 rounded-full overflow-hidden">
                   <div
@@ -196,7 +196,7 @@ export default function RestoCustomerInsights({ restaurant }: { restaurant: Demo
               <Icon name="smart_toy" size={22} />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-white/50 uppercase tracking-widest">AI Insight</p>
+              <p className="text-[10px] font-bold text-white/90 uppercase tracking-widest">AI Insight</p>
               <p className="font-lora font-bold text-lg">Liora's Recommendation</p>
             </div>
           </div>

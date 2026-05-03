@@ -81,7 +81,7 @@ export default function RestaurantPortal(){
           <div className="font-display text-xl font-semibold text-stone-800 tracking-wide">Liora</div>
           <div className="text-[10px] text-brand-400 font-semibold uppercase tracking-widest">for Restaurants</div>
         </div>
-        <button className="md:hidden p-1 text-stone-400" onClick={() => setIsSidebarOpen(false)}>
+        <button className="md:hidden p-1 text-stone-600" onClick={() => setIsSidebarOpen(false)}>
           <Icon name="x" className="w-5 h-5" />
         </button>
       </div>
@@ -89,11 +89,11 @@ export default function RestaurantPortal(){
       <nav className="space-y-0.5 overflow-y-auto flex-1">
         {TAB_GROUPS.map(group => (
           <div key={group}>
-            <div className="px-3 pt-4 pb-1 text-[10px] font-bold text-stone-400 uppercase tracking-widest">{group}</div>
+            <div className="px-3 pt-4 pb-1 text-[10px] font-bold text-stone-600 uppercase tracking-widest">{group}</div>
             {TABS.filter(t => t.group === group).map(t => (
               <button key={t.key}
                 className={`flex items-center w-full gap-3 px-3 py-2.5 rounded-xl text-left transition-colors duration-200 text-sm ${
-                  tab === t.key ? 'bg-brand-400/15 text-stone-800 font-semibold' : 'text-stone-500 hover:bg-cream-100 hover:text-stone-700'
+                  tab === t.key ? 'bg-brand-400/15 text-stone-800 font-semibold' : 'text-stone-600 hover:bg-cream-100 hover:text-stone-700'
                 }`}
                 onClick={() => handleTabClick(t.key)}>
                 <Icon name={t.icon} className="w-4 h-4 flex-shrink-0" />
@@ -103,14 +103,14 @@ export default function RestaurantPortal(){
           </div>
         ))}
       </nav>
-      <div className="mt-6 text-xs text-stone-300">
+      <div className="mt-6 text-xs text-stone-600">
         Data is stored locally in this demo. When you export, connect Supabase and storage.
       </div>
 
       <div className="mt-auto pt-4 border-t border-cream-200">
         <div className="px-3 py-2 mb-2">
           <p className="text-sm font-medium text-stone-700 truncate">{s.user.full_name || s.user.email}</p>
-          <p className="text-xs text-stone-400 truncate">{s.user.email}</p>
+          <p className="text-xs text-stone-600 truncate">{s.user.email}</p>
         </div>
         <button
           onClick={handleLogout}
@@ -145,8 +145,8 @@ export default function RestaurantPortal(){
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-brand-400/20 to-brand-400/5 border border-brand-400/20 flex items-center justify-center">
               <span className="text-xs font-bold text-brand-400">{s.user.email.charAt(0).toUpperCase()}</span>
             </div>
-            <span className="text-sm text-stone-400 hidden sm:block">{s.user.email}</span>
-            <button onClick={handleLogout} className="p-2 rounded-lg text-stone-400 hover:text-red-400 hover:bg-red-500/5 transition-colors" title="Sign out">
+            <span className="text-sm text-stone-600 hidden sm:block">{s.user.email}</span>
+            <button onClick={handleLogout} className="p-2 rounded-lg text-stone-600 hover:text-red-400 hover:bg-red-500/5 transition-colors" title="Sign out">
               <Icon name="x" className="w-4 h-4" />
             </button>
           </div>

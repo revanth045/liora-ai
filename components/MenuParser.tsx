@@ -62,7 +62,7 @@ export const MenuParser: React.FC = () => {
     return (
         <div className="w-full h-full bg-cream-50 border border-cream-200 rounded-2xl shadow-lg p-6 flex flex-col gap-4">
             <h2 className="text-2xl font-lora text-stone-800">Menu Parser</h2>
-            <p className="text-stone-400">Paste a messy menu below, and Liora will turn it into a clean, searchable list.</p>
+            <p className="text-stone-600">Paste a messy menu below, and Liora will turn it into a clean, searchable list.</p>
             <textarea
                 value={menuText}
                 onChange={(e) => setMenuText(e.target.value)}
@@ -96,7 +96,7 @@ export const MenuParser: React.FC = () => {
                     {summaryError && <p className="text-red-500 text-center my-2">{summaryError}</p>}
                     
                     {isSummarizing && (
-                        <div className="flex flex-col items-center justify-center my-4 text-center text-stone-400">
+                        <div className="flex flex-col items-center justify-center my-4 text-center text-stone-600">
                             <Spinner />
                             <p className="mt-2">{loadingMessage}</p>
                         </div>
@@ -105,10 +105,10 @@ export const MenuParser: React.FC = () => {
                     {summary && (
                         <div className="my-4 p-6 bg-gradient-to-br from-yellow-50 to-orange-100 rounded-xl shadow-lg border border-yellow-200">
                             <h4 className="font-lora text-2xl text-stone-800 font-bold">{summary.headline}</h4>
-                            <p className="text-md text-stone-400 mt-1">{summary.sub}</p>
+                            <p className="text-md text-stone-600 mt-1">{summary.sub}</p>
                             <div className="mt-4 flex flex-wrap gap-2">
                                 {summary.tags.map((tag, index) => (
-                                    <span key={index} className="px-3 py-1 bg-white text-stone-400 text-sm font-semibold rounded-full shadow-sm">
+                                    <span key={index} className="px-3 py-1 bg-white text-stone-600 text-sm font-semibold rounded-full shadow-sm">
                                         {tag}
                                     </span>
                                 ))}
@@ -120,7 +120,7 @@ export const MenuParser: React.FC = () => {
                         {parsedMenu.map((item, index) => (
                             <li key={index} className="bg-cream-50 border border-cream-200 p-4 rounded-lg shadow">
                                 <p className="font-bold text-stone-800">{item.recipeName}</p>
-                                <p className="text-sm text-stone-400">{item.ingredients.join(', ')}</p>
+                                <p className="text-sm text-stone-600">{item.ingredients.join(', ')}</p>
                             </li>
                         ))}
                     </ul>

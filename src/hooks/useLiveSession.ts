@@ -176,7 +176,7 @@ export const useLiveSession = ({ onMessage, onError, systemInstruction }: UseLiv
                         if(message.serverContent?.turnComplete){
                             const userInput = liveTranscriptionRef.current.userInput.trim();
                             const modelOutput = liveTranscriptionRef.current.modelOutput.trim();
-                            onMessage({ ...message, userInput, modelOutput });
+                            onMessage({ ...message, userInput, modelOutput } as any);
                             liveTranscriptionRef.current = { userInput: '', modelOutput: '' };
                         }
 

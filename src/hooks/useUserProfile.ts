@@ -1,8 +1,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { StoredUserProfile } from '../types';
+import { StoredUserProfile } from '../../types';
 
-const LOCAL_STORAGE_KEY = 'liora-user-profile';
+import { userScopedKey, onSessionChange } from '../lib/perUserStorage';
+const BASE_KEY = 'liora-user-profile';
+const LOCAL_STORAGE_KEY_FN = () => userScopedKey(BASE_KEY);
 
 /** Coerce any value to a plain string, never throws */
 const toStr = (v: unknown): string => {
@@ -68,28 +70,32 @@ export const useUserProfile = () => {
     const [profile, setProfile] = useState<StoredUserProfile | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
+    const reload = useCallback(() => {
         try {
-            const storedProfile = localStorage.getItem(LOCAL_STORAGE_KEY);
+            const storedProfile = localStorage.getItem(LOCAL_STORAGE_KEY_FN());
             if (storedProfile) {
                 const raw = JSON.parse(storedProfile);
-                const clean = sanitizeProfile(raw);
-                if (clean) {
-                    setProfile(clean);
-                }
+                setProfile(sanitizeProfile(raw));
+            } else {
+                setProfile(null);
             }
         } catch (e) {
             console.error("Failed to parse user profile from localStorage", e);
-            localStorage.removeItem(LOCAL_STORAGE_KEY);
+            setProfile(null);
         } finally {
             setIsLoading(false);
         }
     }, []);
 
+    useEffect(() => {
+        reload();
+        return onSessionChange(reload);
+    }, [reload]);
+
     const saveProfile = useCallback((newProfile: StoredUserProfile) => {
         try {
             const clean = sanitizeProfile(newProfile) ?? newProfile;
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(clean));
+            localStorage.setItem(LOCAL_STORAGE_KEY_FN(), JSON.stringify(clean));
             setProfile(clean as StoredUserProfile);
         } catch (e) {
             console.error("Failed to save user profile to localStorage", e);
@@ -98,7 +104,7 @@ export const useUserProfile = () => {
 
     const clearProfile = useCallback(() => {
         try {
-            localStorage.removeItem(LOCAL_STORAGE_KEY);
+            localStorage.removeItem(LOCAL_STORAGE_KEY_FN());
             setProfile(null);
         } catch (e) {
             console.error("Failed to clear user profile from localStorage", e);
@@ -118,7 +124,7 @@ export const useUserProfile = () => {
                 } 
             };
             try {
-                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newProfile));
+                localStorage.setItem(LOCAL_STORAGE_KEY_FN(), JSON.stringify(newProfile));
             } catch (e) {
                 console.error("Failed to save AI preferences to localStorage", e);
             }

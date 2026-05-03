@@ -59,8 +59,8 @@ export const AiChef = () => {
             <div class="flex flex-wrap gap-2 mt-1">
               <span class="text-[11px] font-bold px-2.5 py-1 rounded-full ${diffColor[diff] || 'bg-stone-100 text-stone-600'}">${diff}</span>
               ${r.cuisine ? `<span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-forest-900/10 text-forest-900">${r.cuisine}</span>` : ''}
-              ${r.prepTime ? `<span class="text-[11px] px-2.5 py-1 rounded-full bg-cream-100/60 text-stone-500">Prep: ${r.prepTime}</span>` : ''}
-              ${r.cookTime ? `<span class="text-[11px] px-2.5 py-1 rounded-full bg-cream-100/60 text-stone-500">Cook: ${r.cookTime}</span>` : ''}
+              ${r.prepTime ? `<span class="text-[11px] px-2.5 py-1 rounded-full bg-cream-100/60 text-stone-600">Prep: ${r.prepTime}</span>` : ''}
+              ${r.cookTime ? `<span class="text-[11px] px-2.5 py-1 rounded-full bg-cream-100/60 text-stone-600">Cook: ${r.cookTime}</span>` : ''}
             </div>
           </div>
 
@@ -72,9 +72,9 @@ export const AiChef = () => {
           ${r.whyItWorks ? `<div class="bg-blue-50/60 p-3 rounded-xl border border-blue-100"><p class="text-xs font-bold text-blue-700 uppercase tracking-widest mb-1">Why It Works</p><p class="text-sm text-stone-700">${r.whyItWorks}</p></div>` : ''}
 
           <div>
-            <h4 class="font-bold text-stone-800 uppercase text-xs tracking-widest mb-3">Ingredients <span class="normal-case font-normal text-stone-400 ml-1">— serves ${r.servings || 2}</span></h4>
+            <h4 class="font-bold text-stone-800 uppercase text-xs tracking-widest mb-3">Ingredients <span class="normal-case font-normal text-stone-600 ml-1">— serves ${r.servings || 2}</span></h4>
             <ul class="space-y-1.5">
-              ${r.ingredients.map((i: any) => `<li class="flex justify-between items-baseline border-b border-dashed border-cream-200 py-1.5 text-sm"><span class="text-stone-800">${i.name}${i.notes ? ` <span class="text-xs text-stone-400 italic">(${i.notes})</span>` : ''}</span><span class="font-semibold text-stone-800 ml-4 flex-shrink-0">${i.qty || ''}</span></li>`).join('')}
+              ${r.ingredients.map((i: any) => `<li class="flex justify-between items-baseline border-b border-dashed border-cream-200 py-1.5 text-sm"><span class="text-stone-800">${i.name}${i.notes ? ` <span class="text-xs text-stone-600 italic">(${i.notes})</span>` : ''}</span><span class="font-semibold text-stone-800 ml-4 flex-shrink-0">${i.qty || ''}</span></li>`).join('')}
             </ul>
           </div>
 
@@ -133,7 +133,7 @@ export const AiChef = () => {
       {/* Header */}
       <div className="p-6 pb-0">
         <h1 className="text-3xl font-lora font-bold text-stone-800 mb-1">AI Chef Studio</h1>
-        <p className="text-stone-400 text-sm">50+ years of culinary mastery, at your fingertips.</p>
+        <p className="text-stone-600 text-sm">50+ years of culinary mastery, at your fingertips.</p>
 
         {/* Tabs */}
         <div className="flex gap-6 mt-6 border-b border-cream-200">
@@ -142,7 +142,7 @@ export const AiChef = () => {
               key={mode}
               onClick={() => setActiveMode(mode)}
               className={`pb-3 px-1 text-xs font-bold tracking-widest uppercase transition-colors relative ${
-                activeMode === mode ? 'text-stone-800' : 'text-stone-400 hover:text-stone-800'
+                activeMode === mode ? 'text-stone-800' : 'text-stone-600 hover:text-stone-800'
               }`}
             >
               {mode === 'tutor' ? 'Chef Tutor' : 'Food Visualizer'}
@@ -166,7 +166,7 @@ export const AiChef = () => {
               </div>
               <div>
                 <p className="font-bold text-sm tracking-wide">Chef Marco Bellini</p>
-                <p className="text-xs text-cream-300">50+ years · Michelin-starred · Paris · Tokyo · New York</p>
+                <p className="text-xs text-cream-200">50+ years · Michelin-starred · Paris · Tokyo · New York</p>
               </div>
               <div className="ml-auto flex-shrink-0">
                 <Icon name="auto_awesome" size={20} className="text-brand-300" />
@@ -179,13 +179,13 @@ export const AiChef = () => {
                 <div className="p-2 bg-cream-50 rounded-full"><Icon name="restaurant_menu" size={20} /></div>
                 <div>
                   <h2 className="font-lora text-xl font-bold leading-tight">Ingredient-Based Recipe Generator</h2>
-                  <p className="text-xs text-stone-400 mt-0.5">Tell Chef Marco what you have — he'll suggest the perfect dish.</p>
+                  <p className="text-xs text-stone-600 mt-0.5">Tell Chef Marco what you have — he'll suggest the perfect dish.</p>
                 </div>
               </div>
 
               {/* Ingredient tag input */}
               <div>
-                <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                <label className="text-xs font-bold uppercase tracking-widest text-stone-600 mb-2 block">
                   Your Ingredients
                 </label>
                 <div className="flex gap-2">
@@ -229,9 +229,9 @@ export const AiChef = () => {
 
               {/* Optional notes */}
               <div>
-                <label className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 block">
+                <label className="text-xs font-bold uppercase tracking-widest text-stone-600 mb-2 block">
                   Additional Notes{' '}
-                  <span className="font-normal normal-case text-stone-400">(optional — cuisine style, dietary needs, occasion...)</span>
+                  <span className="font-normal normal-case text-stone-600">(optional — cuisine style, dietary needs, occasion...)</span>
                 </label>
                 <textarea
                   value={freeNotes}
@@ -243,7 +243,7 @@ export const AiChef = () => {
 
               <div className="flex justify-between items-center">
                 {ingredients.length > 0 && (
-                  <p className="text-xs text-stone-400">
+                  <p className="text-xs text-stone-600">
                     <span className="font-semibold text-forest-900">{ingredients.length}</span> ingredient{ingredients.length !== 1 ? 's' : ''} ready
                   </p>
                 )}
@@ -263,10 +263,10 @@ export const AiChef = () => {
               <div className="bg-white p-8 rounded-3xl shadow-sm border border-cream-200 animate-page-slide mb-12">
                 <div className="prose prose-stone max-w-none" dangerouslySetInnerHTML={{ __html: recipeResult }} />
                 <div className="mt-8 pt-6 border-t border-cream-200 flex flex-wrap gap-4 justify-between">
-                  <button className="text-xs font-bold uppercase tracking-widest text-stone-400 flex items-center gap-2 hover:text-stone-800 transition-colors">
+                  <button className="text-xs font-bold uppercase tracking-widest text-stone-600 flex items-center gap-2 hover:text-stone-800 transition-colors">
                     <Icon name="bookmark_border" size={16} /> Save to Cookbook
                   </button>
-                  <button className="text-xs font-bold uppercase tracking-widest text-stone-400 flex items-center gap-2 hover:text-stone-800 transition-colors">
+                  <button className="text-xs font-bold uppercase tracking-widest text-stone-600 flex items-center gap-2 hover:text-stone-800 transition-colors">
                     <Icon name="shopping_cart" size={16} /> Add to Grocery List
                   </button>
                 </div>
@@ -285,7 +285,7 @@ export const AiChef = () => {
                 <div className="p-2 bg-cream-50 rounded-full"><Icon name="image" size={20} /></div>
                 <div>
                   <h2 className="font-lora text-xl font-bold leading-tight">Plating Visualizer</h2>
-                  <p className="text-xs text-stone-400 mt-0.5">See your dish before you cook it — plus get Chef Marco's preparation guide.</p>
+                  <p className="text-xs text-stone-600 mt-0.5">See your dish before you cook it — plus get Chef Marco's preparation guide.</p>
                 </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
@@ -317,7 +317,7 @@ export const AiChef = () => {
                   className="w-full h-auto aspect-square object-cover rounded-2xl shadow-inner bg-cream-100/80"
                 />
                 <div className="mt-4 px-2 flex justify-between items-center">
-                  <p className="text-xs text-stone-400 font-medium italic">Concept: "{visPrompt}"</p>
+                  <p className="text-xs text-stone-600 font-medium italic">Concept: "{visPrompt}"</p>
                   <button className="p-2 hover:bg-cream-50 rounded-full text-stone-800 transition-colors" title="Download Image">
                     <Icon name="download" size={20} />
                   </button>
@@ -335,7 +335,7 @@ export const AiChef = () => {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-cream-50">Chef Marco's Preparation Guide</p>
-                    <p className="text-xs text-cream-300">How to recreate this dish at home</p>
+                    <p className="text-xs text-cream-200">How to recreate this dish at home</p>
                   </div>
                   {analysis && (
                     <div className="ml-auto flex gap-2">
@@ -350,7 +350,7 @@ export const AiChef = () => {
                 </div>
 
                 {loadingAnalysis && !analysis ? (
-                  <div className="flex items-center justify-center gap-3 py-10 text-stone-400">
+                  <div className="flex items-center justify-center gap-3 py-10 text-stone-600">
                     <Spinner />
                     <p className="text-sm animate-pulse">Chef Marco is preparing your guide...</p>
                   </div>
@@ -366,7 +366,7 @@ export const AiChef = () => {
                     {/* Key techniques */}
                     {analysis.keyTechniques?.length > 0 && (
                       <div>
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">Key Techniques</h4>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-stone-600 mb-3">Key Techniques</h4>
                         <div className="flex flex-wrap gap-2">
                           {analysis.keyTechniques.map((t: string, i: number) => (
                             <span key={i} className="px-3 py-1.5 bg-forest-900/8 border border-forest-900/15 text-forest-900 rounded-full text-xs font-semibold">{t}</span>
@@ -378,7 +378,7 @@ export const AiChef = () => {
                     {/* Preparation steps */}
                     {analysis.preparationSteps?.length > 0 && (
                       <div>
-                        <h4 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-3">How to Prepare</h4>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-stone-600 mb-3">How to Prepare</h4>
                         <ol className="space-y-2.5">
                           {analysis.preparationSteps.map((step: string, i: number) => (
                             <li key={i} className="flex gap-3 items-start">
@@ -418,7 +418,7 @@ export const AiChef = () => {
             )}
 
             {loadingVis && (
-              <div className="flex flex-col items-center justify-center py-20 text-stone-400">
+              <div className="flex flex-col items-center justify-center py-20 text-stone-600">
                 <Spinner />
                 <p className="mt-4 text-sm font-medium animate-pulse">Rendering your culinary concept...</p>
               </div>

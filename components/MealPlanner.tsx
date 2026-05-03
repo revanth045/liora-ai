@@ -152,12 +152,12 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({ demoTrigger = 0, prefi
         <div className="max-w-md mx-auto p-6 space-y-6">
             <div className="text-center mb-8">
                 <h2 className="text-2xl font-lora text-stone-800">Meal Planner</h2>
-                <p className="text-stone-400 text-sm mt-1">Tell Liora your mood and constraints to get a personalized meal plan.</p>
+                <p className="text-stone-600 text-sm mt-1">Tell Liora your mood and constraints to get a personalized meal plan.</p>
             </div>
             
             <div className="space-y-6">
                 <div>
-                    <label className="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">What's the mood?</label>
+                    <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">What's the mood?</label>
                     <div className="grid grid-cols-2 gap-2">
                         {moods.map(mood => (
                             <button
@@ -177,22 +177,22 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({ demoTrigger = 0, prefi
 
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">Budget ($)</label>
+                        <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">Budget ($)</label>
                         <input type="number" name="budget" value={constraints.budget} onChange={handleChange} className="w-full p-3 rounded-xl border border-cream-200 focus:outline-none focus:border-brand-400 bg-white text-stone-800"/>
                     </div>
                      <div>
-                        <label className="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">Time (mins)</label>
+                        <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">Time (mins)</label>
                         <input type="number" name="time" value={constraints.time} onChange={handleChange} className="w-full p-3 rounded-xl border border-cream-200 focus:outline-none focus:border-brand-400 bg-white text-stone-800"/>
                     </div>
                 </div>
 
                  <div>
-                    <label className="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">Location</label>
-                    <input type="text" name="location" value={constraints.location} onChange={handleChange} placeholder="Auto-detecting..." className="w-full p-3 rounded-xl border border-cream-200 bg-cream-100/80 text-stone-400 text-sm"/>
+                    <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">Location</label>
+                    <input type="text" name="location" value={constraints.location} onChange={handleChange} placeholder="Auto-detecting..." className="w-full p-3 rounded-xl border border-cream-200 bg-cream-100/80 text-stone-600 text-sm"/>
                 </div>
 
                 <div>
-                    <label className="block text-xs font-bold text-stone-400 uppercase tracking-wider mb-2">Recent meals</label>
+                    <label className="block text-xs font-bold text-stone-600 uppercase tracking-wider mb-2">Recent meals</label>
                     <textarea name="recentItems" value={constraints.recentItems} onChange={handleChange} rows={2} className="w-full p-3 rounded-xl border border-cream-200 focus:outline-none focus:border-brand-400 resize-none bg-white text-stone-800"></textarea>
                 </div>
             </div>
@@ -214,7 +214,7 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({ demoTrigger = 0, prefi
                         {mealPlan.recommendations.map((idea, index) => (
                             <div key={index} className="bg-white p-5 rounded-2xl shadow-sm border border-cream-200">
                                 <h4 className="font-bold text-stone-800">{idea.title}</h4>
-                                <p className="text-sm text-stone-400 mt-2 italic">"{idea.why}"</p>
+                                <p className="text-sm text-stone-600 mt-2 italic">"{idea.why}"</p>
                             </div>
                         ))}
                     </div>

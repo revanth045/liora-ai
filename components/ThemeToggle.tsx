@@ -28,7 +28,7 @@ export const ThemeToggle: React.FC = () => {
                             className={`flex items-center justify-center gap-2 w-full py-1.5 rounded-full cursor-pointer text-sm font-semibold transition-colors ${
                                 theme === option.value
                                     ? 'bg-white dark:bg-gray-800 shadow text-stone-800 dark:text-gray-100'
-                                    : 'text-stone-400 dark:text-stone-400'
+                                    : 'text-stone-600 dark:text-stone-600'
                             }`}
                         >
                             <Icon name={option.icon} className="w-4 h-4" />

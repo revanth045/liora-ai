@@ -53,7 +53,7 @@ export const WeeklyProgressGraph: React.FC<WeeklyProgressGraphProps> = ({ logs, 
 
     if (daysWithLog === 0) {
         return (
-            <div className="bg-cream-50 border border-cream-200 p-4 rounded-lg shadow-sm text-center text-stone-400 min-h-[224px] flex flex-col items-center justify-center">
+            <div className="bg-cream-50 border border-cream-200 p-4 rounded-lg shadow-sm text-center text-stone-600 min-h-[224px] flex flex-col items-center justify-center">
                 <h3 className="font-lora text-lg text-stone-800 mb-4 w-full">Last 7 Days Progress</h3>
                 <p>Not enough data to show a graph. Start logging your meals!</p>
             </div>
@@ -83,7 +83,7 @@ export const WeeklyProgressGraph: React.FC<WeeklyProgressGraphProps> = ({ logs, 
     return (
         <div className="bg-cream-50 border border-cream-200 p-4 rounded-lg shadow-sm">
             <h3 className="font-lora text-lg text-stone-800 mb-2">Last 7 Days Progress</h3>
-            {summaryText && <p className="text-sm text-stone-400 mb-4">{summaryText}</p>}
+            {summaryText && <p className="text-sm text-stone-600 mb-4">{summaryText}</p>}
 
             <div className="relative h-48 w-full">
                 {/* Goal Line */}
@@ -91,7 +91,7 @@ export const WeeklyProgressGraph: React.FC<WeeklyProgressGraphProps> = ({ logs, 
                     className="absolute left-0 w-full border-t-2 border-dashed border-gray-400 z-10"
                     style={{ bottom: `${goalPercentage}%` }}
                 >
-                    <span className="absolute -right-2 -mt-2.5 text-xs text-stone-400 bg-cream-50 border border-cream-200 px-1 rounded">{goal} kcal</span>
+                    <span className="absolute -right-2 -mt-2.5 text-xs text-stone-600 bg-cream-50 border border-cream-200 px-1 rounded">{goal} kcal</span>
                 </div>
                 
                 {/* Bars */}
@@ -142,12 +142,12 @@ export const WeeklyProgressGraph: React.FC<WeeklyProgressGraphProps> = ({ logs, 
             <div className="w-full flex justify-around items-end gap-2 border-t border-cream-200 pt-1 mt-1">
                  {last7DaysData.map(dayData => (
                     <div key={dayData.date} className="flex-1 text-center">
-                        <span className="text-xs text-stone-400 font-semibold">{dayData.dayLabel}</span>
+                        <span className="text-xs text-stone-600 font-semibold">{dayData.dayLabel}</span>
                     </div>
                 ))}
             </div>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-stone-400">
+            <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-stone-600">
                 <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-blue-400/70"></span> Under Goal</div>
                 <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-400/70"></span> Met Goal</div>
                 <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-red-400/70"></span> Over Goal</div>

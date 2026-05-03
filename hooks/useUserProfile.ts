@@ -2,8 +2,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { StoredUserProfile } from '../types';
 import { sbUpsertCustomerProfile, sbGetCustomerProfile } from '../src/lib/supabaseDb';
+import { userScopedKey, onSessionChange } from '../src/lib/perUserStorage';
 
-const LOCAL_STORAGE_KEY = 'liora-user-profile';
+const BASE_KEY = 'liora-user-profile';
+const LOCAL_STORAGE_KEY_FN = () => userScopedKey(BASE_KEY);
 
 const toStr = (v: unknown): string => {
     if (typeof v === 'string') return v;
@@ -61,17 +63,19 @@ export const useUserProfile = () => {
     const [profile, setProfile] = useState<StoredUserProfile | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    const loadProfileRef = (typeof window !== "undefined") ? null : null;
     useEffect(() => {
+        let cancelled = false;
         const loadProfile = async () => {
             try {
-                const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+                const stored = localStorage.getItem(LOCAL_STORAGE_KEY_FN());
                 const raw = stored ? JSON.parse(stored) : null;
                 const local = sanitizeProfile(raw);
                 if (local) {
                     setProfile(local);
                     setIsLoading(false);
                     // Try to also pull from Supabase for freshness
-                    const email = local.profile?.email ||
+                    const email = (local.profile as any)?.email ||
                         ((() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).email : null; } catch { return null; } })());
                     if (email) {
                         sbGetCustomerProfile(email).then(sbProfile => {
@@ -95,7 +99,7 @@ export const useUserProfile = () => {
                                     },
                                 };
                                 setProfile(merged);
-                                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(merged));
+                                localStorage.setItem(LOCAL_STORAGE_KEY_FN(), JSON.stringify(merged));
                             }
                         }).catch(() => {});
                     }
@@ -120,35 +124,37 @@ export const useUserProfile = () => {
                             aiPreferences: { tone: (sbProfile.ai_tone as any) ?? 'friendly', style: (sbProfile.ai_style as any) ?? 'classic' },
                         };
                         setProfile(fromSb);
-                        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(fromSb));
+                        localStorage.setItem(LOCAL_STORAGE_KEY_FN(), JSON.stringify(fromSb));
                     }
                 }
             } catch (e) {
                 console.error('Failed to load user profile', e);
-                localStorage.removeItem(LOCAL_STORAGE_KEY);
+                localStorage.removeItem(LOCAL_STORAGE_KEY_FN());
             } finally {
                 setIsLoading(false);
             }
         };
         loadProfile();
+        const off = onSessionChange(() => { if(!cancelled) loadProfile(); });
+        return () => { cancelled = true; off(); };
     }, []);
 
     const saveProfile = useCallback((newProfile: StoredUserProfile) => {
         try {
             const clean = sanitizeProfile(newProfile) ?? newProfile;
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(clean));
+            localStorage.setItem(LOCAL_STORAGE_KEY_FN(), JSON.stringify(clean));
             setProfile(clean as StoredUserProfile);
             // Sync to Supabase
             const email = (() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).email : null; } catch { return null; } })();
             const userId = (() => { try { const s = localStorage.getItem('liora_demo_session'); return s ? JSON.parse(s).id : null; } catch { return null; } })();
             if (email && userId) {
                 sbUpsertCustomerProfile({
-                    id: userId, email,
+                    id: userId as any, email,
                     name: clean.profile?.name,
-                    city: clean.profile?.city,
+                    city: clean.profile?.city as any,
                     budget: clean.profile?.budget,
                     cuisines: clean.profile?.cuisines,
-                    spice_level: clean.profile?.spice,
+                    spice_level: clean.profile?.spice as any,
                     allergens: clean.profile?.allergens,
                     diet: clean.profile?.diet,
                     avoid: clean.profile?.avoid,
@@ -167,7 +173,7 @@ export const useUserProfile = () => {
 
     const clearProfile = useCallback(() => {
         try {
-            localStorage.removeItem(LOCAL_STORAGE_KEY);
+            localStorage.removeItem(LOCAL_STORAGE_KEY_FN());
             setProfile(null);
         } catch (e) {
             console.error("Failed to clear user profile from localStorage", e);
@@ -185,7 +191,7 @@ export const useUserProfile = () => {
                 } 
             };
             try {
-                localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newProfile));
+                localStorage.setItem(LOCAL_STORAGE_KEY_FN(), JSON.stringify(newProfile));
             } catch (e) {
                 console.error("Failed to save AI preferences to localStorage", e);
             }

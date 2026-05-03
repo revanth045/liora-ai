@@ -70,7 +70,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
   };
 
   const inp = 'w-full px-4 py-3 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/30 transition-all text-sm';
-  const lbl = 'block text-xs font-bold text-stone-500 uppercase tracking-wider mb-1.5';
+  const lbl = 'block text-xs font-bold text-stone-600 uppercase tracking-wider mb-1.5';
 
   const grouped: Record<DemoChefSpecialCategory, DemoChefSpecial[]> = {
     daily_special: specials.filter(s => s.category === 'daily_special'),
@@ -85,7 +85,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
       <div className="flex justify-between items-end">
         <div>
           <h2 className="text-xl font-lora font-bold text-stone-800">Chef Specials</h2>
-          <p className="text-sm text-stone-400 mt-0.5">Showcase daily specials, seasonal dishes and signature chef creations.</p>
+          <p className="text-sm text-stone-600 mt-0.5">Showcase daily specials, seasonal dishes and signature chef creations.</p>
         </div>
         <button onClick={openCreate}
           className="flex items-center gap-2 px-5 py-3 bg-stone-800 text-white rounded-2xl font-bold text-sm hover:bg-stone-900 transition-all shadow-sm">
@@ -100,12 +100,12 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
           const count = grouped[cat].length;
           const available = grouped[cat].filter(s => s.isAvailable).length;
           return (
-            <div key={cat} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm card-lift group cursor-default">
-              <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider mb-3 ${cfg.color} group-hover:shadow-sm transition-shadow`}>
+            <div key={cat} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm">
+              <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider mb-3 ${cfg.color}`}>
                 <Icon name={cfg.icon} size={14} /> {cfg.label}
               </div>
-              <p className="text-2xl font-lora font-bold text-stone-800">{available}<span className="text-stone-400 text-base font-normal">/{count}</span></p>
-              <p className="text-[10px] text-stone-400 uppercase tracking-wider font-bold mt-1">Available now</p>
+              <p className="text-2xl font-lora font-bold text-stone-800">{available}<span className="text-stone-600 text-base font-normal">/{count}</span></p>
+              <p className="text-[10px] text-stone-600 uppercase tracking-wider font-bold mt-1">Available now</p>
             </div>
           );
         })}
@@ -118,18 +118,18 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
             <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider ${CATEGORY_CONFIG[cat].color}`}>
               <Icon name={CATEGORY_CONFIG[cat].icon} size={14} /> {CATEGORY_CONFIG[cat].label}
             </div>
-            <span className="text-xs text-stone-400 font-bold">{items.length} items</span>
+            <span className="text-xs text-stone-600 font-bold">{items.length} items</span>
           </div>
 
           {items.length === 0 ? (
-            <div className="bg-cream-50 border border-dashed border-cream-300 rounded-3xl py-12 text-center text-stone-400">
+            <div className="bg-cream-50 border border-dashed border-cream-300 rounded-3xl py-12 text-center text-stone-600">
               <p className="text-sm">No {CATEGORY_CONFIG[cat].label.toLowerCase()} yet.</p>
               <button onClick={openCreate} className="mt-3 text-xs font-bold text-brand-400 hover:underline">+ Add one</button>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-4">
               {items.map(special => (
-                <div key={special.id} className={`bg-white rounded-3xl border shadow-sm overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 duration-200 ${!special.isAvailable ? 'opacity-60 border-cream-200' : 'border-cream-200'}`}>
+                <div key={special.id} className={`bg-white rounded-3xl border shadow-sm overflow-hidden transition-all ${!special.isAvailable ? 'opacity-60' : 'border-cream-200'}`}>
                   <div className="p-6">
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-14 h-14 rounded-2xl bg-cream-100 flex items-center justify-center text-3xl flex-shrink-0">
@@ -140,7 +140,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
                           <h3 className="font-bold text-stone-800 text-base leading-tight">{special.name}</h3>
                           <span className="font-lora font-bold text-stone-800 text-lg flex-shrink-0">${(special.priceCents / 100).toFixed(2)}</span>
                         </div>
-                        <p className="text-sm text-stone-500 mt-1 leading-relaxed line-clamp-2">{special.description}</p>
+                        <p className="text-sm text-stone-600 mt-1 leading-relaxed line-clamp-2">{special.description}</p>
                       </div>
                     </div>
 

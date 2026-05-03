@@ -36,7 +36,7 @@ export const Calendar: React.FC<CalendarProps> = ({ selectedDate, onDateSelect, 
     );
 
     const renderDaysOfWeek = () => (
-        <div className="grid grid-cols-7 text-center text-xs text-stone-400 font-semibold mb-2">
+        <div className="grid grid-cols-7 text-center text-xs text-stone-600 font-semibold mb-2">
             {daysOfWeek.map(day => <div key={day} aria-hidden="true">{day}</div>)}
         </div>
     );
@@ -68,7 +68,7 @@ export const Calendar: React.FC<CalendarProps> = ({ selectedDate, onDateSelect, 
                 <div key={day} className={`p-2 text-center rounded-lg cursor-pointer transition-all duration-200 ${colorClass} ${selectedClass}`} onClick={() => onDateSelect(dateStr)}>
                     <span className="text-sm">{day}</span>
                     {log && (
-                        <div className="text-xs font-bold mt-1 text-stone-600/80">
+                        <div className="text-xs font-bold mt-1 text-stone-700">
                             {log.totals.calories.toLocaleString()}
                         </div>
                     )}
@@ -83,7 +83,7 @@ export const Calendar: React.FC<CalendarProps> = ({ selectedDate, onDateSelect, 
             {renderHeader()}
             {renderDaysOfWeek()}
             {renderCells()}
-            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-stone-400">
+            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-stone-600">
                  <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-blue-200"></span> Under Goal</div>
                 <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-green-200"></span> Met Goal</div>
                 <div className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-red-200"></span> Over Goal</div>

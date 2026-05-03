@@ -1,6 +1,98 @@
 
 export type DayHours = { open: string; close: string; closed: boolean };
-export type DemoRestaurant = { id:string; ownerId:string; name:string; address?:string; phone?:string; website?:string; staffCode?:string; cuisine?:string; bio?:string; hours?:DayHours[]; };
+export type RestaurantTheme = 'forest' | 'midnight' | 'champagne' | 'rose' | 'minimal' | 'sunset';
+export type MenuFont =
+  | 'Fraunces' | 'Playfair Display' | 'Cormorant Garamond' | 'DM Serif Display'
+  | 'Italiana' | 'Bodoni Moda' | 'Lora' | 'Crimson Pro'
+  | 'Plus Jakarta Sans' | 'Inter' | 'DM Sans' | 'Manrope'
+  | 'Space Grotesk' | 'JetBrains Mono';
+
+export type MenuLayout = 'classic' | 'editorial' | 'grid' | 'magazine' | 'minimal' | 'luxe';
+export type MenuBgKind = 'solid' | 'gradient' | 'image' | 'paper' | 'linen' | 'noise';
+export type MenuDivider = 'line' | 'dots' | 'ornate' | 'double' | 'none';
+export type MenuCardStyle = 'card' | 'row' | 'list' | 'tile';
+export type MenuImageShape = 'circle' | 'rounded' | 'square' | 'none';
+export type MenuSize = 'sm' | 'md' | 'lg' | 'xl';
+
+export type MenuMeta = {
+  // Header
+  title?: string;
+  subtitle?: string;
+  logoUrl?: string;
+  headerStyle?: 'hero' | 'banner' | 'compact' | 'minimal';
+  headerAlign?: 'left' | 'center';
+
+  // Colors
+  accentColor?: string;        // gold/brand for prices, dividers, badges
+  backgroundColor?: string;    // page bg fallback
+  textColor?: string;          // body text
+  headingColor?: string;       // titles & section headers
+  priceColor?: string;         // dish price
+  cardColor?: string;          // item card background
+  borderColor?: string;        // borders / dividers
+
+  // Background
+  bgKind?: MenuBgKind;
+  bgImageUrl?: string;
+  bgGradientFrom?: string;
+  bgGradientTo?: string;
+
+  // Typography
+  titleFont?: MenuFont;
+  bodyFont?: MenuFont;
+  priceFont?: MenuFont;
+  baseSize?: MenuSize;         // body text scale
+  titleSize?: MenuSize;        // hero title scale
+  letterSpacing?: 'tight' | 'normal' | 'wide' | 'wider';
+
+  // Layout / structure
+  layout?: MenuLayout;
+  cardStyle?: MenuCardStyle;
+  imageShape?: MenuImageShape;
+  divider?: MenuDivider;
+  cornerRadius?: 'none' | 'sm' | 'md' | 'lg' | 'pill';
+  spacing?: 'tight' | 'cozy' | 'roomy' | 'airy';
+
+  // Visibility toggles
+  showDescriptions?: boolean;
+  showTags?: boolean;
+  showPrices?: boolean;
+  showDietaryIcons?: boolean;
+
+  // Section meta
+  sectionLabels?: Record<string, string>;
+  sectionOrder?: string[];
+};
+export type VenueStatus = 'pending' | 'active' | 'blocked';
+export type BankingDetails = {
+  accountHolder?: string;
+  bankName?: string;
+  accountNumber?: string;
+  routingNumber?: string;
+  iban?: string;
+  swift?: string;
+  country?: string;
+  payoutEmail?: string;
+  /** Updated by admin when banking is verified. */
+  verified?: boolean;
+  updatedAt?: number;
+};
+export type DemoRestaurant = {
+  id:string; ownerId:string; name:string;
+  address?:string; zip?:string; phone?:string; website?:string; staffCode?:string;
+  cuisine?:string; bio?:string; hours?:DayHours[];
+  logoUrl?:string; brandColor?:string; accentColor?:string;
+  heroImageUrl?:string; tagline?:string;
+  theme?:RestaurantTheme;
+  menuMeta?: MenuMeta;
+  /** When true, customers may pre-pay via card on file at order time and the venue is paid directly — no cheque at the end. */
+  acceptsPrepay?: boolean;
+  /** Admin lifecycle. Defaults to 'active' for legacy rows; new owner sign-ups become 'pending'. */
+  status?: VenueStatus;
+  blockedReason?: string;
+  bankingDetails?: BankingDetails;
+  createdAt?: number;
+};
 export type DemoMenuItem = { id:string; restaurantId:string; name:string; description?:string; priceCents:number; tags?:string[]; available:boolean; };
 export type DemoEvent = { id:string; restaurantId?:string; type:"view_restaurant"|"open_menu"|"click_call"|"click_directions"|"favorite"|"reservation"; ts:number; };
 
@@ -9,8 +101,13 @@ const MKEY="liora_demo_menu_items";
 const EKEY="liora_demo_events";
 const RESKEY="liora_demo_reservations";
 
+import { syncListChange } from "./lib/dataSync";
+
 const read = <T>(k:string, d:T)=>{ try{return JSON.parse(localStorage.getItem(k)||"")}catch{return d} };
-const write = (k:string, v:any)=>localStorage.setItem(k, JSON.stringify(v));
+const write = (k:string, v:any)=>{
+  localStorage.setItem(k, JSON.stringify(v));
+  if (Array.isArray(v)) syncListChange(k, v);
+};
 const uid = ()=> Math.random().toString(36).slice(2)+Date.now().toString(36);
 
 export function db_getRestaurantsByOwner(ownerId:string): DemoRestaurant[]{
@@ -92,6 +189,7 @@ const DEMO_RESTAURANTS: Omit<DemoRestaurant,'id'|'ownerId'>[] = [
   {
     name: 'The Golden Fork',
     address: '42 Sunset Blvd, New York, NY 10001',
+    zip: '10001',
     phone: '+1 212-555-0101',
     website: 'https://thegoldenfork.com',
     cuisine: 'Italian-American',
@@ -100,6 +198,7 @@ const DEMO_RESTAURANTS: Omit<DemoRestaurant,'id'|'ownerId'>[] = [
   {
     name: 'Sakura Blossom',
     address: '88 Cherry Lane, San Francisco, CA 94102',
+    zip: '94102',
     phone: '+1 415-555-0188',
     website: 'https://sakurablossomsf.com',
     cuisine: 'Japanese',
@@ -108,6 +207,7 @@ const DEMO_RESTAURANTS: Omit<DemoRestaurant,'id'|'ownerId'>[] = [
   {
     name: 'Spice Route',
     address: '7 Curry Mile, Chicago, IL 60601',
+    zip: '60601',
     phone: '+1 312-555-0177',
     website: 'https://spiceroutechicago.com',
     cuisine: 'Indian',
@@ -116,6 +216,7 @@ const DEMO_RESTAURANTS: Omit<DemoRestaurant,'id'|'ownerId'>[] = [
   {
     name: 'The Rustic Table',
     address: '15 Oak Street, Austin, TX 73301',
+    zip: '73301',
     phone: '+1 512-555-0199',
     website: 'https://therustictable.com',
     cuisine: 'American Farm-to-Table',
@@ -164,7 +265,15 @@ export type DemoOrder = {
   updatedAt: number;
   notes?: string;
   allergens?: string[];
+  /** How the order is being paid: card-on-file pre-pay or settle at the table. */
+  paymentMethod?: DemoPaymentMethod;
+  /** Whether the funds have been captured. Pre-pay → "paid" on placement; pay-later → "unpaid" until the bill is settled. */
+  paymentStatus?: DemoPaymentStatus;
+  /** Last 4 digits of the card used for pre-pay (display only). */
+  cardLast4?: string;
 };
+export type DemoPaymentMethod = "prepaid_card" | "pay_later";
+export type DemoPaymentStatus = "paid" | "unpaid";
 
 export function db_listOrders(restaurantId: string): DemoOrder[] {
   return read<DemoOrder[]>(OKEY, []).filter(o => o.restaurantId === restaurantId);
@@ -174,6 +283,25 @@ export function db_addOrder(order: Omit<DemoOrder,'id'|'updatedAt'>): DemoOrder 
   const o: DemoOrder = { ...order, id: uid(), updatedAt: Date.now() };
   all.push(o);
   write(OKEY, all);
+  try {
+    const restaurants = read<DemoRestaurant[]>(RKEY, []);
+    const r = restaurants.find(x => x.id === o.restaurantId);
+    import('./lib/adminNotifications').then(mod => {
+      mod.adminNotify({
+        kind: o.paymentStatus === 'paid' ? 'payment_received' : 'order_placed',
+        venueId: o.restaurantId,
+        venueName: r?.name || 'Unknown restaurant',
+        venueType: 'restaurant',
+        amountCents: o.totalCents,
+        meta: {
+          orderId: o.id,
+          customerName: o.customerName,
+          method: o.paymentMethod,
+          bankingOnFile: !!(r?.bankingDetails?.accountNumber || r?.bankingDetails?.iban),
+        },
+      });
+    }).catch(() => {});
+  } catch {}
   return o;
 }
 export function db_updateOrderStatus(id: string, status: DemoOrderStatus) {
@@ -234,7 +362,7 @@ export function db_listAllActivePromotions(): DemoPromotion[] {
 }
 /** Returns all restaurants (used to resolve names for customer-facing views). */
 export function db_getAllRestaurants(): DemoRestaurant[] {
-  return read<DemoRestaurant[]>(RKEY, []);
+  return read<DemoRestaurant[]>(RKEY, []).filter(r => (r.status ?? 'active') === 'active');
 }
 /** @deprecated No-op on live server — promotions are created by the restaurant owner. */
 export function db_seedPromotions(_restaurantId: string) { /* no-op */ }
@@ -610,4 +738,33 @@ export function db_getOrCreateStaffCode(restaurantId: string): string {
   r.staffCode = code;
   write(RKEY, all);
   return code;
+}
+
+// ===== Admin / Super-Admin helpers =====
+export function db_adminListRestaurants(): DemoRestaurant[] {
+  return read<DemoRestaurant[]>(RKEY, []);
+}
+export function db_listActiveRestaurants(): DemoRestaurant[] {
+  return read<DemoRestaurant[]>(RKEY, []).filter(r => (r.status ?? 'active') === 'active');
+}
+export function db_setRestaurantStatus(id: string, status: VenueStatus, blockedReason?: string) {
+  const all = read<DemoRestaurant[]>(RKEY, []);
+  const i = all.findIndex(r => r.id === id);
+  if (i >= 0) {
+    all[i] = { ...all[i], status, blockedReason: status === 'blocked' ? blockedReason : undefined };
+    write(RKEY, all);
+  }
+}
+export function db_setRestaurantBanking(id: string, banking: BankingDetails) {
+  const all = read<DemoRestaurant[]>(RKEY, []);
+  const i = all.findIndex(r => r.id === id);
+  if (i >= 0) {
+    all[i] = { ...all[i], bankingDetails: { ...banking, updatedAt: Date.now() } };
+    write(RKEY, all);
+  }
+}
+export function db_adminDeleteRestaurant(id: string) {
+  write(RKEY, read<DemoRestaurant[]>(RKEY, []).filter(r => r.id !== id));
+  write(MKEY, read<DemoMenuItem[]>(MKEY, []).filter(m => m.restaurantId !== id));
+  write(OKEY, read<DemoOrder[]>(OKEY, []).filter(o => o.restaurantId !== id));
 }

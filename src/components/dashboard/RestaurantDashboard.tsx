@@ -14,7 +14,7 @@ function Section({ title, children }: { title: string; children?: React.ReactNod
 
 function Field({ label, ...p }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>){
   return <label className="block mb-2">
-    <div className="text-sm text-stone-400">{label}</div>
+    <div className="text-sm text-stone-600">{label}</div>
     <input className="border rounded px-3 py-2 w-full bg-white text-stone-800 focus:ring-2 focus:ring-brand-400/30 transition-shadow duration-200" {...p}/>
   </label>;
 }
@@ -111,13 +111,13 @@ function MenuTab({restaurantId, menu, onChange}:{restaurantId:string; menu:DemoM
 
       <Section title="Current Menu">
         <div className="space-y-2">
-          {(menu||[]).length===0 && <div className="text-sm text-stone-400">No items yet.</div>}
+          {(menu||[]).length===0 && <div className="text-sm text-stone-600">No items yet.</div>}
           {(menu||[]).map(item=>(
             <div key={item.id} className="border rounded p-3 flex items-center justify-between">
               <div>
-                <div className="font-medium">{item.name} <span className="text-stone-400">— {dollars(item.priceCents)}</span></div>
+                <div className="font-medium">{item.name} <span className="text-stone-600">— {dollars(item.priceCents)}</span></div>
                 {item.description && <div className="text-sm text-stone-600">{item.description}</div>}
-                {(item.tags||[]).length>0 && <div className="text-xs text-stone-400 mt-1">#{item.tags?.join("  #")}</div>}
+                {(item.tags||[]).length>0 && <div className="text-xs text-stone-600 mt-1">#{item.tags?.join("  #")}</div>}
                 {!item.available && <div className="text-xs text-red-600 mt-1">Unavailable</div>}
               </div>
               <div className="flex gap-2">
@@ -136,15 +136,15 @@ function ReservationsTab({restaurantId}:{restaurantId:string}){
   const list = db_listReservations(restaurantId);
   return (
     <Section title="Reservations">
-      {list.length===0 ? <div className="text-sm text-stone-400">No reservations yet.</div> :
-      <table className="w-full text-sm">
-        <thead><tr className="text-left text-stone-400"><th>Email</th><th>Party</th><th>When</th><th>Status</th></tr></thead>
+      {list.length===0 ? <div className="text-sm text-stone-600">No reservations yet.</div> :
+      <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0"><table className="w-full text-sm min-w-[480px]">
+        <thead><tr className="text-left text-stone-600"><th>Email</th><th>Party</th><th>When</th><th>Status</th></tr></thead>
         <tbody>
           {list.map(r=>(
             <tr key={r.id}><td>{r.userEmail}</td><td>{r.partySize}</td><td>{r.when}</td><td>{r.status}</td></tr>
           ))}
         </tbody>
-      </table>}
+      </table></div>}
     </Section>
   );
 }
@@ -168,7 +168,7 @@ function AnalyticsTab({restaurantId}:{restaurantId:string}){
 
   return (
     <Section title="Engagement (last 90 days)">
-      {events.length===0 && <div className="text-sm text-stone-400">No activity yet.</div>}
+      {events.length===0 && <div className="text-sm text-stone-600">No activity yet.</div>}
       <div className="space-y-2">
         {metrics.map(m=>{
           const v = counts[m.key]||0;
@@ -181,7 +181,7 @@ function AnalyticsTab({restaurantId}:{restaurantId:string}){
           );
         })}
       </div>
-      <div className="text-xs text-stone-400 mt-3">Tip: these grow when users tap your card CTAs (menu, call, directions, favorite).</div>
+      <div className="text-xs text-stone-600 mt-3">Tip: these grow when users tap your card CTAs (menu, call, directions, favorite).</div>
     </Section>
   );
 }

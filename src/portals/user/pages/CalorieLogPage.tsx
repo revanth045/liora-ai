@@ -68,8 +68,8 @@ export default function CalorieLogPage() {
                         </div>
                     ) : (
                         <div className="flex items-center justify-between">
-                            <p className="text-3xl font-bold text-stone-800">{goal.toLocaleString()} <span className="text-base font-normal text-stone-400">kcal</span></p>
-                            <button onClick={() => setIsEditingGoal(true)} className="text-stone-400 hover:text-stone-800">Edit</button>
+                            <p className="text-3xl font-bold text-stone-800">{goal.toLocaleString()} <span className="text-base font-normal text-stone-600">kcal</span></p>
+                            <button onClick={() => setIsEditingGoal(true)} className="text-stone-600 hover:text-stone-800">Edit</button>
                         </div>
                     )}
                 </div>

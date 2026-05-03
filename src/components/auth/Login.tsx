@@ -44,7 +44,7 @@ export default function Login({ setView }: LoginProps) {
     };
 
     const inputClass = "w-full px-4 py-3 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/30 transition-all text-sm";
-    const labelClass = "block text-xs font-semibold text-stone-500 uppercase tracking-wider mb-1.5";
+    const labelClass = "block text-xs font-semibold text-stone-600 uppercase tracking-wider mb-1.5";
 
     return (
         <div className="w-full">
@@ -59,7 +59,7 @@ export default function Login({ setView }: LoginProps) {
                 <h1 className="font-display text-3xl font-light text-stone-900 leading-snug">
                     {mode === 'login' ? <>Welcome <span className="italic">back</span></> : <>Create <span className="italic">account</span></>}
                 </h1>
-                <p className="text-stone-500 text-sm mt-2">
+                <p className="text-stone-600 text-sm mt-2">
                     {mode === 'login' ? 'Sign in to continue your journey' : 'Start your dining journey with Liora'}
                 </p>
             </div>
@@ -71,7 +71,7 @@ export default function Login({ setView }: LoginProps) {
                     className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                         role === 'user'
                             ? 'bg-white text-stone-800 shadow-sm border border-cream-200'
-                            : 'text-stone-500 hover:text-stone-700'
+                            : 'text-stone-600 hover:text-stone-700'
                     }`}
                 >
                     <Icon name="user-circle" className="w-4 h-4 inline mr-1.5" />
@@ -82,7 +82,7 @@ export default function Login({ setView }: LoginProps) {
                     className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
                         role === 'restaurant'
                             ? 'bg-white text-stone-800 shadow-sm border border-cream-200'
-                            : 'text-stone-500 hover:text-stone-700'
+                            : 'text-stone-600 hover:text-stone-700'
                     }`}
                 >
                     <Icon name="briefcase" className="w-4 h-4 inline mr-1.5" />
@@ -164,7 +164,7 @@ export default function Login({ setView }: LoginProps) {
                 <div className="mt-4 text-center">
                     <button
                         onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError(''); }}
-                        className="text-sm text-stone-500 hover:text-brand-400 transition-colors"
+                        className="text-sm text-stone-600 hover:text-brand-400 transition-colors"
                     >
                         {mode === 'login' ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
                     </button>

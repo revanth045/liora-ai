@@ -27,7 +27,7 @@ export const WellnessHub = () => {
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-lora text-stone-800">Nourish & Thrive</h1>
-          <p className="text-stone-400">Align your body and mind before you eat.</p>
+          <p className="text-stone-600">Align your body and mind before you eat.</p>
         </div>
         <div className="w-10 h-10 bg-cream-200/60 rounded-full flex items-center justify-center text-stone-800">
           <Icon name="sparkles" className="w-5 h-5" />
@@ -41,7 +41,7 @@ export const WellnessHub = () => {
         {/* Physical Hunger Slider */}
         <div className="mb-8">
           <div className="flex justify-between mb-2">
-            <label className="text-sm font-bold text-stone-400 uppercase tracking-wider">Physical Hunger</label>
+            <label className="text-sm font-bold text-stone-600 uppercase tracking-wider">Physical Hunger</label>
             <span className="text-sm font-medium text-stone-800">{getHungerLabel(hungerLevel)}</span>
           </div>
           <input 
@@ -52,7 +52,7 @@ export const WellnessHub = () => {
             onChange={(e) => setHungerLevel(parseInt(e.target.value))}
             className="w-full h-2 bg-cream-50 rounded-lg appearance-none cursor-pointer accent-[#e9ae1e]"
           />
-          <div className="flex justify-between text-xs text-stone-400 mt-1">
+          <div className="flex justify-between text-xs text-stone-600 mt-1">
             <span>Starving</span>
             <span>Neutral</span>
             <span>Stuffed</span>
@@ -61,7 +61,7 @@ export const WellnessHub = () => {
 
         {/* Emotional Driver */}
         <div>
-          <label className="text-sm font-bold text-stone-400 uppercase tracking-wider mb-3 block">What is driving you?</label>
+          <label className="text-sm font-bold text-stone-600 uppercase tracking-wider mb-3 block">What is driving you?</label>
           <div className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-hide pb-2 overscroll-x-contain touch-pan-x">
             {['True Hunger', 'Boredom', 'Stress', 'Sadness', 'Celebration'].map((mood) => (
               <button
@@ -85,7 +85,7 @@ export const WellnessHub = () => {
             <Icon name="sparkles" className="w-5 h-5 text-brand-400 mt-1" />
             <div>
               <p className="text-stone-800 font-medium">Pause for a moment.</p>
-              <p className="text-sm text-stone-400 mt-1 leading-relaxed">
+              <p className="text-sm text-stone-600 mt-1 leading-relaxed">
                 You identified <strong>{emotionalState}</strong> as your driver. 
                 Food might not solve this feeling. Would you like to try a 2-minute breathing exercise instead?
               </p>
@@ -125,7 +125,7 @@ export const WellnessHub = () => {
               <p className="text-xs text-white/90 leading-relaxed font-medium">{CRAVING_TIPS[activeCraving]}</p>
               <button 
                 onClick={() => setActiveCraving(null)} 
-                className="mt-4 text-[10px] uppercase font-bold text-white/60 hover:text-white flex items-center gap-1"
+                className="mt-4 text-[10px] uppercase font-bold text-white/90 hover:text-white flex items-center gap-1"
               >
                 <Icon name="x" className="w-3 h-3" /> Reset Decoder
               </button>
@@ -139,7 +139,7 @@ export const WellnessHub = () => {
             <Icon name="sparkles" className="w-4 h-4" />
           </div>
           <h4 className="font-bold text-stone-800 text-sm">Hydration Check</h4>
-          <p className="text-[10px] text-stone-400 mt-1 font-medium">Thirst often masks itself as hunger.</p>
+          <p className="text-[10px] text-stone-600 mt-1 font-medium">Thirst often masks itself as hunger.</p>
         </div>
 
         <div className="bg-white p-4 rounded-2xl shadow-sm border border-cream-200">
@@ -147,7 +147,7 @@ export const WellnessHub = () => {
             <Icon name="clipboard-list" className="w-4 h-4" />
           </div>
           <h4 className="font-bold text-stone-800 text-sm">Post-Meal Log</h4>
-          <p className="text-[10px] text-stone-400 mt-1 font-medium">How did that last meal make you feel?</p>
+          <p className="text-[10px] text-stone-600 mt-1 font-medium">How did that last meal make you feel?</p>
         </div>
       </div>
 
@@ -160,15 +160,15 @@ export const WellnessHub = () => {
             { time: '10:00 AM', food: 'Greek Yogurt Bowl', feel: 'Energized', icon: 'sparkles' },
           ].map((entry, i) => (
             <div key={i} className="flex items-center gap-4 bg-white p-4 rounded-xl border border-cream-200 shadow-sm">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${entry.feel === 'Energized' ? 'bg-green-100 text-green-700' : 'bg-cream-100/50 text-stone-400'}`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${entry.feel === 'Energized' ? 'bg-green-100 text-green-700' : 'bg-cream-100/50 text-stone-600'}`}>
                 <Icon name={entry.icon === 'sparkles' ? 'sparkles' : 'user-circle'} className="w-5 h-5" />
               </div>
               <div className="flex-1">
                 <div className="flex justify-between items-baseline">
                   <span className="font-bold text-stone-800 text-sm">{entry.food}</span>
-                  <span className="text-[10px] font-bold text-stone-400">{entry.time}</span>
+                  <span className="text-[10px] font-bold text-stone-600">{entry.time}</span>
                 </div>
-                <p className="text-xs text-stone-400">Result: <span className="font-bold text-stone-800">{entry.feel}</span></p>
+                <p className="text-xs text-stone-600">Result: <span className="font-bold text-stone-800">{entry.feel}</span></p>
               </div>
             </div>
           ))}

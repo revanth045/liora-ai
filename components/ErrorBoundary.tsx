@@ -12,9 +12,12 @@ interface ErrorBoundaryState {
 }
 
 export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  public state: ErrorBoundaryState = {
-    hasError: false,
-  };
+  declare state: ErrorBoundaryState;
+  declare props: ErrorBoundaryProps;
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
   public static getDerivedStateFromError(_error: Error): ErrorBoundaryState {
     return { hasError: true };
@@ -22,7 +25,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
   public componentDidCatch(error: any, info: ErrorInfo) {
     console.error("UI crash:", error, info);
-    this.setState({
+    (this as any).setState({
       message: String(error?.message || error),
       componentStack: info?.componentStack || '',
     });

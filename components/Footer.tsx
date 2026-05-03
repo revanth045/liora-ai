@@ -23,7 +23,7 @@ export const Footer: React.FC<FooterProps> = ({ setView }) => {
                         </div>
                         <span className="font-display text-xl font-semibold text-white tracking-wide">Liora</span>
                     </div>
-                    <p className="text-sm text-cream-200/60 leading-relaxed">Your personal dining &amp; lifestyle concierge.</p>
+                    <p className="text-sm text-cream-100 leading-relaxed">Your personal dining &amp; lifestyle concierge.</p>
                     <div className="flex gap-3 pt-1">
                         {['instagram', 'twitter', 'facebook'].map(s => (
                             <a key={s} href="#" aria-label={s} className="w-8 h-8 rounded-full border border-cream-200/20 flex items-center justify-center hover:border-brand-400 hover:text-brand-400 transition-colors">
@@ -35,8 +35,8 @@ export const Footer: React.FC<FooterProps> = ({ setView }) => {
 
                 {/* Explore */}
                 <div>
-                    <h4 className="text-[10px] font-bold text-cream-200/40 mb-5 uppercase tracking-widest">Explore</h4>
-                    <ul className="space-y-3 text-sm text-cream-200/60">
+                    <h4 className="text-[10px] font-bold text-champagne mb-5 uppercase tracking-widest">Explore</h4>
+                    <ul className="space-y-3 text-sm text-cream-100">
                         <li><button onClick={() => handleNav('date_night')} className="hover:text-brand-400 transition-colors">Date Night</button></li>
                         <li><button onClick={() => handleNav('hotels')} className="hover:text-brand-400 transition-colors">Hotels</button></li>
                     </ul>
@@ -44,8 +44,8 @@ export const Footer: React.FC<FooterProps> = ({ setView }) => {
 
                 {/* Community */}
                 <div>
-                    <h4 className="text-[10px] font-bold text-cream-200/40 mb-5 uppercase tracking-widest">Community</h4>
-                    <ul className="space-y-3 text-sm text-cream-200/60">
+                    <h4 className="text-[10px] font-bold text-champagne mb-5 uppercase tracking-widest">Community</h4>
+                    <ul className="space-y-3 text-sm text-cream-100">
                         <li><button onClick={() => handleNav('home')} className="hover:text-brand-400 transition-colors">Home</button></li>
                         <li><button onClick={() => handleNav('support')} className="hover:text-brand-400 transition-colors">Support</button></li>
                         <li><a href="#" className="hover:text-brand-400 transition-colors">Partners</a></li>
@@ -54,8 +54,8 @@ export const Footer: React.FC<FooterProps> = ({ setView }) => {
 
                 {/* Legal */}
                 <div>
-                    <h4 className="text-[10px] font-bold text-cream-200/40 mb-5 uppercase tracking-widest">Legal</h4>
-                    <ul className="space-y-3 text-sm text-cream-200/60">
+                    <h4 className="text-[10px] font-bold text-champagne mb-5 uppercase tracking-widest">Legal</h4>
+                    <ul className="space-y-3 text-sm text-cream-100">
                         <li><a href="#" className="hover:text-brand-400 transition-colors">Privacy Policy</a></li>
                         <li><a href="#" className="hover:text-brand-400 transition-colors">Terms of Service</a></li>
                         <li><a href="#" className="hover:text-brand-400 transition-colors">Cookies</a></li>
@@ -64,12 +64,12 @@ export const Footer: React.FC<FooterProps> = ({ setView }) => {
             </div>
 
             <div className="max-w-6xl mx-auto mt-12 pt-8 border-t border-cream-200/10 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p className="text-xs text-cream-200/30">&copy; {new Date().getFullYear()} Liora AI. All rights reserved.</p>
+                <p className="text-xs text-cream-100">&copy; {new Date().getFullYear()} Liora AI. All rights reserved.</p>
                 <div className="flex gap-4">
-                    <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-cream-200/40 tracking-wider">
+                    <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-champagne tracking-wider">
                         <Icon name="lock" className="w-3 h-3 text-emerald-400" /> Secure
                     </span>
-                    <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-cream-200/40 tracking-wider">
+                    <span className="flex items-center gap-1.5 text-[10px] uppercase font-bold text-champagne tracking-wider">
                         <Icon name="sparkles" className="w-3 h-3 text-brand-400" /> AI Powered
                     </span>
                 </div>

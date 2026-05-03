@@ -98,7 +98,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
           </div>
           <div>
             <h2 className="font-lora text-2xl font-bold text-stone-800">Live Notifications</h2>
-            <p className="text-xs text-stone-400 mt-0.5 font-medium">
+            <p className="text-xs text-stone-600 mt-0.5 font-medium">
               {active.length === 0
                 ? 'All clear — no active alerts right now'
                 : `${active.length} active alert${active.length !== 1 ? 's' : ''} · refreshes every 3 s`}
@@ -115,7 +115,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
           {active.length > 1 && (
             <button
               onClick={handleDismissAll}
-              className="px-4 py-2 text-xs font-bold uppercase tracking-widest border border-stone-200 text-stone-500 rounded-xl hover:bg-stone-50 hover:text-green-600 hover:border-green-300 transition-all"
+              className="px-4 py-2 text-xs font-bold uppercase tracking-widest border border-stone-200 text-stone-600 rounded-xl hover:bg-stone-50 hover:text-green-600 hover:border-green-300 transition-all"
             >
               Dismiss All
             </button>
@@ -126,14 +126,14 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
       {/* Action filter pills */}
       {actions.length > 1 && (
         <div className="flex gap-2 flex-wrap">
-          {['all', ...actions].map(a => (
+          {(['all', ...actions] as string[]).map(a => (
             <button
               key={a}
-              onClick={() => setFilter(a)}
+              onClick={() => setFilter(a as any)}
               className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all border ${
                 filter === a
                   ? 'bg-stone-800 text-white border-stone-800'
-                  : 'bg-white text-stone-500 border-cream-200 hover:border-stone-300'
+                  : 'bg-white text-stone-600 border-cream-200 hover:border-stone-300'
               }`}
             >
               {a === 'all' ? 'All' : getActionMeta(a).label}
@@ -148,7 +148,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
           <div className="bg-white border border-cream-200 rounded-3xl p-16 text-center">
             <Icon name="check_circle" size={48} className="text-green-400 mx-auto mb-4 opacity-60" />
             <p className="font-bold text-stone-600 text-lg">No active alerts</p>
-            <p className="text-stone-400 text-sm mt-1">New requests from customers will appear here instantly.</p>
+            <p className="text-stone-600 text-sm mt-1">New requests from customers will appear here instantly.</p>
           </div>
         ) : filtered.map(alert => {
           const meta = getActionMeta(alert.action);
@@ -156,7 +156,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
             <div
               key={alert.id}
               onClick={() => handleAlertClick(alert)}
-              className={`flex items-start gap-4 p-5 bg-white rounded-3xl border-2 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer ${meta.color}`}
+              className={`flex items-start gap-4 p-5 bg-white rounded-3xl border-2 shadow-sm hover:shadow-md transition-all cursor-pointer ${meta.color}`}
             >
               <div className={`p-3 rounded-2xl border ${meta.color} flex-shrink-0`}>
                 <Icon name={meta.icon} size={22} />
@@ -167,13 +167,13 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
                   <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full border ${meta.color}`}>
                     {meta.label}
                   </span>
-                  <span className="text-[10px] text-stone-400 font-bold ml-auto">{timeAgo(alert.createdAt)}</span>
+                  <span className="text-[10px] text-stone-600 font-bold ml-auto">{timeAgo(alert.createdAt)}</span>
                 </div>
                 <p className="text-sm text-stone-600 leading-relaxed">{alert.message}</p>
               </div>
               <button
                 onClick={() => handleDismiss(alert.id)}
-                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-white/80 border border-stone-200 text-stone-400 hover:text-green-600 hover:border-green-400 transition-all shadow-sm"
+                className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center bg-white/80 border border-stone-200 text-stone-600 hover:text-green-600 hover:border-green-400 transition-all shadow-sm"
                 title="Mark as handled"
               >
                 <Icon name="check" size={20} />
@@ -188,7 +188,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
         <div className="bg-white border border-cream-200 rounded-3xl overflow-hidden shadow-sm">
           {/* ... (history content) */}
           <div className="p-5 border-b border-cream-200 flex items-center gap-3">
-            <Icon name="history" size={20} className="text-stone-400" />
+            <Icon name="history" size={20} className="text-stone-600" />
             <h3 className="font-lora font-bold text-lg text-stone-800">Handled · Last 20</h3>
           </div>
           <div className="divide-y divide-cream-100">
@@ -205,9 +205,9 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-bold text-stone-700 truncate">Table {alert.tableNumber} — {meta.label}</p>
-                    <p className="text-xs text-stone-400 truncate">{alert.message}</p>
+                    <p className="text-xs text-stone-600 truncate">{alert.message}</p>
                   </div>
-                  <span className="text-[10px] text-stone-400 font-bold flex-shrink-0">{timeAgo(alert.createdAt)}</span>
+                  <span className="text-[10px] text-stone-600 font-bold flex-shrink-0">{timeAgo(alert.createdAt)}</span>
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
                     <Icon name="check" size={12} className="text-green-600" />
                   </div>
@@ -226,11 +226,11 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="text-2xl font-lora font-bold text-stone-800">Order Details</h3>
-                  <p className="text-sm text-stone-400 font-medium">Table {selectedOrder.tableNumber} · {selectedOrder.customerName}</p>
+                  <p className="text-sm text-stone-600 font-medium">Table {selectedOrder.tableNumber} · {selectedOrder.customerName}</p>
                 </div>
                 <button 
                   onClick={() => setShowModal(false)}
-                  className="p-2 hover:bg-stone-100 rounded-full text-stone-400 transition-colors"
+                  className="p-2 hover:bg-stone-100 rounded-full text-stone-600 transition-colors"
                 >
                   <Icon name="close" size={24} />
                 </button>
@@ -257,12 +257,12 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
 
               {/* Items List */}
               <div className="space-y-3">
-                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Items</p>
+                <p className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">Items</p>
                 <div className="max-h-[300px] overflow-y-auto space-y-2 pr-2 custom-scrollbar">
                   {selectedOrder.items.map((item, idx) => (
                     <div key={idx} className="flex justify-between items-center py-2 border-b border-stone-50 last:border-0">
                       <div className="flex items-center gap-3">
-                        <span className="w-8 h-8 flex items-center justify-center bg-stone-100 rounded-xl text-xs font-bold text-stone-500">{item.qty}×</span>
+                        <span className="w-8 h-8 flex items-center justify-center bg-stone-100 rounded-xl text-xs font-bold text-stone-600">{item.qty}×</span>
                         <span className="text-sm font-bold text-stone-800">{item.name}</span>
                       </div>
                       <span className="text-sm font-bold text-stone-800">{fmt(item.qty * item.priceCents)}</span>
@@ -279,7 +279,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
               )}
 
               <div className="pt-4 border-t border-stone-100 flex justify-between items-center">
-                <span className="text-stone-400 font-bold text-sm">Amount due</span>
+                <span className="text-stone-600 font-bold text-sm">Amount due</span>
                 <span className="text-2xl font-lora font-bold text-stone-800">{fmt(selectedOrder.totalCents)}</span>
               </div>
 

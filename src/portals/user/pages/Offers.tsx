@@ -25,10 +25,10 @@ function CopyCode({ code }: { code: string }) {
   return (
     <button
       onClick={copy}
-      className="flex items-center gap-2 bg-cream-50 border border-dashed border-cream-300 rounded-2xl px-4 py-3 w-full hover:bg-amber-50 hover:border-amber-300 hover:shadow-sm transition-all group"
+      className="flex items-center gap-2 bg-cream-50 border border-dashed border-cream-300 rounded-2xl px-4 py-3 w-full hover:bg-cream-100 transition-colors group"
     >
       <span className="font-mono font-bold text-lg text-stone-800 tracking-[0.18em] flex-1 text-left">{code}</span>
-      <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${copied ? 'text-emerald-500' : 'text-stone-400 group-hover:text-stone-600'}`}>
+      <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${copied ? 'text-emerald-500' : 'text-stone-600 group-hover:text-stone-600'}`}>
         {copied ? 'Copied!' : 'Tap to copy'}
       </span>
     </button>
@@ -36,13 +36,13 @@ function CopyCode({ code }: { code: string }) {
 }
 
 // --- Restaurant Offer Card ----------------------------------------------------
-function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; restaurantName: string }) {
+function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; restaurantName: string; key?: React.Key }) {
   return (
-    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden">
       {/* Top band */}
       <div className="bg-forest-900 px-6 py-4 flex items-center justify-between">
         <div>
-          <p className="text-cream-300 text-[10px] font-bold uppercase tracking-widest mb-0.5">Restaurant Offer</p>
+          <p className="text-cream-200 text-[10px] font-bold uppercase tracking-widest mb-0.5">Restaurant Offer</p>
           <h3 className="font-lora text-base font-bold text-cream-50 leading-tight">{promo.title}</h3>
         </div>
         <div className="bg-brand-400/20 border border-brand-400/30 rounded-xl px-3 py-2 text-center ml-3 shrink-0">
@@ -56,7 +56,7 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
 
         {/* Valid at label */}
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Valid at</span>
+          <span className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">Valid at</span>
           <span className="bg-forest-900/8 text-forest-900 text-xs font-bold px-3 py-1 rounded-full border border-forest-900/15">
             {restaurantName}
           </span>
@@ -64,7 +64,7 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
 
         {/* Expiry */}
         {promo.validUntil && (
-          <p className="text-[11px] text-stone-400">
+          <p className="text-[11px] text-stone-600">
             Expires {new Date(promo.validUntil).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
           </p>
         )}
@@ -72,14 +72,14 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
         {/* Code */}
         {promo.code ? (
           <>
-            <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Your code</p>
+            <p className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">Your code</p>
             <CopyCode code={promo.code} />
           </>
         ) : (
-          <p className="text-[11px] text-stone-400 italic">No code needed — discount applied automatically at {restaurantName}.</p>
+          <p className="text-[11px] text-stone-600 italic">No code needed — discount applied automatically at {restaurantName}.</p>
         )}
 
-        <p className="text-[10px] text-stone-400">
+        <p className="text-[10px] text-stone-600">
           This offer ({formatDiscountSub(promo)}) is only valid when ordering from <span className="font-semibold">{restaurantName}</span>.
         </p>
       </div>
@@ -90,10 +90,10 @@ function RestaurantOfferCard({ promo, restaurantName }: { promo: DemoPromotion; 
 // --- Liora Offer Card (platform-wide) ----------------------------------------
 function LioraOfferCard() {
   return (
-    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+    <div className="bg-white border border-cream-200 rounded-3xl shadow-sm overflow-hidden">
       <div className="bg-forest-900 px-6 py-4 flex items-center justify-between">
         <div>
-          <p className="text-cream-300 text-[10px] font-bold uppercase tracking-widest mb-0.5">Liora Offer</p>
+          <p className="text-cream-200 text-[10px] font-bold uppercase tracking-widest mb-0.5">Liora Offer</p>
           <h3 className="font-lora text-base font-bold text-cream-50 leading-tight">Welcome Gift</h3>
         </div>
         <div className="bg-brand-400/20 border border-brand-400/30 rounded-xl px-3 py-2 text-center ml-3 shrink-0">
@@ -105,14 +105,14 @@ function LioraOfferCard() {
           You completed your profile and we noticed. Here's $5 off your next order — valid at any restaurant on Liora. No rush, no deadline.
         </p>
         <div className="flex items-center gap-2">
-          <span className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Valid at</span>
+          <span className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">Valid at</span>
           <span className="bg-brand-400/10 text-brand-400 text-xs font-bold px-3 py-1 rounded-full border border-brand-400/20">
             All restaurants
           </span>
         </div>
-        <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest">Your code</p>
+        <p className="text-[10px] font-bold text-stone-600 uppercase tracking-widest">Your code</p>
         <CopyCode code="WELCOME5" />
-        <p className="text-[10px] text-stone-400">T&amp;C: Minimum order value of $50 required to redeem.</p>
+        <p className="text-[10px] text-stone-600">T&amp;C: Minimum order value of $50 required to redeem.</p>
       </div>
     </div>
   );
@@ -136,17 +136,17 @@ export default function OffersPage() {
       <div className="max-w-md mx-auto px-4 py-8 space-y-10">
 
         {/* -- Restaurant Offers -- */}
-        <section className="animate-slide-up stagger-1">
+        <section>
           <div className="mb-4">
             <h2 className="font-lora text-xl font-bold text-stone-800">Restaurant Offers</h2>
-            <p className="text-xs text-stone-400 mt-1">Deals from the restaurants you love — use the code when ordering from that specific spot.</p>
+            <p className="text-xs text-stone-600 mt-1">Deals from the restaurants you love — use the code when ordering from that specific spot.</p>
           </div>
 
           {restaurantPromos.length === 0 ? (
             <div className="bg-white border border-cream-200 rounded-3xl px-6 py-10 text-center">
               <p className="text-3xl mb-3">🍽️</p>
               <p className="font-semibold text-stone-600 text-sm">No restaurant offers right now</p>
-              <p className="text-stone-400 text-xs mt-1">Check back soon — restaurants update their deals regularly.</p>
+              <p className="text-stone-600 text-xs mt-1">Check back soon — restaurants update their deals regularly.</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -158,10 +158,10 @@ export default function OffersPage() {
         </section>
 
         {/* -- Liora Offers -- */}
-        <section className="animate-slide-up stagger-2">
+        <section>
           <div className="mb-4">
             <h2 className="font-lora text-xl font-bold text-stone-800">Liora Offers</h2>
-            <p className="text-xs text-stone-400 mt-1">Platform-wide perks from Liora — these work at every restaurant we partner with.</p>
+            <p className="text-xs text-stone-600 mt-1">Platform-wide perks from Liora — these work at every restaurant we partner with.</p>
           </div>
           <LioraOfferCard />
         </section>

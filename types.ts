@@ -1,5 +1,5 @@
 
-export type View = 'home' | 'dating' | 'fitness' | 'account' | 'support' | 'nearby' | 'planner' | 'favorites' | 'calorie_log' | 'date_night' | 'visualizer' | 'video' | 'parser' | 'onboarding' | 'chef' | 'login' | 'hotels' | 'ai_waiter' | 'chef_mode' | 'ai_chat' | 'checkout' | 'profile' | 'offers' | 'orders' | 'dine_in' | 'restaurants';
+export type View = 'home' | 'landing' | 'dating' | 'fitness' | 'account' | 'support' | 'nearby' | 'planner' | 'favorites' | 'calorie_log' | 'date_night' | 'visualizer' | 'video' | 'parser' | 'onboarding' | 'chef' | 'login' | 'hotels' | 'ai_waiter' | 'chef_mode' | 'ai_chat' | 'checkout' | 'profile' | 'offers' | 'orders' | 'dine_in' | 'restaurants';
 
 export enum MessageAuthor {
     USER = 'user',

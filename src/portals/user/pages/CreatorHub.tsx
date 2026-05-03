@@ -18,7 +18,7 @@ export default function CreatorHub() {
         <div className="flex flex-col sm:flex-row justify-between sm:items-end mb-6 gap-4">
           <div>
             <h1 className="text-3xl font-lora font-bold text-stone-800 mb-1">Creator Studio</h1>
-            <p className="text-stone-400 font-medium">Curate experiences, inspire others, earn rewards.</p>
+            <p className="text-stone-600 font-medium">Curate experiences, inspire others, earn rewards.</p>
           </div>
           <button 
             onClick={() => setActiveTab('builder')}
@@ -41,7 +41,7 @@ export default function CreatorHub() {
               className={`pb-3 flex items-center gap-2 text-sm font-bold tracking-wide transition-all relative whitespace-nowrap ${
                 activeTab === tab.id 
                   ? 'text-stone-800' 
-                  : 'text-stone-400 hover:text-stone-800'
+                  : 'text-stone-600 hover:text-stone-800'
               }`}
             >
               <Icon name={tab.icon} size={18} />
@@ -61,14 +61,14 @@ export default function CreatorHub() {
             {/* Stats Row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-white p-6 rounded-3xl border border-cream-200 shadow-sm group hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-2 mb-3 text-stone-400">
+                <div className="flex items-center gap-2 mb-3 text-stone-600">
                   <Icon name="visibility" size={18} /> 
                   <span className="text-[10px] font-bold uppercase tracking-widest">Total Views</span>
                 </div>
                 <div className="text-3xl font-lora font-bold text-stone-800">0</div>
               </div>
               <div className="bg-white p-6 rounded-3xl border border-cream-200 shadow-sm group hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-2 mb-3 text-stone-400">
+                <div className="flex items-center gap-2 mb-3 text-stone-600">
                   <Icon name="bookmark" size={18} /> 
                   <span className="text-[10px] font-bold uppercase tracking-widest">Guide Saves</span>
                 </div>
@@ -91,7 +91,7 @@ export default function CreatorHub() {
               <div className="p-6 border-b border-cream-200 flex justify-between items-center bg-white/30">
                 <h3 className="font-lora text-xl font-bold text-stone-800">Top Performing Content</h3>
               </div>
-              <div className="p-12 text-center text-stone-400">
+              <div className="p-12 text-center text-stone-600">
                 <Icon name="edit_note" size={40} className="mx-auto mb-3 opacity-30" />
                 <p className="text-sm font-medium">No guides published yet.</p>
                 <p className="text-xs mt-1">Create your first guide to start earning.</p>
@@ -105,7 +105,7 @@ export default function CreatorHub() {
           <div className="max-w-2xl mx-auto space-y-6 animate-page-slide">
             <div className="bg-white p-8 rounded-3xl border border-cream-200 shadow-sm space-y-6">
               <div>
-                <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2 ml-1">Guide Title</label>
+                <label className="block text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-2 ml-1">Guide Title</label>
                 <input 
                   type="text" 
                   placeholder="e.g. The Best Pizza in Manhattan"
@@ -116,8 +116,8 @@ export default function CreatorHub() {
               </div>
 
               <div>
-                 <label className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2 ml-1">Cover Image</label>
-                 <div className="h-40 bg-cream-50/50 rounded-2xl border-2 border-dashed border-cream-200 flex flex-col items-center justify-center text-stone-400 cursor-pointer hover:border-cream-200 hover:text-stone-800 transition-all group">
+                 <label className="block text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-2 ml-1">Cover Image</label>
+                 <div className="h-40 bg-cream-50/50 rounded-2xl border-2 border-dashed border-cream-200 flex flex-col items-center justify-center text-stone-600 cursor-pointer hover:border-cream-200 hover:text-stone-800 transition-all group">
                    <div className="p-3 bg-white rounded-full shadow-sm mb-3 group-hover:scale-110 transition-transform">
                      <Icon name="add_photo_alternate" size={24} />
                    </div>
@@ -135,7 +135,7 @@ export default function CreatorHub() {
                </div>
                
                {guideItems.length === 0 ? (
-                 <div className="text-center py-12 text-stone-400 text-sm italic bg-cream-100/50 rounded-2xl border border-dashed border-cream-200">
+                 <div className="text-center py-12 text-stone-600 text-sm italic bg-cream-100/50 rounded-2xl border border-dashed border-cream-200">
                    No places added yet. Search for restaurants to build your list.
                  </div>
                ) : (
@@ -151,12 +151,12 @@ export default function CreatorHub() {
                    placeholder="Search for a restaurant..." 
                    className="w-full p-4 pl-12 bg-cream-50/50 rounded-2xl text-sm outline-none border border-transparent focus:border-cream-200/10 font-medium"
                  />
-                 <Icon name="search" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400" />
+                 <Icon name="search" size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-600" />
                </div>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="flex-1 py-4 border border-cream-200 text-stone-400 font-bold rounded-2xl hover:bg-white hover:text-stone-800 transition-all uppercase text-[10px] tracking-[0.2em]">Save Draft</button>
+              <button className="flex-1 py-4 border border-cream-200 text-stone-600 font-bold rounded-2xl hover:bg-white hover:text-stone-800 transition-all uppercase text-[10px] tracking-[0.2em]">Save Draft</button>
               <button className="flex-1 py-4 bg-cream-100 text-white font-bold rounded-2xl shadow-lg hover:bg-cream-200 transition-all uppercase text-[10px] tracking-[0.2em] active:scale-95">Publish Guide</button>
             </div>
           </div>
@@ -168,7 +168,7 @@ export default function CreatorHub() {
              {/* Balance Card */}
              <div className="bg-gradient-to-br from-[#18181b] to-cream-100 rounded-[2rem] p-10 text-white relative overflow-hidden shadow-2xl">
                 <div className="relative z-10">
-                   <p className="text-white/40 text-[10px] font-bold uppercase tracking-[0.3em] mb-2">Available Balance</p>
+                   <p className="text-white/85 text-[10px] font-bold uppercase tracking-[0.3em] mb-2">Available Balance</p>
                    <h2 className="text-5xl font-lora font-bold mb-8">$0.00</h2>
                    <div className="flex flex-wrap gap-4">
                         <button className="px-8 py-3 bg-white text-stone-800 rounded-xl text-sm font-bold shadow-lg hover:bg-cream-50 transition-all active:scale-95">
@@ -184,7 +184,7 @@ export default function CreatorHub() {
 
              <div className="space-y-6">
                 <h3 className="font-lora text-2xl text-stone-800 font-bold px-1">Exclusive Creator Perks</h3>
-                <div className="bg-white rounded-3xl border border-cream-200 p-12 text-center text-stone-400">
+                <div className="bg-white rounded-3xl border border-cream-200 p-12 text-center text-stone-600">
                   <Icon name="card_giftcard" size={40} className="mx-auto mb-3 opacity-30" />
                   <p className="text-sm font-medium">No perks available yet.</p>
                   <p className="text-xs mt-1">Perks unlock as you publish and grow your audience.</p>

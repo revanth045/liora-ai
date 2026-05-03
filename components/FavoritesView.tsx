@@ -22,7 +22,7 @@ export const FavoritesView: React.FC<FavoritesViewProps> = ({ favorites, removeF
                 {favorites.length > 0 && (
                     <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <Icon name="search" className="w-4 h-4 text-stone-400" />
+                            <Icon name="search" className="w-4 h-4 text-stone-600" />
                         </div>
                         <input
                             type="text"
@@ -37,13 +37,13 @@ export const FavoritesView: React.FC<FavoritesViewProps> = ({ favorites, removeF
 
             <div className="space-y-4">
                 {favorites.length === 0 ? (
-                    <div className="text-center py-12 text-stone-400">
+                    <div className="text-center py-12 text-stone-600">
                         <Icon name="bookmark" className="w-12 h-12 mx-auto mb-2 opacity-50" />
                         <p>No favorites saved yet.</p>
                         <p className="text-xs mt-1">Tap the heart on any message to save it.</p>
                     </div>
                 ) : filteredFavorites.length === 0 ? (
-                     <div className="text-center py-10 text-stone-400">No matches found.</div>
+                     <div className="text-center py-10 text-stone-600">No matches found.</div>
                 ) : (
                     filteredFavorites.map((msg) => (
                         <div key={msg.id} className="bg-white p-5 rounded-2xl shadow-sm border border-cream-200 relative group">
@@ -51,7 +51,7 @@ export const FavoritesView: React.FC<FavoritesViewProps> = ({ favorites, removeF
                             
                             {msg.groundingChunks && msg.groundingChunks.length > 0 && (
                                 <div className="mt-3 pt-3 border-t border-cream-200/60">
-                                    <h4 className="text-[10px] font-bold uppercase tracking-wide text-stone-400 mb-2">Sources</h4>
+                                    <h4 className="text-[10px] font-bold uppercase tracking-wide text-stone-600 mb-2">Sources</h4>
                                     <ul className="space-y-2">
                                         {msg.groundingChunks.map((chunk, idx) => {
                                             const source = chunk.web || chunk.maps;
@@ -71,7 +71,7 @@ export const FavoritesView: React.FC<FavoritesViewProps> = ({ favorites, removeF
 
                             <button
                                 onClick={() => removeFavorite(msg.id)}
-                                className="absolute top-3 right-3 text-stone-400 hover:text-red-500 transition-colors"
+                                className="absolute top-3 right-3 text-stone-600 hover:text-red-500 transition-colors"
                                 aria-label="Remove from favorites"
                             >
                                 <Icon name="trash" className="w-4 h-4" />

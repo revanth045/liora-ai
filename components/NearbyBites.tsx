@@ -127,7 +127,7 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                 <h2 className="font-lora font-bold text-xl text-stone-800">Nearby Bites</h2>
                 <button 
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all ${showFilters ? 'bg-brand-400 text-white border-brand-400' : 'bg-white text-stone-400 border-cream-200'}`}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-full border transition-all ${showFilters ? 'bg-brand-400 text-white border-brand-400' : 'bg-white text-stone-600 border-cream-200'}`}
                 >
                     {showFilters ? 'Hide Filters' : 'Filters'}
                 </button>
@@ -171,7 +171,7 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                 {/* Top Picks Horizontal Scroll */}
                 {(topPicks.length > 0 || picksLoading) && (
                     <div className="space-y-2">
-                        <h3 className="text-xs font-bold text-stone-400 uppercase tracking-wider flex items-center gap-2">
+                        <h3 className="text-xs font-bold text-stone-600 uppercase tracking-wider flex items-center gap-2">
                             <Icon name="sparkles" className="w-3 h-3 text-brand-400" /> Recommended for You
                         </h3>
                         <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
@@ -189,7 +189,7 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                                     </div>
                                     <div className="p-2">
                                         <h4 className="font-bold text-stone-800 text-sm truncate">{pick.name}</h4>
-                                        <p className="text-[10px] text-stone-400 uppercase font-semibold">{pick.cuisine} • {pick.est_cost}</p>
+                                        <p className="text-[10px] text-stone-600 uppercase font-semibold">{pick.cuisine} • {pick.est_cost}</p>
                                         <button 
                                             onClick={() => pick.isPartner ? handleCheckIn(pick) : executeSearch({ ...formState, cuisine: pick.name })}
                                             className={`w-full mt-2 py-1.5 rounded-lg text-[10px] font-bold transition-all ${pick.isPartner ? 'bg-brand-400 text-white' : 'bg-cream-50 text-stone-800'}`}
@@ -224,7 +224,7 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                                                     </div>
                                                     <span className="bg-white px-2 py-0.5 rounded text-xs border border-cream-200">{rec.rating}✨</span>
                                                 </div>
-                                                <p className="text-xs text-stone-400 mt-0.5">{rec.cuisine} • {rec.est_cost} • {rec.distance}</p>
+                                                <p className="text-xs text-stone-600 mt-0.5">{rec.cuisine} • {rec.est_cost} • {rec.distance}</p>
                                                 <p className="text-xs text-stone-600 mt-2 italic">"{rec.why_matched}"</p>
                                                 <div className="mt-3 flex gap-2">
                                                     {rec.isPartner ? (
@@ -252,7 +252,7 @@ export const NearbyBites: React.FC<NearbyBitesProps> = ({ favorites, addFavorite
                         <div className="flex gap-3">
                             <div className="w-8 h-8 rounded-full bg-brand-400 flex-shrink-0"></div>
                             <div className="bg-white p-3 rounded-2xl rounded-bl-none border border-cream-200/60 shadow-sm flex items-center gap-2">
-                                <Spinner /> <span className="text-xs text-stone-400">Searching nearby...</span>
+                                <Spinner /> <span className="text-xs text-stone-600">Searching nearby...</span>
                             </div>
                         </div>
                     )}

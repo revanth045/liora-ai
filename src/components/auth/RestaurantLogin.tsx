@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth } from '../../auth';
+import { LogoMark } from '../../../components/Logo';
 import { Icon } from '../../../components/Icon';
 import { Spinner } from '../../../components/Spinner';
 import AccountSwitcher from './AccountSwitcher';
@@ -9,16 +10,7 @@ interface RestaurantLoginProps {
 }
 
 type LoginType = 'owner' | 'staff';
-type OwnerMode = 'login' | 'register';
-type StaffMode = 'login' | 'register';
-
-const DEMO_RESTAURANTS_LIST = [
-  { emoji: '🍽️', name: 'The Golden Fork',  email: 'golden@liora.demo',  owner: 'Chef Marco',  cuisine: 'Italian-American' },
-  { emoji: '🌸', name: 'Sakura Blossom',   email: 'sakura@liora.demo',  owner: 'Chef Yuki',   cuisine: 'Japanese' },
-  { emoji: '🌶️', name: 'Spice Route',      email: 'spice@liora.demo',   owner: 'Chef Arjun',  cuisine: 'Indian' },
-  { emoji: '🪵', name: 'The Rustic Table', email: 'rustic@liora.demo',  owner: 'Chef Emma',   cuisine: 'Farm-to-Table' },
-];
-const DEMO_PASSWORD = 'demo1234';
+type Mode      = 'login' | 'register';
 
 const GoogleIcon = () => (
   <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
@@ -33,13 +25,13 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
   const auth = getAuth();
 
   const [loginType, setLoginType] = useState<LoginType>('owner');
-  const [ownerMode, setOwnerMode] = useState<OwnerMode>('login');
+  const [ownerMode, setOwnerMode] = useState<Mode>('login');
   const [ownerEmail, setOwnerEmail] = useState('');
   const [ownerPassword, setOwnerPassword] = useState('');
   const [ownerName, setOwnerName] = useState('');
   const [restaurantName, setRestaurantName] = useState('');
 
-  const [staffMode, setStaffMode] = useState<StaffMode>('login');
+  const [staffMode, setStaffMode] = useState<Mode>('login');
   const [staffEmail, setStaffEmail] = useState('');
   const [staffPassword, setStaffPassword] = useState('');
   const [staffName, setStaffName] = useState('');
@@ -47,190 +39,113 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [selectedDemo, setSelectedDemo] = useState<number | null>(null);
   const [googleLoading, setGoogleLoading] = useState(false);
 
-  const inp = "w-full px-4 py-3 rounded-xl bg-cream-50 border border-cream-200 text-stone-800 placeholder-stone-400 focus:outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400/30 transition-all text-sm";
-  const lbl = "block text-xs font-semibold text-stone-500 uppercase tracking-wider mb-1.5";
+  const inp = "w-full px-4 py-3.5 rounded-2xl bg-white border border-stone-200 text-stone-900 placeholder-stone-400 focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/15 transition-all text-[15px]";
+  const lbl = "block text-[10px] font-bold text-stone-700 uppercase tracking-[0.2em] mb-2";
 
   const handleGoogleLogin = async () => {
     if (!auth.signInWithGoogle) return;
-    setGoogleLoading(true);
-    setError('');
-    try {
-      await auth.signInWithGoogle('restaurant_owner');
-    } catch (err: any) {
-      setError(err.message || 'Google sign-in failed');
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
-  const handleDemoRestaurantLogin = async (idx: number) => {
-    const r = DEMO_RESTAURANTS_LIST[idx];
-    setSelectedDemo(idx);
-    setError('');
-    try {
-      try {
-        // Try signup first (creates the account if it doesn't exist yet)
-        await auth.signUpRestaurantOwner(r.email, DEMO_PASSWORD, r.owner, r.name);
-        // signUpRestaurantOwner now handles session + emit, so we're done
-      } catch {
-        // Already registered — just sign in normally
-        await auth.signInUser(r.email, DEMO_PASSWORD);
-      }
-    } catch (err: any) {
-      setError(err.message || 'Demo login failed');
-    } finally {
-      setSelectedDemo(null);
-    }
+    setGoogleLoading(true); setError('');
+    try { await auth.signInWithGoogle(); }
+    catch (err: any) { setError(err.message || 'Google sign-in failed'); }
+    finally { setGoogleLoading(false); }
   };
 
   const handleOwnerSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+    e.preventDefault(); setError(''); setLoading(true);
     try {
-      if (ownerMode === 'register') {
-        // signUpRestaurantOwner now handles session + emit
-        await auth.signUpRestaurantOwner(ownerEmail, ownerPassword, ownerName, restaurantName);
-      } else {
-        await auth.signInUser(ownerEmail, ownerPassword);
-      }
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
+      if (ownerMode === 'register') await auth.signUpRestaurantOwner(ownerEmail, ownerPassword, ownerName, restaurantName);
+      else                          await auth.signInUser(ownerEmail, ownerPassword);
+    } catch (err: any) { setError(err.message || 'Something went wrong'); }
+    finally { setLoading(false); }
   };
 
   const handleStaffSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    setLoading(true);
+    e.preventDefault(); setError(''); setLoading(true);
     try {
       if (staffMode === 'register') {
         if (!auth.signUpStaff) throw new Error('Staff registration not supported.');
-        // signUpStaff now handles session + emit
         await auth.signUpStaff(staffEmail, staffPassword, staffName, staffCode);
-      } else {
-        await auth.signInUser(staffEmail, staffPassword);
-      }
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong');
-    } finally {
-      setLoading(false);
-    }
+      } else await auth.signInUser(staffEmail, staffPassword);
+    } catch (err: any) { setError(err.message || 'Something went wrong'); }
+    finally { setLoading(false); }
   };
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full">
       {/* Header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-stone-800 flex items-center justify-center shadow">
-            <span className="font-display font-bold text-white text-xl">L</span>
-          </div>
-          <div>
-            <span className="font-display text-2xl font-semibold text-stone-800">Liora</span>
-            <span className="ml-2 text-[9px] font-bold text-stone-400 uppercase tracking-[0.2em]">for Restaurants</span>
+      <div className="mb-7">
+        <div className="flex items-center gap-3 mb-5 md:hidden">
+          <LogoMark className="h-10 w-10" />
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-xl font-semibold text-stone-900 tracking-tight">Liora</span>
+            <span className="text-[8px] font-bold text-stone-800 uppercase tracking-[0.32em] mt-1">For Restaurants</span>
           </div>
         </div>
-        <h1 className="font-display text-3xl font-light text-stone-900 leading-snug">
+        <p className="text-[10px] font-bold text-brand-600 uppercase tracking-[0.28em] mb-3">
+          {loginType === 'owner' ? 'Restaurateur access' : 'Service desk access'}
+        </p>
+        <h1 className="font-display text-4xl font-light text-stone-900 leading-[1.05] tracking-tight">
           {loginType === 'owner'
-            ? ownerMode === 'login' ? <>Welcome <span className="italic">back</span></> : <>Grow your <span className="italic">restaurant</span></>
-            : staffMode === 'login' ? <>Service <span className="italic">Desk</span> Login</> : <>Join your <span className="italic">team</span></>
+            ? ownerMode === 'login' ? <>Welcome <em className="italic text-brand-600">back.</em></> : <>Grow your <em className="italic text-brand-600">restaurant.</em></>
+            : staffMode === 'login' ? <>Service <em className="italic text-brand-600">Desk.</em></> : <>Join your <em className="italic text-brand-600">team.</em></>
           }
         </h1>
-        <p className="text-stone-500 text-sm mt-1.5">
+        <p className="text-stone-800 text-sm mt-3 font-light leading-relaxed">
           {loginType === 'owner'
-            ? ownerMode === 'login' ? 'Full restaurant dashboard access.' : 'Join thousands of restaurants using Liora.'
-            : staffMode === 'login' ? 'Operational view for front-of-house staff.' : 'Enter the staff code from your restaurant owner.'}
+            ? ownerMode === 'login' ? 'Full restaurant dashboard access — orders, menu, marketing, insights.' : 'Join thousands of restaurants orchestrating with Liora.'
+            : staffMode === 'login' ? 'Operational view for front-of-house and kitchen staff.' : 'Enter the staff access code from your restaurant owner.'}
         </p>
       </div>
 
-      {/* 4 Demo Restaurant Buttons */}
-      {loginType === 'owner' && (
-        <div className="mb-5">
-          <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2.5">
-            ⚡ Try a Demo Restaurant — instant access
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            {DEMO_RESTAURANTS_LIST.map((r, idx) => (
-              <button
-                key={r.email}
-                onClick={() => handleDemoRestaurantLogin(idx)}
-                disabled={selectedDemo !== null}
-                className="flex items-center gap-2.5 p-3 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 hover:border-amber-400 hover:shadow-md transition-all text-left group disabled:opacity-60 active:scale-95"
-              >
-                {selectedDemo === idx ? (
-                  <Spinner />
-                ) : (
-                  <span className="text-xl group-hover:scale-110 transition-transform flex-shrink-0">{r.emoji}</span>
-                )}
-                <div className="min-w-0">
-                  <p className="text-xs font-bold text-stone-800 truncate leading-tight">{r.name}</p>
-                  <p className="text-[10px] text-stone-400 truncate">{r.cuisine}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Top-level type toggle */}
-      <div className="flex gap-0 mb-5 p-1 rounded-xl border border-cream-200 bg-cream-100">
+      {/* Login type toggle */}
+      <div className="flex gap-1 mb-5 p-1 rounded-2xl border border-stone-200 bg-cream-100">
         {([
-          { id: 'owner', label: 'Restaurant Owner', icon: 'admin_panel_settings' },
+          { id: 'owner', label: 'Owner',        icon: 'admin_panel_settings' },
           { id: 'staff', label: 'Service Desk', icon: 'support_agent' },
         ] as const).map(t => (
           <button key={t.id} onClick={() => { setLoginType(t.id); setError(''); }}
-            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-              loginType === t.id ? 'bg-white text-stone-800 shadow-sm border border-cream-200' : 'text-stone-500 hover:text-stone-700'
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-[13px] font-bold transition-all tracking-wide ${
+              loginType === t.id ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-800 hover:text-stone-800'
             }`}>
-            <Icon name={t.icon} size={15} />
-            {t.label}
+            <Icon name={t.icon} size={15} />{t.label}
           </button>
         ))}
       </div>
 
-      {/* -- OWNER PANEL -- */}
+      {/* Owner panel */}
       {loginType === 'owner' && (
         <>
-          <div className="flex gap-0 mb-5 p-1 rounded-xl border border-cream-200 bg-cream-50">
-            {(['login', 'register'] as OwnerMode[]).map(m => (
+          <div className="flex gap-1 mb-5 p-1 rounded-2xl border border-stone-200 bg-cream-50">
+            {(['login', 'register'] as Mode[]).map(m => (
               <button key={m} onClick={() => setOwnerMode(m)}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                  ownerMode === m ? 'bg-white text-stone-800 shadow-sm border border-cream-200' : 'text-stone-500 hover:text-stone-700'
+                className={`flex-1 py-2.5 rounded-xl text-[13px] font-bold transition-all tracking-wide ${
+                  ownerMode === m ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-800 hover:text-stone-800'
                 }`}>
                 {m === 'login' ? 'Sign In' : 'Register Restaurant'}
               </button>
             ))}
           </div>
 
-          <div className="bg-white border border-cream-200 rounded-2xl p-6 shadow-sm">
+          <div className="card p-7 md:p-8">
             {error && (
-              <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm flex items-center gap-2">
-                <Icon name="x" className="w-4 h-4 flex-shrink-0" />
-                {error}
+              <div className="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2 font-medium">
+                <Icon name="x" className="w-4 h-4 flex-shrink-0" />{error}
               </div>
             )}
 
             {auth.signInWithGoogle && (
               <>
-                <button
-                  type="button"
-                  onClick={handleGoogleLogin}
-                  disabled={googleLoading}
-                  className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-cream-200 bg-white hover:bg-cream-50 text-stone-700 font-semibold text-sm transition-all shadow-sm disabled:opacity-60 mb-4"
-                >
+                <button type="button" onClick={handleGoogleLogin} disabled={googleLoading}
+                  className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-2xl border border-stone-200 bg-white hover:border-stone-400 text-stone-800 font-semibold text-[14px] transition-all disabled:opacity-60 mb-5 shadow-sm hover:shadow">
                   {googleLoading ? <Spinner /> : <GoogleIcon />}
-                  {googleLoading ? 'Signing you in...' : 'Continue with Google'}
+                  {googleLoading ? 'Connecting…' : 'Continue with Google'}
                 </button>
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex-1 h-px bg-cream-200" />
-                  <span className="text-xs text-stone-400 font-medium uppercase tracking-wider">or</span>
-                  <div className="flex-1 h-px bg-cream-200" />
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="flex-1 h-px bg-stone-200" />
+                  <span className="text-[10px] text-stone-800 font-bold uppercase tracking-[0.25em]">or with email</span>
+                  <div className="flex-1 h-px bg-stone-200" />
                 </div>
               </>
             )}
@@ -240,7 +155,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
                 <>
                   <div>
                     <label className={lbl}>Your Name</label>
-                    <input className={inp} type="text" placeholder="Owner / Manager name" value={ownerName}
+                    <input className={inp} type="text" placeholder="Owner / Manager" value={ownerName}
                       onChange={e => setOwnerName(e.target.value)} required autoComplete="name" />
                   </div>
                   <div>
@@ -257,53 +172,38 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
               </div>
               <div>
                 <label className={lbl}>Password</label>
-                <input className={inp} type="password" placeholder="********" value={ownerPassword}
+                <input className={inp} type="password" placeholder="••••••••" value={ownerPassword}
                   onChange={e => setOwnerPassword(e.target.value)} required
                   autoComplete={ownerMode === 'register' ? 'new-password' : 'current-password'} />
               </div>
-              <button type="submit" disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-sm bg-stone-800 text-white hover:bg-stone-900 transition-all shadow-sm disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
+              <button type="submit" disabled={loading} className="btn-primary w-full !py-4 !text-sm mt-2 anim-glow">
                 {loading ? <Spinner /> : null}
-                {loading ? 'Please wait...' : ownerMode === 'login' ? 'Access Dashboard' : 'Create Restaurant Account'}
+                {loading ? 'Please wait…' : ownerMode === 'login' ? 'Access dashboard →' : 'Create restaurant account'}
               </button>
             </form>
-            <div className="mt-4 pt-4 border-t border-cream-100">
-              <AccountSwitcher />
-            </div>
+            <div className="mt-5 pt-5 border-t border-stone-100"><AccountSwitcher /></div>
           </div>
-
-          {ownerMode === 'register' && (
-            <div className="mt-4 grid grid-cols-3 gap-3 text-center">
-              {[['📊','AI Analytics'],['🤖','AI Menu Tools'],['⭐','Table Management']].map(([emoji, label]) => (
-                <div key={label} className="bg-white border border-cream-200 rounded-2xl p-3 shadow-sm">
-                  <div className="text-2xl mb-1">{emoji}</div>
-                  <p className="text-[10px] font-bold text-stone-500 uppercase tracking-wider leading-tight">{label}</p>
-                </div>
-              ))}
-            </div>
-          )}
         </>
       )}
 
-      {/* -- SERVICE DESK PANEL -- */}
+      {/* Staff panel */}
       {loginType === 'staff' && (
         <>
-          <div className="flex gap-0 mb-5 p-1 rounded-xl border border-cream-200 bg-cream-50">
-            {(['login', 'register'] as StaffMode[]).map(m => (
+          <div className="flex gap-1 mb-5 p-1 rounded-2xl border border-stone-200 bg-cream-50">
+            {(['login', 'register'] as Mode[]).map(m => (
               <button key={m} onClick={() => setStaffMode(m)}
-                className={`flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all ${
-                  staffMode === m ? 'bg-white text-stone-800 shadow-sm border border-cream-200' : 'text-stone-500 hover:text-stone-700'
+                className={`flex-1 py-2.5 rounded-xl text-[13px] font-bold transition-all tracking-wide ${
+                  staffMode === m ? 'bg-white text-stone-900 shadow-sm' : 'text-stone-800 hover:text-stone-800'
                 }`}>
-                {m === 'login' ? 'Staff Sign In' : 'Join via Staff Code'}
+                {m === 'login' ? 'Staff Sign In' : 'Join via Code'}
               </button>
             ))}
           </div>
 
-          <div className="bg-white border border-cream-200 rounded-2xl p-6 shadow-sm">
+          <div className="card p-7 md:p-8">
             {error && (
-              <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm flex items-center gap-2">
-                <Icon name="x" className="w-4 h-4 flex-shrink-0" />
-                {error}
+              <div className="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2 font-medium">
+                <Icon name="x" className="w-4 h-4 flex-shrink-0" />{error}
               </div>
             )}
             <form onSubmit={handleStaffSubmit} className="space-y-4">
@@ -316,7 +216,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
                   </div>
                   <div>
                     <label className={lbl}>Staff Access Code</label>
-                    <input className={inp} type="text" placeholder="6-character code from your manager" value={staffCode}
+                    <input className={inp} type="text" placeholder="6-character code" value={staffCode}
                       onChange={e => setStaffCode(e.target.value.toUpperCase())} required maxLength={8} />
                   </div>
                 </>
@@ -328,29 +228,26 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
               </div>
               <div>
                 <label className={lbl}>Password</label>
-                <input className={inp} type="password" placeholder="********" value={staffPassword}
+                <input className={inp} type="password" placeholder="••••••••" value={staffPassword}
                   onChange={e => setStaffPassword(e.target.value)} required
                   autoComplete={staffMode === 'register' ? 'new-password' : 'current-password'} />
               </div>
-              <button type="submit" disabled={loading}
-                className="w-full py-3.5 rounded-xl font-bold text-sm bg-stone-800 text-white hover:bg-stone-900 transition-all shadow-sm disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
+              <button type="submit" disabled={loading} className="btn-primary w-full !py-4 !text-sm mt-2 anim-glow">
                 {loading ? <Spinner /> : null}
-                {loading ? 'Please wait...' : staffMode === 'login' ? 'Sign In' : 'Join Restaurant Team'}
+                {loading ? 'Please wait…' : staffMode === 'login' ? 'Sign In →' : 'Join restaurant team'}
               </button>
             </form>
-            <div className="mt-4 pt-4 border-t border-cream-100">
-              <AccountSwitcher />
-            </div>
+            <div className="mt-5 pt-5 border-t border-stone-100"><AccountSwitcher /></div>
           </div>
         </>
       )}
 
       {/* Switch to user */}
       {onSwitchToUser && (
-        <p className="text-center text-sm text-stone-400 mt-6">
+        <p className="text-center text-[12px] text-stone-800 mt-7 font-medium">
           Not a restaurant?{' '}
-          <button onClick={onSwitchToUser} className="text-brand-400 font-bold hover:underline">
-            Switch to User Login
+          <button onClick={onSwitchToUser} className="text-brand-600 font-bold hover:text-brand-700 underline-luxe">
+            Member access →
           </button>
         </p>
       )}

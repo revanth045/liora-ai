@@ -27,13 +27,13 @@ export const BillSplitter: React.FC<BillSplitterProps> = ({ total = 145.50, onCl
         <div className="flex bg-cream-50 p-1 rounded-2xl border border-cream-200/50">
           <button 
             onClick={() => setSplitType('equal')}
-            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-widest rounded-xl transition-all ${splitType === 'equal' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-400'}`}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-widest rounded-xl transition-all ${splitType === 'equal' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-600'}`}
           >
             Equal
           </button>
           <button 
             onClick={() => setSplitType('item')}
-            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-widest rounded-xl transition-all ${splitType === 'item' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-400'}`}
+            className={`flex-1 py-2.5 text-xs font-bold uppercase tracking-widest rounded-xl transition-all ${splitType === 'item' ? 'bg-white shadow-sm text-stone-800' : 'text-stone-600'}`}
           >
             By Item
           </button>
@@ -51,7 +51,7 @@ export const BillSplitter: React.FC<BillSplitterProps> = ({ total = 145.50, onCl
               </button>
               <div className="w-20">
                 <span className="block text-4xl font-lora font-bold text-stone-800">{people}</span>
-                <span className="text-[10px] font-bold text-stone-400 uppercase tracking-[0.2em]">Guests</span>
+                <span className="text-[10px] font-bold text-stone-600 uppercase tracking-[0.2em]">Guests</span>
               </div>
               <button 
                 onClick={() => setPeople(people + 1)} 
@@ -62,16 +62,16 @@ export const BillSplitter: React.FC<BillSplitterProps> = ({ total = 145.50, onCl
             </div>
 
             <div className="p-8 bg-cream-50/50 rounded-[2rem] border border-cream-200/50 relative overflow-hidden group">
-              <p className="text-[10px] text-stone-400 font-bold uppercase tracking-[0.3em] mb-2 relative z-10">Per Person</p>
+              <p className="text-[10px] text-stone-600 font-bold uppercase tracking-[0.3em] mb-2 relative z-10">Per Person</p>
               <p className="text-5xl font-lora font-bold text-stone-800 relative z-10">${(total / people).toFixed(2)}</p>
               <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
             </div>
           </div>
         ) : (
           <div className="text-center py-12 bg-cream-100/50 rounded-3xl border border-dashed border-cream-200">
-            <Icon name="drag_handle" size={40} className="mx-auto mb-4 text-stone-400" />
-            <p className="text-sm font-bold text-stone-400 uppercase tracking-widest">Interactive Item Split</p>
-            <p className="text-xs text-stone-400 mt-2 px-6">Drag items to guest avatars to assign. Coming in the next update!</p>
+            <Icon name="drag_handle" size={40} className="mx-auto mb-4 text-stone-600" />
+            <p className="text-sm font-bold text-stone-600 uppercase tracking-widest">Interactive Item Split</p>
+            <p className="text-xs text-stone-600 mt-2 px-6">Drag items to guest avatars to assign. Coming in the next update!</p>
           </div>
         )}
 

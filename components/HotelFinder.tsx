@@ -30,13 +30,13 @@ export const HotelFinder = () => {
         {/* Header */}
         <div>
             <h2 className="text-2xl font-lora font-bold text-stone-800">{content.header.title}</h2>
-            <p className="text-stone-400">{content.header.description}</p>
+            <p className="text-stone-600">{content.header.description}</p>
         </div>
 
         {/* Filters */}
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {content.filters.map((filter, idx) => (
-                <button key={idx} className="px-4 py-1.5 rounded-full bg-white border border-cream-200 text-sm text-stone-400 whitespace-nowrap hover:border-brand-400 hover:text-brand-400 transition-colors shadow-sm">
+                <button key={idx} className="px-4 py-1.5 rounded-full bg-white border border-cream-200 text-sm text-stone-600 whitespace-nowrap hover:border-brand-400 hover:text-brand-400 transition-colors shadow-sm">
                     {filter}
                 </button>
             ))}
@@ -52,7 +52,7 @@ export const HotelFinder = () => {
             </div>
             <div className="p-5">
                 <h3 className="text-xl font-bold text-stone-800">{content.featuredHotel.name}</h3>
-                <p className="text-sm text-stone-400 mb-2">{content.featuredHotel.city}</p>
+                <p className="text-sm text-stone-600 mb-2">{content.featuredHotel.city}</p>
                 <p className="text-sm text-stone-800 mb-4 italic">"{content.featuredHotel.tagline}"</p>
                 <div className="flex gap-3">
                     <button className="flex-1 bg-brand-400 text-white py-2 rounded-xl font-bold text-sm hover:bg-cream-200 transition-colors shadow-md">View Details</button>
@@ -68,18 +68,18 @@ export const HotelFinder = () => {
                 <div key={idx} className="p-4 bg-white rounded-xl border border-cream-200 shadow-sm flex justify-between items-center hover:shadow-md transition-all cursor-pointer">
                     <div>
                         <h4 className="font-bold text-stone-800">{hotel.name}</h4>
-                        <p className="text-xs text-stone-400">{hotel.city} • {hotel.rating}✨</p>
+                        <p className="text-xs text-stone-600">{hotel.city} • {hotel.rating}✨</p>
                         <div className="flex gap-2 mt-1">
-                            {hotel.tags.map(t => <span key={t} className="text-[10px] bg-cream-100/50 px-1.5 py-0.5 rounded text-stone-400">{t}</span>)}
+                            {hotel.tags.map(t => <span key={t} className="text-[10px] bg-cream-100/50 px-1.5 py-0.5 rounded text-stone-600">{t}</span>)}
                         </div>
                     </div>
-                    <Icon name="chevron-right" className="w-5 h-5 text-stone-400" />
+                    <Icon name="chevron-right" className="w-5 h-5 text-stone-600" />
                 </div>
             ))}
         </div>
 
         {/* Safety Note */}
-        <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 text-xs text-stone-400">
+        <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-100 text-xs text-stone-600">
             <div className="flex items-center gap-2 mb-1 text-blue-800 font-bold">
                 <Icon name="lock" className="w-3 h-3" /> Safety First
             </div>

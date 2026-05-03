@@ -97,7 +97,7 @@ export const OnboardingWizard = ({ onComplete }: OnboardingProps) => {
                   className={`p-4 rounded-2xl text-sm font-bold transition-all border ${
                     preferences.includes(diet)
                       ? 'bg-cream-100 text-white shadow-lg border-cream-200'
-                      : 'bg-white border-cream-200 text-stone-400 hover:border-cream-200'
+                      : 'bg-white border-cream-200 text-stone-600 hover:border-cream-200'
                   }`}
                 >
                   {diet}
@@ -146,7 +146,7 @@ export const OnboardingWizard = ({ onComplete }: OnboardingProps) => {
 
         {/* Step 3: Global Typing State */}
         {isTyping && (
-          <div className="flex gap-2 items-center text-stone-400 animate-fade-in p-6 bg-cream-50 border border-cream-200 rounded-2xl border border-dashed border-cream-200">
+          <div className="flex gap-2 items-center text-stone-600 animate-fade-in p-6 bg-cream-50 border border-cream-200 rounded-2xl border border-dashed border-cream-200">
              <div className="w-2 h-2 bg-brand-500 rounded-full animate-bounce"></div>
              <div className="w-2 h-2 bg-brand-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
              <div className="w-2 h-2 bg-brand-500 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
@@ -166,7 +166,7 @@ export const OnboardingWizard = ({ onComplete }: OnboardingProps) => {
              </div>
              <div>
                <h3 className="text-3xl font-lora text-stone-800 mb-2 font-bold">Calibrating...</h3>
-               <p className="text-stone-400 font-medium">Curating local gems for {name}...<br/>Aligning wellness goals...</p>
+               <p className="text-stone-600 font-medium">Curating local gems for {name}...<br/>Aligning wellness goals...</p>
              </div>
           </div>
         )}

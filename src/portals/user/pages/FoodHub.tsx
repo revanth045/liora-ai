@@ -106,7 +106,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
                 <div className="flex justify-between items-start mb-4">
                     <div>
                         <h1 className="text-3xl font-lora font-bold text-stone-800">Taste & Discover</h1>
-                        <p className="text-stone-400 text-sm mt-1">Found 42 local gems near you</p>
+                        <p className="text-stone-600 text-sm mt-1">Found 42 local gems near you</p>
                     </div>
                     <button className="p-2.5 bg-white border border-cream-200 rounded-full text-stone-800 shadow-sm hover:bg-cream-50 transition-all">
                         <Icon name="tune" size={20} />
@@ -134,7 +134,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
 
                 {/* Mood Selectors (The "Why") */}
                 <div className="mb-6">
-                    <h3 className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-3 px-1">What's the vibe?</h3>
+                    <h3 className="text-[10px] font-bold text-stone-600 uppercase tracking-widest mb-3 px-1">What's the vibe?</h3>
                     <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 overscroll-x-contain touch-pan-x">
                         {MOODS.map(mood => (
                             <button 
@@ -169,7 +169,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
                             placeholder="Search for sushi, tacos, or craving..."
                             className="w-full p-4 pl-12 bg-white rounded-2xl border border-cream-200 text-stone-800 shadow-sm group-focus-within:ring-1 group-focus-within:ring-brand-400 focus:outline-none transition-all"
                         />
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-400 group-focus-within:text-stone-800 transition-colors">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-stone-600 group-focus-within:text-stone-800 transition-colors">
                             <Icon name="search" size={20} />
                         </div>
                     </div>
@@ -203,7 +203,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
                                             <h3 className="font-lora text-2xl font-bold text-stone-800">{place.name}</h3>
-                                            <p className="text-sm text-stone-400 font-medium">{place.type} • <span className="text-stone-800 font-bold">{place.price}</span></p>
+                                            <p className="text-sm text-stone-600 font-medium">{place.type} • <span className="text-stone-800 font-bold">{place.price}</span></p>
                                         </div>
                                         <div className="flex items-center gap-1.5 bg-cream-50 px-3 py-1.5 rounded-xl border border-cream-200">
                                             <Icon name="star-solid" size={14} className="text-yellow-500" />
@@ -214,7 +214,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
                                     {/* Tags */}
                                     <div className="flex flex-wrap gap-2 mt-4 mb-6">
                                         {place.tags.map(tag => (
-                                            <span key={tag} className="px-3 py-1 bg-cream-100/80 text-stone-400 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-cream-200/60">
+                                            <span key={tag} className="px-3 py-1 bg-cream-100/80 text-stone-600 text-[10px] font-bold uppercase tracking-wider rounded-lg border border-cream-200/60">
                                                 {tag}
                                             </span>
                                         ))}
@@ -255,7 +255,7 @@ export default function FoodHub({ favorites, addFavorite, removeFavorite, setVie
                             <Icon name="search_off" size={40} />
                         </div>
                         <h3 className="text-stone-800 font-lora text-xl font-bold">No matching gems</h3>
-                        <p className="text-sm text-stone-400 mt-2 max-w-xs mx-auto">Try adjusting your mood filters or searching for something else.</p>
+                        <p className="text-sm text-stone-600 mt-2 max-w-xs mx-auto">Try adjusting your mood filters or searching for something else.</p>
                         <button onClick={() => setActiveFilter('all')} className="mt-8 px-6 py-2.5 bg-cream-100 text-white rounded-xl text-sm font-bold shadow-md">Clear Filters</button>
                     </div>
                 )}

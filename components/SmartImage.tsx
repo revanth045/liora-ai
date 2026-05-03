@@ -30,12 +30,12 @@ export const SmartImage: React.FC<SmartImageProps> = ({ src, alt, className, con
     return (
         <div className={`relative overflow-hidden bg-cream-100/50 ${containerClassName || ''}`}>
             {status === 'loading' && (
-                <div className="absolute inset-0 flex items-center justify-center text-stone-400 bg-cream-100/80 z-10">
+                <div className="absolute inset-0 flex items-center justify-center text-stone-600 bg-cream-100/80 z-10">
                     <Spinner />
                 </div>
             )}
             {status === 'error' ? (
-                <div className="absolute inset-0 flex items-center justify-center text-stone-400 bg-cream-100/50">
+                <div className="absolute inset-0 flex items-center justify-center text-stone-600 bg-cream-100/50">
                     <Icon name="camera" className="w-8 h-8" />
                 </div>
             ) : (

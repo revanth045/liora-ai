@@ -52,10 +52,10 @@ export const AiWaiter = () => {
     const [orderSuccess, setOrderSuccess] = useState(false);
     const [qrError, setQrError] = useState('');
 
-    const cartCount = Object.values(cartQty).reduce((sum, q) => sum + q, 0);
+    const cartCount = (Object.values(cartQty) as number[]).reduce((sum, q) => sum + q, 0);
     const cartTotal = specials
-        .filter(i => (cartQty[i.id] ?? 0) > 0)
-        .reduce((sum, i) => sum + i.priceCents * (cartQty[i.id] ?? 0), 0);
+        .filter(i => ((cartQty[i.id] as number) ?? 0) > 0)
+        .reduce((sum, i) => sum + i.priceCents * ((cartQty[i.id] as number) ?? 0), 0);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -333,7 +333,7 @@ export const AiWaiter = () => {
             status: 'pending',
             totalCents: cartTotal,
             createdAt: Date.now(),
-            allergens: profile?.profile?.allergens && profile.profile.allergens.length > 0 ? profile.profile.allergens : undefined,
+            allergens: profile?.profile?.allergens && (profile.profile.allergens as any[]).length > 0 ? profile.profile.allergens : undefined,
         });
 
         // Also write to Supabase for cross-device sync
@@ -349,25 +349,23 @@ export const AiWaiter = () => {
             totalCents: cartTotal,
             createdAt: Date.now(),
             updatedAt: Date.now(),
-            allergens: profile?.profile?.allergens && profile.profile.allergens.length > 0 ? profile.profile.allergens : undefined,
+            allergens: profile?.profile?.allergens && (profile.profile.allergens as any[]).length > 0 ? profile.profile.allergens : undefined,
         };
         sbAddOrder(orderPayload).catch(e => console.warn('Supabase order sync failed:', e));
 
         const alertId = uid();
-        const allergensList = (profile?.profile?.allergens && profile.profile.allergens.length > 0) ? profile.profile.allergens.join(', ') : '';
+        const allergensList = (profile?.profile?.allergens && (profile.profile.allergens as any[]).length > 0) ? profile.profile.allergens.join(', ') : '';
         let notificationMessage = `Order placed with ${items.length} items (${items.map(i => `${i.qty}x ${i.name}`).join(', ')})`;
         if (allergensList) notificationMessage += ` | ⚠️ ALLERGY WARNING: ${allergensList}`;
 
         db_addTableAlert({
-            id: alertId,
             restaurantName: session.restaurantName,
             tableNumber: String(session.tableNumber),
             action: 'New Order',
             message: notificationMessage,
-            status: 'active',
             orderId: orderId,
-            createdAt: Date.now()
-        });
+        } as any);
+        void alertId;
 
         sbAddTableAlert({
             id: alertId,
@@ -446,7 +444,7 @@ export const AiWaiter = () => {
                     </div>
                     <div>
                         <h2 className="text-3xl font-lora font-bold text-stone-800 mb-3">Connect to Table</h2>
-                        <p className="text-stone-400 max-w-sm mx-auto leading-relaxed">
+                        <p className="text-stone-600 max-w-sm mx-auto leading-relaxed">
                             Scan the QR code at any Liora Partner restaurant to unlock instant service, digital ordering, and table-side assistance.
                         </p>
                     </div>
@@ -460,7 +458,7 @@ export const AiWaiter = () => {
                         <Icon name="scan" className="w-6 h-6 group-hover:animate-pulse" />
                         Open Camera Scanner
                     </button>
-                    <p className="text-[10px] text-stone-400 uppercase tracking-widest font-bold">Secure Liora Direct Connection</p>
+                    <p className="text-[10px] text-stone-600 uppercase tracking-widest font-bold">Secure Liora Direct Connection</p>
                 </div>
 
                 {/* QR Scanner Modal */}
@@ -562,7 +560,7 @@ export const AiWaiter = () => {
                                 <div key={item.id} className="flex items-center justify-between bg-cream-50 border border-cream-200 rounded-2xl p-4 shadow-sm">
                                     <div className="flex-1 min-w-0">
                                         <p className="font-bold text-stone-800 text-sm">{item.name}</p>
-                                        {item.description && <p className="text-stone-400 text-xs mt-0.5 line-clamp-2">{item.description}</p>}
+                                        {item.description && <p className="text-stone-600 text-xs mt-0.5 line-clamp-2">{item.description}</p>}
                                         {item.tags && item.tags.length > 0 && (
                                             <div className="flex flex-wrap gap-1 mt-1.5">
                                                 {item.tags.map(tag => (
@@ -597,7 +595,7 @@ export const AiWaiter = () => {
                                     <div key={item.name} className="flex items-center justify-between bg-cream-50 border border-cream-200 rounded-2xl p-4 shadow-sm">
                                         <div className="flex-1 min-w-0">
                                             <p className="font-bold text-stone-800 text-sm">{item.name}</p>
-                                            <p className="text-stone-400 text-xs mt-0.5">{item.desc}</p>
+                                            <p className="text-stone-600 text-xs mt-0.5">{item.desc}</p>
                                             <div className="flex flex-wrap gap-1 mt-1.5">
                                                 {item.tags.map(tag => (
                                                     <span key={tag} className="text-[10px] font-bold px-2 py-0.5 bg-brand-400/10 text-brand-400 rounded-full uppercase tracking-wide">{tag}</span>
@@ -617,7 +615,7 @@ export const AiWaiter = () => {
                                     <Icon name="check_circle" size={48} className="text-green-500" />
                                 </div>
                                 <p className="font-lora font-bold text-2xl text-stone-800">Order Sent!</p>
-                                <p className="text-stone-400 text-sm">The kitchen is on it.</p>
+                                <p className="text-stone-600 text-sm">The kitchen is on it.</p>
                             </div>
                         )}
                         <div className="p-4 border-t border-cream-200 bg-white flex-shrink-0 space-y-3">
@@ -670,16 +668,16 @@ export const AiWaiter = () => {
                                     <Icon name="check_circle" size={48} className="text-green-500" />
                                 </div>
                                 <p className="font-lora font-bold text-2xl text-stone-800">Order Sent!</p>
-                                <p className="text-stone-400 text-sm">The kitchen is on it.</p>
+                                <p className="text-stone-600 text-sm">The kitchen is on it.</p>
                             </div>
                         )}
 
                         {/* Menu items list */}
                         <div className="overflow-y-auto flex-1 p-4 space-y-3">
                             {specials.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center py-16 text-center text-stone-400 gap-3">
+                                <div className="flex flex-col items-center justify-center py-16 text-center text-stone-600 gap-3">
                                     <Icon name="menu_book" size={48} className="opacity-20" />
-                                    <p className="font-bold text-stone-500">Menu not set up yet</p>
+                                    <p className="font-bold text-stone-600">Menu not set up yet</p>
                                     <p className="text-sm">Please ask your waiter for today's menu.</p>
                                 </div>
                             ) : specials.map(item => {
@@ -688,11 +686,11 @@ export const AiWaiter = () => {
                                     <div key={item.id} className="flex items-center gap-3 bg-cream-50 border border-cream-200 rounded-2xl p-4 shadow-sm">
                                         <div className="flex-1 min-w-0">
                                             <p className="font-bold text-stone-800 text-sm">{item.name}</p>
-                                            {item.description && <p className="text-stone-400 text-xs mt-0.5 line-clamp-2">{item.description}</p>}
+                                            {item.description && <p className="text-stone-600 text-xs mt-0.5 line-clamp-2">{item.description}</p>}
                                             {item.tags && item.tags.length > 0 && (
                                                 <div className="flex flex-wrap gap-1 mt-1.5">
                                                     {item.tags.map(tag => (
-                                                        <span key={tag} className="text-[10px] font-bold px-2 py-0.5 bg-stone-100 text-stone-500 rounded-full uppercase tracking-wide">{tag}</span>
+                                                        <span key={tag} className="text-[10px] font-bold px-2 py-0.5 bg-stone-100 text-stone-600 rounded-full uppercase tracking-wide">{tag}</span>
                                                     ))}
                                                 </div>
                                             )}
@@ -785,7 +783,7 @@ export const AiWaiter = () => {
                         onClick={() => {
                             if (window.confirm("Ready to leave the table? This will end your active session.")) endSession();
                         }}
-                        className="p-2.5 text-stone-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+                        className="p-2.5 text-stone-600 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
                         title="Leave Table"
                     >
                         <Icon name="x" size={20} />
@@ -814,7 +812,7 @@ export const AiWaiter = () => {
                         <div className="w-8 h-8 rounded-full bg-brand-400 flex-shrink-0" />
                         <div className="bg-white p-4 rounded-2xl border border-cream-200/60 shadow-sm flex items-center gap-2">
                             <Spinner />
-                            <span className="text-xs text-stone-400 font-medium">Checking with the kitchen...</span>
+                            <span className="text-xs text-stone-600 font-medium">Checking with the kitchen...</span>
                         </div>
                     </div>
                 )}
@@ -833,7 +831,7 @@ export const AiWaiter = () => {
                     <button 
                         key={label}
                         onClick={() => handleQuickAction(label)}
-                        className="px-4 py-2.5 rounded-full bg-cream-50 border border-cream-200 text-[11px] font-bold text-stone-500 whitespace-nowrap hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-all flex-shrink-0 shadow-sm active:scale-95 flex items-center gap-1.5"
+                        className="px-4 py-2.5 rounded-full bg-cream-50 border border-cream-200 text-[11px] font-bold text-stone-600 whitespace-nowrap hover:bg-brand-400 hover:text-white hover:border-brand-400 transition-all flex-shrink-0 shadow-sm active:scale-95 flex items-center gap-1.5"
                     >
                         <span>{icon}</span>
                         <span>{label}</span>
