@@ -237,28 +237,42 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-stone-900 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group animate-slide-up stagger-5">
-             <div className="relative z-10">
-                <h3 className="font-lora text-xl font-bold mb-6">Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { icon: 'add',           label: 'New Item'   },
-                    { icon: 'campaign',      label: 'Blast Promo'},
-                    { icon: 'pause',         label: 'Pause Orders'},
-                    { icon: 'support_agent', label: 'Liora Help' },
-                  ].map((btn, i) => (
-                    <button key={i} className="p-4 bg-white/5 hover:bg-white/15 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 transition-all duration-150 active:scale-95 border border-white/10 hover:border-white/25 hover:-translate-y-0.5 group/btn">
-                      <span className="group-hover/btn:scale-110 transition-transform duration-150">
-                        <Icon name={btn.icon} size={22} />
-                      </span>
-                      {btn.label}
-                    </button>
-                  ))}
+          <div
+            className="rounded-[2rem] p-8 shadow-2xl relative overflow-hidden group animate-slide-up stagger-5"
+            style={{ background: 'linear-gradient(135deg, #1c1917 0%, #292524 60%, #3b2a1a 100%)' }}
+          >
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'rgba(200,137,26,0.25)' }}>
+                  <Icon name="bolt" size={18} style={{ color: '#C8891A' }} />
                 </div>
-             </div>
-             <div className="absolute -bottom-8 -right-8 text-white/5 group-hover:text-white/10 transition-all duration-700 group-hover:scale-110 pointer-events-none">
-               <Icon name="bolt" size={200} />
-             </div>
+                <h3 className="font-lora text-xl font-bold text-white">Quick Actions</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { icon: 'add',           label: 'New Item',     accent: 'rgba(200,137,26,0.15)' },
+                  { icon: 'campaign',      label: 'Blast Promo',  accent: 'rgba(200,137,26,0.15)' },
+                  { icon: 'pause',         label: 'Pause Orders', accent: 'rgba(200,137,26,0.15)' },
+                  { icon: 'support_agent', label: 'Liora Help',   accent: 'rgba(200,137,26,0.15)' },
+                ].map((btn, i) => (
+                  <button
+                    key={i}
+                    className="p-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 transition-all duration-200 active:scale-95 group/btn"
+                    style={{ background: btn.accent, border: '1px solid rgba(255,255,255,0.1)' }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,137,26,0.30)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(200,137,26,0.6)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = btn.accent; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.1)'; (e.currentTarget as HTMLElement).style.transform = ''; }}
+                  >
+                    <span className="text-white group-hover/btn:scale-110 transition-transform duration-150">
+                      <Icon name={btn.icon} size={22} />
+                    </span>
+                    <span className="text-white/80">{btn.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="absolute -bottom-10 -right-10 pointer-events-none select-none" style={{ color: 'rgba(200,137,26,0.06)', fontSize: '220px', lineHeight: 1 }}>
+              ⚡
+            </div>
           </div>
 
         </div>
