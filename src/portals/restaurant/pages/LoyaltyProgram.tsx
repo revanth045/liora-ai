@@ -58,17 +58,17 @@ export default function LoyaltyProgram({ restaurant }: { restaurant: import('../
         <div className="space-y-6">
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 shadow-sm">
+            <div className="bg-white p-6 rounded-2xl border border-cream-200 shadow-sm card-lift animate-slide-up stagger-1 cursor-default">
                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">Loyalty Sales</p>
                <h3 className="text-3xl font-lora font-bold text-stone-800">$12,450</h3>
                <p className="text-xs text-green-600 mt-2 font-bold">+18% vs non-members</p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 shadow-sm">
+            <div className="bg-white p-6 rounded-2xl border border-cream-200 shadow-sm card-lift animate-slide-up stagger-2 cursor-default">
                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">Total Members</p>
                <h3 className="text-3xl font-lora font-bold text-stone-800">1,668</h3>
                <p className="text-xs text-green-600 mt-2 font-bold">+42 this week</p>
             </div>
-            <div className="bg-white p-6 rounded-2xl border border-cream-200 shadow-sm">
+            <div className="bg-white p-6 rounded-2xl border border-cream-200 shadow-sm card-lift animate-slide-up stagger-3 cursor-default">
                <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-2">Points Issued</p>
                <h3 className="text-3xl font-lora font-bold text-stone-800">84.2k</h3>
                <p className="text-xs text-stone-400 mt-2 font-medium">Value: ~$840.00</p>

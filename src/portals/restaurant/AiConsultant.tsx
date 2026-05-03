@@ -51,13 +51,14 @@ export default function RestoAiConsultant({ restaurant }: { restaurant: DemoRest
     <div className="max-w-4xl mx-auto h-[calc(100vh-180px)] flex flex-col animate-page-slide pb-4">
       
       {/* Header */}
-      <div className="mb-6 flex items-center gap-4">
-        <div className="w-12 h-12 bg-brand-500 rounded-full flex items-center justify-center text-white shadow-lg shadow-yellow-900/10 border-2 border-white">
-          <Icon name="smart_toy" size={24} />
+      <div className="mb-6 flex items-center gap-4 animate-slide-up stagger-1">
+        <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-amber-900/20 relative group">
+          <Icon name="smart_toy" size={26} />
+          <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-green-400 rounded-full border-2 border-white animate-pulse" />
         </div>
         <div>
           <h2 className="font-lora text-2xl font-bold text-stone-800">Liora Business Consultant</h2>
-          <p className="text-sm text-stone-400 font-medium">Your 24/7 AI Operational Analyst</p>
+          <p className="text-sm text-stone-400 font-medium">Your 24/7 AI Operational Analyst · Always online</p>
         </div>
       </div>
 
@@ -101,7 +102,7 @@ export default function RestoAiConsultant({ restaurant }: { restaurant: DemoRest
                 <button 
                   key={i}
                   onClick={() => handleSend(q)}
-                  className="flex-shrink-0 px-4 py-2 bg-cream-50 border border-cream-200 rounded-xl text-xs font-bold text-stone-800 hover:border-[#e9ae1e] hover:bg-white transition-all whitespace-nowrap shadow-sm active:scale-95"
+                  className="flex-shrink-0 px-4 py-2 bg-cream-50 border border-cream-200 rounded-xl text-xs font-bold text-stone-800 hover:border-amber-400 hover:bg-amber-50/50 hover:-translate-y-0.5 hover:shadow-md transition-all whitespace-nowrap shadow-sm active:scale-95"
                 >
                   {q}
                 </button>

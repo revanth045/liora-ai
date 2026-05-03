@@ -100,8 +100,8 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
           const count = grouped[cat].length;
           const available = grouped[cat].filter(s => s.isAvailable).length;
           return (
-            <div key={cat} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm">
-              <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider mb-3 ${cfg.color}`}>
+            <div key={cat} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm card-lift group cursor-default">
+              <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider mb-3 ${cfg.color} group-hover:shadow-sm transition-shadow`}>
                 <Icon name={cfg.icon} size={14} /> {cfg.label}
               </div>
               <p className="text-2xl font-lora font-bold text-stone-800">{available}<span className="text-stone-400 text-base font-normal">/{count}</span></p>
@@ -129,7 +129,7 @@ export default function RestoChefSpecials({ restaurant }: { restaurant: DemoRest
           ) : (
             <div className="grid md:grid-cols-2 gap-4">
               {items.map(special => (
-                <div key={special.id} className={`bg-white rounded-3xl border shadow-sm overflow-hidden transition-all ${!special.isAvailable ? 'opacity-60' : 'border-cream-200'}`}>
+                <div key={special.id} className={`bg-white rounded-3xl border shadow-sm overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 duration-200 ${!special.isAvailable ? 'opacity-60 border-cream-200' : 'border-cream-200'}`}>
                   <div className="p-6">
                     <div className="flex items-start gap-4 mb-4">
                       <div className="w-14 h-14 rounded-2xl bg-cream-100 flex items-center justify-center text-3xl flex-shrink-0">

@@ -78,7 +78,7 @@ export default function RestoVenueSettings({ restaurant }: { restaurant: DemoRes
     <div className="max-w-4xl mx-auto space-y-8 animate-page-slide pb-24">
 
       {/* Profile Section */}
-      <div className="bg-white p-8 rounded-[2rem] border border-cream-200 shadow-sm">
+      <div className="bg-white p-8 rounded-[2rem] border border-cream-200 shadow-sm animate-slide-up stagger-1">
         <h3 className="font-lora text-2xl text-stone-800 mb-8 font-bold">Venue Profile</h3>
 
         <div className="flex flex-col md:flex-row items-start gap-8">
@@ -150,7 +150,7 @@ export default function RestoVenueSettings({ restaurant }: { restaurant: DemoRes
       </div>
 
       {/* Hours & Operations */}
-      <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden animate-slide-up stagger-2">
         <div className="p-8 border-b border-cream-200 bg-cream-100/50">
           <h3 className="font-lora text-2xl text-stone-800 font-bold">Hours & Operations</h3>
           <p className="text-stone-400 text-sm mt-1">Toggle a day off to mark it closed. Changes are saved with the Save button.</p>

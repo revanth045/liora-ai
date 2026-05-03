@@ -93,17 +93,17 @@ export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant
       {/* Header stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          { label: 'Today\'s Orders', value: orders.length, icon: 'receipt_long', color: 'bg-blue-100 text-blue-700' },
-          { label: 'Active Now', value: orders.filter(o => o.status === 'preparing').length, icon: 'local_fire_department', color: 'bg-orange-100 text-orange-700' },
-          { label: 'Pending', value: counts.pending, icon: 'pending_actions', color: 'bg-amber-100 text-amber-700' },
+          { label: "Today's Orders",  value: orders.length, icon: 'receipt_long',        color: 'bg-blue-100 text-blue-700'   },
+          { label: 'Active Now',      value: orders.filter(o => o.status === 'preparing').length, icon: 'local_fire_department', color: 'bg-orange-100 text-orange-700' },
+          { label: 'Pending',         value: counts.pending, icon: 'pending_actions',     color: 'bg-amber-100 text-amber-700' },
           { label: "Today's Revenue", value: fmt(orders.filter(o=>o.status==='delivered').reduce((s,o)=>s+o.totalCents,0)), icon: 'attach_money', color: 'bg-green-100 text-green-700' },
         ].map((m,i) => (
-          <div key={i} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between">
+          <div key={i} className={`bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between group card-lift animate-slide-up stagger-${i+1}`}>
             <div>
               <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">{m.label}</p>
               <h3 className="text-2xl font-lora font-bold text-stone-800">{m.value}</h3>
             </div>
-            <div className={`p-3 rounded-2xl ${m.color}`}><Icon name={m.icon} size={20} /></div>
+            <div className={`p-3 rounded-2xl ${m.color} group-hover:scale-110 transition-transform duration-200`}><Icon name={m.icon} size={20} /></div>
           </div>
         ))}
       </div>
@@ -189,9 +189,9 @@ export default function RestoOrders({ restaurant }: { restaurant: DemoRestaurant
 
             return (
               <div key={order.id}
-                className="bg-white rounded-3xl border border-cream-200 shadow-sm overflow-hidden transition-all">
+                className="bg-white rounded-3xl border border-cream-200 shadow-sm overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5 duration-200">
                 <button onClick={() => setExpanded(isExpanded ? null : order.id)}
-                  className="w-full flex items-center gap-4 p-5 hover:bg-cream-50/30 text-left transition-colors">
+                  className="w-full flex items-center gap-4 p-5 hover:bg-cream-50/40 text-left transition-colors">
                   {/* Status dot */}
                   <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${order.status === 'pending' ? 'bg-amber-400 animate-pulse' : order.status === 'preparing' ? 'bg-blue-400 animate-pulse' : order.status === 'ready' ? 'bg-green-400' : order.status === 'delivered' ? 'bg-stone-300' : 'bg-red-300'}`} />
 

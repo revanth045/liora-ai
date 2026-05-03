@@ -128,6 +128,43 @@
       .pb-safe { padding-bottom:env(safe-area-inset-bottom, 0px); }
 
       ::selection { background:rgba(200,137,26,0.2); color:#1c1917; }
+
+      /* ── Extra portal animations ─────────────────────────────── */
+      @keyframes slideUp   { from{ opacity:0; transform:translateY(16px) } to{ opacity:1; transform:translateY(0) } }
+      @keyframes shimmer   { 0%{ background-position:200% center } 100%{ background-position:-200% center } }
+      @keyframes popIn     { 0%{ opacity:0; transform:scale(.92) } 60%{ transform:scale(1.03) } 100%{ opacity:1; transform:scale(1) } }
+      @keyframes barGrow   { from{ width:0 } }
+      @keyframes fadeSlide { from{ opacity:0; transform:translateX(-8px) } to{ opacity:1; transform:translateX(0) } }
+
+      .animate-slide-up  { animation: slideUp .42s cubic-bezier(.16,1,.3,1) forwards; }
+      .animate-pop-in    { animation: popIn  .35s cubic-bezier(.34,1.56,.64,1) forwards; }
+      .animate-fade-slide{ animation: fadeSlide .4s ease-out forwards; }
+
+      /* Staggered entrance delays */
+      .stagger-1 { animation-delay:  60ms; opacity:0; }
+      .stagger-2 { animation-delay: 120ms; opacity:0; }
+      .stagger-3 { animation-delay: 180ms; opacity:0; }
+      .stagger-4 { animation-delay: 240ms; opacity:0; }
+      .stagger-5 { animation-delay: 300ms; opacity:0; }
+      .stagger-6 { animation-delay: 360ms; opacity:0; }
+
+      /* Card hover lift */
+      .card-lift { transition: transform .22s ease, box-shadow .22s ease; }
+      .card-lift:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(28,25,23,.10); }
+
+      /* Shimmer text gradient */
+      .shimmer-text {
+        background: linear-gradient(90deg,#C8891A 0%,#E8C06A 40%,#C8891A 80%);
+        background-size: 200% auto;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        animation: shimmer 3s linear infinite;
+      }
+
+      /* Stat bar animated fill */
+      .bar-fill { animation: barGrow .9s cubic-bezier(.16,1,.3,1) forwards; }
+
+      /* Sidebar nav active glow */
+      .nav-active-glow { box-shadow: inset 3px 0 0 #C8891A; }
     </style>
 <script type="importmap">
 {
