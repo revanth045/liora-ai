@@ -47,11 +47,26 @@ app.use('/api', (_req, res) => res.status(404).json({ error: 'Endpoint not found
 // â €â € Production: serve Vite build output â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €â €
 if (isProduction) {
   const distPath = path.resolve(__dirname, '..', 'dist');
-  app.use(express.static(distPath));
 
-  // SPA fallback â ” serve index.html for all non-API routes
+  // Serve hashed assets with long cache; index.html must never be cached
+  app.use(express.static(distPath, {
+    setHeaders: (res, filePath) => {
+      if (path.basename(filePath) === 'index.html') {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+      } else {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+    },
+  }));
+
+  // SPA fallback — serve index.html for all non-API routes (never cached)
   app.use((req, res, next) => {
     if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
       res.sendFile(path.join(distPath, 'index.html'));
     } else {
       next();
