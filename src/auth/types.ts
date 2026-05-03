@@ -21,8 +21,8 @@ export interface AuthAdapter {
   signInFromSwitcher?(email: string): Promise<void>;
   /** Synchronous session read — only available on DemoAuth. */
   getSessionSync?(): Session;
-  /** Sign in with Google OAuth — only available when Supabase is configured. */
-  signInWithGoogle?(): Promise<void>;
+  /** Sign in with Google OAuth. Pass role to control which portal demo users land in. */
+  signInWithGoogle?(role?: 'user' | 'restaurant_owner'): Promise<void>;
   /** Send a password-reset email to the given address. */
   resetPassword?(email: string): Promise<void>;
   /** Update the currently signed-in user's password. */

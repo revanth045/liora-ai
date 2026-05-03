@@ -58,7 +58,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
     setGoogleLoading(true);
     setError('');
     try {
-      await auth.signInWithGoogle();
+      await auth.signInWithGoogle('restaurant_owner');
     } catch (err: any) {
       setError(err.message || 'Google sign-in failed');
     } finally {
@@ -225,7 +225,7 @@ export default function RestaurantLogin({ onSwitchToUser }: RestaurantLoginProps
                   className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-cream-200 bg-white hover:bg-cream-50 text-stone-700 font-semibold text-sm transition-all shadow-sm disabled:opacity-60 mb-4"
                 >
                   {googleLoading ? <Spinner /> : <GoogleIcon />}
-                  {googleLoading ? 'Connecting...' : 'Continue with Google'}
+                  {googleLoading ? 'Signing you in...' : 'Continue with Google'}
                 </button>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex-1 h-px bg-cream-200" />

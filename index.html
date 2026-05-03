@@ -5,130 +5,13 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Liora — AI Food & Lifestyle Concierge</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                50:  '#fdf9f0',
-                100: '#faf0d8',
-                200: '#f3dba5',
-                300: '#e8c06a',
-                400: '#C8891A',
-                500: '#b07416',
-                600: '#8f5c10',
-                700: '#6d430c',
-                800: '#4e2f08',
-                900: '#321d04',
-              },
-              cream: {
-                50:  '#FDFAF5',
-                100: '#F8F3E8',
-                200: '#EFE6D4',
-                300: '#E4D8BF',
-                400: '#D4C4A4',
-              },
-              forest: {
-                700: '#4A5C4B',
-                800: '#3A4B3C',
-                900: '#2D3C2E',
-                950: '#1F2920',
-              },
-              stone: {
-                100: '#f5f5f4',
-                200: '#e7e5e4',
-                300: '#d6d3d1',
-                400: '#a8a29e',
-                500: '#78716c',
-                600: '#57534e',
-                700: '#44403c',
-                800: '#292524',
-                900: '#1c1917',
-              },
-              /* Keep surface for inner app pages */
-              surface: { 50:'#fafafa', 100:'#f4f4f5', 200:'#e4e4e7', 300:'#d4d4d8', 400:'#a1a1aa', 500:'#71717a', 600:'#52525b', 700:'#3f3f46', 800:'#27272a', 900:'#18181b', 950:'#09090b' },
-            },
-            fontFamily: {
-              sans:    ['Inter', 'system-ui', 'sans-serif'],
-              serif:   ['"Cormorant Garamond"', 'Georgia', 'serif'],
-              display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-              lora:    ['Lora', 'Georgia', 'serif'],
-            },
-            animation: {
-              'fade-up':    'fadeUp .6s cubic-bezier(.16,1,.3,1) forwards',
-              'fade-in':    'fadeIn .8s ease-out forwards',
-              'page-slide': 'pageSlide .35s ease-out forwards',
-            },
-            keyframes: {
-              fadeUp:    { '0%':{ opacity:0, transform:'translateY(20px)' }, '100%':{ opacity:1, transform:'translateY(0)' } },
-              fadeIn:    { '0%':{ opacity:0 }, '100%':{ opacity:1 } },
-              pageSlide: { '0%':{ opacity:0, transform:'translateX(10px)' }, '100%':{ opacity:1, transform:'translateX(0)' } },
-            },
-          },
-        },
-      }
-    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Lora:ital,wght@0,400..700;1,400..700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-    <style>
-      *, *::before, *::after { box-sizing: border-box; }
-      body { font-family: 'Inter', system-ui, sans-serif; background: #FDFAF5; color: #1c1917; -webkit-font-smoothing: antialiased; }
-
-      .font-display, .font-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
-      .font-lora { font-family: 'Lora', Georgia, serif; }
-
-      /* Scrollbar */
-      .scrollbar-hide::-webkit-scrollbar { display:none; }
-      .scrollbar-hide { -ms-overflow-style:none; scrollbar-width:none; }
-      ::-webkit-scrollbar { width:5px; }
-      ::-webkit-scrollbar-track { background:transparent; }
-      ::-webkit-scrollbar-thumb { background:#D4C4A4; border-radius:10px; }
-      ::-webkit-scrollbar-thumb:hover { background:#C8B494; }
-
-      /* Luxury card style - warm cream with subtle border */
-      .card { background:#FFFFFF; border:1px solid #EFE6D4; border-radius:4px; }
-      .card-cream { background:#F8F3E8; border:1px solid #EFE6D4; border-radius:4px; }
-
-      /* Section dividers */
-      .divider { border-top:1px solid #EFE6D4; }
-
-      /* Gold CTA button */
-      .btn-gold { background:#C8891A; color:#fff; font-weight:600; border-radius:9999px; transition:all .2s; }
-      .btn-gold:hover { background:#b07416; }
-      .btn-gold-outline { border:1.5px solid #C8891A; color:#C8891A; font-weight:600; border-radius:9999px; background:transparent; transition:all .2s; }
-      .btn-gold-outline:hover { background:#C8891A; color:#fff; }
-
-      /* Circular icon button like the arrow CTAs in reference */
-      .btn-circle-gold { width:48px; height:48px; background:#C8891A; border-radius:9999px; display:flex; align-items:center; justify-content:center; color:#fff; transition:all .2s; flex-shrink:0; }
-      .btn-circle-gold:hover { background:#b07416; transform:scale(1.05); }
-
-      /* Forest green section */
-      .section-forest { background:#2D3C2E; color:#FAF8F3; }
-
-      /* Light inner-app glass (for inner pages that still use glass) */
-      .glass { background:rgba(255,255,255,0.7); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.9); }
-      .glass-light { background:rgba(255,255,255,0.5); backdrop-filter:blur(12px); border:1px solid rgba(239,230,212,0.6); }
-      .glass-heavy { background:rgba(255,255,255,0.85); backdrop-filter:blur(24px); border:1px solid #EFE6D4; }
-
-      /* Text utilities */
-      .text-gradient { background:linear-gradient(135deg,#C8891A 0%,#E8C06A 50%,#C8891A 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-      .text-muted { color:#78716c; }
-
-      /* Tag/badge */
-      .tag { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 10px; border:1px solid #EFE6D4; border-radius:9999px; color:#78716c; }
-      .tag-gold { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 12px; background:#C8891A; color:#fff; border-radius:9999px; }
-
-      /* Safe area */
-      .pb-safe { padding-bottom:env(safe-area-inset-bottom, 0px); }
-
-      ::selection { background:rgba(200,137,26,0.2); color:#1c1917; }
-    </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script type="importmap">
 {
   "imports": {

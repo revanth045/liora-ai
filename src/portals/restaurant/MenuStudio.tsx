@@ -295,7 +295,7 @@ export default function RestoMenuStudio({ restaurant }: { restaurant: DemoRestau
           </div>
           <div className="bg-white rounded-2xl border border-cream-200 overflow-hidden divide-y divide-cream-100">
             {grouped[cat].map(item => (
-              <div key={item.id} className={`flex items-center gap-4 px-5 py-4 hover:bg-cream-50/50 transition-colors ${!item.available ? 'opacity-50' : ''}`}>
+              <div key={item.id} className={`flex items-center gap-4 px-5 py-4 hover:bg-cream-50/70 hover:pl-6 transition-all duration-150 group/item ${!item.available ? 'opacity-50' : ''}`}>
                 <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.available ? 'bg-green-500' : 'bg-stone-300'}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">

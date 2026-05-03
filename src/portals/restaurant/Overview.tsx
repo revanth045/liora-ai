@@ -18,7 +18,7 @@ function timeAgo(ts: number) {
   return `${Math.floor(m / 1440)}d ago`;
 }
 
-export default function RestoOverview({ restaurant }: { restaurant: DemoRestaurant }) {
+export default function RestoOverview({ restaurant, onNavigate }: { restaurant: DemoRestaurant; onNavigate?: (tab: string) => void }) {
   const [orders, setOrders] = useState<DemoOrder[]>([]);
   const [inventory, setInventory] = useState<DemoInventoryItem[]>([]);
   const [menuCount, setMenuCount] = useState(0);
@@ -107,13 +107,13 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
       {/* 1. Top Metrics Row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {METRICS.map((metric, i) => (
-          <div key={i} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between group hover:shadow-md transition-shadow">
+          <div key={i} className={`bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between group card-lift animate-slide-up stagger-${i + 1} cursor-default`}>
             <div>
               <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">{metric.label}</p>
               <h3 className="text-2xl font-lora font-bold text-stone-800">{metric.value}</h3>
               <p className="text-[10px] text-stone-400 mt-1">{metric.sub}</p>
             </div>
-            <div className={`p-3 rounded-2xl ${metric.color} shadow-inner`}>
+            <div className={`p-3 rounded-2xl ${metric.color} shadow-inner group-hover:scale-110 transition-transform duration-200`}>
               <Icon name={metric.icon} size={20} />
             </div>
           </div>
@@ -123,7 +123,7 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
       <div className="grid lg:grid-cols-3 gap-8">
         
         {/* 2. Live Orders Feed */}
-        <div className="lg:col-span-2 bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden flex flex-col h-[500px]">
+        <div className="lg:col-span-2 bg-white rounded-[2rem] border border-cream-200 shadow-sm overflow-hidden flex flex-col h-[500px] card-lift animate-slide-up stagger-2">
           <div className="p-6 border-b border-cream-200 flex justify-between items-center bg-cream-50/50">
             <div className="flex items-center gap-3">
               <div className="relative">
@@ -218,17 +218,17 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
           </div>
 
           {/* At-a-Glance Stats */}
-          <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm p-6 space-y-4">
-            <h3 className="font-lora text-lg font-bold text-stone-800">At a Glance</h3>
+          <div className="bg-white rounded-[2rem] border border-cream-200 shadow-sm p-6 space-y-1 card-lift animate-slide-up stagger-4">
+            <h3 className="font-lora text-lg font-bold text-stone-800 mb-3">At a Glance</h3>
             {[
               { label: 'Menu Items (Live)', value: menuCount, icon: 'restaurant_menu' },
               { label: 'Chef Specials (Active)', value: specialsCount, icon: 'restaurant' },
               { label: 'Reservations', value: reservationCount, icon: 'calendar_today' },
               { label: 'Low Stock Items', value: lowStockItems.length, icon: 'warning', warn: lowStockItems.length > 0 },
             ].map((s, i) => (
-              <div key={i} className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-stone-600">
-                  <Icon name={s.icon} size={16} className={s.warn ? 'text-red-500' : 'text-stone-400'} />
+              <div key={i} className="flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-cream-50 transition-colors group cursor-default">
+                <div className="flex items-center gap-2.5 text-sm text-stone-600">
+                  <Icon name={s.icon} size={15} className={`transition-colors ${s.warn ? 'text-red-500' : 'text-stone-300 group-hover:text-stone-500'}`} />
                   {s.label}
                 </div>
                 <span className={`text-sm font-bold ${s.warn ? 'text-red-500' : 'text-stone-800'}`}>{s.value}</span>
@@ -237,27 +237,43 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-cream-100 text-white rounded-[2rem] p-8 shadow-xl relative overflow-hidden group">
-             <div className="relative z-10">
-                <h3 className="font-lora text-xl font-bold mb-6">Quick Actions</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <button className="p-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 backdrop-blur-md transition-all active:scale-95 border border-cream-100">
-                    <Icon name="add" size={24} /> New Item
-                  </button>
-                  <button className="p-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 backdrop-blur-md transition-all active:scale-95 border border-cream-100">
-                    <Icon name="campaign" size={24} /> Blast Promo
-                  </button>
-                  <button className="p-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 backdrop-blur-md transition-all active:scale-95 border border-cream-100">
-                    <Icon name="pause" size={24} /> Pause Orders
-                  </button>
-                  <button className="p-4 bg-white/10 hover:bg-white/20 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 backdrop-blur-md transition-all active:scale-95 border border-cream-100">
-                    <Icon name="support_agent" size={24} /> Liora Help
-                  </button>
+          <div
+            className="rounded-[2rem] p-8 shadow-2xl relative overflow-hidden group animate-slide-up stagger-5"
+            style={{ background: 'linear-gradient(135deg, #1c1917 0%, #292524 60%, #3b2a1a 100%)' }}
+          >
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: 'rgba(200,137,26,0.25)' }}>
+                  <Icon name="bolt" size={18} style={{ color: '#C8891A' }} />
                 </div>
-             </div>
-             <div className="absolute -bottom-8 -right-8 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity pointer-events-none">
-               <Icon name="bolt" size={200} />
-             </div>
+                <h3 className="font-lora text-xl font-bold text-white">Quick Actions</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { icon: 'add',           label: 'New Item',     tab: 'menu'         },
+                  { icon: 'campaign',      label: 'Blast Promo',  tab: 'promotions'   },
+                  { icon: 'pause',         label: 'Pause Orders', tab: 'orders'       },
+                  { icon: 'support_agent', label: 'Liora Help',   tab: 'ai_consultant'},
+                ].map((btn, i) => (
+                  <button
+                    key={i}
+                    onClick={() => onNavigate?.(btn.tab)}
+                    className="p-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 transition-all duration-200 active:scale-95 group/btn cursor-pointer"
+                    style={{ background: 'rgba(200,137,26,0.15)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(200,137,26,0.30)'; el.style.borderColor = 'rgba(200,137,26,0.6)'; el.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(200,137,26,0.15)'; el.style.borderColor = 'rgba(255,255,255,0.1)'; el.style.transform = ''; }}
+                  >
+                    <span className="text-white group-hover/btn:scale-110 transition-transform duration-150">
+                      <Icon name={btn.icon} size={22} />
+                    </span>
+                    <span className="text-white/80">{btn.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="absolute -bottom-10 -right-10 pointer-events-none select-none" style={{ color: 'rgba(200,137,26,0.06)', fontSize: '220px', lineHeight: 1 }}>
+              ⚡
+            </div>
           </div>
 
         </div>

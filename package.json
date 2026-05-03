@@ -7,7 +7,7 @@
     "node": "20.x"
   },
   "scripts": {
-    "dev": "concurrently -n client,server -c cyan,green \"vite\" \"node --env-file=.env server/index.js\"",
+    "dev": "concurrently -n client,server -c cyan,green \"vite\" \"node server/index.js\"",
     "dev:client": "vite",
     "dev:server": "nodemon server/index.js",
     "build": "vite build",
@@ -17,13 +17,16 @@
   "dependencies": {
     "@google/genai": "^1.27.0",
     "@supabase/supabase-js": "2",
+    "autoprefixer": "^10.5.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.1",
     "helmet": "^8.1.0",
     "jsqr": "^1.4.0",
+    "postcss": "^8.5.13",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

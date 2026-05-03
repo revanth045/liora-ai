@@ -32,7 +32,7 @@ export const SupabaseAuth: AuthAdapter = {
     return () => data.subscription.unsubscribe();
   },
 
-  async signInWithGoogle() {
+  async signInWithGoogle(_role?: 'user' | 'restaurant_owner') {
     const sb = getSupabase();
     if (!sb) throw new Error("Supabase not configured.");
     const { error } = await sb.auth.signInWithOAuth({

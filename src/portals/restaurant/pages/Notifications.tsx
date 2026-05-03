@@ -156,7 +156,7 @@ export default function RestoNotifications({ restaurant }: { restaurant: DemoRes
             <div
               key={alert.id}
               onClick={() => handleAlertClick(alert)}
-              className={`flex items-start gap-4 p-5 bg-white rounded-3xl border-2 shadow-sm hover:shadow-md transition-all cursor-pointer ${meta.color}`}
+              className={`flex items-start gap-4 p-5 bg-white rounded-3xl border-2 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 cursor-pointer ${meta.color}`}
             >
               <div className={`p-3 rounded-2xl border ${meta.color} flex-shrink-0`}>
                 <Icon name={meta.icon} size={22} />

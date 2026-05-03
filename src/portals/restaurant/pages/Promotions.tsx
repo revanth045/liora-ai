@@ -88,16 +88,16 @@ export default function RestoPromotions({ restaurant }: { restaurant: DemoRestau
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {[
-          { label: 'Active Promos', value: promos.filter(p => p.isActive).length, icon: 'campaign', color: 'bg-green-100 text-green-700' },
-          { label: 'Total Redemptions', value: promos.reduce((s,p) => s + p.usageCount, 0), icon: 'confirmation_number', color: 'bg-blue-100 text-blue-700' },
-          { label: 'Saved for Customers', value: `$${(promos.filter(p=>p.isActive&&p.type==='flat').reduce((s,p)=>s+p.value*p.usageCount,0)/100).toFixed(0)}`, icon: 'savings', color: 'bg-amber-100 text-amber-700' },
+          { label: 'Active Promos',      value: promos.filter(p => p.isActive).length, icon: 'campaign',            color: 'bg-green-100 text-green-700' },
+          { label: 'Total Redemptions',  value: promos.reduce((s,p) => s + p.usageCount, 0), icon: 'confirmation_number', color: 'bg-blue-100 text-blue-700' },
+          { label: 'Saved for Customers',value: `$${(promos.filter(p=>p.isActive&&p.type==='flat').reduce((s,p)=>s+p.value*p.usageCount,0)/100).toFixed(0)}`, icon: 'savings', color: 'bg-amber-100 text-amber-700' },
         ].map((m, i) => (
-          <div key={i} className="bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between">
+          <div key={i} className={`bg-white p-5 rounded-3xl border border-cream-200 shadow-sm flex items-start justify-between group card-lift animate-slide-up stagger-${i+1}`}>
             <div>
               <p className="text-[10px] font-bold text-stone-400 uppercase tracking-widest mb-1">{m.label}</p>
               <h3 className="text-2xl font-lora font-bold text-stone-800">{m.value}</h3>
             </div>
-            <div className={`p-3 rounded-2xl ${m.color}`}><Icon name={m.icon} size={20} /></div>
+            <div className={`p-3 rounded-2xl ${m.color} group-hover:scale-110 transition-transform duration-200`}><Icon name={m.icon} size={20} /></div>
           </div>
         ))}
       </div>
@@ -127,7 +127,7 @@ export default function RestoPromotions({ restaurant }: { restaurant: DemoRestau
       ) : (
         <div className="grid md:grid-cols-2 gap-4">
           {promos.map(p => (
-            <div key={p.id} className={`bg-white rounded-3xl border shadow-sm overflow-hidden transition-all ${p.isActive ? 'border-cream-200' : 'border-cream-200 opacity-60'}`}>
+            <div key={p.id} className={`bg-white rounded-3xl border shadow-sm overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 duration-200 ${p.isActive ? 'border-cream-200' : 'border-cream-200 opacity-60'}`}>
               <div className="p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex-1">

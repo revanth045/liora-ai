@@ -316,20 +316,25 @@ export default function UserShell() {
                         </Suspense>
 
                         {/* Mobile bottom nav */}
-                        <nav className="md:hidden flex-shrink-0 bg-white border border-cream-200 shadow-sm border-t border-cream-100 safe-area-bottom">
-                            <div className="flex justify-around py-2">
+                        <nav className="md:hidden flex-shrink-0 bg-white/95 backdrop-blur-md border-t border-cream-200 shadow-lg safe-area-bottom">
+                            <div className="flex justify-around py-2 px-2">
                                 {BOTTOM_NAV.map(item => {
                                     const isActive = view === item.view || (item.view === 'dating' && view === 'date_night');
                                     return (
                                         <button
                                             key={item.view}
                                             onClick={() => setView(item.view)}
-                                            className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-colors ${
-                                                isActive ? 'text-brand-400' : 'text-stone-400'
+                                            className={`flex flex-col items-center gap-0.5 px-4 py-1.5 rounded-xl transition-all duration-200 relative ${
+                                                isActive
+                                                    ? 'text-brand-400 bg-brand-400/8 scale-105'
+                                                    : 'text-stone-400 hover:text-stone-600 hover:bg-cream-100 active:scale-95'
                                             }`}
                                         >
-                                            <Icon name={item.icon} className="w-5 h-5" />
-                                            <span className="text-[10px] font-medium">{item.label}</span>
+                                            {isActive && (
+                                                <span className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-brand-400" />
+                                            )}
+                                            <Icon name={item.icon} className={`w-5 h-5 transition-transform duration-200 ${isActive ? 'scale-110' : ''}`} />
+                                            <span className={`text-[10px] font-bold transition-colors ${isActive ? 'text-brand-400' : 'font-medium'}`}>{item.label}</span>
                                         </button>
                                     );
                                 })}

@@ -1001,7 +1001,7 @@ function RestaurantCard({ r, onClick }: { r: Restaurant; onClick: () => void }) 
     return (
         <button
             onClick={onClick}
-            className="w-full text-left bg-white border border-cream-200 rounded-2xl p-4 hover:shadow-md hover:border-brand-400/30 transition-all group"
+            className="w-full text-left bg-white border border-cream-200 rounded-2xl p-4 hover:shadow-lg hover:-translate-y-0.5 hover:border-amber-300/60 transition-all duration-200 group"
         >
             <div className="flex items-start gap-3">
                 <span className="text-3xl flex-shrink-0 mt-0.5">{r.imageEmoji}</span>
@@ -1115,7 +1115,7 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
     return (
         <div className="max-w-2xl mx-auto">
             {/* Page Header */}
-            <div className="mb-6">
+            <div className="mb-6 animate-slide-up stagger-1">
                 <h1 className="font-display text-2xl font-semibold text-stone-800">Restaurants</h1>
                 <p className="text-sm text-stone-500 mt-1">
                     {all.length} place{all.length !== 1 ? 's' : ''} in the Liora directory
@@ -1145,12 +1145,16 @@ export default function RestaurantsPage({ setView }: { setView?: (v: string) => 
             </div>
 
             {/* Cuisine filter chips */}
-            <div className="flex gap-2 overflow-x-auto pb-2 mb-5 scrollbar-hide -mx-1 px-1">
+            <div className="flex gap-2 overflow-x-auto pb-2 mb-5 scrollbar-hide -mx-1 px-1 animate-slide-up stagger-2">
                 {availableCuisines.map(c => (
                     <button
                         key={c}
                         onClick={() => setCuisineFilter(c)}
-                        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${cuisineFilter === c ? 'bg-forest-900 text-cream-50' : 'bg-white border border-cream-200 text-stone-500 hover:border-forest-900/40'}`}
+                        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+                            cuisineFilter === c
+                                ? 'bg-forest-900 text-cream-50 shadow-sm scale-105'
+                                : 'bg-white border border-cream-200 text-stone-500 hover:border-amber-400/50 hover:text-amber-700 hover:bg-amber-50/50'
+                        }`}
                     >{c}</button>
                 ))}
             </div>

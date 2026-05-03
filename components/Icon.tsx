@@ -24,9 +24,6 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
     x: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     ),
-    close: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-    ),
     check: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41" />
     ),
@@ -82,7 +79,10 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747C20.45 11.896 18.81 8 12 8c-6.81 0-8.45 3.896-8.716 6.253A9.004 9.004 0 0 0 12 21Zm0 0V8" />
     ),
     soup_kitchen: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v3m-3-3v3m6-3v3M4.5 12c0-1.5 1.5-3 4.5-3s4.5 1.5 4.5 3m-9 0h9m-9 0c0 4 3 7 7.5 7s7.5-3 7.5-7h-9Z" />
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3h10.5c.414 0 .75.336.75.75v5.25a6 6 0 01-12 0V3.75c0-.414.336-.75.75-.75zM3.75 21h16.5M12 15v6" />
+      </>
     ),
     explore: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 9l-6 6m6-6l-2 5-4-1 1-4 5 0ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -112,7 +112,13 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M12.92 6.09c.27-.47.16-1.07-.26-1.41-.42-.34-1.04-.29-1.38.16l-3.37 4.54c-.21.28-.27.65-.17.99l2.09 7.02c.16.53.72.82 1.25.66.53-.16.82-.72.66-1.25l-1.63-5.48 2.37-3.19.44-.04zm-1.89 2.05l-1.4-1.88-2.67 3.6c-.27.37-.19.89.18 1.16.37.27.89.19 1.16-.18l2.73-3.7zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
     ),
     smart_toy: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zm-2 10H6V7h12v12zm-9-6c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm7.5-3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM8 15h8v2H8v-2z" />
+      <>
+        <rect x="7" y="9" width="10" height="9" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V7a3 3 0 016 0v2" />
+        <circle cx="10" cy="13" r="1" fill="currentColor" stroke="none" />
+        <circle cx="14" cy="13" r="1" fill="currentColor" stroke="none" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 16h4M4 12h3M17 12h3" />
+      </>
     ),
     trash: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -224,9 +230,6 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
     sync: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z" />
     ),
-    download: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-    ),
     visibility: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
     ),
@@ -243,7 +246,11 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
     ),
     restaurant_menu: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.58 1.58-2.08 3.73-1.37 5.27L3.5 20.09l1.41 1.41L14.88 11.53z" />
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+        <rect x="9" y="3" width="6" height="4" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6M9 16h4" />
+      </>
     ),
     image: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
@@ -270,13 +277,25 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
     ),
     group: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a.75.75 0 00.926.34 8.14 8.14 0 004.484-6.32c.023-.49-.311-.918-.802-.958a5.406 5.406 0 01-4.303-2.208.75.75 0 00-1.084-.112 5.14 5.14 0 01-6.442 0 .75.75 0 00-1.084.112 5.406 5.406 0 01-4.303 2.208c-.491.04-.825.468-.802.958a8.14 8.14 0 004.484 6.32.75.75 0 00.926-.34m12 0a.75.75 0 010-1.5m-12 0a.75.75 0 000 1.5m6-1.5v3" />
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+        <circle cx="9" cy="7" r="4" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+      </>
     ),
     receipt_long: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4h16v16H4z" opacity="0" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 2v20l2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6M9 11h6M9 15h4" />
+      </>
     ),
     badge: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z" />
+      <>
+        <rect x="2" y="7" width="20" height="14" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z" />
+        <circle cx="12" cy="14" r="3" strokeLinecap="round" strokeLinejoin="round" />
+      </>
     ),
     room_service: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2m-6.364 1.636l1.414 1.414m11.314 0l-1.414-1.414M3 12h2m14 0h2M4.93 19.07l1.414-1.414m11.314 0l1.414 1.414M12 7a5 5 0 100 10 5 5 0 000-10z" />
@@ -297,7 +316,16 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
     ),
     restaurant: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.58 1.58-2.08 3.73-1.37 5.27L3.5 20.09l1.41 1.41L14.88 11.53z" />
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 11l19-9-9 19-2-8-8-2z" />
+      </>
+    ),
+    chef_hat: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 21h12M6 17h12v4H6zM8 17V13M16 17V13" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3a4 4 0 014 4c0 1.5-.82 2.8-2 3.46V13H10v-2.54A4 4 0 0112 3z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 012 0M8 7a4 4 0 00-2 0" />
+      </>
     ),
     schedule: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m4-2a8 8 0 11-16 0 8 8 0 0116 0z" />
@@ -309,19 +337,42 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
     ),
     dashboard: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h7v9H3V3zm11 0h7v5h-7V3zm0 9h7v9h-7v-9zM3 16h7v5H3v-5z" />
+      <>
+        <rect x="3" y="3" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="14" y="3" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="3" y="14" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="14" y="14" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+      </>
     ),
     inventory_2: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-14v4m0 0l8 4m-8-4l-8 4m0-4v10l8 4" />
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2M12 12v4M10 14h4" />
+      </>
     ),
     reviews: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
     ),
     settings: (
-      <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <>
+        <circle cx="12" cy="12" r="3" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+      </>
     ),
     notifications: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    ),
+    notifications_active: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        <circle cx="18" cy="5" r="3" fill="currentColor" stroke="none" />
+      </>
+    ),
+    table_restaurant: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M3 10v2m18-2v2M5 12v6M19 12v6M8 18h8" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7 10V7a5 5 0 0110 0v3" />
+      </>
     ),
     help: (
       <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 1 1-18 0 9 9 0 0118 0z" />
@@ -399,17 +450,153 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 8h16M4 16h16" />
     ),
     loyalty: (
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.659A2.25 2.25 0 009.568 3zM6 6h.008v.008H6V6z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.659A2.25 2.25 0 009.568 3zM6 6h.008v.008H6V6z" />
     ),
     workspace_premium: (
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.174L3 12l1.26 1.826C4.53 14.238 4.673 14.73 4.59 15.22l-.43 2.193 2.203.411c.488.091.936.37 1.23.774L8.91 20.5l2.09-.81a1.95 1.95 0 011.606 0l2.09.81 1.317-1.899a1.95 1.95 0 011.23-.774l2.203-.411-.43-2.193a1.95 1.95 0 01.083-.997L21 12l-1.26-1.826a1.95 1.95 0 01-.083-.997l.43-2.193-2.203-.411a1.95 1.95 0 01-1.23-.774L15.09 3.5l-2.09.81a1.95 1.95 0 01-1.606 0l-2.09-.81L8.003 5.399a1.95 1.95 0 01-1.23.774L4.57 6.584l.43 2.193c.083.49-.06 1.012-.44 1.397zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.174L3 12l1.26 1.826C4.53 14.238 4.673 14.73 4.59 15.22l-.43 2.193 2.203.411c.488.091.936.37 1.23.774L8.91 20.5l2.09-.81a1.95 1.95 0 011.606 0l2.09.81 1.317-1.899a1.95 1.95 0 011.23-.774l2.203-.411-.43-2.193a1.95 1.95 0 01.083-.997L21 12l-1.26-1.826a1.95 1.95 0 01-.083-.997l.43-2.193-2.203-.411a1.95 1.95 0 01-1.23-.774L15.09 3.5l-2.09.81a1.95 1.95 0 01-1.606 0l-2.09-.81L8.003 5.399a1.95 1.95 0 01-1.23.774L4.57 6.584l.43 2.193c.083.49-.06 1.012-.44 1.397zM15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     ),
     military_tech: (
-        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
     ),
     stars: (
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09-3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-    )
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09-3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+    ),
+    admin_panel_settings: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 11c0 2.761-2.239 5-5 5s-5-2.239-5-5V7l5-2 5 2v4z" />
+        <circle cx="12" cy="11" r="1.5" fill="currentColor" stroke="none" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 20a7 7 0 0114 0" />
+      </>
+    ),
+    'arrow-right': (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+    ),
+    autorenew: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+    ),
+    refresh: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+    ),
+    calendar_month: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm5-5h.01v.01H10V16zm4 0h.01v.01H14V16zm-8 4h.01v.01H6V20zm4 0h.01v.01H10V20zm4 0h.01v.01H14V20z" />
+    ),
+    'chevron-down': (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    ),
+    clock: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    ),
+    confirmation_number: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 5H9a2 2 0 00-2 2v10a2 2 0 002 2h6a2 2 0 002-2V7a2 2 0 00-2-2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6M9 9h6M9 15h4" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 012 2v4a2 2 0 01-2 2h-2M7 8H5a2 2 0 00-2 2v4a2 2 0 002 2h2" />
+      </>
+    ),
+    database: (
+      <>
+        <ellipse cx="12" cy="5" rx="9" ry="3" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5" />
+      </>
+    ),
+    delete: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+    ),
+    event_available: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 14l2 2 4-4" />
+      </>
+    ),
+    history: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3.05 11a9 9 0 1 0 .5-3M3 4v4h4" />
+      </>
+    ),
+    info: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    ),
+    mail: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    ),
+    menu_book: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6M9 11h4" />
+      </>
+    ),
+    minus: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+    ),
+    person_add: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h11" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 14v6M16 17h6" />
+      </>
+    ),
+    phone: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+    ),
+    close: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    ),
+    download: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+    ),
+    print: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 21h6a1 1 0 001-1v-5a1 1 0 00-1-1H9a1 1 0 00-1 1v5a1 1 0 001 1z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 7V4a1 1 0 00-1-1H8a1 1 0 00-1 1v3" />
+      </>
+    ),
+    grid_view: (
+      <>
+        <rect x="3" y="3" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="14" y="3" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="3" y="14" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="14" y="14" width="7" height="7" rx="1" strokeLinecap="round" strokeLinejoin="round" />
+      </>
+    ),
+    fitness_center: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 6.5h11M6.5 17.5h11" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.5h2v7H3zM19 8.5h2v7h-2zM5 10H6v4H5zM18 10h1v4h-1z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h8" />
+      </>
+    ),
+    directions_run: (
+      <>
+        <circle cx="13.5" cy="4.5" r="1.5" fill="currentColor" stroke="none" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 19l1.5-4 2.5 2 3-5.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12.5 8l2 3-3 2-1.5 4M8 8.5l3 1" />
+      </>
+    ),
+    self_improvement: (
+      <>
+        <circle cx="12" cy="6" r="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3M9.5 14.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5v1a4 4 0 01-8 0v-1c0-1.38 1.12-2.5 2.5-2.5z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5 20.5A9.5 9.5 0 0112 17.5a9.5 9.5 0 017 3" />
+      </>
+    ),
+    monitor_heart: (
+      <>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h3l2-6 4 12 3-8 2 4h4" />
+        <rect x="2" y="4" width="20" height="16" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+      </>
+    ),
+    thumb_up: (
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
+    ),
+    play_circle: (
+      <>
+        <circle cx="12" cy="12" r="9" strokeLinecap="round" strokeLinejoin="round" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10 8.5l6 3.5-6 3.5V8.5z" fill="currentColor" stroke="none" />
+      </>
+    ),
   };
 
   const icon = icons[name];
@@ -422,7 +609,7 @@ export const Icon: React.FC<IconProps> = ({ name, className, size = 24 }) => {
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1.8}
       width={size}
       height={size}
     >
