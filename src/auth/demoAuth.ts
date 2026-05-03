@@ -180,29 +180,44 @@ export const DemoAuth: AuthAdapter = {
 
   signInFromSwitcher,
 
-  async signInWithGoogle() {
-    // Demo-mode Google Sign-In: creates a shared Google-style account and signs in.
-    const googleEmail = "google-demo@gmail.com";
+  async signInWithGoogle(role: 'user' | 'restaurant_owner' = 'user') {
+    const isOwner = role === 'restaurant_owner';
+    const googleEmail = isOwner ? "google-owner-demo@gmail.com" : "google-demo@gmail.com";
     const googlePassword = "__google_oauth_demo__";
-    const googleName = "Google User (Demo)";
+    const googleName = isOwner ? "Google Owner (Demo)" : "Google User (Demo)";
+
     const users = read<DemoUser[]>(UKEY, []);
     let u = users.find(x => x.email === googleEmail);
-    const isNewGoogleUser = !u;
+    const isNew = !u;
+
     if (!u) {
-      u = { id: cryptoRandom(), email: googleEmail, password: googlePassword, role: "user", name: googleName, lastUsedAt: Date.now() };
+      u = { id: cryptoRandom(), email: googleEmail, password: googlePassword, role, name: googleName, lastUsedAt: Date.now() };
       users.push(u);
       write(UKEY, users);
-      upsertSavedAccount({ email: googleEmail, role: "user", name: googleName });
+      upsertSavedAccount({ email: googleEmail, role, name: googleName });
     }
-    if (isNewGoogleUser) {
+
+    if (isNew && !isOwner) {
       localStorage.setItem('liora-needs-onboarding', 'true');
     }
+
+    if (isNew && isOwner) {
+      const restaurants = read<DemoRestaurant[]>(RKEY, []);
+      if (!restaurants.some(r => r.ownerId === u!.id)) {
+        const newResto = { id: cryptoRandom(), ownerId: u!.id, name: "My Restaurant" };
+        restaurants.push(newResto);
+        write(RKEY, restaurants);
+        sbUpsertRestaurant({ id: newResto.id, ownerId: u!.id, name: "My Restaurant" }).catch(() => {});
+      }
+    }
+
     u.lastUsedAt = Date.now();
     write(UKEY, users);
     write(SKEY, { id: u.id, email: u.email, role: u.role, name: u.name });
     localStorage.setItem(LKEY, u.email);
     localStorage.setItem(PKEY, u.role);
     upsertSavedAccount({ email: u.email, role: u.role, name: u.name });
+    if (isOwner) sbUpsertUser(u.id, u.email, u.role, u.name).catch(() => {});
     emit();
   },
 

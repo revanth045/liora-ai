@@ -58,10 +58,11 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
     setMsg('');
     setGoogleLoading(true);
     try {
-      await auth.signInWithGoogle();
-      // Page will redirect to Google - no further action needed
+      await auth.signInWithGoogle('user');
+      // If real OAuth: browser will redirect; if demo: session fires and component unmounts.
     } catch (err: any) {
       setError(err.message || 'Google sign-in failed');
+    } finally {
       setGoogleLoading(false);
     }
   };
@@ -133,7 +134,7 @@ export default function UserLogin({ onSwitchToRestaurant }: UserLoginProps) {
               className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-cream-200 bg-white hover:bg-cream-50 text-stone-700 font-semibold text-sm transition-all shadow-sm disabled:opacity-60 mb-4"
             >
               {googleLoading ? <Spinner /> : <GoogleIcon />}
-              {googleLoading ? 'Redirecting to Google...' : 'Continue with Google'}
+              {googleLoading ? 'Signing you in...' : 'Continue with Google'}
             </button>
 
             {/* Divider */}
