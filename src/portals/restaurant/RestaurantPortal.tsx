@@ -116,7 +116,7 @@ export default function RestaurantPortal(){
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'overview':          return <RestoOverview restaurant={restaurant} />;
+      case 'overview':          return <RestoOverview restaurant={restaurant} onNavigate={setActiveTab} />;
       case 'ai_consultant':     return <RestoAiConsultant restaurant={restaurant} />;
       case 'analytics':         return <RestoKPIs restaurant={restaurant} />;
       case 'customer_insights': return <RestoCustomerInsights restaurant={restaurant} />;

@@ -18,7 +18,7 @@ function timeAgo(ts: number) {
   return `${Math.floor(m / 1440)}d ago`;
 }
 
-export default function RestoOverview({ restaurant }: { restaurant: DemoRestaurant }) {
+export default function RestoOverview({ restaurant, onNavigate }: { restaurant: DemoRestaurant; onNavigate?: (tab: string) => void }) {
   const [orders, setOrders] = useState<DemoOrder[]>([]);
   const [inventory, setInventory] = useState<DemoInventoryItem[]>([]);
   const [menuCount, setMenuCount] = useState(0);
@@ -250,17 +250,18 @@ export default function RestoOverview({ restaurant }: { restaurant: DemoRestaura
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { icon: 'add',           label: 'New Item',     accent: 'rgba(200,137,26,0.15)' },
-                  { icon: 'campaign',      label: 'Blast Promo',  accent: 'rgba(200,137,26,0.15)' },
-                  { icon: 'pause',         label: 'Pause Orders', accent: 'rgba(200,137,26,0.15)' },
-                  { icon: 'support_agent', label: 'Liora Help',   accent: 'rgba(200,137,26,0.15)' },
+                  { icon: 'add',           label: 'New Item',     tab: 'menu'         },
+                  { icon: 'campaign',      label: 'Blast Promo',  tab: 'promotions'   },
+                  { icon: 'pause',         label: 'Pause Orders', tab: 'orders'       },
+                  { icon: 'support_agent', label: 'Liora Help',   tab: 'ai_consultant'},
                 ].map((btn, i) => (
                   <button
                     key={i}
-                    className="p-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 transition-all duration-200 active:scale-95 group/btn"
-                    style={{ background: btn.accent, border: '1px solid rgba(255,255,255,0.1)' }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(200,137,26,0.30)'; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(200,137,26,0.6)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = btn.accent; (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.1)'; (e.currentTarget as HTMLElement).style.transform = ''; }}
+                    onClick={() => onNavigate?.(btn.tab)}
+                    className="p-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest flex flex-col items-center gap-3 transition-all duration-200 active:scale-95 group/btn cursor-pointer"
+                    style={{ background: 'rgba(200,137,26,0.15)', border: '1px solid rgba(255,255,255,0.1)' }}
+                    onMouseEnter={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(200,137,26,0.30)'; el.style.borderColor = 'rgba(200,137,26,0.6)'; el.style.transform = 'translateY(-2px)'; }}
+                    onMouseLeave={e => { const el = e.currentTarget as HTMLElement; el.style.background = 'rgba(200,137,26,0.15)'; el.style.borderColor = 'rgba(255,255,255,0.1)'; el.style.transform = ''; }}
                   >
                     <span className="text-white group-hover/btn:scale-110 transition-transform duration-150">
                       <Icon name={btn.icon} size={22} />
