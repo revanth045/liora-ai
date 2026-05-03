@@ -1,5 +1,6 @@
 import { AuthAdapter, Role, Session } from "./types";
 import { sbUpsertUser, sbUpsertRestaurant } from "../lib/supabaseDb";
+import { hasGoogleClientId, signInWithRealGoogle } from "./googleGSI";
 
 const UKEY = "liora_demo_users";
 const RKEY = "liora_demo_restaurants";
@@ -182,19 +183,31 @@ export const DemoAuth: AuthAdapter = {
 
   async signInWithGoogle(role: 'user' | 'restaurant_owner' = 'user') {
     const isOwner = role === 'restaurant_owner';
-    const googleEmail = isOwner ? "google-owner-demo@gmail.com" : "google-demo@gmail.com";
-    const googlePassword = "__google_oauth_demo__";
-    const googleName = isOwner ? "Google Owner (Demo)" : "Google User (Demo)";
 
+    // --- Resolve identity: real Google or demo fallback ---
+    let email: string;
+    let name: string;
+
+    if (hasGoogleClientId) {
+      const info = await signInWithRealGoogle();
+      email = info.email;
+      name = info.name;
+    } else {
+      email = isOwner ? "google-owner-demo@gmail.com" : "google-demo@gmail.com";
+      name  = isOwner ? "Google Owner (Demo)" : "Google User (Demo)";
+    }
+
+    // --- Upsert local session record ---
+    const googlePassword = "__google_oauth__";
     const users = read<DemoUser[]>(UKEY, []);
-    let u = users.find(x => x.email === googleEmail);
+    let u = users.find(x => x.email === email);
     const isNew = !u;
 
     if (!u) {
-      u = { id: cryptoRandom(), email: googleEmail, password: googlePassword, role, name: googleName, lastUsedAt: Date.now() };
+      u = { id: cryptoRandom(), email, password: googlePassword, role, name, lastUsedAt: Date.now() };
       users.push(u);
       write(UKEY, users);
-      upsertSavedAccount({ email: googleEmail, role, name: googleName });
+      upsertSavedAccount({ email, role, name });
     }
 
     if (isNew && !isOwner) {
@@ -217,7 +230,7 @@ export const DemoAuth: AuthAdapter = {
     localStorage.setItem(LKEY, u.email);
     localStorage.setItem(PKEY, u.role);
     upsertSavedAccount({ email: u.email, role: u.role, name: u.name });
-    if (isOwner) sbUpsertUser(u.id, u.email, u.role, u.name).catch(() => {});
+    sbUpsertUser(u.id, u.email, u.role, u.name).catch(() => {});
     emit();
   },
 
